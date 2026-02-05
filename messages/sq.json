@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "services": "Shërbime",
+    "works": "Punët",
+    "training": "Trajnime",
+    "contact": "Kontakt",
+    "bookCall": "Rezervo një telefonatë"
+  },
+  "hero": {
+    "kicker": "DARA MARKETING AGENCY",
+    "titleA": "Guxo të jesh",
+    "titleB": "ndryshe",
+    "desc": "Ndihmojmë bizneset të kthejnë ndjekësit në shitje përmes strategjisë, përmbajtjes dhe marketingut me performancë.",
+    "ctaPrimary": "Audit falas",
+    "ctaSecondary": "Shiko punët"
+  },
+  "seo": {
+  "title": "DARA Marketing Agency | Guxo të jesh ndryshe",
+  "description": "Agjenci marketingu që ndihmon bizneset të kthejnë ndjekësit në shitje përmes strategjisë, përmbajtjes dhe marketingut me performancë."
+}
+
+}

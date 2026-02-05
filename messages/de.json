@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "services": "Leistungen",
+    "works": "Referenzen",
+    "training": "Training",
+    "contact": "Kontakt",
+    "bookCall": "Beratung buchen"
+  },
+  "hero": {
+    "kicker": "DARA MARKETING AGENCY",
+    "titleA": "Wage es,",
+    "titleB": "anders zu sein",
+    "desc": "Wir helfen Unternehmen, Follower durch Strategie, Content und Performance-Marketing in Verkäufe zu verwandeln.",
+    "ctaPrimary": "Kostenloses Audit",
+    "ctaSecondary": "Referenzen ansehen"
+  },
+  "seo": {
+  "title": "DARA Marketing Agentur | Wage es, anders zu sein",
+  "description": "Marketingagentur, die Unternehmen hilft, Follower durch Strategie, Content und Performance-Marketing in Verkäufe zu verwandeln."
+}
+
+}

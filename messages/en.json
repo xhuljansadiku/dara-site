@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "services": "Services",
+    "works": "Works",
+    "training": "Training",
+    "contact": "Contact",
+    "bookCall": "Book a call"
+  },
+  "hero": {
+    "kicker": "DARA MARKETING AGENCY",
+    "titleA": "Dare to be",
+    "titleB": "different",
+    "desc": "We help business owners convert followers into sales through strategy, content, and performance marketing.",
+    "ctaPrimary": "Get a free audit",
+    "ctaSecondary": "View works"
+  },
+  "seo": {
+  "title": "DARA Marketing Agency | Dare to be different",
+  "description": "Marketing agency helping businesses convert followers into sales through strategy, content and performance marketing."
+}
+
+}
