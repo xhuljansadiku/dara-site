@@ -1,29 +1,57 @@
 // app/[locale]/process/page.tsx
+import LocaleLink from "@/components/site/LocaleLink";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Process",
+  description:
+    "Proces i qartë: audit, build, launch, optimize & scale për rezultate të qëndrueshme.",
+};
 
 const steps = [
   {
     n: "01",
     title: "Audit & Discovery",
     desc: "E kuptojmë biznesin, ofertën, audiencën, dhe ku po humbin konvertimet.",
-    bullets: ["Audit website + funnel", "Konkurrenca & positioning", "KPI + objektiva", "Plan 7–30 ditë"],
+    bullets: [
+      "Audit website + funnel",
+      "Konkurrenca & positioning",
+      "KPI + objektiva",
+      "Plan 7–30 ditë",
+    ],
   },
   {
     n: "02",
     title: "Strategy & Assets",
     desc: "Ndërtojmë planin dhe asetet që e bëjnë marketingun të performojë realisht.",
-    bullets: ["Landing pages / UX", "Tracking (events + pixels)", "Creative & copy", "Content calendar"],
+    bullets: [
+      "Landing pages / UX",
+      "Tracking (events + pixels)",
+      "Creative & copy",
+      "Content calendar",
+    ],
   },
   {
     n: "03",
     title: "Launch & Testing",
     desc: "Nisim me strukturë, jo “random ads”. Pastaj testojmë për fitues.",
-    bullets: ["Campaign structure", "A/B testing", "Budget allocation", "Offer iterations"],
+    bullets: [
+      "Campaign structure",
+      "A/B testing",
+      "Budget allocation",
+      "Offer iterations",
+    ],
   },
   {
     n: "04",
     title: "Optimize & Scale",
     desc: "Optimizojmë çdo javë dhe skalojmë vetëm atë që sjell rezultat.",
-    bullets: ["Weekly reporting", "CRO improvements", "Scale winners", "New creative cycles"],
+    bullets: [
+      "Weekly reporting",
+      "CRO improvements",
+      "Scale winners",
+      "New creative cycles",
+    ],
   },
 ];
 
@@ -39,41 +67,50 @@ export default function ProcessPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden py-14 md:py-20">
+      <section className="relative overflow-hidden py-12 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Process</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">
+          Process
+        </p>
+
         <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
           Proces i qartë, ekzekutim{" "}
           <span className="text-yellow-400">i fortë</span>
         </h1>
+
         <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">
-          Pa fjalë të kota. Ne ndërtojmë sistem: audit → asetet → launch → optimizim & scale.
+          Pa fjalë të kota. Ne ndërtojmë sistem: audit → asetet → launch →
+          optimizim & scale.
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
+          <LocaleLink
             href="/contact"
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
           >
             Kërko audit
-          </a>
-          <a
+          </LocaleLink>
+
+          <LocaleLink
             href="/services"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
           >
             Shërbimet
-          </a>
+          </LocaleLink>
         </div>
       </section>
 
-      {/* DELIVERABLES STRIP */}
+      {/* DELIVERABLES */}
       <section className="py-8">
         <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-          <p className="text-xs uppercase tracking-widest text-white/60">Deliverables</p>
+          <p className="text-xs uppercase tracking-widest text-white/60">
+            Deliverables
+          </p>
+
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             {deliverables.map((d) => (
               <div
@@ -90,9 +127,7 @@ export default function ProcessPage() {
 
       {/* STEPS */}
       <section className="py-12 md:py-16">
-        <h2 className="text-2xl font-semibold md:text-3xl">
-          Hapat
-        </h2>
+        <h2 className="text-2xl font-semibold md:text-3xl">Hapat</h2>
         <p className="mt-2 max-w-2xl text-white/60">
           Çdo hap ka output të qartë, që të mos ketë konfuzion.
         </p>
@@ -109,7 +144,7 @@ export default function ProcessPage() {
 
               <div className="mt-5 h-px bg-white/10" />
 
-              <ul className="mt-4 grid gap-2 text-sm text-white/70 sm:grid-cols-2">
+              <ul className="mt-4 grid gap-2 text-sm text-white/70">
                 {s.bullets.map((b) => (
                   <li key={b} className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/70" />
@@ -126,25 +161,28 @@ export default function ProcessPage() {
       <section className="py-12 md:py-16">
         <div className="rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6 md:p-10">
           <h2 className="text-2xl font-semibold md:text-3xl">
-            Gati për rritje? <span className="text-yellow-400">Let’s talk.</span>
+            Gati për rritje?{" "}
+            <span className="text-yellow-400">Let’s talk.</span>
           </h2>
+
           <p className="mt-2 max-w-2xl text-white/70">
             Na trego çfarë synon dhe ku je sot. Të kthejmë me një plan të shkurtër.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a
+            <LocaleLink
               href="/contact"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
             >
               Kontakt
-            </a>
-            <a
+            </LocaleLink>
+
+            <LocaleLink
               href="/work"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
             >
               Shiko work
-            </a>
+            </LocaleLink>
           </div>
         </div>
       </section>

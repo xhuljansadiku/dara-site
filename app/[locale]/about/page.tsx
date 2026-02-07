@@ -1,4 +1,12 @@
 // app/[locale]/about/page.tsx
+import LocaleLink from "@/components/site/LocaleLink";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About DARA",
+  description:
+    "Njihuni me DARA — ekip i fokusuar te performance, konvertime dhe growth afatgjatë.",
+};
 
 const stats = [
   { k: "Focus", v: "Web + Ads + Content" },
@@ -55,7 +63,7 @@ export default function AboutPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden py-14 md:py-20">
+      <section className="relative overflow-hidden py-12 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
@@ -73,7 +81,7 @@ export default function AboutPage() {
           dhe content që ndërton brand. Pa zhurmë. Me rezultat.
         </p>
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {stats.map((s) => (
             <div key={s.k} className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs text-white/60">{s.k}</p>
@@ -83,18 +91,19 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
+          <LocaleLink
             href="/contact"
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
           >
             Kontakt
-          </a>
-          <a
+          </LocaleLink>
+
+          <LocaleLink
             href="/services"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
           >
             Shërbimet
-          </a>
+          </LocaleLink>
         </div>
       </section>
 
@@ -127,9 +136,7 @@ export default function AboutPage() {
 
           <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 md:p-8">
             <p className="text-xs uppercase tracking-widest text-white/60">What you get</p>
-            <h3 className="mt-3 text-xl font-semibold">
-              Një sistem që sjell kërkesa & shitje
-            </h3>
+            <h3 className="mt-3 text-xl font-semibold">Një sistem që sjell kërkesa & shitje</h3>
             <p className="mt-3 text-sm text-white/70">
               Nuk bëjmë thjesht “website të bukur”. Qëllimi është një sistem: pages të forta + ads/content
               + optimizim — që sjell lead-e/shitje.
@@ -173,9 +180,7 @@ export default function AboutPage() {
 
       {/* PROCESS STRIP */}
       <section className="py-12 md:py-16">
-        <h2 className="text-2xl font-semibold md:text-3xl">
-          Procesi ynë në 3 hapa
-        </h2>
+        <h2 className="text-2xl font-semibold md:text-3xl">Procesi ynë në 3 hapa</h2>
         <p className="mt-2 max-w-2xl text-white/60">
           Qartësi nga dita 1 — dhe optimizim deri te rezultati.
         </p>
@@ -202,18 +207,19 @@ export default function AboutPage() {
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a
+            <LocaleLink
               href="/contact"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
             >
               Kontakt
-            </a>
-            <a
+            </LocaleLink>
+
+            <LocaleLink
               href="/services"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
             >
               Shërbimet
-            </a>
+            </LocaleLink>
           </div>
         </div>
       </section>

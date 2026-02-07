@@ -24,10 +24,9 @@ export default function ContactPage() {
       company: String(fd.get("company") ?? "").trim(),
       budget: String(fd.get("budget") ?? "").trim(),
       message: String(fd.get("message") ?? "").trim(),
-      hp: "", // honeypot
+      hp: String(fd.get("hp") ?? "").trim(), // honeypot
     };
 
-    // Minimal validation client-side
     if (!payload.name || !payload.email || !payload.message) {
       setStatus("error");
       setError("Plotëso emrin, email-in dhe mesazhin.");
@@ -35,19 +34,16 @@ export default function ContactPage() {
     }
 
     try {
-      // For now we just send to newsletter endpoint as a simple capture.
-      // Later we can add a dedicated /api/leads route.
-    const res = await fetch("/api/leads", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload),
-});
-
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         setStatus("error");
-        setError(data?.error ? String(data.error) : "Dicka shkoi keq. Provo prap.");
+        setError(data?.error ? String(data.error) : "Diçka shkoi keq. Provo prap.");
         return;
       }
 
@@ -70,12 +66,11 @@ export default function ContactPage() {
 
         <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Contact</p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
-          Le të flasim për{" "}
-          <span className="text-yellow-400">rritjen</span> tënde
+          Le të flasim për <span className="text-yellow-400">rritjen</span> tënde
         </h1>
         <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">
-          Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe
-          çfarë rezultati synojmë.
+          Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe çfarë
+          rezultati synojmë.
         </p>
       </section>
 
@@ -91,14 +86,8 @@ export default function ContactPage() {
               </p>
 
               <form onSubmit={onLeadSubmit} className="mt-6 grid gap-4">
-                {/* honeypot (hidden) */}
-                <input
-                  type="text"
-                  name="hp"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  className="hidden"
-                />
+                {/* honeypot */}
+                <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="hidden" />
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Emri*" name="name" placeholder="Xhuljan" />
@@ -110,12 +99,7 @@ export default function ContactPage() {
                   <SelectField
                     label="Buxheti"
                     name="budget"
-                    options={[
-                      "Nuk jam i sigurt",
-                      "€300–€700",
-                      "€700–€1500",
-                      "€1500+",
-                    ]}
+                    options={["Nuk jam i sigurt", "€300–€700", "€700–€1500", "€1500+"]}
                   />
                 </div>
 
@@ -128,7 +112,7 @@ export default function ContactPage() {
 
                 {status === "error" && (
                   <p className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                    {error ?? "Dicka shkoi keq."}
+                    {error ?? "Diçka shkoi keq."}
                   </p>
                 )}
 
@@ -167,9 +151,7 @@ export default function ContactPage() {
               <div className="mt-6 h-px w-full bg-white/10" />
 
               <h4 className="mt-6 text-sm font-semibold text-white/80">Preferon newsletter?</h4>
-              <p className="mt-2 text-sm text-white/60">
-                Merr tips javore për content, growth dhe ads.
-              </p>
+              <p className="mt-2 text-sm text-white/60">Merr tips javore për content, growth dhe ads.</p>
 
               <div className="mt-4">
                 <NewsletterForm />
@@ -180,8 +162,8 @@ export default function ContactPage() {
 
             <div className="mt-6 rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6">
               <p className="text-sm text-white/70">
-                <span className="text-yellow-400">Tip:</span> Nëse ke link të website-it
-                aktual ose IG/TikTok, shkruaje te mesazhi — na ndihmon për audit.
+                <span className="text-yellow-400">Tip:</span> Nëse ke link të website-it aktual ose
+                IG/TikTok, shkruaje te mesazhi — na ndihmon për audit.
               </p>
             </div>
           </div>
@@ -192,6 +174,8 @@ export default function ContactPage() {
     </>
   );
 }
+
+/* ----------------- helpers (must be in same file or imported) ----------------- */
 
 function Field({
   label,

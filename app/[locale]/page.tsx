@@ -1,5 +1,6 @@
 // app/[locale]/page.tsx
 import NewsletterForm from "@/components/NewsletterForm";
+import LocaleLink from "@/components/site/LocaleLink";
 
 const services = [
   {
@@ -40,7 +41,7 @@ export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden py-14 md:py-20">
+      <section className="relative overflow-hidden py-12 md:py-20">
         {/* background glow */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
@@ -66,22 +67,22 @@ export default function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
+              <LocaleLink
                 href="/contact"
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300"
+                className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
               >
                 Merr ofertë
-              </a>
+              </LocaleLink>
 
-              <a
+              <LocaleLink
                 href="/services"
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+                className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
               >
                 Shiko shërbimet
-              </a>
+              </LocaleLink>
             </div>
 
-            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
               {[
                 { k: "Fast delivery", v: "Sprint-e të shkurtra" },
                 { k: "Premium design", v: "Black/Gold aesthetic" },
@@ -99,7 +100,7 @@ export default function HomePage() {
           </div>
 
           {/* right mock */}
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-md md:max-w-none">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_120px_rgba(0,0,0,0.7)]">
               <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-5">
                 <div className="flex items-center justify-between">
@@ -143,12 +144,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <a
+          <LocaleLink
             href="/services"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
           >
             Shiko të gjitha
-          </a>
+          </LocaleLink>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -211,12 +212,13 @@ export default function HomePage() {
               Vendos 3–6 case studies ose screenshots kur t’i kesh gati.
             </p>
           </div>
-          <a
+
+          <LocaleLink
             href="/work"
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10"
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
           >
             Shiko punët
-          </a>
+          </LocaleLink>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -265,7 +267,6 @@ export default function HomePage() {
             Na shkruaj për një audit të shpejtë ose lër email për update/oferta.
           </p>
 
-          {/* If you don't want NewsletterForm yet, replace with a simple form */}
           <div className="mt-6 max-w-xl">
             <NewsletterForm />
           </div>

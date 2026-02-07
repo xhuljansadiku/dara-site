@@ -1,6 +1,16 @@
 // app/page.tsx
+
 import Header from "../components/site/Header";
 import Footer from "../components/site/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Web, Marketing & Content që konverton",
+  description:
+    "Ndërtojmë website premium, e-commerce që shet dhe marketing/content që sjell klientë realë.",
+};
+
+
 
 const services = [
   { title: "Marketing & Ads", desc: "Strategji, Meta/Google ads, funnels dhe optimizim për konvertime." },
