@@ -8,9 +8,6 @@ import { locales as LOCALES, defaultLocale } from "@/i18n";
 
 type NavItem = { label: string; href: string };
 
-const BRAND_GOLD = "#c8a55c";
-const BRAND_GOLD_HOVER = "#b6944f";
-
 const NAV_TRANSLATIONS: Record<
   (typeof LOCALES)[number],
   {
@@ -110,28 +107,27 @@ export default function Navbar() {
   }
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-white/10 backdrop-blur"
-      style={{ backgroundColor: "rgba(68, 68, 68, 0.9)" }}
-    >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2 md:h-20">
         {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
-        <Link href={`/${locale}`} className="flex flex-col items-center gap-0.5" onClick={() => setOpen(false)}>
-          <Image
-            src="/logo.png"
-            alt="DARA"
-            width={140}
-            height={44}
-            className="h-8 w-auto object-contain sm:h-9 md:h-10"
-            priority
-          />
-          <span className="text-[9px] uppercase tracking-[0.12em] text-white/50 sm:text-[10px]">
-            Marketing Agency
-          </span>
+        <Link href={`/${locale}`} className="flex items-center gap-3" onClick={() => setOpen(false)}>
+          <div className="flex flex-col items-center gap-0.5">
+            <Image
+              src="/logo.png"
+              alt="DARA"
+              width={150}
+              height={48}
+              className="h-9 w-auto object-contain sm:h-10 md:h-11"
+              priority
+            />
+            <span className="text-[9px] uppercase tracking-[0.16em] text-white/60 sm:text-[10px]">
+              Marketing Agency
+            </span>
+          </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/20 px-2 py-1 md:flex">
           {items.map((it) => {
             const active = isActive(it.href);
             return (
@@ -139,18 +135,14 @@ export default function Navbar() {
                 key={it.href}
                 href={withLocale(it.href)}
                 className={[
-                  "rounded-xl px-3 py-2 text-sm transition",
-                  active
-                    ? "border"
-                    : "border border-transparent text-white/70 hover:bg-white/5 hover:text-white",
+                  "relative rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                  active ? "text-[#c8a55c]" : "text-white/70 hover:text-white",
                 ].join(" ")}
-                style={
-                  active
-                    ? { backgroundColor: `${BRAND_GOLD}20`, color: BRAND_GOLD, borderColor: `${BRAND_GOLD}40` }
-                    : {}
-                }
               >
-                {it.label}
+                {active && (
+                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                )}
+                <span className="relative z-10">{it.label}</span>
               </Link>
             );
           })}
@@ -158,7 +150,7 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 rounded-xl border border-white/10 bg-white/5 p-1 md:flex">
+          <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/30 p-1 md:flex">
             {LOCALES.map((l) => {
               const active = l === locale;
               return (
@@ -166,10 +158,9 @@ export default function Navbar() {
                   key={l}
                   href={switchLocale(l)}
                   className={[
-                    "rounded-lg px-2.5 py-1 text-xs font-medium transition",
-                    active ? "text-black" : "text-white/70 hover:text-white",
+                    "rounded-full px-2.5 py-1 text-xs font-medium transition-colors",
+                    active ? "bg-[#c8a55c] text-black" : "text-white/70 hover:text-white",
                   ].join(" ")}
-                  style={active ? { backgroundColor: BRAND_GOLD } : {}}
                 >
                   {l.toUpperCase()}
                 </Link>
@@ -179,21 +170,14 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 items-center justify-center rounded-xl px-4 text-sm font-medium text-black md:inline-flex"
-            style={{ backgroundColor: BRAND_GOLD }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = BRAND_GOLD_HOVER;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = BRAND_GOLD;
-            }}
+            className="hidden h-10 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition hover:bg-[#b6944f] md:inline-flex"
           >
             {nav.getQuote}
           </Link>
 
           <button
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/30 text-white/80 hover:bg-black/40 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -204,8 +188,8 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-white/10 md:hidden" style={{ backgroundColor: "#444444" }}>
-          <div className="mx-auto max-w-7xl px-4 py-4">
+        <div className="border-t border-white/10 bg-[#2b2b2b]/95 md:hidden">
+          <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {
                 const active = isActive(it.href);
@@ -215,10 +199,11 @@ export default function Navbar() {
                     href={withLocale(it.href)}
                     onClick={() => setOpen(false)}
                     className={[
-                      "flex items-center justify-between rounded-2xl border px-4 py-3 text-sm transition",
-                      active ? "border-white/30" : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10",
+                      "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
+                      active
+                        ? "bg-[#c8a55c]/15 text-[#c8a55c]"
+                        : "bg-white/5 text-white/80 hover:bg-white/10",
                     ].join(" ")}
-                    style={active ? { backgroundColor: `${BRAND_GOLD}20`, color: BRAND_GOLD } : {}}
                   >
                     <span>{it.label}</span>
                     <span className="text-white/40">→</span>
@@ -227,7 +212,7 @@ export default function Navbar() {
               })}
             </div>
 
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-3">
+            <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3">
               <p className="text-xs text-white/60">{nav.language}</p>
               <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
@@ -238,10 +223,11 @@ export default function Navbar() {
                       href={switchLocale(l)}
                       onClick={() => setOpen(false)}
                       className={[
-                        "flex-1 rounded-xl px-3 py-2 text-center text-xs font-medium transition",
-                        active ? "text-black" : "border border-white/10 text-white/80 hover:bg-white/10",
+                        "flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors",
+                        active
+                          ? "bg-[#c8a55c] text-black"
+                          : "border border-white/10 text-white/80 hover:bg-white/10",
                       ].join(" ")}
-                      style={active ? { backgroundColor: BRAND_GOLD } : {}}
                     >
                       {l.toUpperCase()}
                     </Link>
@@ -253,8 +239,7 @@ export default function Navbar() {
             <Link
               href={withLocale("/contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-2xl px-5 font-medium text-black"
-              style={{ backgroundColor: BRAND_GOLD }}
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)]"
             >
               {nav.getQuote}
             </Link>

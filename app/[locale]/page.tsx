@@ -69,6 +69,12 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
   },
 };
 
+const ABOUT_STATS_BY_LOCALE: Record<Locale, string[]> = {
+  sq: ["7+ vite eksperiencë", "30+ biznese të punuara", "EU & AL market"],
+  en: ["7+ years experience", "30+ brands supported", "EU & AL markets"],
+  de: ["7+ Jahre Erfahrung", "30+ betreute Marken", "EU & AL Märkte"],
+};
+
 const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: string }[]> = {
   sq: [
     {
@@ -418,6 +424,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
   const hero = HERO_BY_LOCALE[locale];
   const about = ABOUT_BY_LOCALE[locale];
+  const aboutStats = ABOUT_STATS_BY_LOCALE[locale];
   const services = SERVICES_BY_LOCALE[locale];
   const projects = PROJECTS_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
@@ -477,39 +484,58 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       {/* ABOUT - HELLO! MY NAME IS RED */}
       <section id="about" className="py-12 md:py-20">
-        <div className="grid items-start gap-10 md:grid-cols-2 md:gap-12">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]">{about.kicker}</p>
+        <div className="grid items-stretch gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] md:gap-12">
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5/10 p-6 pb-8 md:p-8">
+              <div className="pointer-events-none absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-white/5 via-transparent to-[#c8a55c]/10" />
 
-            <h2 className="mt-4 font-display text-3xl font-semibold md:text-5xl">
-              {about.title}
-            </h2>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]">{about.kicker}</p>
 
-            <div className="mt-6 space-y-4 text-base text-white/70 md:text-lg">
-              {about.paragraphs.map((p, idx) => (
-                <p key={idx}>{p}</p>
-              ))}
-            </div>
+              <h2 className="mt-4 font-display text-3xl font-semibold md:text-5xl">
+                {about.title}
+              </h2>
 
-            <div className="mt-8 flex gap-3">
-              <LocaleLink
-                href="/about"
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
-              >
-                {about.readMore}
-              </LocaleLink>
+              <div className="mt-6 space-y-4 text-base text-white/70 md:text-lg">
+                {about.paragraphs.map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-3 text-xs text-white/70 md:text-sm">
+                {aboutStats.map((stat) => (
+                  <div
+                    key={stat}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/30 px-3 py-1.5"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
+                    <span>{stat}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex gap-3">
+                <LocaleLink
+                  href="/about"
+                  className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+                >
+                  {about.readMore}
+                </LocaleLink>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-center md:justify-end">
-            <div className="relative w-full max-w-xs overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl md:max-w-sm">
-              <Image
-                src="/red-portrait.png"
-                alt="Red - Founder of DARA Marketing Agency"
-                width={400}
-                height={500}
-                className="w-full object-cover"
-              />
+          <div className="flex items-center justify-center md:justify-end">
+            <div className="relative w-full max-w-xs md:max-w-sm">
+              <div className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-b from-[#c8a55c]/25 via-transparent to-transparent blur-3xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/5 shadow-2xl shadow-black/40">
+                <Image
+                  src="/red-portrait.png"
+                  alt="Red - Founder of DARA Marketing Agency"
+                  width={400}
+                  height={520}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -543,15 +569,27 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </h2>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
+          {services.map((s, index) => (
             <div
               key={s.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-[#c8a55c]/30"
+              className="group flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-white/5/5 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.45)] transition hover:-translate-y-1 hover:border-[#c8a55c]/40 hover:shadow-[0_22px_50px_rgba(0,0,0,0.6)]"
             >
-              <h3 className="text-lg font-medium">{s.title}</h3>
-              <p className="mt-2 text-sm text-white/60">{s.desc}</p>
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[11px] uppercase tracking-[0.15em] text-white/60">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
+                  <span>
+                    {locale === "sq" && "Shërbimi"}
+                    {locale === "en" && "Service"}
+                    {locale === "de" && "Leistung"}{" "}
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <h3 className="mt-4 text-lg font-medium text-white">{s.title}</h3>
+                <p className="mt-2 text-sm text-white/60">{s.desc}</p>
+              </div>
               {s.price && (
-                <p className="mt-4 text-sm font-medium text-[#c8a55c]">
+                <p className="mt-5 text-sm font-medium text-[#c8a55c]">
                   {locale === "sq"
                     ? "Çmim orientues:"
                     : locale === "de"
