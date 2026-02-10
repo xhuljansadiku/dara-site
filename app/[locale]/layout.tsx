@@ -4,6 +4,10 @@ import { NextIntlClientProvider } from "next-intl";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import type { Metadata } from "next";
+import { Montserrat, Playfair_Display } from "next/font/google";
+
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 
 export const metadata: Metadata = {
@@ -31,8 +35,8 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   return (
-    <html lang={locale}>
-      <body className="min-h-screen bg-black text-white antialiased">
+    <html lang={locale} className={`${montserrat.variable} ${playfair.variable}`}>
+      <body className={`min-h-screen bg-[#444444] text-white antialiased ${montserrat.className}`}>
         <NextIntlClientProvider locale={locale}>
           <Navbar />
           <main className="mx-auto max-w-6xl px-4">{children}</main>

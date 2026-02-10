@@ -143,10 +143,50 @@ export default function ContactPage() {
               <h3 className="text-lg font-semibold">Quick info</h3>
 
               <div className="mt-5 grid gap-3 text-sm">
-                <InfoRow k="Email" v="daramarketing.eu@gmail.com" />
-                <InfoRow k="Phone" v="+355 68 800 9988" />
-                <InfoRow k="Social" v="@daramarketing.eu / @daramarketing.al" />
+                <InfoRow
+                  k="Email"
+                  v="daramarketing.eu@gmail.com"
+                  href="mailto:daramarketing.eu@gmail.com"
+                />
+                <InfoRow k="Phone" v="+355 68 800 9988" href="tel:+355688009988" />
+                <InfoRow
+                  k="Address"
+                  v="Rruga Donika Kastrioti, Bllok, Tirane, Albania"
+                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
+                />
                 <InfoRow k="Response" v="Within 24h" />
+              </div>
+
+              <div className="mt-5">
+                <p className="text-sm font-semibold text-white/80">Social</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <a
+                    className="text-sm text-[#c8a55c] hover:underline"
+                    href="https://instagram.com/daramarketing.eu"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Instagram
+                  </a>
+                  <span className="text-white/30">|</span>
+                  <a
+                    className="text-sm text-[#c8a55c] hover:underline"
+                    href="https://facebook.com/daramarketing.eu"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Facebook
+                  </a>
+                  <span className="text-white/30">|</span>
+                  <a
+                    className="text-sm text-[#c8a55c] hover:underline"
+                    href="https://linkedin.com/company/daramarketing"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               </div>
 
               <div className="mt-6 h-px w-full bg-white/10" />
@@ -253,11 +293,17 @@ function SelectField({
   );
 }
 
-function InfoRow({ k, v }: { k: string; v: string }) {
+function InfoRow({ k, v, href }: { k: string; v: string; href?: string }) {
   return (
     <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3">
       <span className="text-white/60">{k}</span>
-      <span className="text-white">{v}</span>
+      {href ? (
+        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="text-right text-white hover:text-[#c8a55c]">
+          {v}
+        </a>
+      ) : (
+        <span className="text-white">{v}</span>
+      )}
     </div>
   );
 }
