@@ -1,22 +1,26 @@
 {
   "nav": {
+    "home": "Startseite",
     "services": "Leistungen",
+    "about": "Über uns",
     "works": "Referenzen",
+    "process": "Prozess",
     "training": "Training",
     "contact": "Kontakt",
-    "bookCall": "Beratung buchen"
+    "bookCall": "Beratung buchen",
+    "getQuote": "Angebot anfragen",
+    "language": "Sprache"
   },
   "hero": {
     "kicker": "DARA MARKETING AGENCY",
     "titleA": "Wage es,",
     "titleB": "anders zu sein",
-    "desc": "Wir helfen Unternehmen, Follower durch Strategie, Content und Performance-Marketing in Verkäufe zu verwandeln.",
-    "ctaPrimary": "Kostenloses Audit",
-    "ctaSecondary": "Referenzen ansehen"
+    "desc": "Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne.",
+    "ctaPrimary": "Kontaktiere uns",
+    "ctaSecondary": "Leistungen"
   },
   "seo": {
-  "title": "DARA Marketing Agentur | Wage es, anders zu sein",
-  "description": "Marketingagentur, die Unternehmen hilft, Follower durch Strategie, Content und Performance-Marketing in Verkäufe zu verwandeln."
-}
-
+    "title": "DARA Marketing Agentur | Wage es, anders zu sein",
+    "description": "Marketingagentur, die Unternehmen hilft, Follower durch Strategie, Content und Performance-Marketing in Verkäufe zu verwandeln."
+  }
 }

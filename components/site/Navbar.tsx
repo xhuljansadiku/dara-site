@@ -4,31 +4,82 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
+import { locales as LOCALES, defaultLocale } from "@/i18n";
 
 type NavItem = { label: string; href: string };
-
-const LOCALES = ["sq", "en", "de"] as const;
 
 const BRAND_GOLD = "#c8a55c";
 const BRAND_GOLD_HOVER = "#b6944f";
 
+const NAV_TRANSLATIONS: Record<
+  (typeof LOCALES)[number],
+  {
+    home: string;
+    services: string;
+    about: string;
+    works: string;
+    process: string;
+    contact: string;
+    getQuote: string;
+    language: string;
+  }
+> = {
+  sq: {
+    home: "Kreu",
+    services: "Shërbime",
+    about: "Rreth nesh",
+    works: "Punët",
+    process: "Procesi",
+    contact: "Kontakt",
+    getQuote: "Merr ofertë",
+    language: "Gjuha",
+  },
+  en: {
+    home: "Home",
+    services: "Services",
+    about: "About",
+    works: "Work",
+    process: "Process",
+    contact: "Contact",
+    getQuote: "Get a quote",
+    language: "Language",
+  },
+  de: {
+    home: "Startseite",
+    services: "Leistungen",
+    about: "Über uns",
+    works: "Referenzen",
+    process: "Prozess",
+    contact: "Kontakt",
+    getQuote: "Angebot anfragen",
+    language: "Sprache",
+  },
+};
+
 export default function Navbar() {
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
   const params = useParams();
-  const locale = String(params?.locale ?? "en");
+
+  // Derive current locale from params or path, fall back to defaultLocale
+  const pathParts = pathname.split("/").filter(Boolean);
+  let locale = typeof params?.locale === "string" ? String(params.locale) : pathParts[0];
+  if (!LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])) {
+    locale = defaultLocale;
+  }
+  const nav = NAV_TRANSLATIONS[locale as (typeof LOCALES)[number]] ?? NAV_TRANSLATIONS[defaultLocale];
 
   const [open, setOpen] = useState(false);
 
   const items: NavItem[] = useMemo(
     () => [
-      { label: "Home", href: "/" },
-      { label: "Services", href: "/services" },
-      { label: "About", href: "/about" },
-      { label: "Work", href: "/work" },
-      { label: "Process", href: "/process" },
-      { label: "Contact", href: "/contact" },
+      { label: nav.home, href: "/" },
+      { label: nav.services, href: "/services" },
+      { label: nav.about, href: "/about" },
+      { label: nav.works, href: "/work" },
+      { label: nav.process, href: "/process" },
+      { label: nav.contact, href: "/contact" },
     ],
-    []
+    [nav]
   );
 
   function withLocale(href: string) {
@@ -43,10 +94,19 @@ export default function Navbar() {
   }
 
   function switchLocale(nextLocale: string) {
-    const parts = (pathname || `/${locale}`).split("/").filter(Boolean);
-    if (parts.length === 0) return `/${nextLocale}`;
-    parts[0] = nextLocale;
-    return `/${parts.join("/")}`;
+    const parts = pathname.split("/").filter(Boolean);
+
+    if (parts.length === 0) {
+      return `/${nextLocale}`;
+    }
+
+    // If first segment is a locale, replace it; otherwise, prepend
+    if (LOCALES.includes(parts[0] as (typeof LOCALES)[number])) {
+      parts[0] = nextLocale;
+      return `/${parts.join("/")}`;
+    }
+
+    return `/${nextLocale}/${parts.join("/")}`;
   }
 
   return (
@@ -128,7 +188,7 @@ export default function Navbar() {
               e.currentTarget.style.backgroundColor = BRAND_GOLD;
             }}
           >
-            Get a quote
+            {nav.getQuote}
           </Link>
 
           <button
@@ -168,7 +228,7 @@ export default function Navbar() {
             </div>
 
             <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-3">
-              <p className="text-xs text-white/60">Language</p>
+              <p className="text-xs text-white/60">{nav.language}</p>
               <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
                   const active = l === locale;
@@ -196,7 +256,7 @@ export default function Navbar() {
               className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-2xl px-5 font-medium text-black"
               style={{ backgroundColor: BRAND_GOLD }}
             >
-              Get a quote
+              {nav.getQuote}
             </Link>
           </div>
         </div>
