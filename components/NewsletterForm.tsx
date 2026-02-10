@@ -29,7 +29,7 @@ export default function NewsletterForm() {
 
       setMsg(data?.exists ? "✅ You are already subscribed." : "✅ You’re subscribed.");
       setEmail("");
-    } catch (err) {
+    } catch {
       setMsg("❌ Network error. Try again.");
     } finally {
       setLoading(false);

@@ -8,31 +8,32 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "DARA — Web, Marketing & Growth",
+    default: "DARA — Dare to be Different",
     template: "%s | DARA",
   },
   description:
-    "Premium websites, e-commerce që shet, dhe marketing/content që sjell klientë realë.",
+    "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
   openGraph: {
-    title: "DARA — Web, Marketing & Growth",
+    title: "DARA — Dare to be Different",
     description:
-      "Premium websites, e-commerce që shet, dhe marketing/content që sjell klientë realë.",
+      "We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     type: "website",
   },
 };
 
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className="min-h-screen bg-black text-white antialiased">
-        <NextIntlClientProvider locale={params.locale}>
+        <NextIntlClientProvider locale={locale}>
           <Navbar />
           <main className="mx-auto max-w-6xl px-4">{children}</main>
           <Footer />

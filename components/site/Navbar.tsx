@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
 
 type NavItem = { label: string; href: string };
@@ -55,12 +56,16 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Brand */}
         <Link href={`/${locale}`} className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="text-lg font-semibold tracking-wide">
-            <span className="text-white">DA</span>
-            <span className="text-yellow-400">RA</span>
-          </span>
+          <Image
+            src="/logo.png"
+            alt="DARA Marketing Agency"
+            width={100}
+            height={32}
+            className="h-8 w-auto object-contain"
+            priority
+          />
           <span className="hidden rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/60 md:inline">
-            marketing • web
+            Dare to be different
           </span>
         </Link>
 

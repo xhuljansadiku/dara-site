@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     }
 
     // 2️⃣ Safe body parsing
-    let body: any;
+    let body: unknown;
     try {
       body = await req.json();
     } catch {
@@ -41,12 +41,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const email = typeof body.email === "string"
-      ? body.email.trim().toLowerCase()
+    const obj = body as Record<string, unknown>;
+    const email = typeof obj.email === "string"
+      ? obj.email.trim().toLowerCase()
       : "";
 
-    const hp = typeof body.hp === "string"
-      ? body.hp.trim()
+    const hp = typeof obj.hp === "string"
+      ? obj.hp.trim()
       : "";
 
     // 4️⃣ Honeypot (bots)

@@ -140,12 +140,13 @@ export default function ContactPage() {
           {/* RIGHT: Info */}
           <div className="md:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <h3 className="text-lg font-semibold">Info e shpejtë</h3>
+              <h3 className="text-lg font-semibold">Quick info</h3>
 
               <div className="mt-5 grid gap-3 text-sm">
-                <InfoRow k="Response time" v="Brenda 24h" />
-                <InfoRow k="Delivery" v="Sprint-e të shkurtra" />
-                <InfoRow k="Focus" v="Konvertime + performance" />
+                <InfoRow k="Email" v="daramarketing.eu@gmail.com" />
+                <InfoRow k="Phone" v="+355 68 800 9988" />
+                <InfoRow k="Social" v="@daramarketing.eu / @daramarketing.al" />
+                <InfoRow k="Response" v="Within 24h" />
               </div>
 
               <div className="mt-6 h-px w-full bg-white/10" />

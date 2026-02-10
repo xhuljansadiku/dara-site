@@ -1,6 +1,8 @@
 import { locales, defaultLocale } from "./i18n";
 
-export default {
+const config = {
   locales,
   defaultLocale,
 };
+
+export default config;

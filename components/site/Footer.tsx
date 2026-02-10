@@ -15,12 +15,12 @@ export default function Footer() {
               <span className="text-yellow-400">RA</span>
             </p>
             <p className="mt-3 max-w-sm text-sm text-white/60">
-              Website premium, e-commerce që shet, dhe marketing/content që sjell klientë. Fokus
-              te rezultatet.
+              Dare to be different. We bring brand stories to life through bold strategies,
+              digital marketing, and creative content.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
-              {["Web", "Ads", "E-commerce", "Content"].map((x) => (
+              {["Social Media", "Ads", "Branding", "Web Design"].map((x) => (
                 <span
                   key={x}
                   className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
@@ -73,37 +73,36 @@ export default function Footer() {
               <p className="text-sm font-semibold text-white">Contact</p>
               <ul className="mt-4 grid gap-2 text-sm text-white/60">
                 <li>
-                  <a className="hover:text-white" href="mailto:hello@dara.agency">
-                    hello@dara.agency
+                  <a className="hover:text-white" href="mailto:daramarketing.eu@gmail.com">
+                    daramarketing.eu@gmail.com
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-white" href="tel:+0000000000">
-                    +00 000 000 000
+                  <a className="hover:text-white" href="tel:+355688009988">
+                    +355 68 800 9988
                   </a>
                 </li>
-                <li className="text-white/40">Berlin / EU</li>
+                <li className="text-white/40">EU</li>
               </ul>
 
               <div className="mt-5">
                 <p className="text-sm font-semibold text-white">Social</p>
                 <div className="mt-3 flex gap-3">
-                  {/* Replace # with real URLs when ready */}
                   <a
                     className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 hover:text-white"
-                    href="https://instagram.com"
+                    href="https://instagram.com/daramarketing.eu"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Instagram
+                    @daramarketing.eu
                   </a>
                   <a
                     className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70 hover:text-white"
-                    href="https://tiktok.com"
+                    href="https://instagram.com/daramarketing.al"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    TikTok
+                    @daramarketing.al
                   </a>
                 </div>
               </div>
@@ -114,7 +113,7 @@ export default function Footer() {
           <div className="rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6">
             <p className="text-sm text-white/70">Ready to grow?</p>
             <p className="mt-2 text-xl font-semibold">
-              Let’s build something <span className="text-yellow-400">that converts</span>.
+              Let’s work together and create <span className="text-yellow-400">something great</span>.
             </p>
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">

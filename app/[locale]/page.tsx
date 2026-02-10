@@ -1,277 +1,236 @@
-// app/[locale]/page.tsx
+// app/[locale]/page.tsx - Matches Dara Marketing EU PDF structure
 import NewsletterForm from "@/components/NewsletterForm";
 import LocaleLink from "@/components/site/LocaleLink";
 
 const services = [
   {
-    title: "Marketing & Ads",
-    desc: "Strategji, Meta/Google ads, funnels dhe optimizim për konvertime.",
-    points: ["KPI & tracking", "Creative + copy", "A/B testing", "Weekly reporting"],
+    title: "Digital Marketing Strategy",
+    desc: "Tailored strategies to meet the unique needs of your business.",
   },
   {
-    title: "Websites & Landing Pages",
-    desc: "Website modern, i shpejtë, i optimizuar për SEO dhe shitje.",
-    points: ["UX/UI premium", "SEO basics", "Fast performance", "Lead capture"],
+    title: "Social Media Design",
+    desc: "Content creation, community management, and growth strategies for platforms like Instagram, Facebook, TikTok and LinkedIn.",
   },
   {
-    title: "E-commerce",
-    desc: "Shop setup, pages produkti që shesin, checkout & automatizime.",
-    points: ["Product pages", "Checkout flow", "Email automations", "Conversion boosts"],
+    title: "Paid Advertising (Meta Ads & Google Ads)",
+    desc: "Targeted advertising to boost your brand visibility and drive conversions.",
   },
   {
-    title: "Content Creation",
-    desc: "Reels/TikTok, photo/video, copywriting dhe kalendar content-i.",
-    points: ["Content plan", "Short-form video", "UGC style", "Posting cadence"],
+    title: "Branding",
+    desc: "Crafting strong, consistent, and recognizable brand identities.",
+  },
+  {
+    title: "Creative Content Creation",
+    desc: "Visual designs, copywriting, and storytelling to engage and attract customers.",
+  },
+  {
+    title: "SEO & Web Design",
+    desc: "Enhancing your website's performance and ranking to attract organic traffic.",
   },
 ];
 
-const process = [
-  { n: "01", title: "Audit & Plan", desc: "Analizojmë brand-in, audiencën dhe vendosim KPI + roadmap." },
-  { n: "02", title: "Build & Launch", desc: "Ndërtojmë asetet (website/ads/content) dhe i lançojmë me kujdes." },
-  { n: "03", title: "Optimize", desc: "Testim, raportim dhe përmirësim çdo javë për rritje të qëndrueshme." },
-];
-
-const faqs = [
-  { q: "Sa kohë merr një website?", a: "Landing page zakonisht 3–7 ditë; website më i madh 2–4 javë (varet nga përmbajtja)." },
-  { q: "A bëni edhe e-commerce?", a: "Po. Setup i plotë + pages produkti, checkout, automatizime dhe optimizim për konvertime." },
-  { q: "A mund të punojmë vetëm për content?", a: "Po. Mund të merrni paketë vetëm për content creation ose vetëm për ads." },
+const projects = [
+  { title: "Don Mare Hotel & Restaurant", tag: "Social Media", desc: "A cozy hotel in Dhermi Village. We collaborated to shape their social media presence to target new customers." },
+  { title: "355 Black", tag: "Social Media", desc: "A dynamic mobile phone and accessories company in Tirana. We collaborated to enhance their social media presence and drive engagement." },
+  { title: "Aia Hotel & Apartments", tag: "Social Media", desc: "Located in Tirana, offering comfortable accommodations. We worked together to strengthen their social media presence." },
+  { title: "Zorada", tag: "Social Media", desc: "A premium jewelry brand. We collaborated to elevate their social media presence, attracting jewelry lovers." },
+  { title: "City Fitness Club", tag: "Social Media", desc: "Located in Tirana. We partnered to boost their social media presence, engaging fitness enthusiasts." },
+  { title: "Cara Dental Clinic", tag: "Social Media", desc: "Located in Tirana. We worked together to enhance their social media presence, attracting new patients." },
+  { title: "Premium International Real Estate", tag: "Social Media", desc: "We collaborated to strengthen their social media presence, targeting high-end buyers and investors worldwide." },
+  { title: "Nova Real Estate", tag: "Social Media", desc: "We partnered to enhance their social media presence, attracting potential buyers and investors." },
+  { title: "Icon Store", tag: "Social Media", desc: "We collaborated to boost their social media presence, engaging fashion enthusiasts." },
+  { title: "DD Store", tag: "Social Media", desc: "Women's clothing and accessories. We worked together to enhance their social media presence." },
+  { title: "KOA Consulting", tag: "Social Media & Logo", desc: "We collaborated to strengthen their social media presence and create their logo." },
+  { title: "Endis Store", tag: "Brand Identity", desc: "We partnered to elevate their social media presence and establish a strong brand identity." },
+  { title: "Taxi Service Dhermi", tag: "Web Design", desc: "We collaborated on web design to create an engaging, user-friendly website for booking rides online." },
 ];
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO - PDF: Dare To Be Different / Dara Marketing Agency */}
       <section className="relative overflow-hidden py-12 md:py-20">
-        {/* background glow */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-          <div className="absolute bottom-[-80px] left-20 h-72 w-72 rounded-full bg-yellow-400/5 blur-3xl" />
         </div>
 
-        <div className="grid items-center gap-10 md:grid-cols-2">
-          {/* left */}
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">
-              DARA Marketing Agency
-            </p>
+        <div className="text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">
+            Dara Marketing Agency
+          </p>
 
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
-              Rritje reale për biznesin tënd —{" "}
-              <span className="text-yellow-400">me web + marketing</span> që konverton.
-            </h1>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-7xl">
+            Dare to be{" "}
+            <span className="text-yellow-400">different</span>
+          </h1>
 
-            <p className="mt-5 max-w-xl text-base text-white/70 md:text-lg">
-              Ndërtojmë website premium, e-commerce që shet, dhe content/ads që sjell klientë.
-              Fokus te rezultatet, jo te “postimet”.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <LocaleLink
-                href="/contact"
-                className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto"
-              >
-                Merr ofertë
-              </LocaleLink>
-
-              <LocaleLink
-                href="/services"
-                className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
-              >
-                Shiko shërbimet
-              </LocaleLink>
-            </div>
-
-            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {[
-                { k: "Fast delivery", v: "Sprint-e të shkurtra" },
-                { k: "Premium design", v: "Black/Gold aesthetic" },
-                { k: "Performance", v: "SEO + speed" },
-              ].map((x) => (
-                <div
-                  key={x.k}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4"
-                >
-                  <p className="text-xs text-white/60">{x.k}</p>
-                  <p className="mt-1 font-medium">{x.v}</p>
-                </div>
-              ))}
-            </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-white/70">
+            <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-yellow-400">
+              @daramarketing.eu
+            </a>
+            <span className="text-white/30">|</span>
+            <a href="https://instagram.com/daramarketing.al" target="_blank" rel="noreferrer" className="hover:text-yellow-400">
+              @daramarketing.al
+            </a>
           </div>
 
-          {/* right mock */}
-          <div className="relative mx-auto w-full max-w-md md:max-w-none">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_120px_rgba(0,0,0,0.7)]">
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-5">
-                <div className="flex items-center justify-between">
-                  <div className="h-2.5 w-24 rounded-full bg-white/10" />
-                  <div className="flex gap-2">
-                    <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                    <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                    <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                  </div>
-                </div>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <LocaleLink
+              href="/contact"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-6 font-medium text-black hover:bg-yellow-300 sm:w-auto"
+            >
+              Contact us
+            </LocaleLink>
 
-                <div className="mt-6 space-y-4">
-                  <div className="h-3 w-2/3 rounded-full bg-white/10" />
-                  <div className="h-3 w-5/6 rounded-full bg-white/10" />
-                  <div className="h-24 w-full rounded-2xl bg-white/5" />
-                  <div className="grid grid-cols-3 gap-3">
-                    <div className="h-14 rounded-2xl bg-white/5" />
-                    <div className="h-14 rounded-2xl bg-white/5" />
-                    <div className="h-14 rounded-2xl bg-white/5" />
-                  </div>
-                </div>
-
-                <p className="mt-4 text-xs text-white/50">(Preview / case study mock)</p>
-              </div>
-            </div>
-
-            <div className="pointer-events-none absolute -bottom-8 left-10 h-24 w-24 rounded-full bg-yellow-400/10 blur-2xl" />
+            <LocaleLink
+              href="#services"
+              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
+            >
+              Services
+            </LocaleLink>
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="py-12 md:py-16">
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold md:text-3xl">
-              Shërbime që sjellin <span className="text-yellow-400">konvertime</span>
-            </h2>
-            <p className="mt-2 max-w-2xl text-white/60">
-              Zgjidh paketën që të duhet — ose e kombinojmë sipas objektivave të biznesit.
-            </p>
-          </div>
+      {/* ABOUT - PDF: HELLO! MY NAME IS RED */}
+      <section id="about" className="py-12 md:py-20">
+        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">About me</p>
 
-          <LocaleLink
-            href="/services"
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
-          >
-            Shiko të gjitha
-          </LocaleLink>
+        <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
+          Hello! My name is <span className="text-yellow-400">Red</span>
+        </h2>
+
+        <div className="mt-6 max-w-2xl space-y-4 text-base text-white/70 md:text-lg">
+          <p>
+            I&apos;m Red, the founder of DARA Marketing Agency, a creative mind with a deep passion for
+            marketing and business. With 5 years of experience, I&apos;ve learned that success comes not from
+            following the rules but from daring to be different.
+          </p>
+          <p>
+            Driven by the philosophy of &quot;Dare to be Different&quot;, I believe every brand has a unique story to tell.
+            My mission is to bring those stories to life through bold and innovative strategies. For me,
+            marketing is more than just a profession—it&apos;s a way to create real impact and challenge the
+            ordinary.
+          </p>
+          <p>
+            Always seeking new opportunities, I combine intuition, creativity, and a clear vision to help
+            businesses grow and transform into success stories.
+          </p>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <div className="mt-8 flex gap-3">
+          <LocaleLink
+            href="/about"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+          >
+            Read more
+          </LocaleLink>
+        </div>
+      </section>
+
+      {/* SERVICES - PDF: SERVICES */}
+      <section id="services" className="py-12 md:py-20">
+        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Services</p>
+
+        <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
+          What we <span className="text-yellow-400">offer</span>
+        </h2>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <div
               key={s.title}
-              className="group rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-yellow-400/30"
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-yellow-400/30"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-medium">{s.title}</h3>
-                  <p className="mt-2 text-sm text-white/60">{s.desc}</p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/70">
-                  Pro
-                </div>
-              </div>
-
-              <div className="mt-5 h-px w-full bg-white/10 group-hover:bg-yellow-400/20" />
-
-              <ul className="mt-4 grid gap-2 text-sm text-white/70 sm:grid-cols-2">
-                {s.points.map((p) => (
-                  <li key={p} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/70" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-medium">{s.title}</h3>
+              <p className="mt-2 text-sm text-white/60">{s.desc}</p>
             </div>
           ))}
         </div>
+
+        <div className="mt-8">
+          <LocaleLink
+            href="/services"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
+          >
+            View all services
+          </LocaleLink>
+        </div>
       </section>
 
-      {/* PROCESS */}
-      <section className="py-12 md:py-16">
-        <h2 className="text-2xl font-semibold md:text-3xl">
-          Proces i thjeshtë, ekzekutim <span className="text-yellow-400">i fortë</span>
-        </h2>
-        <p className="mt-2 max-w-2xl text-white/60">
-          Qartësi, shpejtësi dhe fokus te rezultati. Pa fjalë të kota.
-        </p>
+      {/* PREVIOUS PROJECTS - PDF: PREVIOUS PROJECTS */}
+      <section id="work" className="py-12 md:py-20">
+        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Previous projects</p>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {process.map((p) => (
-            <div key={p.n} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <p className="text-xs text-yellow-400/90">{p.n}</p>
-              <h3 className="mt-2 text-lg font-medium">{p.title}</h3>
+        <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
+          Our <span className="text-yellow-400">work</span>
+        </h2>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => (
+            <div
+              key={p.title}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-yellow-400/30"
+            >
+              <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
+                {p.tag}
+              </span>
+              <h3 className="mt-3 font-medium">{p.title}</h3>
               <p className="mt-2 text-sm text-white/60">{p.desc}</p>
             </div>
           ))}
         </div>
-      </section>
 
-      {/* WORK / PROOF */}
-      <section className="py-12 md:py-16">
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold md:text-3xl">Work / Proof</h2>
-            <p className="mt-2 text-white/60">
-              Vendos 3–6 case studies ose screenshots kur t’i kesh gati.
-            </p>
-          </div>
-
+        <div className="mt-8">
           <LocaleLink
             href="/work"
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10"
           >
-            Shiko punët
+            View all projects
           </LocaleLink>
         </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5"
-            >
-              <div className="aspect-[4/3] w-full bg-black/20" />
-              <div className="p-5">
-                <p className="text-sm font-medium">Case Study #{i}</p>
-                <p className="mt-1 text-sm text-white/60">
-                  Growth snapshot / rezultati kryesor.
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-12 md:py-16">
-        <h2 className="text-2xl font-semibold md:text-3xl">FAQ</h2>
-
-        <div className="mt-8 grid gap-4">
-          {faqs.map((f) => (
-            <details key={f.q} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <summary className="cursor-pointer list-none font-medium">
-                <span className="text-white">{f.q}</span>
-                <span className="ml-2 text-yellow-400">—</span>
-              </summary>
-              <p className="mt-3 text-sm text-white/60">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-12 md:py-16">
-        <div className="rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6 md:p-10">
-          <h2 className="text-2xl font-semibold md:text-3xl">
-            Ready to grow? <span className="text-yellow-400">Let’s talk.</span>
+      {/* CTA - PDF: LET'S WORK TOGETHER AND CREATE SOMETHING GREAT */}
+      <section className="py-12 md:py-20">
+        <div className="rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-8 md:p-12">
+          <h2 className="text-2xl font-semibold md:text-4xl">
+            Let&apos;s work together and create <span className="text-yellow-400">something great</span>
           </h2>
 
-          <p className="mt-2 max-w-2xl text-white/70">
-            Na shkruaj për një audit të shpejtë ose lër email për update/oferta.
-          </p>
+          <div className="mt-6 flex flex-wrap gap-4 text-sm text-white/80">
+            <a href="mailto:daramarketing.eu@gmail.com" className="hover:text-yellow-400">
+              daramarketing.eu@gmail.com
+            </a>
+            <span className="text-white/30">|</span>
+            <a href="https://instagram.com/daramarketing.al" target="_blank" rel="noreferrer" className="hover:text-yellow-400">
+              @daramarketing.al
+            </a>
+            <span className="text-white/30">|</span>
+            <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-yellow-400">
+              @daramarketing.eu
+            </a>
+            <span className="text-white/30">|</span>
+            <a href="tel:+355688009988" className="hover:text-yellow-400">
+              +355 68 800 9988
+            </a>
+          </div>
 
-          <div className="mt-6 max-w-xl">
+          <div className="mt-8 max-w-xl">
             <NewsletterForm />
           </div>
 
           <p className="mt-3 text-xs text-white/50">No spam. Unsubscribe anytime.</p>
+
+          <div className="mt-6">
+            <LocaleLink
+              href="/contact"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-yellow-400 px-6 font-medium text-black hover:bg-yellow-300"
+            >
+              Get in touch
+            </LocaleLink>
+          </div>
         </div>
       </section>
 
