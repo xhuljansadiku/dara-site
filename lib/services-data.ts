@@ -10,7 +10,9 @@ export const SERVICE_SLUGS = [
   "ads",
   "consulting",
   "training",
-  "website",
+  "website-landing",
+  "ecommerce",
+  "saas",
 ] as const;
 
 export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
@@ -53,8 +55,19 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 250€ / program",
     },
     {
-      title: "Website, E‑commerce & SaaS",
-      desc: "Website, e‑commerce dhe produkte software të personalizuara për individë ose kompani.",
+      title: "Website & faqe uljeje",
+      desc: "Faqe një-faqe (landing) ose website me disa faqe — prezencë profesionale, forma kontakt, SEO.",
+      price: "Nga 400€",
+    },
+    {
+      title: "E-commerce",
+      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim — zgjidhje e përshtatshme për shitje në internet.",
+      price: "Ofertë",
+    },
+    {
+      title: "SaaS & aplikacione",
+      desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
+      price: "Ofertë",
     },
   ],
   en: [
@@ -92,8 +105,19 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "From €250/program",
     },
     {
-      title: "Website, E‑commerce & SaaS",
-      desc: "Custom websites, e‑commerce and software products for individuals or companies.",
+      title: "Website & landing pages",
+      desc: "Single-page (landing) or multi-page website — professional presence, contact forms, SEO.",
+      price: "From €400",
+    },
+    {
+      title: "E-commerce",
+      desc: "Online store with products, inventory, payment and delivery — tailored solution for selling online.",
+      price: "On request",
+    },
+    {
+      title: "SaaS & applications",
+      desc: "Custom applications, platforms or software products for businesses or end users.",
+      price: "On request",
     },
   ],
   de: [
@@ -131,8 +155,19 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Ab 250€ / Programm",
     },
     {
-      title: "Website, E‑Commerce & SaaS",
-      desc: "Individuelle Websites, E‑Commerce‑Lösungen und Softwareprodukte für Privatpersonen oder Unternehmen.",
+      title: "Website & Landingpages",
+      desc: "Einzelseiten (Landing) oder mehrseitige Website — professioneller Auftritt, Kontaktformulare, SEO.",
+      price: "Ab 400€",
+    },
+    {
+      title: "E-Commerce",
+      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand — maßgeschneiderte Lösung für den Verkauf im Internet.",
+      price: "Auf Anfrage",
+    },
+    {
+      title: "SaaS & Anwendungen",
+      desc: "Individuelle Anwendungen, Plattformen oder Softwareprodukte für Unternehmen oder Endnutzer.",
+      price: "Auf Anfrage",
     },
   ],
 };

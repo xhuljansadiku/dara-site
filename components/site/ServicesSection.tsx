@@ -27,7 +27,7 @@ type Props = {
   resultByIndex: Record<number, string>;
   packagesByGroup: Record<PackageGroup, Pkg[]>;
   packageFilterTabs: { label: string; indices: number[] }[];
-  testimonial: { quote: string; name: string; role: string };
+  testimonial: { quote: string; name: string; role: string; company?: string };
   copy: {
     sectionKicker: string;
     sectionTitleBefore: string;
@@ -137,7 +137,7 @@ export default function ServicesSection({
                 return (
                   <div
                     key={s.title}
-                    className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c8a55c]/20 hover:bg-white/[0.06] hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] md:p-6"
+                    className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:shadow-[#c8a55c]/5 md:p-6"
                   >
                     <div className="absolute right-0 top-0 h-20 w-20 translate-x-6 -translate-y-6 rounded-full bg-[#c8a55c]/5 blur-xl transition group-hover:bg-[#c8a55c]/10" />
                     <div className="relative flex flex-1 flex-col">
@@ -211,6 +211,7 @@ export default function ServicesSection({
                 <p className="text-sm italic text-white/80">&ldquo;{testimonial.quote}&rdquo;</p>
                 <p className="mt-3 text-xs font-medium text-[#c8a55c]">
                   — {testimonial.name}, {testimonial.role}
+                  {testimonial.company && ` · ${testimonial.company}`}
                 </p>
               </div>
             )}

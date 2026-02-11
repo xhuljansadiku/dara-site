@@ -1,9 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
 import type { ProjectCategory } from "@/lib/projects";
+
+const HOME_PROJECTS_LIMIT = 6;
+const THUMBNAIL_FALLBACK = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop";
 
 type Props = {
   locale: "sq" | "en" | "de";
@@ -18,6 +22,9 @@ export default function HomeWorkSection({ locale }: Props) {
     activeFilter === "all"
       ? projects
       : projects.filter((p) => p.category === activeFilter);
+
+  const displayProjects = filteredProjects.slice(0, HOME_PROJECTS_LIMIT);
+  const hasMore = filteredProjects.length > HOME_PROJECTS_LIMIT;
 
   return (
     <section id="work" className="py-12 md:py-20">
@@ -53,7 +60,7 @@ export default function HomeWorkSection({ locale }: Props) {
         </div>
         <LocaleLink
           href="/work"
-          className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-[#c8a55c] transition hover:text-[#d4b86a]"
+          className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-[#c8a55c] transition hover:text-[#d4b86a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] focus-visible:rounded"
         >
           {locale === "sq"
             ? "Shiko të gjitha projektet"
@@ -64,7 +71,6 @@ export default function HomeWorkSection({ locale }: Props) {
         </LocaleLink>
       </div>
 
-      {/* Filter tabs */}
       <div className="mt-6 flex flex-wrap gap-2">
         {filterTabs.map((tab) => (
           <button
@@ -83,26 +89,47 @@ export default function HomeWorkSection({ locale }: Props) {
       </div>
 
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {filteredProjects.map((p) => (
+        {displayProjects.map((p) => (
           <LocaleLink
             key={p.title}
             href="/work"
-            className="group block rounded-2xl border border-white/10 bg-white/[0.06] p-6 transition hover:border-[#c8a55c]/25 hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(200,165,92,0.06)]"
+            className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] transition hover:border-[#c8a55c]/25 hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(200,165,92,0.06)]"
           >
-            <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
-              {p.tag}
-            </span>
-            <h3 className="mt-3 font-medium text-white/95 group-hover:text-[#c8a55c]/90">
-              {p.title}
-            </h3>
-            <p className="mt-2 text-sm text-white/60 line-clamp-2">{p.desc}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
-              {locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project"}
-              <span className="transition group-hover:translate-x-0.5">→</span>
-            </span>
+            <div className="relative aspect-[4/3] overflow-hidden bg-white/5">
+              <Image
+                src={p.thumbnail ?? THUMBNAIL_FALLBACK}
+                alt={p.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-5">
+              <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
+                {p.tag}
+              </span>
+              <h3 className="mt-3 font-medium text-white/95 group-hover:text-[#c8a55c]/90">
+                {p.title}
+              </h3>
+              <p className="mt-2 text-sm text-white/60 line-clamp-2">{p.desc}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
+                {locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project"}
+                <span className="transition group-hover:translate-x-0.5">→</span>
+              </span>
+            </div>
           </LocaleLink>
         ))}
       </div>
+      {hasMore && (
+        <div className="mt-8 text-center">
+          <LocaleLink
+            href="/work"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-[#c8a55c]"
+          >
+            {locale === "sq" ? "Shiko më shumë" : locale === "de" ? "Mehr anzeigen" : "View more"}
+          </LocaleLink>
+        </div>
+      )}
     </section>
   );
 }

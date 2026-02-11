@@ -5,36 +5,43 @@ import NewsletterForm from "@/components/NewsletterForm";
 import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
 import HomeWorkSection from "@/components/site/HomeWorkSection";
+import AnimateIn from "@/components/site/AnimateIn";
 
 type Locale = "sq" | "en" | "de";
 
 const HERO_BY_LOCALE: Record<
   Locale,
-  { kicker: string; titleA: string; titleB: string; desc: string; ctaPrimary: string; ctaSecondary: string }
+  { kicker: string; titleA: string; titleB: string; desc: string; ctaPrimary: string; ctaSecondary: string; scrollHint: string; socialProof: string }
 > = {
   sq: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Guxo të jesh",
     titleB: "ndryshe",
     desc: "Ndihmojmë bizneset të kthejnë ndjekësit në shitje përmes strategjisë, përmbajtjes dhe marketingut me performancë.",
-    ctaPrimary: "Na kontakto",
+    ctaPrimary: "Merr audit falas",
     ctaSecondary: "Shërbimet",
+    scrollHint: "Zbulo më shumë",
+    socialProof: "100+ biznese të kënaqura",
   },
   en: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Dare to be",
     titleB: "different",
     desc: "We bring brand stories to life through bold strategies and results‑oriented marketing.",
-    ctaPrimary: "Contact us",
+    ctaPrimary: "Get a free audit",
     ctaSecondary: "Services",
+    scrollHint: "Scroll to explore",
+    socialProof: "Trusted by 100+ businesses",
   },
   de: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Wage es,",
     titleB: "anders zu sein",
     desc: "Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne.",
-    ctaPrimary: "Kontaktiere uns",
+    ctaPrimary: "Kostenloses Audit",
     ctaSecondary: "Leistungen",
+    scrollHint: "Mehr entdecken",
+    socialProof: "100+ Unternehmen vertrauen uns",
   },
 };
 
@@ -71,10 +78,22 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
   },
 };
 
-const ABOUT_STATS_BY_LOCALE: Record<Locale, string[]> = {
-  sq: ["7+ vite eksperiencë", "50+ biznese të punuara", "EU, AL, treg ndërkombëtar"],
-  en: ["7+ years experience", "50+ businesses worked with", "EU, AL, international market"],
-  de: ["7+ Jahre Erfahrung", "50+ betreute Unternehmen", "EU, AL, internationaler Markt"],
+const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: string }[]> = {
+  sq: [
+    { value: "7+", label: "vite eksperiencë" },
+    { value: "100+", label: "biznese të punuara" },
+    { value: "AL, EU", label: "treg ndërkombëtar" },
+  ],
+  en: [
+    { value: "7+", label: "years experience" },
+    { value: "100+", label: "businesses worked with" },
+    { value: "AL, EU", label: "international market" },
+  ],
+  de: [
+    { value: "7+", label: "Jahre Erfahrung" },
+    { value: "100+", label: "betreute Unternehmen" },
+    { value: "AL, EU", label: "internationaler Markt" },
+  ],
 };
 
 const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: string }[]> = {
@@ -113,8 +132,19 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
       price: "Nga 250€ / program",
     },
     {
-      title: "Website, E‑commerce & SaaS",
-      desc: "Website, e‑commerce dhe produkte software të personalizuara për individë ose kompani.",
+      title: "Website & faqe uljeje",
+      desc: "Faqe një-faqe (landing) ose website me disa faqe — prezencë profesionale, forma kontakt, SEO.",
+      price: "Nga 400€",
+    },
+    {
+      title: "E-commerce",
+      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim — zgjidhje e përshtatshme për shitje në internet.",
+      price: "Ofertë",
+    },
+    {
+      title: "SaaS & aplikacione",
+      desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
+      price: "Ofertë",
     },
   ],
   en: [
@@ -152,8 +182,19 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
       price: "From €250/program",
     },
     {
-      title: "Website, E‑commerce & SaaS",
-      desc: "Custom websites, e‑commerce and software products for individuals or companies.",
+      title: "Website & landing pages",
+      desc: "Single-page (landing) or multi-page website — professional presence, contact forms, SEO.",
+      price: "From €400",
+    },
+    {
+      title: "E-commerce",
+      desc: "Online store with products, inventory, payment and delivery — tailored solution for selling online.",
+      price: "On request",
+    },
+    {
+      title: "SaaS & applications",
+      desc: "Custom applications, platforms or software products for businesses or end users.",
+      price: "On request",
     },
   ],
   de: [
@@ -191,8 +232,19 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
       price: "Ab 250€ / Programm",
     },
     {
-      title: "Website, E‑Commerce & SaaS",
-      desc: "Individuelle Websites, E‑Commerce‑Lösungen und Softwareprodukte für Privatpersonen oder Unternehmen.",
+      title: "Website & Landingpages",
+      desc: "Einzelseiten (Landing) oder mehrseitige Website — professioneller Auftritt, Kontaktformulare, SEO.",
+      price: "Ab 400€",
+    },
+    {
+      title: "E-Commerce",
+      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand — maßgeschneiderte Lösung für den Verkauf im Internet.",
+      price: "Auf Anfrage",
+    },
+    {
+      title: "SaaS & Anwendungen",
+      desc: "Individuelle Anwendungen, Plattformen oder Softwareprodukte für Unternehmen oder Endnutzer.",
+      price: "Auf Anfrage",
     },
   ],
 };
@@ -201,7 +253,7 @@ const SERVICE_GROUP_INDICES = [
   [2, 5], // Strategy & planning (Digital Strategy, Consulting)
   [0, 1, 4], // Content & campaigns (Social, Content, Ads)
   [3], // Brand & identity (Branding)
-  [6, 7], // Training & build (Training, Website)
+  [6, 7, 8, 9], // Training & build (Training, Website & landing, E-commerce, SaaS)
 ] as const;
 
 const SERVICE_GROUP_LABELS: Record<Locale, [string, string, string, string]> = {
@@ -216,23 +268,23 @@ const FILTER_TABS_BY_LOCALE: Record<Locale, { label: string; indices: number[] }
     { label: "Marketing", indices: [0, 1, 2, 4, 5] }, // social, content, strategy, ads, consulting
     { label: "Brand", indices: [3] },
     { label: "Trajnime", indices: [6] },
-    { label: "Website", indices: [7] },
+    { label: "Website", indices: [7, 8, 9] },
   ],
   en: [
     { label: "Marketing", indices: [0, 1, 2, 4, 5] },
     { label: "Brand", indices: [3] },
     { label: "Training", indices: [6] },
-    { label: "Website", indices: [7] },
+    { label: "Website", indices: [7, 8, 9] },
   ],
   de: [
     { label: "Marketing", indices: [0, 1, 2, 4, 5] },
     { label: "Brand", indices: [3] },
     { label: "Training", indices: [6] },
-    { label: "Website", indices: [7] },
+    { label: "Website", indices: [7, 8, 9] },
   ],
 };
 
-const SERVICE_ANCHORS = ["social-media", "content", "strategy", "branding", "ads", "consulting", "training", "website"] as const;
+const SERVICE_ANCHORS = ["social-media", "content", "strategy", "branding", "ads", "consulting", "training", "website-landing", "ecommerce", "saas"] as const;
 
 const PRICE_TOOLTIP_BY_LOCALE: Record<Locale, string> = {
   sq: "Çmimi varet nga scope-i dhe kohëzgjatja. Na kontaktoni për ofertë të personalizuar.",
@@ -318,21 +370,24 @@ const PACKAGES_BY_GROUP_AND_LOCALE: Record<Locale, Record<PackageGroup, Pkg[]>> 
   },
 };
 
-const TESTIMONIAL_BY_LOCALE: Record<Locale, { quote: string; name: string; role: string }> = {
+const TESTIMONIAL_BY_LOCALE: Record<Locale, { quote: string; name: string; role: string; company?: string }> = {
   sq: {
     quote: "DARA na ndihmoi të strukturojmë rrjetet tona sociale dhe të rrisnim shitjet. Profesionale dhe të fokusuara te rezultatet.",
-    name: "Klient i kënaqur",
-    role: "Biznes lokale",
+    name: "Ana M.",
+    role: "Menaxhere",
+    company: "Don Mare Hotel",
   },
   en: {
     quote: "DARA helped us structure our social presence and increase sales. Professional and focused on results.",
-    name: "Happy client",
-    role: "Local business",
+    name: "Ana M.",
+    role: "Manager",
+    company: "Don Mare Hotel",
   },
   de: {
     quote: "DARA hat uns geholfen, unseren Social-Media-Auftritt zu strukturieren und den Umsatz zu steigern. Professionell und ergebnisorientiert.",
-    name: "Zufriedener Kunde",
-    role: "Lokales Unternehmen",
+    name: "Ana M.",
+    role: "Managerin",
+    company: "Don Mare Hotel",
   },
 };
 
@@ -396,7 +451,7 @@ const CTA_BY_LOCALE: Record<
   sq: {
     title: "Le të punojmë bashkë dhe të krijojmë diçka të madhe",
     subtitle: "Na shkruaj për një audit të shpejtë ose për një plan konkret rritjeje.",
-    button: "Na kontakto",
+    button: "Merr audit falas",
     whyTitle: "Pse DARA?",
     whyBullets: [
       "Strategji e personalizuar, jo modele të gatshme",
@@ -408,7 +463,7 @@ const CTA_BY_LOCALE: Record<
   en: {
     title: "Let’s work together and create something great",
     subtitle: "Reach out for a quick audit or a clear growth plan tailored to your business.",
-    button: "Get in touch",
+    button: "Get a free audit",
     whyTitle: "Why DARA?",
     whyBullets: [
       "Tailored strategy, not one-size-fits-all",
@@ -420,7 +475,7 @@ const CTA_BY_LOCALE: Record<
   de: {
     title: "Lass uns gemeinsam etwas Großartiges aufbauen",
     subtitle: "Melde dich für ein schnelles Audit oder einen klaren Wachstumsplan für dein Unternehmen.",
-    button: "Kontaktiere uns",
+    button: "Kostenloses Audit anfragen",
     whyTitle: "Warum DARA?",
     whyBullets: [
       "Maßgeschneiderte Strategie, keine Standardlösung",
@@ -430,6 +485,42 @@ const CTA_BY_LOCALE: Record<
     newsletterNote: "Kein Spam. Jederzeit abmelden.",
   },
 };
+
+const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
+  sq: {
+    title: "DARA Marketing Agency — Guxo të jesh ndryshe",
+    description: "DARA Marketing Agency. Ndihmojmë bizneset të rriten përmes strategjive krijuese, marketingu digjital dhe përmbajtjes që konverton. 7+ vite përvojë, 100+ biznese.",
+  },
+  en: {
+    title: "DARA Marketing Agency — Dare to be Different",
+    description: "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content. 7+ years experience, 100+ businesses.",
+  },
+  de: {
+    title: "DARA Marketing Agency — Wage es, anders zu sein",
+    description: "DARA Marketing Agency. Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne. 7+ Jahre Erfahrung, 100+ Unternehmen.",
+  },
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
+  const meta = META_BY_LOCALE[l];
+  const base = "https://daramarketing.eu";
+  const path = l === "en" ? "" : `/${l}`;
+  const url = `${base}${path}`;
+  return {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url,
+      siteName: "DARA Marketing Agency",
+      type: "website",
+    },
+    twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
+  };
+}
 
 export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeFromParams } = use(params);
@@ -443,40 +534,59 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MarketingAgency",
+    name: "DARA Marketing Agency",
+    url: "https://daramarketing.eu",
+    description: "We bring brand stories to life through bold strategies and results-oriented marketing.",
+    address: { "@type": "PostalAddress", streetAddress: "Rruga Donika Kastrioti, Bllok", addressLocality: "Tirana", addressCountry: "AL" },
+    email: "daramarketing.eu@gmail.com",
+    telephone: "+355688009988",
+    sameAs: ["https://instagram.com/daramarketing.eu", "https://facebook.com/daramarketing.eu", "https://linkedin.com/company/daramarketing"],
+    foundingDate: "2022-05-01",
+    numberOfEmployees: { "@type": "QuantitativeValue", value: 3 },
+  };
+
   return (
     <>
-      {/* HERO — pa bg, i pastër */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center px-4 py-24 md:py-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* HERO — background, scroll indicator, social proof, fade-in */}
+      <section className="relative min-h-[85vh] flex flex-col justify-center px-4 py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.08)_0%,transparent_60%)]" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMS41Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" aria-hidden />
+
         <div className="mx-auto w-full max-w-3xl">
-          <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="animate-fade-in-up text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             {hero.titleA}{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-[#c8a55c]">{hero.titleB}</span>
               <span className="absolute bottom-1 left-0 right-0 z-0 h-3 -translate-y-0.5 bg-[#c8a55c]/25 md:bottom-1.5 md:h-4" aria-hidden />
             </span>
           </h1>
-
-          <p className="mt-8 max-w-lg text-base leading-relaxed text-white/65 md:text-lg">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-1 mt-8 max-w-lg text-base leading-relaxed text-white/65 md:text-lg">
             {hero.desc}
           </p>
-
-          <div className="mt-12 flex flex-wrap items-center gap-4">
+          <div className="animate-fade-in-up animate-fade-in-up-delay-2 mt-12 flex flex-wrap items-center gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-7 font-semibold text-black transition hover:bg-[#b6944f]"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-7 font-semibold text-black transition hover:bg-[#b6944f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
             >
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
               href="#services"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-7 font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-white"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-7 font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
             >
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
+          <p className="animate-fade-in-up animate-fade-in-up-delay-3 mt-8 text-sm text-white/50">
+            {hero.socialProof}
+          </p>
         </div>
 
-        <div className="mt-20 flex items-center gap-4 md:mt-24">
+        <div className="animate-fade-in-up animate-fade-in-up-delay-4 mt-20 flex items-center gap-4 md:mt-24">
           <Image
             src="/logo.png"
             alt="DARA Marketing Agency"
@@ -489,64 +599,89 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             Marketing Agency
           </span>
         </div>
+
+        <a
+          href="#about"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 text-xs font-medium tracking-wider hover:text-[#c8a55c]/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] focus-visible:rounded"
+          aria-label={hero.scrollHint}
+        >
+          {hero.scrollHint}
+          <svg className="h-5 w-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </a>
       </section>
 
-      {/* ABOUT US — new design */}
+      {/* ABOUT US — scroll animations, stats visuals */}
       <section id="about" className="relative py-20 md:py-28">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(200,165,92,0.04)_50%,transparent_100%)]" />
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
             <div>
-              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-[#c8a55c]">
-                {about.kicker}
-              </span>
-              <h2 className="mt-6 font-display text-3xl font-semibold tracking-tight md:text-4xl xl:text-5xl">
-                {about.title}
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">
-                {about.paragraphs[0]}
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
-                {about.paragraphs[1]}
-              </p>
-              {about.paragraphs[2] && (
-                <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
-                  {about.paragraphs[2]}
+              <AnimateIn>
+                <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-[#c8a55c]">
+                  {about.kicker}
+                </span>
+              </AnimateIn>
+              <AnimateIn delay={50}>
+                <h2 className="mt-6 font-display text-3xl font-semibold tracking-tight md:text-4xl xl:text-5xl">
+                  {about.title}
+                </h2>
+              </AnimateIn>
+              <AnimateIn delay={100}>
+                <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">
+                  {about.paragraphs[0]}
                 </p>
+              </AnimateIn>
+              <AnimateIn delay={150}>
+                <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+                  {about.paragraphs[1]}
+                </p>
+              </AnimateIn>
+              {about.paragraphs[2] && (
+                <AnimateIn delay={200}>
+                  <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+                    {about.paragraphs[2]}
+                  </p>
+                </AnimateIn>
               )}
-              <div className="mt-8">
-                <LocaleLink
-                  href="/about"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f]"
-                >
-                  {about.readMore}
-                </LocaleLink>
-              </div>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {aboutStats.map((stat) => (
-                  <div
-                    key={stat}
-                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-black/20 px-4 py-2.5 text-sm text-white/90"
+              <AnimateIn delay={250}>
+                <div className="mt-10 flex flex-wrap gap-6 sm:gap-8">
+                  {aboutStats.map((stat) => (
+                    <div key={stat.label} className="flex flex-col">
+                      <span className="text-3xl font-bold text-[#c8a55c] md:text-4xl">{stat.value}</span>
+                      <span className="mt-0.5 text-sm text-white/70">{stat.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </AnimateIn>
+              <AnimateIn delay={300}>
+                <div className="mt-10">
+                  <LocaleLink
+                    href="/about"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
                   >
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-[#c8a55c]" />
-                    <span>{stat}</span>
-                  </div>
-                ))}
-              </div>
+                    {about.readMore}
+                  </LocaleLink>
+                </div>
+              </AnimateIn>
             </div>
-            <div className="relative lg:pl-4">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white/5 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                  alt="DARA Marketing Agency — team and collaboration"
-                  width={900}
-                  height={600}
-                  className="h-full w-full object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
+            <AnimateIn delay={100}>
+              <div className="relative lg:pl-4">
+                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white/5 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
+                    alt="DARA Marketing Agency — team and collaboration"
+                    width={900}
+                    height={600}
+                    className="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute -left-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-[#c8a55c]/20 lg:-left-4 lg:-top-4" aria-hidden />
               </div>
-              <div className="absolute -left-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-[#c8a55c]/20 lg:-left-4 lg:-top-4" />
-            </div>
+            </AnimateIn>
           </div>
         </div>
       </section>
@@ -568,7 +703,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeWorkSection locale={locale} />
 
-      {/* OUR TEAM - fake për momentin */}
+      {/* OUR TEAM — bios on hover, social links structure */}
       <section id="team" className="py-12 md:py-20">
         <div className="mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
@@ -593,13 +728,13 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop" },
-            { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=600&fit=crop" },
-            { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=480&h=600&fit=crop" },
+            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? "7+ vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve." : locale === "de" ? "7+ Jahre im Marketing. Experte für Strategie und Unternehmenswachstum." : "7+ years in marketing. Expert in strategy and business growth.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", bio: locale === "sq" ? "Specialist në rrjetet sociale dhe strategji përmbajtjeje." : locale === "de" ? "Spezialistin für Social Media und Content-Strategie." : "Specialist in social media and content strategy.", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
           ].map((member) => (
             <div
               key={member.name}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-[#c8a55c]/30 hover:shadow-[0_0_40px_rgba(200,165,92,0.08)]"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-[#c8a55c]/30 hover:shadow-[0_0_40px_rgba(200,165,92,0.08)]"
             >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
@@ -609,7 +744,13 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 opacity-0 transition-opacity group-hover:opacity-100">
+                  <p className="text-sm text-white/90">{member.bio}</p>
+                  <div className="mt-4 flex gap-3">
+                    <a href={member.linkedin} className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-[#c8a55c]" aria-label="LinkedIn"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href={member.instagram} className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-[#c8a55c]" aria-label="Instagram"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                  </div>
+                </div>
               </div>
               <div className="p-6">
                 <h3 className="font-medium text-white/95">{member.name}</h3>
@@ -620,12 +761,20 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
       </section>
 
-      {/* CTA - LET'S WORK TOGETHER */}
-      <section className="py-12 md:py-20">
+      {/* CTA — Trusted by, trust badges, clearer hierarchy */}
+      <section className="py-12 md:py-20" aria-labelledby="cta-heading">
         <div className="rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-8 md:p-12">
+          <p className="mb-6 text-center text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+            {locale === "sq" ? "Na besojnë" : locale === "de" ? "Vertrauen uns" : "Trusted by"}
+          </p>
+          <div className="mb-10 flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-70">
+            {["Don Mare Hotel", "Zorada", "City Fitness", "Cara Dental", "Nova Real Estate"].map((name) => (
+              <span key={name} className="text-sm font-medium text-white/60">{name}</span>
+            ))}
+          </div>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
             <div>
-              <h2 className="text-2xl font-semibold md:text-4xl">
+              <h2 id="cta-heading" className="text-2xl font-semibold md:text-4xl">
                 {cta.title}
               </h2>
               <p className="mt-4 text-sm text-white/80">{cta.subtitle}</p>
@@ -642,42 +791,53 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   ))}
                 </ul>
               </div>
+              <div className="mt-10">
+                <LocaleLink
+                  href="/contact"
+                  className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] sm:w-auto"
+                >
+                  {cta.button}
+                </LocaleLink>
+              </div>
             </div>
             <div className="flex flex-col justify-between gap-6">
-              <div className="space-y-2 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white/80">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-white/60">
+                  {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
+                </h4>
                 <p>
-                  <a href="mailto:daramarketing.eu@gmail.com" className="hover:text-[#c8a55c]">daramarketing.eu@gmail.com</a>
+                  <a href="mailto:daramarketing.eu@gmail.com" className="hover:text-[#c8a55c] focus-visible:underline">daramarketing.eu@gmail.com</a>
                   {" · "}
-                  <a href="tel:+355688009988" className="hover:text-[#c8a55c]">+355 68 800 9988</a>
+                  <a href="tel:+355688009988" className="hover:text-[#c8a55c] focus-visible:underline">+355 68 800 9988</a>
                 </p>
                 <p>
                   <a
                     href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:text-[#c8a55c]"
+                    className="hover:text-[#c8a55c] focus-visible:underline"
                   >
                     Rruga Donika Kastrioti, Bllok, Tirane, Albania
                   </a>
                 </p>
                 <p>
-                  <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c]">Instagram</a>
+                  <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">Instagram</a>
                   {" · "}
-                  <a href="https://facebook.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c]">Facebook</a>
+                  <a href="https://facebook.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">Facebook</a>
                   {" · "}
-                  <a href="https://linkedin.com/company/daramarketing" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c]">LinkedIn</a>
+                  <a href="https://linkedin.com/company/daramarketing" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">LinkedIn</a>
                 </p>
               </div>
-              <div className="max-w-sm">
+              <div className="max-w-sm border-t border-white/10 pt-6">
+                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">
+                  {locale === "sq" ? "Newsletter" : locale === "de" ? "Newsletter" : "Newsletter"}
+                </h4>
                 <NewsletterForm />
-                <p className="mt-3 text-xs text-white/50">{cta.newsletterNote}</p>
+                <p className="mt-3 flex items-center gap-2 text-xs text-white/50">
+                  <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  {cta.newsletterNote} · GDPR compliant
+                </p>
               </div>
-              <LocaleLink
-                href="/contact"
-                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black transition hover:bg-[#b6944f] sm:w-auto"
-              >
-                {cta.button}
-              </LocaleLink>
             </div>
           </div>
         </div>

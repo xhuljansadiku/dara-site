@@ -73,6 +73,7 @@ export default function Navbar() {
 
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
 
   const currentLocale = (LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])
@@ -102,6 +103,11 @@ export default function Navbar() {
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, [servicesOpen]);
+
+  // Kur menuja mobile mbyllet, mbyll edhe nënmenunë e shërbimeve
+  useEffect(() => {
+    if (!open) setMobileServicesOpen(false);
+  }, [open]);
 
   function withLocale(href: string) {
     const normalized = href.startsWith("/") ? href : `/${href}`;
@@ -255,45 +261,67 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-white/10 bg-[#2b2b2b]/95 md:hidden">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-white/10 bg-[#2b2b2b]/95 md:hidden">
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {
                 if (it.href === "/services") {
                   return (
-                    <div key="services-mobile" className="space-y-1">
-                      <p className="px-2 py-1 text-xs font-medium uppercase tracking-wider text-white/50">
-                        {nav.services}
-                      </p>
-                      <Link
-                        href={withLocale("/services")}
-                        onClick={() => setOpen(false)}
-                        className={[
-                          "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
-                          pathname === withLocale("/services")
-                            ? "bg-[#c8a55c]/15 text-[#c8a55c]"
-                            : "bg-white/5 text-white/80 hover:bg-white/10",
-                        ].join(" ")}
+                    <div
+                      key="services-mobile"
+                      className={`space-y-1 ${mobileServicesOpen ? "border-b border-white/10 pb-3 mb-2" : ""}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setMobileServicesOpen((o) => !o)}
+                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white/90 hover:bg-white/10"
+                        aria-expanded={mobileServicesOpen}
+                        aria-controls="mobile-services-list"
+                        id="mobile-services-button"
                       >
-                        <span>{nav.viewAllServices}</span>
-                        <span className="text-white/40">→</span>
-                      </Link>
-                      {serviceNavItems.map(({ slug, label }) => (
-                        <Link
-                          key={slug}
-                          href={withLocale(`/services/${slug}`)}
-                          onClick={() => setOpen(false)}
-                          className={[
-                            "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
-                            pathname === withLocale(`/services/${slug}`)
-                              ? "bg-[#c8a55c]/15 text-[#c8a55c]"
-                              : "bg-white/5 text-white/80 hover:bg-white/10",
-                          ].join(" ")}
-                        >
-                          <span>{label}</span>
-                          <span className="text-white/40">→</span>
-                        </Link>
-                      ))}
+                        <span>{nav.services}</span>
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-lg font-medium text-white/90" aria-hidden>
+                          {mobileServicesOpen ? "−" : "+"}
+                        </span>
+                      </button>
+                      <div
+                        id="mobile-services-list"
+                        role="region"
+                        aria-labelledby="mobile-services-button"
+                        className={`overflow-hidden transition-all duration-200 ${mobileServicesOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        <div className="space-y-1 pt-1">
+                          <Link
+                            href={withLocale("/services")}
+                            onClick={() => { setOpen(false); setMobileServicesOpen(false); }}
+                            className={[
+                              "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
+                              pathname === withLocale("/services")
+                                ? "bg-[#c8a55c]/15 text-[#c8a55c]"
+                                : "bg-white/5 text-white/80 hover:bg-white/10",
+                            ].join(" ")}
+                          >
+                            <span>{nav.viewAllServices}</span>
+                            <span className="text-white/40">→</span>
+                          </Link>
+                          {serviceNavItems.map(({ slug, label }) => (
+                            <Link
+                              key={slug}
+                              href={withLocale(`/services/${slug}`)}
+                              onClick={() => { setOpen(false); setMobileServicesOpen(false); }}
+                              className={[
+                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
+                                pathname === withLocale(`/services/${slug}`)
+                                  ? "bg-[#c8a55c]/15 text-[#c8a55c]"
+                                  : "bg-white/5 text-white/80 hover:bg-white/10",
+                              ].join(" ")}
+                            >
+                              <span>{label}</span>
+                              <span className="text-white/40">→</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   );
                 }
