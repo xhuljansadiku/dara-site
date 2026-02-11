@@ -1,10 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
 import { locales as LOCALES, defaultLocale } from "@/i18n";
+import { getServiceNavItems } from "@/lib/services-data";
+import type { Locale } from "@/lib/services-data";
 
 type NavItem = { label: string; href: string };
 
@@ -13,6 +15,7 @@ const NAV_TRANSLATIONS: Record<
   {
     home: string;
     services: string;
+    viewAllServices: string;
     about: string;
     works: string;
     process: string;
@@ -24,6 +27,7 @@ const NAV_TRANSLATIONS: Record<
   sq: {
     home: "Kreu",
     services: "Shërbime",
+    viewAllServices: "Të gjitha shërbimet",
     about: "Rreth nesh",
     works: "Punët",
     process: "Procesi",
@@ -34,6 +38,7 @@ const NAV_TRANSLATIONS: Record<
   en: {
     home: "Home",
     services: "Services",
+    viewAllServices: "All services",
     about: "About",
     works: "Work",
     process: "Process",
@@ -44,6 +49,7 @@ const NAV_TRANSLATIONS: Record<
   de: {
     home: "Startseite",
     services: "Leistungen",
+    viewAllServices: "Alle Leistungen",
     about: "Über uns",
     works: "Referenzen",
     process: "Prozess",
@@ -66,6 +72,13 @@ export default function Navbar() {
   const nav = NAV_TRANSLATIONS[locale as (typeof LOCALES)[number]] ?? NAV_TRANSLATIONS[defaultLocale];
 
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+
+  const currentLocale = (LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])
+    ? locale
+    : defaultLocale) as Locale;
+  const serviceNavItems = useMemo(() => getServiceNavItems(currentLocale), [currentLocale]);
 
   const items: NavItem[] = useMemo(
     () => [
@@ -78,6 +91,17 @@ export default function Navbar() {
     ],
     [nav]
   );
+
+  const isServicesActive = pathname === withLocale("/services") || pathname.startsWith(withLocale("/services/"));
+
+  useEffect(() => {
+    if (!servicesOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) setServicesOpen(false);
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [servicesOpen]);
 
   function withLocale(href: string) {
     const normalized = href.startsWith("/") ? href : `/${href}`;
@@ -129,6 +153,49 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/20 px-2 py-1 md:flex">
           {items.map((it) => {
+            if (it.href === "/services") {
+              return (
+                <div key="services" ref={servicesRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setServicesOpen((o) => !o)}
+                    className={[
+                      "relative flex items-center gap-0.5 rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                      isServicesActive ? "text-[#c8a55c]" : "text-white/70 hover:text-white",
+                    ].join(" ")}
+                    aria-expanded={servicesOpen}
+                    aria-haspopup="true"
+                  >
+                    {isServicesActive && (
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                    )}
+                    <span className="relative z-10">{it.label}</span>
+                    <span className="relative z-10 ml-0.5 text-[10px] opacity-70">▾</span>
+                  </button>
+                  {servicesOpen && (
+                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[220px] rounded-2xl border border-white/10 bg-[#2b2b2b] py-2 shadow-xl">
+                      <Link
+                        href={withLocale("/services")}
+                        onClick={() => setServicesOpen(false)}
+                        className="block border-b border-white/10 px-4 py-2.5 text-sm font-medium text-[#c8a55c] hover:bg-white/5"
+                      >
+                        {nav.viewAllServices}
+                      </Link>
+                      {serviceNavItems.map(({ slug, label }) => (
+                        <Link
+                          key={slug}
+                          href={withLocale(`/services/${slug}`)}
+                          onClick={() => setServicesOpen(false)}
+                          className="block px-4 py-2 text-sm text-white/85 hover:bg-white/5 hover:text-white"
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
             const active = isActive(it.href);
             return (
               <Link
@@ -192,6 +259,44 @@ export default function Navbar() {
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {
+                if (it.href === "/services") {
+                  return (
+                    <div key="services-mobile" className="space-y-1">
+                      <p className="px-2 py-1 text-xs font-medium uppercase tracking-wider text-white/50">
+                        {nav.services}
+                      </p>
+                      <Link
+                        href={withLocale("/services")}
+                        onClick={() => setOpen(false)}
+                        className={[
+                          "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
+                          pathname === withLocale("/services")
+                            ? "bg-[#c8a55c]/15 text-[#c8a55c]"
+                            : "bg-white/5 text-white/80 hover:bg-white/10",
+                        ].join(" ")}
+                      >
+                        <span>{nav.viewAllServices}</span>
+                        <span className="text-white/40">→</span>
+                      </Link>
+                      {serviceNavItems.map(({ slug, label }) => (
+                        <Link
+                          key={slug}
+                          href={withLocale(`/services/${slug}`)}
+                          onClick={() => setOpen(false)}
+                          className={[
+                            "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
+                            pathname === withLocale(`/services/${slug}`)
+                              ? "bg-[#c8a55c]/15 text-[#c8a55c]"
+                              : "bg-white/5 text-white/80 hover:bg-white/10",
+                          ].join(" ")}
+                        >
+                          <span>{label}</span>
+                          <span className="text-white/40">→</span>
+                        </Link>
+                      ))}
+                    </div>
+                  );
+                }
                 const active = isActive(it.href);
                 return (
                   <Link

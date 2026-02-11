@@ -2,16 +2,96 @@
 import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 
-export default function Footer() {
+type Locale = "sq" | "en" | "de";
+
+const FOOTER_BY_LOCALE: Record<
+  Locale,
+  {
+    tagline: string;
+    desc: string;
+    tags: string[];
+    pagesTitle: string;
+    legalTitle: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaSubtitleHighlight: string;
+    getQuote: string;
+    viewWork: string;
+    note: string;
+    copyright: string;
+    slogan: string;
+    links: { home: string; services: string; work: string; process: string; about: string; contact: string };
+    legal: { privacy: string; terms: string };
+    social: { instagram: string; facebook: string; linkedin: string };
+  }
+> = {
+  sq: {
+    tagline: "Marketing Agency",
+    desc: "Guxo të jesh ndryshe. Bashkëpunojmë me marka që duan strategji të guximshme, përmbajtje premium dhe rritje të matshme.",
+    tags: ["Strategji", "Rrjete sociale", "Reklama", "Branding", "Web & E‑commerce"],
+    pagesTitle: "Faqet",
+    legalTitle: "Legjale",
+    ctaTitle: "Le të punojmë bashkë",
+    ctaSubtitle: "Gati për rritje me një partner strategjik marketingu?",
+    ctaSubtitleHighlight: "partner strategjik marketingu",
+    getQuote: "Merr ofertë",
+    viewWork: "Shiko punën",
+    note: "Pa angazhim afatgjatë. Strategji e qartë, raportim transparent, rezultate reale.",
+    copyright: "© {year} DARA. Të gjitha të drejtat e rezervuara.",
+    slogan: "Guxo të jesh ndryshe.",
+    links: { home: "Kreu", services: "Shërbimet", work: "Punët", process: "Procesi", about: "Rreth nesh", contact: "Kontakt" },
+    legal: { privacy: "Politika e privatësisë", terms: "Kushtet dhe kushtet" },
+    social: { instagram: "Instagram", facebook: "Facebook", linkedin: "LinkedIn" },
+  },
+  en: {
+    tagline: "Marketing Agency",
+    desc: "Dare to be different. We partner with brands that want bold strategy, premium content and measurable growth.",
+    tags: ["Strategy", "Social Media", "Paid Ads", "Branding", "Web & E‑commerce"],
+    pagesTitle: "Pages",
+    legalTitle: "Legal",
+    ctaTitle: "Let's work together",
+    ctaSubtitle: "Ready to grow with a strategic marketing partner?",
+    ctaSubtitleHighlight: "strategic marketing partner",
+    getQuote: "Get a quote",
+    viewWork: "View work",
+    note: "No long-term lock-ins. Clear strategy, transparent reporting, real results.",
+    copyright: "© {year} DARA. All rights reserved.",
+    slogan: "Dare to be different.",
+    links: { home: "Home", services: "Services", work: "Work", process: "Process", about: "About", contact: "Contact" },
+    legal: { privacy: "Privacy policy", terms: "Terms & conditions" },
+    social: { instagram: "Instagram", facebook: "Facebook", linkedin: "LinkedIn" },
+  },
+  de: {
+    tagline: "Marketing Agentur",
+    desc: "Wage es, anders zu sein. Wir arbeiten mit Marken, die mutige Strategie, Premium-Content und messbares Wachstum wollen.",
+    tags: ["Strategie", "Social Media", "Paid Ads", "Branding", "Web & E‑Commerce"],
+    pagesTitle: "Seiten",
+    legalTitle: "Rechtliches",
+    ctaTitle: "Lass uns zusammenarbeiten",
+    ctaSubtitle: "Bereit zu wachsen mit einem strategischen Marketing-Partner?",
+    ctaSubtitleHighlight: "strategischen Marketing-Partner",
+    getQuote: "Angebot anfragen",
+    viewWork: "Referenzen",
+    note: "Keine langfristigen Verträge. Klare Strategie, transparentes Reporting, echte Ergebnisse.",
+    copyright: "© {year} DARA. Alle Rechte vorbehalten.",
+    slogan: "Wage es, anders zu sein.",
+    links: { home: "Startseite", services: "Leistungen", work: "Referenzen", process: "Prozess", about: "Über uns", contact: "Kontakt" },
+    legal: { privacy: "Datenschutz", terms: "AGB" },
+    social: { instagram: "Instagram", facebook: "Facebook", linkedin: "LinkedIn" },
+  },
+};
+
+export default function Footer({ locale }: { locale: string }) {
+  const t = FOOTER_BY_LOCALE[(locale as Locale) || "en"] ?? FOOTER_BY_LOCALE.en;
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-white/10 bg-[#1f1f1f]">
       <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1.3fr)_minmax(0,1.2fr)]">
+        <div className="grid gap-10 text-center md:grid-cols-[minmax(0,1.4fr)_minmax(0,1.3fr)_minmax(0,1.2fr)] md:text-left">
           {/* Brand */}
-          <div>
-            <div className="flex flex-col items-start gap-2">
+          <div className="flex flex-col items-center md:items-start">
+            <div className="flex flex-col items-center gap-2 md:items-start">
               <Image
                 src="/logo.png"
                 alt="DARA Marketing Agency"
@@ -19,15 +99,11 @@ export default function Footer() {
                 height={48}
                 className="h-9 w-auto object-contain sm:h-10 md:h-11"
               />
-              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60">Marketing Agency</p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60">{t.tagline}</p>
             </div>
-            <p className="mt-3 max-w-sm text-sm text-white/60">
-              Dare to be different. We partner with brands that want bold strategy, premium content and measurable
-              growth.
-            </p>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["Strategy", "Social Media", "Paid Ads", "Branding", "Web & E‑commerce"].map((x) => (
+            <p className="mt-3 max-w-sm text-sm text-white/60">{t.desc}</p>
+            <div className="mt-5 flex flex-wrap justify-center gap-2 md:justify-start">
+              {t.tags.map((x) => (
                 <span
                   key={x}
                   className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
@@ -39,66 +115,41 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="grid gap-8 sm:grid-cols-2">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Pages</p>
+          <div className="grid gap-8 sm:grid-cols-2 md:text-left">
+            <div className="flex flex-col items-center md:items-start">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">{t.pagesTitle}</p>
               <ul className="mt-4 grid gap-2 text-sm text-white/60">
-                <li>
-                  <LocaleLink className="hover:text-white" href="/">
-                    Home
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/services">
-                    Services
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/work">
-                    Work
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/process">
-                    Process
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/about">
-                    About
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/contact">
-                    Contact
-                  </LocaleLink>
-                </li>
+                <li><LocaleLink className="hover:text-white" href="/">{t.links.home}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/services">{t.links.services}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/work">{t.links.work}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/process">{t.links.process}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/about">{t.links.about}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/contact">{t.links.contact}</LocaleLink></li>
               </ul>
             </div>
-
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">Legal</p>
+            <div className="flex flex-col items-center md:items-start">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">{t.legalTitle}</p>
               <ul className="mt-4 grid gap-2 text-sm text-white/60">
-                <li>
-                  <LocaleLink className="hover:text-white" href="/privacy">
-                    Privacy policy
-                  </LocaleLink>
-                </li>
-                <li>
-                  <LocaleLink className="hover:text-white" href="/terms">
-                    Terms & conditions
-                  </LocaleLink>
-                </li>
+                <li><LocaleLink className="hover:text-white" href="/privacy">{t.legal.privacy}</LocaleLink></li>
+                <li><LocaleLink className="hover:text-white" href="/terms">{t.legal.terms}</LocaleLink></li>
               </ul>
             </div>
           </div>
 
           {/* Contact / CTA */}
-          <div className="rounded-3xl border border-[#c8a55c]/25 bg-[#c8a55c]/5 p-6 md:p-7">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8a55c]">Let&apos;s work together</p>
+          <div className="flex flex-col items-center rounded-3xl border border-[#c8a55c]/25 bg-[#c8a55c]/5 p-6 text-center md:items-start md:text-left md:p-7">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8a55c]">{t.ctaTitle}</p>
             <p className="mt-3 font-display text-xl font-semibold">
-              Ready to grow with a{" "}
-              <span className="text-[#c8a55c]">strategic marketing partner</span>?
+              {t.ctaSubtitle.replace(
+                t.ctaSubtitleHighlight,
+                `\0${t.ctaSubtitleHighlight}\0`
+              ).split("\0").map((part, i) =>
+                part === t.ctaSubtitleHighlight ? (
+                  <span key={i} className="text-[#c8a55c]">{part}</span>
+                ) : (
+                  part
+                )
+              )}
             </p>
 
             <div className="mt-4 space-y-2 text-sm text-white/80">
@@ -124,34 +175,31 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-5 flex w-full flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
               <LocaleLink
                 href="/contact"
-                className="inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-[#c8a55c] px-5 text-sm font-medium text-black hover:bg-[#b6944f]"
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-[#c8a55c] px-5 text-sm font-medium text-black hover:bg-[#b6944f] sm:flex-initial"
               >
-                Get a quote
+                {t.getQuote}
               </LocaleLink>
-
-            <LocaleLink
-              href="/work"
-              className="inline-flex h-11 flex-1 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10"
-            >
-              View work
-            </LocaleLink>
+              <LocaleLink
+                href="/work"
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-sm text-white/90 hover:border-white/25 hover:bg-white/10 sm:flex-initial"
+              >
+                {t.viewWork}
+              </LocaleLink>
             </div>
 
-            <p className="mt-4 text-xs text-white/50">
-              No long-term lock‑ins. Clear strategy, transparent reporting, real results.
-            </p>
+            <p className="mt-4 text-xs text-white/50">{t.note}</p>
 
-            <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/70">
+            <div className="mt-5 flex flex-wrap justify-center gap-2 md:justify-start text-xs text-white/70">
               <a
                 className="rounded-full border border-white/10 bg-black/30 px-4 py-2 hover:border-[#c8a55c]/50 hover:text-[#c8a55c]"
                 href="https://instagram.com/daramarketing.eu"
                 target="_blank"
                 rel="noreferrer"
               >
-                Instagram
+                {t.social.instagram}
               </a>
               <a
                 className="rounded-full border border-white/10 bg-black/30 px-4 py-2 hover:border-[#c8a55c]/50 hover:text-[#c8a55c]"
@@ -159,7 +207,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Facebook
+                {t.social.facebook}
               </a>
               <a
                 className="rounded-full border border-white/10 bg-black/30 px-4 py-2 hover:border-[#c8a55c]/50 hover:text-[#c8a55c]"
@@ -167,15 +215,15 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                LinkedIn
+                {t.social.linkedin}
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-          <p>© {year} DARA. All rights reserved.</p>
-          <p className="text-white/40">Dare to be different.</p>
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-center text-xs text-white/50 md:flex-row md:items-center md:justify-between md:text-left">
+          <p>{t.copyright.replace("{year}", String(year))}</p>
+          <p className="text-white/40">{t.slogan}</p>
         </div>
       </div>
     </footer>
