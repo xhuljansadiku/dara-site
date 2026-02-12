@@ -835,6 +835,86 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       priceNote: "Preis nach Umfang und Komplexität. Angebot nach erstem Workshop.",
     },
   },
+  maintenance: {
+    sq: {
+      whatIncluded: [
+        "Mirembajtje website (updates, backups, siguri, patches)",
+        "Mirembajtje e-commerce (sinkronizim inventari, menaxhim porosish, rregullime pagesash)",
+        "Optimizim website të vjetra (shpejtësi, SEO, modernizim, responsive)",
+        "Monitoring dhe raportim i performancës",
+        "Support teknik dhe përditësime të rregullta",
+      ],
+      whoIsItFor: [
+        "Biznese që kanë website ose e-commerce dhe duan mirembajtje të vazhdueshme",
+        "Kompani me website të vjetra që duan optimizim dhe modernizim",
+        "Marka që duan që website-i të jetë gjithmonë i përditësuar dhe i sigurt",
+      ],
+      benefits: [
+        "Website i sigurt dhe i përditësuar — pa probleme teknike",
+        "Performancë më e mirë dhe shpejtësi më e lartë",
+        "Pa stres — ne kujdesemi për të gjitha detajet teknike",
+      ],
+      howWeWork: [
+        "Audit fillestar i website/e-commerce tuaj",
+        "Plan mirembajtjeje mujor (updates, backups, monitoring)",
+        "Raportim mujor dhe rekomandime për optimizime",
+        "Support i vazhdueshëm për çdo problem ose nevojë",
+      ],
+      priceNote: "Çmimi nga 100€/muaj për mirembajtje bazë. Optimizime dhe projekte më të mëdha sipas nevojës.",
+    },
+    en: {
+      whatIncluded: [
+        "Website maintenance (updates, backups, security, patches)",
+        "E-commerce maintenance (inventory sync, order management, payment fixes)",
+        "Old website optimization (speed, SEO, modernization, responsive)",
+        "Performance monitoring and reporting",
+        "Technical support and regular updates",
+      ],
+      whoIsItFor: [
+        "Businesses with websites or e-commerce that need ongoing maintenance",
+        "Companies with old websites that want optimization and modernization",
+        "Brands that want their website always updated and secure",
+      ],
+      benefits: [
+        "Secure and updated website — no technical issues",
+        "Better performance and higher speed",
+        "No stress — we handle all technical details",
+      ],
+      howWeWork: [
+        "Initial audit of your website/e-commerce",
+        "Monthly maintenance plan (updates, backups, monitoring)",
+        "Monthly reporting and optimization recommendations",
+        "Ongoing support for any issue or need",
+      ],
+      priceNote: "From €100/month for basic maintenance. Optimizations and larger projects as needed.",
+    },
+    de: {
+      whatIncluded: [
+        "Website-Wartung (Updates, Backups, Sicherheit, Patches)",
+        "E-Commerce-Wartung (Lager-Synchronisation, Bestellverwaltung, Zahlungsfehlerbehebung)",
+        "Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung, Responsive)",
+        "Performance-Monitoring und Berichterstattung",
+        "Technischer Support und regelmäßige Updates",
+      ],
+      whoIsItFor: [
+        "Unternehmen mit Websites oder E-Commerce, die laufende Wartung brauchen",
+        "Firmen mit alten Websites, die Optimierung und Modernisierung wollen",
+        "Marken, die ihre Website immer aktualisiert und sicher haben wollen",
+      ],
+      benefits: [
+        "Sichere und aktualisierte Website — keine technischen Probleme",
+        "Bessere Performance und höhere Geschwindigkeit",
+        "Kein Stress — wir kümmern uns um alle technischen Details",
+      ],
+      howWeWork: [
+        "Erstes Audit Ihrer Website/E-Commerce",
+        "Monatlicher Wartungsplan (Updates, Backups, Monitoring)",
+        "Monatliche Berichte und Optimierungsempfehlungen",
+        "Laufender Support bei jedem Problem oder Bedarf",
+      ],
+      priceNote: "Ab 100€/Monat für Basis-Wartung. Optimierungen und größere Projekte nach Bedarf.",
+    },
+  },
 };
 
 export function getServicePageContent(

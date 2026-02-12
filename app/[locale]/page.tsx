@@ -6,6 +6,7 @@ import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
 import HomeWorkSection from "@/components/site/HomeWorkSection";
 import AnimateIn from "@/components/site/AnimateIn";
+import { getYearsOfExperienceFormatted } from "@/lib/experience";
 
 type Locale = "sq" | "en" | "de";
 
@@ -18,7 +19,7 @@ const HERO_BY_LOCALE: Record<
     titleA: "Guxo të jesh",
     titleB: "ndryshe",
     desc: "Ndihmojmë bizneset të kthejnë ndjekësit në shitje përmes strategjisë, përmbajtjes dhe marketingut me performancë.",
-    ctaPrimary: "Merr audit falas",
+    ctaPrimary: "Merr analizë falas",
     ctaSecondary: "Shërbimet",
     scrollHint: "Zbulo më shumë",
     socialProof: "100+ biznese të kënaqura",
@@ -50,7 +51,7 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
     kicker: "Rreth nesh",
     title: "Ne jemi DARA.",
     paragraphs: [
-      "DARA Marketing Agency është agjencia juaj e marketingut, themeluar më 1 maj 2022. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
+      "DARA Marketing Agency është agjencia juaj e marketingut, themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
       "Punojmë me biznese lokale dhe ndërkombëtare, duke kombinuar kreativitetin, analizën dhe një qasje praktike për të arritur rritje të matshme.",
     ],
@@ -60,7 +61,7 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
     kicker: "About us",
     title: "We are DARA.",
     paragraphs: [
-      "DARA Marketing Agency is your marketing partner, established on 1 May 2022. We help businesses grow through creative strategies and results-oriented marketing.",
+      "DARA Marketing Agency is your marketing partner, established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
       "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
       "We work with local and international businesses, combining creativity, analysis and a hands-on approach to deliver measurable growth.",
     ],
@@ -70,7 +71,7 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
     kicker: "Über uns",
     title: "Wir sind DARA.",
     paragraphs: [
-      "DARA Marketing Agency ist Ihre Marketing-Partnerin, gegründet am 1. Mai 2022. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
+      "DARA Marketing Agency ist Ihre Marketing-Partnerin, gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
       "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
       "Wir arbeiten mit lokalen und internationalen Unternehmen und verbinden Kreativität, Analyse und einen praxisnahen Ansatz für messbares Wachstum.",
     ],
@@ -80,17 +81,17 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
 
 const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: string }[]> = {
   sq: [
-    { value: "7+", label: "vite eksperiencë" },
+    { value: "", label: "vite eksperiencë" }, // Will be replaced dynamically
     { value: "100+", label: "biznese të punuara" },
     { value: "AL, EU", label: "treg ndërkombëtar" },
   ],
   en: [
-    { value: "7+", label: "years experience" },
+    { value: "", label: "years experience" }, // Will be replaced dynamically
     { value: "100+", label: "businesses worked with" },
     { value: "AL, EU", label: "international market" },
   ],
   de: [
-    { value: "7+", label: "Jahre Erfahrung" },
+    { value: "", label: "Jahre Erfahrung" }, // Will be replaced dynamically
     { value: "100+", label: "betreute Unternehmen" },
     { value: "AL, EU", label: "internationaler Markt" },
   ],
@@ -109,12 +110,12 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
     },
     {
       title: "Strategji marketingu digjital",
-      desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale — pozicionim, objektiva dhe ide konkrete zhvillimi.",
+      desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale  pozicionim, objektiva dhe ide konkrete zhvillimi.",
       price: "Nga 300€ / strategji",
     },
     {
       title: "Branding & identitet vizual",
-      desc: "Krijim ose rifreskim i identitetit të brand-it — logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
+      desc: "Krijim ose rifreskim i identitetit të brand-it  logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
     },
     {
       title: "Menaxhim reklamash (Meta & Google)",
@@ -133,18 +134,23 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
     },
     {
       title: "Website & faqe uljeje",
-      desc: "Faqe një-faqe (landing) ose website me disa faqe — prezencë profesionale, forma kontakt, SEO.",
+      desc: "Faqe një-faqe (landing) ose website me disa faqe  prezencë profesionale, forma kontakt, SEO.",
       price: "Nga 400€",
     },
     {
       title: "E-commerce",
-      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim — zgjidhje e përshtatshme për shitje në internet.",
+      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim  zgjidhje e përshtatshme për shitje në internet.",
       price: "Ofertë",
     },
     {
       title: "SaaS & aplikacione",
       desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
       price: "Ofertë",
+    },
+    {
+      title: "Mirembajtje & Optimizim",
+      desc: "Mirembajtje website dhe e-commerce (updates, backups, siguri), optimizim website të vjetra (shpejtësi, SEO, modernizim), monitoring dhe support.",
+      price: "Nga 100€ / muaj",
     },
   ],
   en: [
@@ -159,7 +165,7 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
     },
     {
       title: "Digital Marketing Strategy",
-      desc: "Business analysis and personalized strategy for real growth — positioning, objectives and concrete ideas.",
+      desc: "Business analysis and personalized strategy for real growth  positioning, objectives and concrete ideas.",
       price: "From €300/strategy",
     },
     {
@@ -183,18 +189,23 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
     },
     {
       title: "Website & landing pages",
-      desc: "Single-page (landing) or multi-page website — professional presence, contact forms, SEO.",
+      desc: "Single-page (landing) or multi-page website  professional presence, contact forms, SEO.",
       price: "From €400",
     },
     {
       title: "E-commerce",
-      desc: "Online store with products, inventory, payment and delivery — tailored solution for selling online.",
+      desc: "Online store with products, inventory, payment and delivery  tailored solution for selling online.",
       price: "On request",
     },
     {
       title: "SaaS & applications",
       desc: "Custom applications, platforms or software products for businesses or end users.",
       price: "On request",
+    },
+    {
+      title: "Maintenance & Optimization",
+      desc: "Website and e-commerce maintenance (updates, backups, security), optimization of old websites (speed, SEO, modernization), monitoring and support.",
+      price: "From €100/month",
     },
   ],
   de: [
@@ -233,18 +244,23 @@ const SERVICES_BY_LOCALE: Record<Locale, { title: string; desc: string; price?: 
     },
     {
       title: "Website & Landingpages",
-      desc: "Einzelseiten (Landing) oder mehrseitige Website — professioneller Auftritt, Kontaktformulare, SEO.",
+      desc: "Einzelseiten (Landing) oder mehrseitige Website  professioneller Auftritt, Kontaktformulare, SEO.",
       price: "Ab 400€",
     },
     {
       title: "E-Commerce",
-      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand — maßgeschneiderte Lösung für den Verkauf im Internet.",
+      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand  maßgeschneiderte Lösung für den Verkauf im Internet.",
       price: "Auf Anfrage",
     },
     {
       title: "SaaS & Anwendungen",
       desc: "Individuelle Anwendungen, Plattformen oder Softwareprodukte für Unternehmen oder Endnutzer.",
       price: "Auf Anfrage",
+    },
+    {
+      title: "Wartung & Optimierung",
+      desc: "Website- und E-Commerce-Wartung (Updates, Backups, Sicherheit), Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung), Monitoring und Support.",
+      price: "Ab 100€ / Monat",
     },
   ],
 };
@@ -253,7 +269,7 @@ const SERVICE_GROUP_INDICES = [
   [2, 5], // Strategy & planning (Digital Strategy, Consulting)
   [0, 1, 4], // Content & campaigns (Social, Content, Ads)
   [3], // Brand & identity (Branding)
-  [6, 7, 8, 9], // Training & build (Training, Website & landing, E-commerce, SaaS)
+  [6, 7, 8, 9, 10], // Training & build (Training, Website & landing, E-commerce, SaaS, Maintenance)
 ] as const;
 
 const SERVICE_GROUP_LABELS: Record<Locale, [string, string, string, string]> = {
@@ -262,29 +278,32 @@ const SERVICE_GROUP_LABELS: Record<Locale, [string, string, string, string]> = {
   de: ["Strategie & Planung", "Content & Kampagnen", "Marke & Identität", "Training & Umsetzung"],
 };
 
-// Simple filter tabs for services: Marketing, Brand, Trajnime, Website
+// Simple filter tabs for services: Marketing, Brand, Trajnime, Website, Mirembajtje
 const FILTER_TABS_BY_LOCALE: Record<Locale, { label: string; indices: number[] }[]> = {
   sq: [
     { label: "Marketing", indices: [0, 1, 2, 4, 5] }, // social, content, strategy, ads, consulting
     { label: "Brand", indices: [3] },
     { label: "Trajnime", indices: [6] },
-    { label: "Website", indices: [7, 8, 9] },
+    { label: "Website", indices: [7, 8, 9] }, // website-landing, ecommerce, saas
+    { label: "Mirembajtje", indices: [10] }, // maintenance
   ],
   en: [
     { label: "Marketing", indices: [0, 1, 2, 4, 5] },
     { label: "Brand", indices: [3] },
     { label: "Training", indices: [6] },
     { label: "Website", indices: [7, 8, 9] },
+    { label: "Maintenance", indices: [10] },
   ],
   de: [
     { label: "Marketing", indices: [0, 1, 2, 4, 5] },
     { label: "Brand", indices: [3] },
     { label: "Training", indices: [6] },
     { label: "Website", indices: [7, 8, 9] },
+    { label: "Wartung", indices: [10] },
   ],
 };
 
-const SERVICE_ANCHORS = ["social-media", "content", "strategy", "branding", "ads", "consulting", "training", "website-landing", "ecommerce", "saas"] as const;
+const SERVICE_ANCHORS = ["social-media", "content", "strategy", "branding", "ads", "consulting", "training", "website-landing", "ecommerce", "saas", "maintenance"] as const;
 
 const PRICE_TOOLTIP_BY_LOCALE: Record<Locale, string> = {
   sq: "Çmimi varet nga scope-i dhe kohëzgjatja. Na kontaktoni për ofertë të personalizuar.",
@@ -299,7 +318,7 @@ const RESULT_BY_SERVICE_INDEX: Record<Locale, Record<number, string>> = {
 };
 
 type Pkg = { title: string; subtitle: string; price: string; points: string[] };
-type PackageGroup = "marketing" | "brand" | "training" | "website";
+type PackageGroup = "marketing" | "brand" | "training" | "website" | "maintenance";
 
 const PACKAGES_BY_GROUP_AND_LOCALE: Record<Locale, Record<PackageGroup, Pkg[]>> = {
   sq: {
@@ -323,6 +342,11 @@ const PACKAGES_BY_GROUP_AND_LOCALE: Record<Locale, Record<PackageGroup, Pkg[]>> 
       { title: "Website", subtitle: "Multi-faqe", price: "Nga 800€", points: ["5–8 faqe", "Forma kontakt", "Mobile-friendly"] },
       { title: "E-commerce / SaaS", subtitle: "Projekt i dedikuar", price: "Ofertë", points: ["Dyqan online ose app", "Integrime", "Mbështetje"] },
     ],
+    maintenance: [
+      { title: "Bazë", subtitle: "Website, E-commerce, SaaS", price: "Nga 100€/muaj", points: ["Updates dhe backups", "Monitoring bazë", "Support email", "Siguri bazë", "Website, E-commerce dhe SaaS"] },
+      { title: "Standard", subtitle: "+ Optimizim", price: "Nga 200€/muaj", points: ["Bazë +", "Optimizim shpejtësie", "SEO monitoring", "Raportim mujor", "Mirembajtje E-commerce dhe SaaS"] },
+      { title: "Premium", subtitle: "Paketë e plotë", price: "Ofertë", points: ["Standard +", "Mirembajtje e plotë E-commerce", "Mirembajtje SaaS dhe aplikacione", "Optimizim i vazhdueshëm", "Support prioritet"] },
+    ],
   },
   en: {
     marketing: [
@@ -345,6 +369,11 @@ const PACKAGES_BY_GROUP_AND_LOCALE: Record<Locale, Record<PackageGroup, Pkg[]>> 
       { title: "Website", subtitle: "Multi-page", price: "From €800", points: ["5–8 pages", "Contact form", "Mobile-friendly"] },
       { title: "E-commerce / SaaS", subtitle: "Dedicated project", price: "On request", points: ["Online store or app", "Integrations", "Support"] },
     ],
+    maintenance: [
+      { title: "Basic", subtitle: "Website, E-commerce, SaaS", price: "From €100/mo", points: ["Updates and backups", "Basic monitoring", "Email support", "Basic security", "Website, E-commerce and SaaS"] },
+      { title: "Standard", subtitle: "+ Optimization", price: "From €200/mo", points: ["Basic +", "Speed optimization", "SEO monitoring", "Monthly reporting", "E-commerce and SaaS maintenance"] },
+      { title: "Premium", subtitle: "Full package", price: "On request", points: ["Standard +", "Full E-commerce maintenance", "SaaS and applications maintenance", "Ongoing optimization", "Priority support"] },
+    ],
   },
   de: {
     marketing: [
@@ -366,6 +395,11 @@ const PACKAGES_BY_GROUP_AND_LOCALE: Record<Locale, Record<PackageGroup, Pkg[]>> 
       { title: "Landing", subtitle: "Eine Seite", price: "Ab 400€", points: ["1 Conversion-Seite", "Responsives Design", "Basis-SEO"] },
       { title: "Website", subtitle: "Mehrseitig", price: "Ab 800€", points: ["5–8 Seiten", "Kontaktformular", "Mobile-friendly"] },
       { title: "E-Commerce / SaaS", subtitle: "Dediziertes Projekt", price: "Auf Anfrage", points: ["Online-Shop oder App", "Integrationen", "Support"] },
+    ],
+    maintenance: [
+      { title: "Basis", subtitle: "Website, E-Commerce, SaaS", price: "Ab 100€/Monat", points: ["Updates und Backups", "Basis-Monitoring", "E-Mail-Support", "Basis-Sicherheit", "Website, E-Commerce und SaaS"] },
+      { title: "Standard", subtitle: "+ Optimierung", price: "Ab 200€/Monat", points: ["Basis +", "Geschwindigkeitsoptimierung", "SEO-Monitoring", "Monatsreporting", "E-Commerce- und SaaS-Wartung"] },
+      { title: "Premium", subtitle: "Vollpaket", price: "Auf Anfrage", points: ["Standard +", "Vollständige E-Commerce-Wartung", "SaaS- und Anwendungs-Wartung", "Laufende Optimierung", "Prioritäts-Support"] },
     ],
   },
 };
@@ -404,6 +438,11 @@ const SERVICES_SECTION_COPY: Record<
     more: string;
     requestQuoteForGroup: string;
     packagesTitle: string;
+    packagesKicker: string;
+    packagesTitleBefore: string;
+    packagesTitleHighlight: string;
+    packagesIntro: string;
+    packagesAll: string;
   }
 > = {
   sq: {
@@ -417,6 +456,11 @@ const SERVICES_SECTION_COPY: Record<
     more: "Më shumë",
     requestQuoteForGroup: "Kërko ofertë për këto shërbime",
     packagesTitle: "Paketa",
+    packagesKicker: "Paketa",
+    packagesTitleBefore: "Paketa për ",
+    packagesTitleHighlight: "çdo nevojë",
+    packagesIntro: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website  paketa që përshtaten me biznesin tuaj.",
+    packagesAll: "Të gjitha",
   },
   en: {
     sectionKicker: "Services",
@@ -429,6 +473,11 @@ const SERVICES_SECTION_COPY: Record<
     more: "More",
     requestQuoteForGroup: "Request quote for these services",
     packagesTitle: "Packages",
+    packagesKicker: "Packages",
+    packagesTitleBefore: "Packages for ",
+    packagesTitleHighlight: "every need",
+    packagesIntro: "Ready-made solutions for marketing, brand, training and website  packages that fit your business.",
+    packagesAll: "All",
   },
   de: {
     sectionKicker: "Leistungen",
@@ -441,6 +490,11 @@ const SERVICES_SECTION_COPY: Record<
     more: "Mehr",
     requestQuoteForGroup: "Angebot für diese Leistungen",
     packagesTitle: "Pakete",
+    packagesKicker: "Pakete",
+    packagesTitleBefore: "Pakete für ",
+    packagesTitleHighlight: "jeden Bedarf",
+    packagesIntro: "Fertige Lösungen für Marketing, Marke, Training und Website  Pakete, die zu Ihrem Unternehmen passen.",
+    packagesAll: "Alle",
   },
 };
 
@@ -451,12 +505,12 @@ const CTA_BY_LOCALE: Record<
   sq: {
     title: "Le të punojmë bashkë dhe të krijojmë diçka të madhe",
     subtitle: "Na shkruaj për një audit të shpejtë ose për një plan konkret rritjeje.",
-    button: "Merr audit falas",
+    button: "Merr analizë falas",
     whyTitle: "Pse DARA?",
     whyBullets: [
       "Strategji e personalizuar, jo modele të gatshme",
       "Fokus te rezultatet dhe raportimi transparent",
-      "Ekip me përvojë — 7+ vjet në marketingu",
+      "Ekip me përvojë", // Years will be added dynamically
     ],
     newsletterNote: "Pa spam. Çdoherë mund të çabonësh.",
   },
@@ -468,7 +522,7 @@ const CTA_BY_LOCALE: Record<
     whyBullets: [
       "Tailored strategy, not one-size-fits-all",
       "Focus on results and transparent reporting",
-      "Experienced team — 7+ years in marketing",
+      "Experienced team", // Years will be added dynamically
     ],
     newsletterNote: "No spam. Unsubscribe anytime.",
   },
@@ -480,7 +534,7 @@ const CTA_BY_LOCALE: Record<
     whyBullets: [
       "Maßgeschneiderte Strategie, keine Standardlösung",
       "Fokus auf Ergebnisse und transparentes Reporting",
-      "Erfahrenes Team — 7+ Jahre im Marketing",
+      "Erfahrenes Team", // Years will be added dynamically
     ],
     newsletterNote: "Kein Spam. Jederzeit abmelden.",
   },
@@ -488,15 +542,15 @@ const CTA_BY_LOCALE: Record<
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
-    title: "DARA Marketing Agency — Guxo të jesh ndryshe",
+    title: "DARA Marketing Agency  Guxo të jesh ndryshe",
     description: "DARA Marketing Agency. Ndihmojmë bizneset të rriten përmes strategjive krijuese, marketingu digjital dhe përmbajtjes që konverton. 7+ vite përvojë, 100+ biznese.",
   },
   en: {
-    title: "DARA Marketing Agency — Dare to be Different",
+    title: "DARA Marketing Agency  Dare to be Different",
     description: "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content. 7+ years experience, 100+ businesses.",
   },
   de: {
-    title: "DARA Marketing Agency — Wage es, anders zu sein",
+    title: "DARA Marketing Agency  Wage es, anders zu sein",
     description: "DARA Marketing Agency. Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne. 7+ Jahre Erfahrung, 100+ Unternehmen.",
   },
 };
@@ -505,31 +559,42 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const meta = META_BY_LOCALE[l];
+  const yearsExp = getYearsOfExperienceFormatted();
+  // Replace years in description dynamically
+  const description = meta.description.replace(/7\+/, yearsExp);
   const base = "https://daramarketing.eu";
   const path = l === "en" ? "" : `/${l}`;
   const url = `${base}${path}`;
   return {
     title: meta.title,
-    description: meta.description,
+    description,
     openGraph: {
       title: meta.title,
-      description: meta.description,
+      description,
       url,
       siteName: "DARA Marketing Agency",
       type: "website",
     },
-    twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
+    twitter: { card: "summary_large_image", title: meta.title, description },
   };
 }
+
+// Use shared utility function for years of experience
 
 export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeFromParams } = use(params);
   const currentLocale = (localeFromParams as Locale) || "sq";
   const locale: Locale = ["sq", "en", "de"].includes(currentLocale) ? currentLocale : "sq";
 
+  const yearsExperienceFormatted = getYearsOfExperienceFormatted();
   const hero = HERO_BY_LOCALE[locale];
   const about = ABOUT_BY_LOCALE[locale];
-  const aboutStats = ABOUT_STATS_BY_LOCALE[locale];
+  const aboutStatsRaw = ABOUT_STATS_BY_LOCALE[locale];
+  // Replace the first stat (experience) with dynamic value
+  const aboutStats = [
+    { value: yearsExperienceFormatted, label: aboutStatsRaw[0].label },
+    ...aboutStatsRaw.slice(1),
+  ];
   const services = SERVICES_BY_LOCALE[locale];
   const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
@@ -544,14 +609,14 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     email: "daramarketing.eu@gmail.com",
     telephone: "+355688009988",
     sameAs: ["https://instagram.com/daramarketing.eu", "https://facebook.com/daramarketing.eu", "https://linkedin.com/company/daramarketing"],
-    foundingDate: "2022-05-01",
+    foundingDate: "2020-01-01",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 3 },
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* HERO — background, scroll indicator, social proof, fade-in */}
+      {/* HERO  background, scroll indicator, social proof, fade-in */}
       <section className="relative min-h-[85vh] flex flex-col justify-center px-4 py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.08)_0%,transparent_60%)]" aria-hidden />
         <div className="absolute inset-0 -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMS41Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" aria-hidden />
@@ -612,7 +677,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </a>
       </section>
 
-      {/* ABOUT US — scroll animations, stats visuals */}
+      {/* ABOUT US  scroll animations, stats visuals */}
       <section id="about" className="relative py-20 md:py-28">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(200,165,92,0.04)_50%,transparent_100%)]" />
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10 lg:p-12">
@@ -671,7 +736,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white/5 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
                   <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                    alt="DARA Marketing Agency — team and collaboration"
+                    alt="DARA Marketing Agency  team and collaboration"
                     width={900}
                     height={600}
                     className="h-full w-full object-cover"
@@ -703,7 +768,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeWorkSection locale={locale} />
 
-      {/* OUR TEAM — bios on hover, social links structure */}
+      {/* OUR TEAM  bios on hover, social links structure */}
       <section id="team" className="py-12 md:py-20">
         <div className="mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
@@ -728,7 +793,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? "7+ vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve." : locale === "de" ? "7+ Jahre im Marketing. Experte für Strategie und Unternehmenswachstum." : "7+ years in marketing. Expert in strategy and business growth.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? `${yearsExperienceFormatted} vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve.` : locale === "de" ? `${yearsExperienceFormatted} Jahre im Marketing. Experte für Strategie und Unternehmenswachstum.` : `${yearsExperienceFormatted} years in marketing. Expert in strategy and business growth.`, img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
             { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
             { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", bio: locale === "sq" ? "Specialist në rrjetet sociale dhe strategji përmbajtjeje." : locale === "de" ? "Spezialistin für Social Media und Content-Strategie." : "Specialist in social media and content strategy.", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
           ].map((member) => (
@@ -761,7 +826,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
       </section>
 
-      {/* CTA — Trusted by, trust badges, clearer hierarchy */}
+      {/* CTA  Trusted by, trust badges, clearer hierarchy */}
       <section className="py-12 md:py-20" aria-labelledby="cta-heading">
         <div className="rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-8 md:p-12">
           <p className="mb-6 text-center text-xs font-medium uppercase tracking-[0.2em] text-white/50">
@@ -783,12 +848,22 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   {cta.whyTitle}
                 </h3>
                 <ul className="mt-4 space-y-3">
-                  {cta.whyBullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start gap-3 text-sm text-white/85">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
-                      {bullet}
-                    </li>
-                  ))}
+                  {cta.whyBullets.map((bullet, idx) => {
+                    // Add years of experience to the third bullet (index 2)
+                    const displayBullet = idx === 2 && bullet.includes("Ekip") || bullet.includes("team") || bullet.includes("Team")
+                      ? locale === "sq"
+                        ? `Ekip me përvojë  ${yearsExperienceFormatted} vjet në marketingu`
+                        : locale === "de"
+                        ? `Erfahrenes Team  ${yearsExperienceFormatted} Jahre im Marketing`
+                        : `Experienced team  ${yearsExperienceFormatted} years in marketing`
+                      : bullet;
+                    return (
+                      <li key={bullet} className="flex items-start gap-3 text-sm text-white/85">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                        {displayBullet}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="mt-10">
@@ -820,13 +895,41 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     Rruga Donika Kastrioti, Bllok, Tirane, Albania
                   </a>
                 </p>
-                <p>
-                  <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">Instagram</a>
-                  {" · "}
-                  <a href="https://facebook.com/daramarketing.eu" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">Facebook</a>
-                  {" · "}
-                  <a href="https://linkedin.com/company/daramarketing" target="_blank" rel="noreferrer" className="hover:text-[#c8a55c] focus-visible:underline">LinkedIn</a>
-                </p>
+                <div className="flex items-center gap-3">
+                  <a 
+                    href="https://instagram.com/daramarketing.eu" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    aria-label="Instagram"
+                  >
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </a>
+                  <a 
+                    href="https://facebook.com/daramarketing.eu" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    aria-label="Facebook"
+                  >
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </a>
+                  <a 
+                    href="https://linkedin.com/company/daramarketing" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    aria-label="LinkedIn"
+                  >
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
               <div className="max-w-sm border-t border-white/10 pt-6">
                 <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">

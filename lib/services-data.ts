@@ -13,6 +13,7 @@ export const SERVICE_SLUGS = [
   "website-landing",
   "ecommerce",
   "saas",
+  "maintenance",
 ] as const;
 
 export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
@@ -69,6 +70,11 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
       price: "Ofertë",
     },
+    {
+      title: "Mirembajtje & Optimizim",
+      desc: "Mirembajtje website dhe e-commerce (updates, backups, siguri), optimizim website të vjetra (shpejtësi, SEO, modernizim), monitoring dhe support.",
+      price: "Nga 100€ / muaj",
+    },
   ],
   en: [
     {
@@ -119,6 +125,11 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       desc: "Custom applications, platforms or software products for businesses or end users.",
       price: "On request",
     },
+    {
+      title: "Maintenance & Optimization",
+      desc: "Website and e-commerce maintenance (updates, backups, security), optimization of old websites (speed, SEO, modernization), monitoring and support.",
+      price: "From €100/month",
+    },
   ],
   de: [
     {
@@ -168,6 +179,11 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       title: "SaaS & Anwendungen",
       desc: "Individuelle Anwendungen, Plattformen oder Softwareprodukte für Unternehmen oder Endnutzer.",
       price: "Auf Anfrage",
+    },
+    {
+      title: "Wartung & Optimierung",
+      desc: "Website- und E-Commerce-Wartung (Updates, Backups, Sicherheit), Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung), Monitoring und Support.",
+      price: "Ab 100€ / Monat",
     },
   ],
 };

@@ -16,9 +16,10 @@ const NAV_TRANSLATIONS: Record<
     home: string;
     services: string;
     viewAllServices: string;
+    packages: string;
     about: string;
     works: string;
-    process: string;
+    team: string;
     contact: string;
     getQuote: string;
     language: string;
@@ -28,9 +29,10 @@ const NAV_TRANSLATIONS: Record<
     home: "Kreu",
     services: "Shërbime",
     viewAllServices: "Të gjitha shërbimet",
+    packages: "Paketa",
     about: "Rreth nesh",
     works: "Punët",
-    process: "Procesi",
+    team: "Ekipi",
     contact: "Kontakt",
     getQuote: "Merr ofertë",
     language: "Gjuha",
@@ -39,9 +41,10 @@ const NAV_TRANSLATIONS: Record<
     home: "Home",
     services: "Services",
     viewAllServices: "All services",
+    packages: "Packages",
     about: "About",
     works: "Work",
-    process: "Process",
+    team: "Team",
     contact: "Contact",
     getQuote: "Get a quote",
     language: "Language",
@@ -50,9 +53,10 @@ const NAV_TRANSLATIONS: Record<
     home: "Startseite",
     services: "Leistungen",
     viewAllServices: "Alle Leistungen",
+    packages: "Pakete",
     about: "Über uns",
     works: "Referenzen",
-    process: "Prozess",
+    team: "Team",
     contact: "Kontakt",
     getQuote: "Angebot anfragen",
     language: "Sprache",
@@ -84,10 +88,11 @@ export default function Navbar() {
   const items: NavItem[] = useMemo(
     () => [
       { label: nav.home, href: "/" },
-      { label: nav.services, href: "/services" },
       { label: nav.about, href: "/about" },
+      { label: nav.services, href: "/services" },
+      { label: nav.packages, href: "/packages" },
       { label: nav.works, href: "/work" },
-      { label: nav.process, href: "/process" },
+      { label: nav.team, href: "/#team" },
       { label: nav.contact, href: "/contact" },
     ],
     [nav]

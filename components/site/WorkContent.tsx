@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import type { Project, ProjectCategory } from "@/lib/projects";
 import type { FilterTab } from "@/lib/projects";
+
+const THUMBNAIL_FALLBACK = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop";
 
 type Props = {
   locale: "sq" | "en" | "de";
@@ -19,13 +22,6 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
       ? projects
       : projects.filter((p) => p.category === activeFilter);
 
-  const heroLabels =
-    locale === "sq"
-      ? { kicker: "Puna", title: "Projektet", titleAccent: "e kaluara", desc: "Zgjedhje e markave që kemi ndihmuar të rriten përmes social media, brandingut dhe web dizajnit.", startProject: "Nis një projekt", ourServices: "Shërbimet tona" }
-      : locale === "de"
-      ? { kicker: "Arbeit", title: "Ausgewählte", titleAccent: "Projekte", desc: "Eine Auswahl von Marken, die wir durch Social Media, Branding und Webdesign zum Wachstum verholfen haben.", startProject: "Projekt starten", ourServices: "Unsere Leistungen" }
-      : { kicker: "Work", title: "Previous", titleAccent: "projects", desc: "A selection of brands we've helped grow through social media, branding, and web design.", startProject: "Start a project", ourServices: "Our services" };
-
   const ctaLabels =
     locale === "sq"
       ? { title: "Le të punojmë së bashku dhe të krijojmë", accent: "diçka të madhe", desc: "Na thuaj objektivin dhe ne do të kthehemi me një plan të qartë.", contact: "Na kontakto", backHome: "Kthehu në fillim" }
@@ -35,74 +31,102 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden py-12 md:py-20">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
-          <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-        </div>
-        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">{heroLabels.kicker}</p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
-          {heroLabels.title} <span className="text-yellow-400">{heroLabels.titleAccent}</span>
-        </h1>
-        <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">{heroLabels.desc}</p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <LocaleLink href="/contact" className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto">
-            {heroLabels.startProject}
-          </LocaleLink>
-          <LocaleLink href="/services" className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto">
-            {heroLabels.ourServices}
-          </LocaleLink>
-        </div>
-      </section>
-
-      {/* FILTER TABS */}
-      <section className="py-6">
-        <div className="-mx-4 overflow-x-auto px-4">
-          <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap">
-            {filterTabs.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => setActiveFilter(tab.key)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  activeFilter === tab.key ? "bg-yellow-400 text-black" : "border border-white/10 bg-white/5 text-white/70 hover:border-white/20 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+      {/* HEADER SECTION - Same as HomeWorkSection */}
+      <section id="work" className="py-12 md:py-20">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
+              {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
+              {locale === "sq" && (
+                <>
+                  Puna jonë <span className="text-[#c8a55c]">e zgjedhur</span>
+                </>
+              )}
+              {locale === "en" && (
+                <>
+                  Our <span className="text-[#c8a55c]">work</span>
+                </>
+              )}
+              {locale === "de" && (
+                <>
+                  Unsere <span className="text-[#c8a55c]">Arbeiten</span>
+                </>
+              )}
+            </h2>
+            <p className="mt-3 max-w-xl text-sm text-white/70">
+              {locale === "sq"
+                ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
+                : locale === "de"
+                ? "Verschiedene Projekte von Strategie und Social Media bis Brand und Schulungen."
+                : "From strategy and social media to brand and training — a selection of what we deliver."}
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* GRID */}
-      <section className="py-12 md:py-16">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((c) => (
-            <div key={c.title} className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 hover:border-yellow-400/30">
-              <div className="aspect-[4/3] w-full bg-gradient-to-b from-white/10 to-white/5" />
-              <div className="p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-medium">{c.title}</p>
-                  <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">{c.tag}</span>
-                </div>
-                <p className="mt-2 text-sm text-white/60">{c.desc}</p>
+        {/* FILTER TABS */}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {filterTabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveFilter(tab.key)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activeFilter === tab.key
+                  ? "bg-[#c8a55c] text-black"
+                  : "border border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* GRID WITH THUMBNAILS */}
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {filteredProjects.map((p) => (
+            <LocaleLink
+              key={p.title}
+              href="/work"
+              className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] transition hover:border-[#c8a55c]/25 hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(200,165,92,0.06)]"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-white/5">
+                <Image
+                  src={p.thumbnail ?? THUMBNAIL_FALLBACK}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition duration-300 group-hover:scale-105"
+                />
               </div>
-            </div>
+              <div className="p-5">
+                <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
+                  {p.tag}
+                </span>
+                <h3 className="mt-3 font-medium text-white/95 group-hover:text-[#c8a55c]/90">
+                  {p.title}
+                </h3>
+                <p className="mt-2 text-sm text-white/60 line-clamp-2">{p.desc}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
+                  {locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project"}
+                  <span className="transition group-hover:translate-x-0.5">→</span>
+                </span>
+              </div>
+            </LocaleLink>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-12 md:py-16">
-        <div className="rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6 md:p-10">
+        <div className="rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-6 md:p-10">
           <h2 className="text-2xl font-semibold md:text-3xl">
-            {ctaLabels.title} <span className="text-yellow-400">{ctaLabels.accent}</span>.
+            {ctaLabels.title} <span className="text-[#c8a55c]">{ctaLabels.accent}</span>.
           </h2>
           <p className="mt-2 max-w-2xl text-white/70">{ctaLabels.desc}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <LocaleLink href="/contact" className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-yellow-400 px-5 font-medium text-black hover:bg-yellow-300 sm:w-auto">
+            <LocaleLink href="/contact" className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#c8a55c] px-5 font-medium text-black hover:bg-[#b6944f] sm:w-auto">
               {ctaLabels.contact}
             </LocaleLink>
             <LocaleLink href="/" className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto">

@@ -14,7 +14,7 @@ const GROUP_ICONS = [
 ];
 
 type Pkg = { title: string; subtitle: string; price: string; points: string[] };
-type PackageGroup = "marketing" | "brand" | "training" | "website";
+type PackageGroup = "marketing" | "brand" | "training" | "website" | "maintenance";
 
 type Props = {
   locale: Locale;
@@ -39,6 +39,11 @@ type Props = {
     more: string;
     requestQuoteForGroup: string;
     packagesTitle: string;
+    packagesKicker: string;
+    packagesTitleBefore: string;
+    packagesTitleHighlight: string;
+    packagesIntro: string;
+    packagesAll: string;
   };
 };
 
@@ -60,7 +65,7 @@ export default function ServicesSection({
   const [activePackageTab, setActivePackageTab] = useState<number>(0);
   const [tooltipCard, setTooltipCard] = useState<number | null>(null);
 
-  const PACKAGE_GROUPS: PackageGroup[] = ["marketing", "brand", "training", "website"];
+  const PACKAGE_GROUPS: PackageGroup[] = ["marketing", "brand", "training", "website", "maintenance"];
   const packageTabLabels = [copy.allServices, ...packageFilterTabs.map((t) => t.label)];
 
   const visibleGroups =
@@ -231,9 +236,18 @@ export default function ServicesSection({
 
       {/* Packages: filter + paketa për çdo lloj shërbimi */}
       <div className="mt-16 md:mt-20">
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
-          {copy.packagesTitle}
-        </h3>
+        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
+          <div>
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
+              {copy.packagesKicker}
+            </span>
+            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
+              {copy.packagesTitleBefore}
+              <span className="text-[#c8a55c]">{copy.packagesTitleHighlight}</span>
+            </h2>
+            <p className="mt-3 max-w-xl text-sm text-white/60">{copy.packagesIntro}</p>
+          </div>
+        </div>
         <div className="mb-6 flex flex-wrap gap-2">
           {packageTabLabels.map((label, idx) => (
             <button

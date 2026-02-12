@@ -2,14 +2,16 @@
 import Image from "next/image";
 import { use } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
+import AnimateIn from "@/components/site/AnimateIn";
 import type { Metadata } from "next";
+import { getYearsOfExperienceFormatted } from "@/lib/experience";
 
 type Locale = "sq" | "en" | "de";
 
 export const metadata: Metadata = {
   title: "About DARA",
   description:
-    "DARA Marketing Agency — established May 1, 2022. Helping businesses grow through creative strategies and results-oriented marketing.",
+    "DARA Marketing Agency — established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
 };
 
 const HERO_BY_LOCALE: Record<
@@ -27,15 +29,15 @@ const HERO_BY_LOCALE: Record<
     kicker: "Rreth nesh",
     title: "Ne jemi DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency është agjencia juaj e marketingut — themeluar më 1 maj 2022. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
+      "DARA Marketing Agency është agjencia juaj e marketingut — themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
       "Ekipi ynë kombinojnë kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset lokale dhe ndërkombëtare të bëhen histori suksesi.",
     ],
     stats: [
-      { k: "Themeluar", v: "1 Maj 2022" },
+      { k: "Themeluar", v: "2020" },
       { k: "DARA", v: "Guxo të jesh ndryshe" },
       { k: "Fokus", v: "Rezultatet & rritja" },
-      { k: "Ekipi", v: "7+ vite përvojë" },
+      { k: "Ekipi", v: "" }, // Will be replaced dynamically
     ],
     ctaWork: "Shiko punën tonë",
     ctaContact: "Na kontakto",
@@ -44,15 +46,15 @@ const HERO_BY_LOCALE: Record<
     kicker: "About us",
     title: "We are DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency is your marketing partner — established on 1 May 2022. We help businesses grow through creative strategies and results-oriented marketing.",
+      "DARA Marketing Agency is your marketing partner — established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
       "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
       "Our team combines creativity, experience and a hands-on approach to help local and international businesses become success stories.",
     ],
     stats: [
-      { k: "Established", v: "1 May 2022" },
+      { k: "Established", v: "2020" },
       { k: "DARA", v: "Dare to be different" },
       { k: "Focus", v: "Results & growth" },
-      { k: "Team", v: "7+ years experience" },
+      { k: "Team", v: "" }, // Will be replaced dynamically
     ],
     ctaWork: "View our work",
     ctaContact: "Contact us",
@@ -61,18 +63,114 @@ const HERO_BY_LOCALE: Record<
     kicker: "Über uns",
     title: "Wir sind DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency ist Ihre Marketing-Partnerin — gegründet am 1. Mai 2022. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
+      "DARA Marketing Agency ist Ihre Marketing-Partnerin — gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
       "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
       "Unser Team verbindet Kreativität, Erfahrung und einen praxisnahen Ansatz, um lokale und internationale Unternehmen zu Erfolgsgeschichten zu machen.",
     ],
     stats: [
-      { k: "Gegründet", v: "1. Mai 2022" },
+      { k: "Gegründet", v: "2020" },
       { k: "DARA", v: "Wage es, anders zu sein" },
       { k: "Fokus", v: "Ergebnisse & Wachstum" },
-      { k: "Team", v: "7+ Jahre Erfahrung" },
+      { k: "Team", v: "" }, // Will be replaced dynamically
     ],
     ctaWork: "Unsere Arbeiten",
     ctaContact: "Kontaktiere uns",
+  },
+};
+
+const PROCESS_BY_LOCALE: Record<
+  Locale,
+  { sectionTitle: string; sectionDesc: string; steps: Array<{ n: string; title: string; desc: string; bullets: string[] }> }
+> = {
+  sq: {
+    sectionTitle: "Si punojmë",
+    sectionDesc: "Proces i qartë me hapa të përcaktuar — nga audit te optimizim dhe rritje.",
+    steps: [
+      {
+        n: "01",
+        title: "Audit & Discovery",
+        desc: "E kuptojmë biznesin, ofertën, audiencën, dhe ku po humbin konvertimet.",
+        bullets: ["Audit website + funnel", "Konkurrenca & positioning", "KPI + objektiva", "Plan 7–30 ditë"],
+      },
+      {
+        n: "02",
+        title: "Strategy & Assets",
+        desc: "Ndërtojmë planin dhe asetet që e bëjnë marketingun të performojë realisht.",
+        bullets: ["Landing pages / UX", "Tracking (events + pixels)", "Creative & copy", "Content calendar"],
+      },
+      {
+        n: "03",
+        title: "Launch & Testing",
+        desc: "Nisim me strukturë, jo \"random ads\". Pastaj testojmë për fitues.",
+        bullets: ["Campaign structure", "A/B testing", "Budget allocation", "Offer iterations"],
+      },
+      {
+        n: "04",
+        title: "Optimize & Scale",
+        desc: "Optimizojmë çdo javë dhe skalojmë vetëm atë që sjell rezultat.",
+        bullets: ["Weekly reporting", "CRO improvements", "Scale winners", "New creative cycles"],
+      },
+    ],
+  },
+  en: {
+    sectionTitle: "How we work",
+    sectionDesc: "Clear process with defined steps — from audit to optimization and growth.",
+    steps: [
+      {
+        n: "01",
+        title: "Audit & Discovery",
+        desc: "We understand your business, offer, audience, and where conversions are lost.",
+        bullets: ["Website + funnel audit", "Competition & positioning", "KPI & objectives", "7–30 day plan"],
+      },
+      {
+        n: "02",
+        title: "Strategy & Assets",
+        desc: "We build the plan and assets that make marketing perform in the real world.",
+        bullets: ["Landing pages / UX", "Tracking (events + pixels)", "Creative & copy", "Content calendar"],
+      },
+      {
+        n: "03",
+        title: "Launch & Testing",
+        desc: "We launch with structure, not random ads. Then we test for winners.",
+        bullets: ["Campaign structure", "A/B testing", "Budget allocation", "Offer iterations"],
+      },
+      {
+        n: "04",
+        title: "Optimize & Scale",
+        desc: "We optimize every week and scale only what delivers results.",
+        bullets: ["Weekly reporting", "CRO improvements", "Scale winners", "New creative cycles"],
+      },
+    ],
+  },
+  de: {
+    sectionTitle: "Wie wir arbeiten",
+    sectionDesc: "Klarer Prozess mit definierten Schritten — vom Audit bis zur Optimierung und zum Wachstum.",
+    steps: [
+      {
+        n: "01",
+        title: "Audit & Discovery",
+        desc: "Wir verstehen Ihr Geschäft, Ihr Angebot, die Zielgruppe und wo Konversionen verloren gehen.",
+        bullets: ["Website- + Funnel-Audit", "Wettbewerb & Positionierung", "KPI & Ziele", "7–30 Tage Plan"],
+      },
+      {
+        n: "02",
+        title: "Strategy & Assets",
+        desc: "Wir erstellen den Plan und die Assets, die Marketing in der Praxis wirksam machen.",
+        bullets: ["Landing Pages / UX", "Tracking (Events + Pixels)", "Creative & Copy", "Content-Kalender"],
+      },
+      {
+        n: "03",
+        title: "Launch & Testing",
+        desc: "Wir starten mit Struktur, keine zufälligen Ads. Dann testen wir auf Gewinner.",
+        bullets: ["Kampagnenstruktur", "A/B-Tests", "Budgetverteilung", "Angebots-Iterationen"],
+      },
+      {
+        n: "04",
+        title: "Optimize & Scale",
+        desc: "Wir optimieren wöchentlich und skalieren nur, was Ergebnisse liefert.",
+        bullets: ["Wöchentliches Reporting", "CRO-Verbesserungen", "Gewinner skalieren", "Neue Creative-Zyklen"],
+      },
+    ],
   },
 };
 
@@ -285,7 +383,26 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
   const { locale: localeFromParams } = use(params);
   const locale: Locale = ["sq", "en", "de"].includes(localeFromParams as Locale) ? (localeFromParams as Locale) : "sq";
 
-  const hero = HERO_BY_LOCALE[locale];
+  const yearsExpFormatted = getYearsOfExperienceFormatted();
+  const heroRaw = HERO_BY_LOCALE[locale];
+  // Replace experience stat dynamically
+  const hero = {
+    ...heroRaw,
+    stats: heroRaw.stats.map((stat) =>
+      stat.k === "Ekipi" || stat.k === "Team"
+        ? {
+            ...stat,
+            v:
+              locale === "sq"
+                ? `${yearsExpFormatted} vite përvojë`
+                : locale === "de"
+                ? `${yearsExpFormatted} Jahre Erfahrung`
+                : `${yearsExpFormatted} years experience`,
+          }
+        : stat
+    ),
+  };
+  const process = PROCESS_BY_LOCALE[locale];
   const missionVision = MISSION_VISION_BY_LOCALE[locale];
   const differentiators = DIFFERENTIATORS_BY_LOCALE[locale];
   const target = TARGET_BY_LOCALE[locale];
@@ -364,6 +481,47 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
             </div>
             <div className="absolute -bottom-4 -right-4 -z-10 h-3/4 w-full rounded-3xl bg-[#c8a55c]/10 blur-2xl" />
           </div>
+        </div>
+      </section>
+
+      {/* PROCESS - How we work */}
+      <section id="process" className="py-14 md:py-20">
+        <AnimateIn delay={0}>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
+            {process.sectionTitle}
+          </p>
+        </AnimateIn>
+        <AnimateIn delay={100}>
+          <h2 className="mt-4 font-display text-2xl font-semibold md:text-3xl lg:text-4xl">
+            {process.sectionTitle}
+          </h2>
+          <p className="mt-3 max-w-2xl text-white/60">{process.sectionDesc}</p>
+        </AnimateIn>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {process.steps.map((step, idx) => (
+            <AnimateIn key={step.n} delay={idx * 100}>
+              <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 transition-all duration-300 hover:border-[#c8a55c]/30 hover:bg-gradient-to-br hover:from-white/[0.1] hover:to-white/[0.05] hover:shadow-[0_0_30px_rgba(200,165,92,0.1)]">
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="text-3xl font-bold text-[#c8a55c]/30">{step.n}</span>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#c8a55c]/20 to-transparent ml-4" />
+                </div>
+                <h3 className="text-lg font-semibold text-white/95 transition group-hover:text-[#c8a55c]/90">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">{step.desc}</p>
+                <ul className="mt-5 space-y-2">
+                  {step.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2 text-xs text-white/60">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c8a55c]" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-[#c8a55c]/0 to-[#c8a55c]/0 transition group-hover:from-[#c8a55c]/5 group-hover:to-transparent" />
+              </div>
+            </AnimateIn>
+          ))}
         </div>
       </section>
 
