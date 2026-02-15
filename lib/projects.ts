@@ -4,9 +4,15 @@ export type Locale = "sq" | "en" | "de";
 
 export type ProjectCategory = "social-media" | "brand" | "website";
 
-export type Project = { title: string; tag: string; desc: string; category: ProjectCategory; thumbnail?: string };
+export type Project = {
+  title: string;
+  tag: string;
+  desc: string;
+  category: ProjectCategory;
+  thumbnail?: string;
+};
 
-// Thumbnails: placeholder Unsplash images (replace with real project covers)
+// Unsplash thumbnails (used for social-media projects)
 const THUMBNAILS = [
   "https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop",
@@ -18,57 +24,60 @@ const THUMBNAILS = [
   "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop",
 ];
+
+// ----------------------
+// 🇦🇱 ALBANIAN
+// ----------------------
 
 const projectsSq: Project[] = [
-  { title: "Don Mare Hotel & Restaurant", tag: "Social Media", desc: "Hotel dhe restorant komod në Dhërmi. Ndërtuam prezencën në rrjetet sociale për të tërhequr klientë të rinj.", category: "social-media", thumbnail: THUMBNAILS[0] },
-  { title: "355 Black", tag: "Social Media", desc: "Dyqan telefoni dhe aksesorësh në Tiranë. Rritëm prezencën në rrjete sociale dhe angazhimin e audiencës.", category: "social-media", thumbnail: THUMBNAILS[1] },
-  { title: "Aia Hotel & Apartments", tag: "Social Media", desc: "Hotel & apartamente në Tiranë. Forcuam prezencën e tyre digjitale për më shumë rezervime.", category: "social-media", thumbnail: THUMBNAILS[2] },
-  { title: "Zorada", tag: "Social Media", desc: "Brand bizhuterish premium. Krijuam përmbajtje që thekson elegancën dhe ekskluzivitetin.", category: "social-media", thumbnail: THUMBNAILS[3] },
-  { title: "City Fitness Club", tag: "Social Media", desc: "Palestër në Tiranë. Ndërtuam sistem përmbajtjeje që angazhon dhe sjell anëtarë të rinj.", category: "social-media", thumbnail: THUMBNAILS[4] },
-  { title: "Cara Dental Clinic", tag: "Social Media", desc: "Klinikë dentare në Tiranë. Ndihmuam në rritjen e besueshmërisë dhe kërkesave të pacientëve online.", category: "social-media", thumbnail: THUMBNAILS[5] },
-  { title: "Premium International Real Estate", tag: "Social Media", desc: "Agjenci për prona luksoze. Krijuam prezencë që flet me klientët me vlerë të lartë.", category: "social-media", thumbnail: THUMBNAILS[6] },
-  { title: "Nova Real Estate", tag: "Social Media", desc: "Agjenci imobiliare. Përmirësuam komunikimin vizual dhe gjenerimin e lead‑eve.", category: "social-media", thumbnail: THUMBNAILS[7] },
-  { title: "Icon Store", tag: "Social Media", desc: "Dyqan mode & aksesorësh. Rritëm reach dhe shitjet përmes përmbajtjes kreative.", category: "social-media", thumbnail: THUMBNAILS[8] },
-  { title: "DD Store", tag: "Social Media", desc: "Veshje për gra. Optimizuam komunikimin vizual për audiencën femërore.", category: "social-media", thumbnail: THUMBNAILS[9] },
-  { title: "KOA Consulting", tag: "Social Media & Logo", desc: "Kompani konsulence financiare. Krijuam identitet vizual dhe komunikim profesional.", category: "social-media", thumbnail: THUMBNAILS[10] },
-  { title: "Endis Store", tag: "Brand Identity", desc: "Dyqan me produkte premium. Ndërtuam identitet të fortë brand‑i dhe prezencë online.", category: "brand", thumbnail: THUMBNAILS[11] },
-  { title: "Taxi Service Dhermi", tag: "Web Design", desc: "Shërbim taksie në Dhërmi. Krijuam website të thjeshtë dhe miqësor për rezervime online.", category: "website", thumbnail: THUMBNAILS[12] },
+  // --- Social Media ---
+  { title: "Albalink", tag: "Social Media", desc: "Menaxhim dhe rritje e prezencës në rrjetet sociale.", category: "social-media", thumbnail: THUMBNAILS[0] },
+  { title: "Am Services", tag: "Social Media", desc: "Strategji dhe përmbajtje për rritje të audiencës.", category: "social-media", thumbnail: THUMBNAILS[1] },
+  { title: "Arome.edit", tag: "Social Media", desc: "Identitet vizual dhe përmbajtje kreative.", category: "social-media", thumbnail: THUMBNAILS[2] },
+  { title: "Bos Cleaners", tag: "Social Media", desc: "Ndërtim i prezencës online.", category: "social-media", thumbnail: THUMBNAILS[3] },
+  { title: "Brows By Anila", tag: "Social Media", desc: "Menaxhim rrjetesh për brand bukurie.", category: "social-media", thumbnail: THUMBNAILS[4] },
+  { title: "Churros", tag: "Social Media", desc: "Strategji për brand ushqimi.", category: "social-media", thumbnail: THUMBNAILS[5] },
+  { title: "DDstore", tag: "Social Media", desc: "Marketing për e-commerce.", category: "social-media", thumbnail: THUMBNAILS[6] },
+  { title: "DTEC", tag: "Social Media", desc: "Komunikim për brand teknologjie.", category: "social-media", thumbnail: THUMBNAILS[7] },
+  { title: "Gentjana", tag: "Social Media", desc: "Personal brand management.", category: "social-media", thumbnail: THUMBNAILS[8] },
+  { title: "La Campagna 5 biznese", tag: "Social Media", desc: "Menaxhim për disa biznese.", category: "social-media", thumbnail: THUMBNAILS[9] },
+
+  // --- Brand Identity (LOCAL PNG LOGOS) ---
+  { title: "Albalink International", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Albalink_International.png" },
+  { title: "Altana Longevity Concept", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Altana_Longevity_Concept.png" },
+  { title: "Arome Edit", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Arome_Edit.png" },
+  { title: "Gentjana Marku — Avokate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Gentjana_Marku-Avokate.png" },
+  { title: "Kladji Hidrosanitare", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Klajdi_Hidrosanitare.png" },
+  { title: "Marku Real Estate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/Marku_Real_Estate.png" },
 ];
+
+// ----------------------
+// 🇬🇧 ENGLISH
+// ----------------------
 
 const projectsEn: Project[] = [
-  { title: "Don Mare Hotel & Restaurant", tag: "Social Media", desc: "A cosy hotel and restaurant in Dhermi. We shaped their social presence to attract new guests.", category: "social-media", thumbnail: THUMBNAILS[0] },
-  { title: "355 Black", tag: "Social Media", desc: "Mobile phones & accessories store in Tirana. We improved their social media presence and engagement.", category: "social-media", thumbnail: THUMBNAILS[1] },
-  { title: "Aia Hotel & Apartments", tag: "Social Media", desc: "Hotel & apartments in Tirana. We strengthened their digital presence to drive more bookings.", category: "social-media", thumbnail: THUMBNAILS[2] },
-  { title: "Zorada", tag: "Social Media", desc: "Premium jewellery brand. We created content that highlights their unique and elegant pieces.", category: "social-media", thumbnail: THUMBNAILS[3] },
-  { title: "City Fitness Club", tag: "Social Media", desc: "Fitness club in Tirana. We built a content system that engages and brings in new members.", category: "social-media", thumbnail: THUMBNAILS[4] },
-  { title: "Cara Dental Clinic", tag: "Social Media", desc: "Dental clinic in Tirana. We helped increase trust and patient enquiries through social media.", category: "social-media", thumbnail: THUMBNAILS[5] },
-  { title: "Premium International Real Estate", tag: "Social Media", desc: "Luxury real estate agency. We strengthened their presence towards high‑value clients.", category: "social-media", thumbnail: THUMBNAILS[6] },
-  { title: "Nova Real Estate", tag: "Social Media", desc: "Real estate agency. We improved their visual communication and lead generation.", category: "social-media", thumbnail: THUMBNAILS[7] },
-  { title: "Icon Store", tag: "Social Media", desc: "Fashion & lifestyle store. We increased reach and sales through creative content.", category: "social-media", thumbnail: THUMBNAILS[8] },
-  { title: "DD Store", tag: "Social Media", desc: "Women's clothing store. We optimised their content for a fashion‑forward audience.", category: "social-media", thumbnail: THUMBNAILS[9] },
-  { title: "KOA Consulting", tag: "Social Media & Logo", desc: "Financial consulting company. We created their visual identity and professional presence.", category: "social-media", thumbnail: THUMBNAILS[10] },
-  { title: "Endis Store", tag: "Brand Identity", desc: "Premium products store. We developed a strong brand identity and online presence.", category: "brand", thumbnail: THUMBNAILS[11] },
-  { title: "Taxi Service Dhermi", tag: "Web Design", desc: "Taxi service in Dhermi. We designed an easy‑to‑use website for online bookings.", category: "website", thumbnail: THUMBNAILS[12] },
+  ...projectsSq.map((p) => ({
+    ...p,
+    desc:
+      p.category === "brand"
+        ? "Logo and brand identity."
+        : "Social media management and strategy.",
+  })),
 ];
 
+// ----------------------
+// 🇩🇪 GERMAN
+// ----------------------
+
 const projectsDe: Project[] = [
-  { title: "Don Mare Hotel & Restaurant", tag: "Social Media", desc: "Gemütliches Hotel und Restaurant in Dhërmi. Wir haben ihren Social‑Media‑Auftritt für mehr Gäste optimiert.", category: "social-media", thumbnail: THUMBNAILS[0] },
-  { title: "355 Black", tag: "Social Media", desc: "Handy‑ und Zubehörshop in Tirana. Wir haben ihre Präsenz und das Engagement in sozialen Medien gesteigert.", category: "social-media", thumbnail: THUMBNAILS[1] },
-  { title: "Aia Hotel & Apartments", tag: "Social Media", desc: "Hotel & Apartments in Tirana. Wir haben ihre digitale Präsenz gestärkt, um mehr Buchungen zu erzielen.", category: "social-media", thumbnail: THUMBNAILS[2] },
-  { title: "Zorada", tag: "Social Media", desc: "Premium‑Schmuckmarke. Wir entwickelten Content, der die Eleganz und Einzigartigkeit der Stücke zeigt.", category: "social-media", thumbnail: THUMBNAILS[3] },
-  { title: "City Fitness Club", tag: "Social Media", desc: "Fitnessstudio in Tirana. Wir bauten ein Content‑System auf, das Mitglieder gewinnt und bindet.", category: "social-media", thumbnail: THUMBNAILS[4] },
-  { title: "Cara Dental Clinic", tag: "Social Media", desc: "Zahnklinik in Tirana. Wir erhöhten Vertrauen und Anfragen durch gezieltes Social‑Media‑Marketing.", category: "social-media", thumbnail: THUMBNAILS[5] },
-  { title: "Premium International Real Estate", tag: "Social Media", desc: "Agentur für Luxusimmobilien. Wir stärkten die Marke gegenüber anspruchsvollen Käufern und Investoren.", category: "social-media", thumbnail: THUMBNAILS[6] },
-  { title: "Nova Real Estate", tag: "Social Media", desc: "Immobilienagentur. Wir verbesserten die visuelle Kommunikation und Lead‑Generierung.", category: "social-media", thumbnail: THUMBNAILS[7] },
-  { title: "Icon Store", tag: "Social Media", desc: "Mode‑ und Lifestyle‑Store. Wir steigerten Reichweite und Verkäufe mit kreativem Content.", category: "social-media", thumbnail: THUMBNAILS[8] },
-  { title: "DD Store", tag: "Social Media", desc: "Mode für Frauen. Wir optimierten den Auftritt für eine modebewusste Zielgruppe.", category: "social-media", thumbnail: THUMBNAILS[9] },
-  { title: "KOA Consulting", tag: "Social Media & Logo", desc: "Beratungsunternehmen im Finanzbereich. Wir entwickelten ihre visuelle Identität und Online‑Präsenz.", category: "social-media", thumbnail: THUMBNAILS[10] },
-  { title: "Endis Store", tag: "Brand Identity", desc: "Store für Premium‑Produkte. Wir bauten eine starke Markenidentität und Social‑Media‑Präsenz auf.", category: "brand", thumbnail: THUMBNAILS[11] },
-  { title: "Taxi Service Dhermi", tag: "Webdesign", desc: "Taxi‑Service in Dhërmi. Wir gestalteten eine benutzerfreundliche Website für Online‑Buchungen.", category: "website", thumbnail: THUMBNAILS[12] },
+  ...projectsSq.map((p) => ({
+    ...p,
+    desc:
+      p.category === "brand"
+        ? "Logo und Markenidentität."
+        : "Social-Media-Management und Strategie.",
+  })),
 ];
 
 export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {
