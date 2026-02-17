@@ -12,18 +12,21 @@ export type Project = {
   thumbnail?: string;
 };
 
-// Unsplash thumbnails (used for social-media projects)
+// ----------------------
+// Local & External Thumbnails
+// ----------------------
+
 const THUMBNAILS = [
-  "https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1556740758-90de374c12ad?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop",
+  "/images/projects/social-media/albalink/albalink_international_6.webp",
+  "/images/projects/social-media/am_services/am_services_8.webp",
+  "/images/projects/social-media/arome.edit/arome.edit_1.webp",
+  "/images/projects/social-media/bos_cleaners/bos_cleaners_6.webp",
+  "/images/projects/social-media/brows_by_anila/brows_by_anila_3.jpeg",
+  "/images/projects/social-media/churros/churros_1.jpeg",
+  "/images/projects/social-media/ddstore/ddstore_5.webp",
+  "/images/projects/social-media/dtec/dtec_4.webp",
+  "/images/projects/social-media/gentjana/gentjana_4.webp",
+  "/images/projects/social-media/la_campagna/la_campagna_chard/la_campagna_chard_9.jpeg",
 ];
 
 // ----------------------
@@ -40,45 +43,82 @@ const projectsSq: Project[] = [
   { title: "Churros", tag: "Social Media", desc: "Strategji për brand ushqimi.", category: "social-media", thumbnail: THUMBNAILS[5] },
   { title: "DDstore", tag: "Social Media", desc: "Marketing për e-commerce.", category: "social-media", thumbnail: THUMBNAILS[6] },
   { title: "DTEC", tag: "Social Media", desc: "Komunikim për brand teknologjie.", category: "social-media", thumbnail: THUMBNAILS[7] },
-  { title: "Gentjana", tag: "Social Media", desc: "Personal brand management.", category: "social-media", thumbnail: THUMBNAILS[8] },
-  { title: "La Campagna 5 biznese", tag: "Social Media", desc: "Menaxhim për disa biznese.", category: "social-media", thumbnail: THUMBNAILS[9] },
+  { title: "Gentjana Marku", tag: "Social Media", desc: "Personal brand management.", category: "social-media", thumbnail: THUMBNAILS[8] },
+  { title: "La Campagna", tag: "Social Media", desc: "Menaxhim për disa biznese.", category: "social-media", thumbnail: THUMBNAILS[9] },
 
-  // --- Brand Identity (LOCAL PNG LOGOS) ---
+  // --- Brand Identity ---
   { title: "Albalink International", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/ai.png" },
   { title: "Altana Longevity Concept", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/alc.png" },
   { title: "Arome Edit", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/ae.png" },
   { title: "Gentjana Marku — Avokate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/gma.png" },
   { title: "Klajdi Hidrosanitare", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/klajdi-h.png" },
   { title: "Marku Real Estate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/mre.png" },
+
+  // --- Website ---
+  {
+    title: "Dara Marketing",
+    tag: "Website",
+    desc: "Website modern për agjenci marketingu me fokus në lead generation.",
+    category: "website",
+    thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+  },
+  {
+    title: "Luxury Stay Dhermi",
+    tag: "Website",
+    desc: "Website për hotel boutique me sistem rezervimi.",
+    category: "website",
+    thumbnail: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=600&h=400&fit=crop",
+  },
+  {
+    title: "Elite Construction",
+    tag: "Website",
+    desc: "Website korporativ me galeri projektesh dhe prezantim shërbimesh.",
+    category: "website",
+    thumbnail: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop",
+  },
+  {
+    title: "HealthPlus Clinic",
+    tag: "Website",
+    desc: "Website për klinikë private me strukturë informative të qartë.",
+    category: "website",
+    thumbnail: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=600&h=400&fit=crop",
+  },
+  {
+    title: "Urban Fashion Store",
+    tag: "Website",
+    desc: "E-commerce website për brand mode me fokus në konvertime.",
+    category: "website",
+    thumbnail: "https://images.unsplash.com/photo-1521334884684-d80222895322?w=600&h=400&fit=crop",
+  },
 ];
 
 // ----------------------
 // 🇬🇧 ENGLISH
 // ----------------------
 
-const projectsEn: Project[] = [
-  ...projectsSq.map((p) => ({
-    ...p,
-    desc:
-      p.category === "brand"
-        ? "Logo and brand identity."
-        : "Social media management and strategy.",
-  })),
-];
+const projectsEn: Project[] = projectsSq.map((p) => ({
+  ...p,
+  desc:
+    p.category === "brand"
+      ? "Logo and brand identity."
+      : p.category === "website"
+      ? "Website design and development."
+      : "Social media management and strategy.",
+}));
 
 // ----------------------
 // 🇩🇪 GERMAN
 // ----------------------
 
-const projectsDe: Project[] = [
-  ...projectsSq.map((p) => ({
-    ...p,
-    desc:
-      p.category === "brand"
-        ? "Logo und Markenidentität."
-        : "Social-Media-Management und Strategie.",
-  })),
-];
+const projectsDe: Project[] = projectsSq.map((p) => ({
+  ...p,
+  desc:
+    p.category === "brand"
+      ? "Logo und Markenidentität."
+      : p.category === "website"
+      ? "Webdesign und Entwicklung."
+      : "Social-Media-Management und Strategie.",
+}));
 
 export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {
   sq: projectsSq,
