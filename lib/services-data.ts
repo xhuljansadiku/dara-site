@@ -30,15 +30,17 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Krijim përmbajtjeje",
       desc: "Foto, video, reels dhe materiale kreative që reflektojnë identitetin e brand-it dhe tërheqin audiencën e duhur.",
+      price: "Ofertë sipas nevojës",
     },
     {
       title: "Strategji marketingu digjital",
       desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale — pozicionim, objektiva dhe ide konkrete zhvillimi.",
-      price: "Nga 300€ / strategji",
+      price: "Nga 400€ / strategji",
     },
     {
       title: "Branding & identitet vizual",
       desc: "Krijim ose rifreskim i identitetit të brand-it — logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
+      price: "Nga 500€",
     },
     {
       title: "Menaxhim reklamash (Meta & Google)",
@@ -48,7 +50,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Konsulencë marketingu",
       desc: "Konsulencë strategjike për biznese ose individë që duan të rrisin performancën dhe të qartësojnë drejtimin e marketingut.",
-      price: "Nga 80€ / seancë",
+      price: "Nga 100€ / seancë",
     },
     {
       title: "Trajnime marketingu & rrjete sociale",
@@ -63,24 +65,24 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "E-commerce",
       desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim — zgjidhje e përshtatshme për shitje në internet.",
-      price: "Ofertë",
+      price: "Nga 1,200€",
     },
     {
       title: "SaaS & aplikacione",
       desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
-      price: "Ofertë",
+      price: "Nga 4,000€",
     },
     {
       title: "Mirembajtje & Optimizim",
       desc: "Mirembajtje website dhe e-commerce (updates, backups, siguri), optimizim website të vjetra (shpejtësi, SEO, modernizim), monitoring dhe support.",
-      price: "Nga 100€ / muaj",
+      price: "Nga 120€ / muaj",
     },
   ],
   en: [
     {
       title: "Social Media Management",
       desc: "Content strategy, post creation, planning and performance analysis to increase brand presence and engagement.",
-      price: "From €250/month",
+      price: "From €400/month",
     },
     {
       title: "Content Creation",
@@ -89,7 +91,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Digital Marketing Strategy",
       desc: "Business analysis and personalized strategy for real growth — positioning, objectives and concrete ideas.",
-      price: "From €300/strategy",
+      price: "From €400/strategy",
     },
     {
       title: "Branding & Visual Identity",

@@ -620,7 +620,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim dhe testim",
         "Lansim dhe (opsional) mbështetje",
       ],
-      priceNote: "Çmimi nga 400€ për landing; website multi-faqe nga 800€. Oferta pas diskutimit të nevojave.",
+      priceNote: "Landing Page nga 400€; Business Website nga 900€; Premium Website nga 1,800€. Oferta pas diskutimit të nevojave.",
     },
     en: {
       whatIncluded: [
@@ -646,7 +646,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Development and testing",
         "Launch and (optional) support",
       ],
-      priceNote: "From €400 for a landing page; multi-page website from €800. Quote after discussing your needs.",
+      priceNote: "Landing Page from €400; Business Website from €900; Premium Website from €1,800. Quote after discussing your needs.",
     },
     de: {
       whatIncluded: [
@@ -672,7 +672,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung und Test",
         "Launch und optional Support",
       ],
-      priceNote: "Ab 400€ für eine Landingpage; mehrseitige Website ab 800€. Angebot nach Bedarfsgespräch.",
+      priceNote: "Landing Page ab 400€; Business Website ab 900€; Premium Website ab 1.800€. Angebot nach Bedarfsgespräch.",
     },
   },
   ecommerce: {
@@ -700,7 +700,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim, testim dhe integrim pagesash",
         "Lansim dhe mbështetje të vazhdueshme",
       ],
-      priceNote: "Çmimi varet nga numri i produkteve, integrimet dhe nevojat. Oferta pas diskutimit.",
+      priceNote: "Basic Shop nga 1,200€; Standard Shop nga 2,200€; Premium Shop nga 4,000€. Oferta pas diskutimit.",
     },
     en: {
       whatIncluded: [
@@ -726,7 +726,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Development, testing and payment integration",
         "Launch and ongoing support",
       ],
-      priceNote: "Price depends on product count, integrations and needs. Quote after discussion.",
+      priceNote: "Basic Shop from €1,200; Standard Shop from €2,200; Premium Shop from €4,000. Quote after discussion.",
     },
     de: {
       whatIncluded: [
@@ -752,7 +752,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung, Test und Zahlungsintegration",
         "Launch und laufender Support",
       ],
-      priceNote: "Preis abhängig von Produktanzahl, Integrationen und Bedarf. Angebot nach Gespräch.",
+      priceNote: "Basic Shop ab 1.200€; Standard Shop ab 2.200€; Premium Shop ab 4.000€. Angebot nach Gespräch.",
     },
   },
   saas: {
@@ -780,7 +780,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim në faza, testim dhe përsëritje",
         "Lansim dhe mbështetje / evolucion i vazhdueshëm",
       ],
-      priceNote: "Çmimi sipas scope-it dhe kompleksitetit. Oferta pas workshop fillestar.",
+      priceNote: "MVP nga 4,000€; Growth nga 8,000€; Enterprise ofertë e personalizuar. Oferta pas workshop fillestar.",
     },
     en: {
       whatIncluded: [
@@ -806,7 +806,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Phased development, testing and iteration",
         "Launch and ongoing support / evolution",
       ],
-      priceNote: "Price according to scope and complexity. Quote after initial workshop.",
+      priceNote: "MVP from €4,000; Growth from €8,000; Enterprise custom quote. Quote after initial workshop.",
     },
     de: {
       whatIncluded: [
@@ -832,7 +832,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung in Phasen, Test und Iteration",
         "Launch und laufender Support / Weiterentwicklung",
       ],
-      priceNote: "Preis nach Umfang und Komplexität. Angebot nach erstem Workshop.",
+      priceNote: "MVP ab 4.000€; Growth ab 8.000€; Enterprise individuelles Angebot. Angebot nach erstem Workshop.",
     },
   },
   maintenance: {

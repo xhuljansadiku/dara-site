@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
+import type { Pkg, PackageGroup } from "@/lib/packages-data";
 
 type Locale = "sq" | "en" | "de";
 type Service = { title: string; desc: string; price?: string };
@@ -13,8 +14,7 @@ const GROUP_ICONS = [
   <svg key="3" className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
 ];
 
-type Pkg = { title: string; subtitle: string; price: string; points: string[] };
-type PackageGroup = "marketing" | "brand" | "training" | "website" | "maintenance";
+type PackageFilterTab = { label: string; groups: PackageGroup[] };
 
 type Props = {
   locale: Locale;
@@ -26,7 +26,8 @@ type Props = {
   priceTooltip: string;
   resultByIndex: Record<number, string>;
   packagesByGroup: Record<PackageGroup, Pkg[]>;
-  packageFilterTabs: { label: string; indices: number[] }[];
+  packageFilterTabs: PackageFilterTab[];
+  packageGroupLabels: Record<PackageGroup, string>;
   testimonial: { quote: string; name: string; role: string; company?: string };
   copy: {
     sectionKicker: string;
@@ -58,6 +59,7 @@ export default function ServicesSection({
   resultByIndex,
   packagesByGroup,
   packageFilterTabs,
+  packageGroupLabels,
   testimonial,
   copy,
 }: Props) {
@@ -65,8 +67,12 @@ export default function ServicesSection({
   const [activePackageTab, setActivePackageTab] = useState<number>(0);
   const [tooltipCard, setTooltipCard] = useState<number | null>(null);
 
-  const PACKAGE_GROUPS: PackageGroup[] = ["marketing", "brand", "training", "website", "maintenance"];
-  const packageTabLabels = [copy.allServices, ...packageFilterTabs.map((t) => t.label)];
+  const packageTabLabels = packageFilterTabs.map((t) => t.label);
+
+  const visiblePackageGroups =
+    activePackageTab === 0 || packageFilterTabs[activePackageTab]?.groups.length === 0
+      ? (["marketing", "brand", "training", "websiteLanding", "ecommerce", "saas", "maintenance"] as PackageGroup[])
+      : packageFilterTabs[activePackageTab].groups;
 
   const visibleGroups =
     activeTab === 0
@@ -265,72 +271,51 @@ export default function ServicesSection({
           ))}
         </div>
         <div className="space-y-10">
-          {activePackageTab === 0 ? (
-            PACKAGE_GROUPS.map((groupKey) => (
-              <div key={groupKey}>
-                <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#c8a55c]/90">
-                  {packageFilterTabs[PACKAGE_GROUPS.indexOf(groupKey)].label}
-                </h4>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {packagesByGroup[groupKey].map((pkg) => (
-                    <div
-                      key={`${groupKey}-${pkg.title}`}
-                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#c8a55c]/20 md:p-6"
-                    >
-                      <p className="text-xs font-medium uppercase tracking-wider text-[#c8a55c]">{pkg.subtitle}</p>
-                      <h5 className="mt-2 text-lg font-semibold text-white">{pkg.title}</h5>
-                      <p className="mt-2 text-sm font-semibold text-[#c8a55c]">{pkg.price}</p>
-                      <ul className="mt-4 space-y-2">
-                        {pkg.points.map((point) => (
-                          <li key={point} className="flex items-center gap-2 text-sm text-white/70">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
-                            {point}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-5">
-                        <LocaleLink
-                          href="/contact"
-                          className="inline-flex h-9 items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black hover:bg-[#b6944f]"
-                        >
-                          {copy.requestQuoteForGroup}
-                        </LocaleLink>
-                      </div>
+          {visiblePackageGroups.map((groupKey) => (
+            <div key={groupKey}>
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#c8a55c]/90">
+                {packageGroupLabels[groupKey]}
+              </h4>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {packagesByGroup[groupKey].map((pkg) => (
+                  <div
+                    key={`${groupKey}-${pkg.title}`}
+                    className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#c8a55c]/20 md:p-6"
+                  >
+                    {pkg.badge && (
+                      <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-[10px] font-medium text-[#c8a55c]">
+                        <span aria-hidden>⭐</span> {pkg.badge}
+                      </span>
+                    )}
+                    <p className="text-xs font-medium uppercase tracking-wider text-[#c8a55c]">{pkg.subtitle}</p>
+                    <h5 className="mt-2 text-lg font-semibold text-white">{pkg.title}</h5>
+                    <div className="mt-2 flex flex-wrap items-baseline gap-2">
+                      {pkg.priceOriginal && (
+                        <span className="text-sm text-white/50 line-through">{pkg.priceOriginal}</span>
+                      )}
+                      <span className="text-sm font-semibold text-[#c8a55c]">{pkg.price}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-3">
-              {packagesByGroup[PACKAGE_GROUPS[activePackageTab - 1]].map((pkg) => (
-                <div
-                  key={pkg.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#c8a55c]/20 md:p-6"
-                >
-                  <p className="text-xs font-medium uppercase tracking-wider text-[#c8a55c]">{pkg.subtitle}</p>
-                  <h5 className="mt-2 text-lg font-semibold text-white">{pkg.title}</h5>
-                  <p className="mt-2 text-sm font-semibold text-[#c8a55c]">{pkg.price}</p>
-                  <ul className="mt-4 space-y-2">
-                    {pkg.points.map((point) => (
-                      <li key={point} className="flex items-center gap-2 text-sm text-white/70">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-5">
-                    <LocaleLink
-                      href="/contact"
-                      className="inline-flex h-9 items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black hover:bg-[#b6944f]"
-                    >
-                      {copy.requestQuoteForGroup}
-                    </LocaleLink>
+                    <ul className="mt-4 space-y-2">
+                      {pkg.points.map((point) => (
+                        <li key={point} className="flex items-center gap-2 text-sm text-white/70">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-5">
+                      <LocaleLink
+                        href="/contact"
+                        className="inline-flex h-9 items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black hover:bg-[#b6944f]"
+                      >
+                        {copy.requestQuoteForGroup}
+                      </LocaleLink>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </section>
