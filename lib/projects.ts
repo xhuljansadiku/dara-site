@@ -56,40 +56,44 @@ const projectsSq: Project[] = [
 
   // --- Website ---
   {
-    title: "Dara Marketing",
+    title: "ESM GROUP",
     tag: "Website",
-    desc: "Website modern për agjenci marketingu me fokus në lead generation.",
+    desc: "Website korporativ për kompani ndërtimi dhe montimi strukturash metalike.",
     category: "website",
     thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
   },
   {
-    title: "Luxury Stay Dhermi",
+    title: "Palushi Brothers",
     tag: "Website",
-    desc: "Website për hotel boutique me sistem rezervimi.",
+    desc: "Website për kompani ndërtimi dhe rinovimi në Londër, që prezanton shërbimet, projektet dhe kontaktin për klientët e banimit dhe komerciale.",
     category: "website",
-    thumbnail: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=600&h=400&fit=crop",
-  },
+    thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+  }
+  ,
   {
-    title: "Elite Construction",
+    title: "HAUSWERK Niederbayern",
     tag: "Website",
-    desc: "Website korporativ me galeri projektesh dhe prezantim shërbimesh.",
+    desc: "Website për shërbime objektesh pastrim, mirëmbajtje dhe kujdes shtëpie/zyre në Niederbayern, me prezantim të shërbimeve dhe kontakt për oferta.",
     category: "website",
-    thumbnail: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop",
-  },
+    thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+  }
+  ,
   {
-    title: "HealthPlus Clinic",
+    title: "Bardhi Wellness",
     tag: "Website",
-    desc: "Website për klinikë private me strukturë informative të qartë.",
+    desc: "Platformë online trajnimi dhe nutricioni me plane të personalizuara, rezultate klientësh dhe paketë abonimi për shëndet dhe fitnes.",
     category: "website",
-    thumbnail: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=600&h=400&fit=crop",
-  },
+    thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+  }
+  ,
   {
-    title: "Urban Fashion Store",
+    title: "Besi's Imbiss",
     tag: "Website",
-    desc: "E-commerce website për brand mode me fokus në konvertime.",
+    desc: "Website për Imbiss lokal në Weiden in der Oberpfalz me menu ushqimesh, orare dhe kontakt për porosi ose vizitë në vend.",
     category: "website",
-    thumbnail: "https://images.unsplash.com/photo-1521334884684-d80222895322?w=600&h=400&fit=crop",
-  },
+    thumbnail: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+  }
+  ,
 ];
 
 // ----------------------
