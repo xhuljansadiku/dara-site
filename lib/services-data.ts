@@ -97,11 +97,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Social Media Management",
       desc: "Content strategy, post creation, planning and performance analysis to increase brand presence and engagement.",
-      price: "From €400/month",
+      price: "From €250/month",
     },
     {
       title: "Content Creation",
       desc: "Photos, videos, reels and creative materials to reflect brand identity and attract the right audience.",
+      price: "Quote on request",
     },
     {
       title: "Digital Marketing Strategy",
@@ -111,6 +112,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Branding & Visual Identity",
       desc: "Logo, visual guidelines, communication tone and professional image for a strong market presence.",
+      price: "From €500",
     },
     {
       title: "Ads Management (Meta & Google)",
@@ -120,7 +122,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Marketing Consulting",
       desc: "Strategic consulting to increase performance, clarify direction and make smarter decisions.",
-      price: "From €80/session",
+      price: "From €100/session",
     },
     {
       title: "Marketing & Social Media Training",
@@ -135,17 +137,17 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "E-commerce",
       desc: "Online store with products, inventory, payment and delivery — tailored solution for selling online.",
-      price: "On request",
+      price: "From €1,200",
     },
     {
       title: "SaaS & applications",
       desc: "Custom applications, platforms or software products for businesses or end users.",
-      price: "On request",
+      price: "From €4,000",
     },
     {
       title: "Maintenance & Optimization",
       desc: "Website and e-commerce maintenance (updates, backups, security), optimization of old websites (speed, SEO, modernization), monitoring and support.",
-      price: "From €100/month",
+      price: "From €120/month",
     },
   ],
   de: [
@@ -157,15 +159,17 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Content Creation",
       desc: "Fotos, Videos, Reels und kreative Inhalte, die die Markenidentität widerspiegeln und die richtige Zielgruppe anziehen.",
+      price: "Angebot auf Anfrage",
     },
     {
       title: "Digitale Marketingstrategie",
       desc: "Business‑Analyse und individuelle Strategie für echtes Wachstum – Positionierung, Ziele und konkrete Maßnahmen.",
-      price: "Ab 300€ / Strategie",
+      price: "Ab 400€ / Strategie",
     },
     {
       title: "Branding & visuelle Identität",
       desc: "Entwicklung oder Refresh der Markenidentität – Logo, Styleguide, Tonalität und professionelles Markenbild.",
+      price: "Ab 500€",
     },
     {
       title: "Ads Management (Meta & Google)",
@@ -175,7 +179,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Marketing‑Beratung",
       desc: "Strategische Beratung für Unternehmen oder Einzelpersonen, die ihre Performance steigern und ihren Marketingkurs klären möchten.",
-      price: "Ab 80€ / Session",
+      price: "Ab 100€ / Session",
     },
     {
       title: "Marketing‑ & Social‑Media‑Trainings",
@@ -190,17 +194,17 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "E-Commerce",
       desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand — maßgeschneiderte Lösung für den Verkauf im Internet.",
-      price: "Auf Anfrage",
+      price: "Ab 1.200€",
     },
     {
       title: "SaaS & Anwendungen",
       desc: "Individuelle Anwendungen, Plattformen oder Softwareprodukte für Unternehmen oder Endnutzer.",
-      price: "Auf Anfrage",
+      price: "Ab 4.000€",
     },
     {
       title: "Wartung & Optimierung",
       desc: "Website- und E-Commerce-Wartung (Updates, Backups, Sicherheit), Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung), Monitoring und Support.",
-      price: "Ab 100€ / Monat",
+      price: "Ab 120€ / Monat",
     },
   ],
 };

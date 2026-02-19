@@ -21,7 +21,7 @@ const FOOTER_BY_LOCALE: Record<
     contactTitle: string;
     followUs: string;
     whatsAppHover: string;
-    links: { home: string; about: string; services: string; packages: string; trainings: string; work: string; team: string; contact: string };
+    links: { home: string; about: string; services: string; packages: string; trainings: string; work: string; team: string; contact: string; faq: string };
     legal: { privacy: string; terms: string };
   }
 > = {
@@ -45,7 +45,8 @@ const FOOTER_BY_LOCALE: Record<
       trainings: "Trajnime", 
       work: "Punët", 
       team: "Ekipi", 
-      contact: "Kontakt" 
+      contact: "Kontakt",
+      faq: "FAQ",
     },
     legal: { privacy: "Politika e privatësisë", terms: "Kushtet dhe kushtet" },
   },
@@ -69,7 +70,8 @@ const FOOTER_BY_LOCALE: Record<
       trainings: "Training", 
       work: "Work", 
       team: "Team", 
-      contact: "Contact" 
+      contact: "Contact",
+      faq: "FAQ",
     },
     legal: { privacy: "Privacy policy", terms: "Terms & conditions" },
   },
@@ -93,7 +95,8 @@ const FOOTER_BY_LOCALE: Record<
       trainings: "Training", 
       work: "Referenzen", 
       team: "Team", 
-      contact: "Kontakt" 
+      contact: "Kontakt",
+      faq: "FAQ",
     },
     legal: { privacy: "Datenschutz", terms: "AGB" },
   },
@@ -292,6 +295,14 @@ export default function Footer({ locale }: { locale: string }) {
                   className="transition-colors duration-200 hover:text-[#c8a55c]"
                 >
                   {t.links.contact}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink
+                  href="/faq"
+                  className="transition-colors duration-200 hover:text-[#c8a55c]"
+                >
+                  {t.links.faq}
                 </LocaleLink>
               </li>
               <li>

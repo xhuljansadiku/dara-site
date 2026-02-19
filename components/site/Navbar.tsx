@@ -355,9 +355,10 @@ export default function Navbar() {
               })}
             </div>
 
-            <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3">
-              <p className="text-xs text-white/60">{nav.language}</p>
-              <div className="mt-2 flex gap-2">
+            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/30 p-3">
+              <div className="flex-1">
+                <p className="text-xs text-white/60">{nav.language}</p>
+                <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
                   const active = l === locale;
                   return (
@@ -376,6 +377,7 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
+                </div>
               </div>
             </div>
 

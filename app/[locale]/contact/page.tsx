@@ -2,26 +2,70 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import NewsletterForm from "@/components/NewsletterForm";
+import { useRecaptchaToken } from "@/components/RecaptchaProvider";
+import { trackEvent } from "@/lib/analytics";
 import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
+import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 
 // Services shown in contact form (exclude training - has its own form at /trainings/register)
 const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
 
-// Budget options: [label, minEur] - only show options where minEur >= service's minimum price
+// Budget options: first option = service min, then sequence (100→250→500→1000→2000→4000)
 const BUDGET_OPTIONS: { sq: string[]; en: string[]; de: string[] } = {
-  sq: ["Nuk jam i sigurt", "€100–€400", "€400–€800", "€800–€1.200", "€1.200–€2.500", "€2.500+"],
-  en: ["Not sure", "€100–€400", "€400–€800", "€800–€1,200", "€1,200–€2,500", "€2,500+"],
-  de: ["Nicht sicher", "€100–€400", "€400–€800", "€800–€1.200", "€1.200–€2.500", "€2.500+"],
+  sq: [
+    "Nuk jam i sigurt",
+    "€100–€250",
+    "€120–€250",
+    "€150–€250",
+    "€200–€500",
+    "€250–€500",
+    "€400–€800",
+    "€500–€1.000",
+    "€1.000–€2.000",
+    "€1.200–€2.000",
+    "€2.000–€4.000",
+    "€4.000+",
+  ],
+  en: [
+    "Not sure",
+    "€100–€250",
+    "€120–€250",
+    "€150–€250",
+    "€200–€500",
+    "€250–€500",
+    "€400–€800",
+    "€500–€1,000",
+    "€1,000–€2,000",
+    "€1,200–€2,000",
+    "€2,000–€4,000",
+    "€4,000+",
+  ],
+  de: [
+    "Nicht sicher",
+    "€100–€250",
+    "€120–€250",
+    "€150–€250",
+    "€200–€500",
+    "€250–€500",
+    "€400–€800",
+    "€500–€1.000",
+    "€1.000–€2.000",
+    "€1.200–€2.000",
+    "€2.000–€4.000",
+    "€4.000+",
+  ],
 };
-const BUDGET_MIN_EUR = [0, 100, 400, 800, 1200, 2500]; // index matches BUDGET_OPTIONS (0 = "not sure")
+const BUDGET_MIN_EUR = [0, 100, 120, 150, 200, 250, 400, 500, 1000, 1200, 2000, 4000];
 
 type Status = "idle" | "loading" | "success" | "error";
-type Step = 1 | 2 | 3 | 4 | 5 | 6;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 export default function ContactPage() {
   const params = useParams();
+  const router = useRouter();
+  const { getToken } = useRecaptchaToken();
   const locale = (params?.locale as Locale) || "sq";
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>("idle");
@@ -112,7 +156,7 @@ export default function ContactPage() {
     setError(null);
     setIsNavigating(true);
     // Only increment by 1 step at a time
-    if (currentStep < 6) {
+    if (currentStep < 5) {
       const nextStep = (currentStep + 1) as Step;
       setCurrentStep(nextStep);
       // Reset navigation flag after a short delay
@@ -149,7 +193,7 @@ export default function ContactPage() {
     if (formData.service) {
       const serviceIndex = SERVICE_SLUGS.indexOf(formData.service as any);
       const serviceTitle = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex]?.title || formData.service;
-      messageParts.push(`${locale === "sq" ? "Shërbimi" : locale === "de" ? "Service" : "Service"}: ${serviceTitle}`);
+      messageParts.push(`${locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}: ${serviceTitle}`);
     }
 
     if (formData.service === "website-landing") {
@@ -181,13 +225,19 @@ export default function ContactPage() {
 
     const fullMessage = messageParts.join("\n");
 
+    const hpInput = (e.target as HTMLFormElement).elements.namedItem("hp") as HTMLInputElement | null;
+    const hp = hpInput?.value?.trim() ?? "";
+
+    const recaptchaToken = await getToken("contact_submit");
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),
       company: formData.company.trim(),
       budget: formData.budget.trim(),
       message: fullMessage || formData.message.trim(),
-      hp: "", // honeypot
+      hp,
+      recaptchaToken,
+      locale,
     };
 
     // Validate required fields
@@ -219,15 +269,16 @@ export default function ContactPage() {
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         setStatus("error");
-        setError(data?.error ? String(data.error) : locale === "sq" ? "Diçka shkoi keq. Provo prap." : locale === "de" ? "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut." : "Something went wrong. Please try again.");
+        setError(getApiErrorMessage(data?.error, locale));
         return;
       }
 
       setStatus("success");
-      setCurrentStep(6);
+      trackEvent("Contact Form Submit");
+      router.push(`/${locale}/contact/thank-you`);
     } catch {
       setStatus("error");
-      setError(locale === "sq" ? "Network error. Provo prap." : locale === "de" ? "Netzwerkfehler. Bitte versuchen Sie es erneut." : "Network error. Please try again.");
+      setError(NETWORK_ERROR_MESSAGES[locale]);
     }
   }
 
@@ -240,13 +291,24 @@ export default function ContactPage() {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Contact</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">
+          {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
+        </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
-          Le të flasim për <span className="text-yellow-400">rritjen</span> tënde
+          {locale === "sq" ? (
+            <>Le të flasim për <span className="text-yellow-400">rritjen</span> tënde</>
+          ) : locale === "de" ? (
+            <>Lass uns über dein <span className="text-yellow-400">Wachstum</span> sprechen</>
+          ) : (
+            <>Let&apos;s talk about your <span className="text-yellow-400">growth</span></>
+          )}
         </h1>
         <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">
-          Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe çfarë
-          rezultati synojmë.
+          {locale === "sq"
+            ? "Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe çfarë rezultati synojmë."
+            : locale === "de"
+            ? "Senden Sie eine Nachricht und wir melden uns mit einem kurzen Plan: was wir tun, wie lange es dauert und welches Ergebnis wir anstreben."
+            : "Send a message and we'll get back with a short plan: what we do, how long it takes and what result we aim for."}
         </p>
       </section>
 
@@ -269,14 +331,14 @@ export default function ContactPage() {
 
               {/* Step Indicator */}
               <div className="mt-6 flex items-center gap-2">
-                {[1, 2, 3, 4, 5, 6].map((step) => (
+                {[1, 2, 3, 4, 5].map((step) => (
                   <div key={step} className="flex items-center gap-2">
                     <div
                       className={`h-2 flex-1 rounded-full transition ${
                         currentStep >= step ? "bg-[#c8a55c]" : "bg-white/10"
                       }`}
                     />
-                    {step < 6 && (
+                    {step < 5 && (
                       <div className={`h-2 w-2 rounded-full transition ${
                         currentStep > step ? "bg-[#c8a55c]" : "bg-white/10"
                       }`} />
@@ -292,6 +354,7 @@ export default function ContactPage() {
                   e.stopPropagation();
                 }
               }}>
+                <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden" aria-hidden="true" />
                 {/* Step 1: Basic Info */}
                 {currentStep === 1 && (
                   <div className="grid gap-4">
@@ -551,7 +614,7 @@ export default function ContactPage() {
                         )}
                         {formData.service && (
                           <ReviewRow
-                            label={locale === "sq" ? "Shërbimi" : locale === "de" ? "Service" : "Service"}
+                            label={locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}
                             value={SERVICE_DETAILS_BY_LOCALE[locale]?.[SERVICE_SLUGS.indexOf(formData.service as any)]?.title || formData.service}
                           />
                         )}
@@ -653,23 +716,6 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                {/* Step 6: Success */}
-                {currentStep === 6 && status === "success" && (
-                  <div className="text-center py-8">
-                    <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 mb-4">
-                      <svg className="h-8 w-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {locale === "sq" ? "U dërgua!" : locale === "de" ? "Gesendet!" : "Sent!"}
-                    </h3>
-                    <p className="text-white/70">
-                      {locale === "sq" ? "Do të kontaktojmë së shpejti." : locale === "de" ? "Wir werden uns bald melden." : "We'll contact you soon."}
-                    </p>
-                  </div>
-                )}
-
                 {status === "error" && (
                   <p className="mt-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                     {error ?? (locale === "sq" ? "Diçka shkoi keq." : locale === "de" ? "Etwas ist schief gelaufen." : "Something went wrong.")}
@@ -677,7 +723,7 @@ export default function ContactPage() {
                 )}
 
                 {/* Navigation Buttons */}
-                {currentStep < 6 && status !== "success" && (
+                {currentStep <= 5 && (
                   <div className="mt-6 flex items-center gap-3">
                     {currentStep > 1 && (
                       <button
@@ -718,7 +764,7 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                {currentStep < 6 && (
+                {currentStep <= 5 && (
                   <p className="mt-4 text-xs text-white/50">
                     {locale === "sq"
                       ? "Duke dërguar, pranon të të kontaktojmë për këtë kërkesë."
@@ -734,16 +780,18 @@ export default function ContactPage() {
           {/* RIGHT: Info */}
           <div className="md:col-span-2">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <h3 className="text-lg font-semibold">Quick info</h3>
+              <h3 className="text-lg font-semibold">
+                {locale === "sq" ? "Info e shpejtë" : locale === "de" ? "Schnellinfo" : "Quick info"}
+              </h3>
 
               <div className="mt-5 grid gap-3 text-sm">
                 <InfoRow
-                  k="Email"
+                  k={locale === "sq" ? "Email" : locale === "de" ? "E-Mail" : "Email"}
                   v="daramarketing.eu@gmail.com"
                   href="mailto:daramarketing.eu@gmail.com"
                 />
                 <div className="flex items-center gap-3">
-                  <InfoRow k="Phone" v="+355 68 800 9988" href="tel:+355688009988" className="flex-1" />
+                  <InfoRow k={locale === "sq" ? "Telefoni" : locale === "de" ? "Telefon" : "Phone"} v="+355 68 800 9988" href="tel:+355688009988" className="flex-1" />
                   <a
                     href="https://wa.me/355688009988"
                     target="_blank"
@@ -758,15 +806,20 @@ export default function ContactPage() {
                   </a>
                 </div>
                 <InfoRow
-                  k="Address"
+                  k={locale === "sq" ? "Adresa" : locale === "de" ? "Adresse" : "Address"}
                   v="Rruga Donika Kastrioti, Bllok, Tirane, Albania"
                   href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
                 />
-                <InfoRow k="Response" v="Within 24h" />
+                <InfoRow
+                  k={locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
+                  v={locale === "sq" ? "Brenda 24 orëve" : locale === "de" ? "Innerhalb von 24 Std." : "Within 24h"}
+                />
               </div>
 
               <div className="mt-5">
-                <p className="text-sm font-semibold text-white/80">Social</p>
+                <p className="text-sm font-semibold text-white/80">
+                  {locale === "sq" ? "Social" : locale === "de" ? "Social" : "Social"}
+                </p>
                 <div className="mt-2 flex items-center gap-3">
                   <a
                     className="text-white/70 hover:text-[#c8a55c] transition"
@@ -806,20 +859,36 @@ export default function ContactPage() {
 
               <div className="mt-6 h-px w-full bg-white/10" />
 
-              <h4 className="mt-6 text-sm font-semibold text-white/80">Preferon newsletter?</h4>
-              <p className="mt-2 text-sm text-white/60">Merr tips javore për content, growth dhe ads.</p>
+              <h4 className="mt-6 text-sm font-semibold text-white/80">
+                {locale === "sq" ? "Preferon newsletter?" : locale === "de" ? "Newsletter bevorzugt?" : "Prefer newsletter?"}
+              </h4>
+              <p className="mt-2 text-sm text-white/60">
+                {locale === "sq"
+                  ? "Merr tips javore për content, growth dhe ads."
+                  : locale === "de"
+                  ? "Wöchentliche Tipps zu Content, Growth und Ads."
+                  : "Get weekly tips on content, growth and ads."}
+              </p>
 
               <div className="mt-4">
-                <NewsletterForm />
+                <NewsletterForm locale={locale} />
               </div>
 
-              <p className="mt-3 text-xs text-white/50">No spam. Unsubscribe anytime.</p>
+              <p className="mt-3 text-xs text-white/50">
+                {locale === "sq" ? "Pa spam. Çabohu kur të duash." : locale === "de" ? "Kein Spam. Jederzeit abmelden." : "No spam. Unsubscribe anytime."}
+              </p>
             </div>
 
             <div className="mt-6 rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6">
               <p className="text-sm text-white/70">
-                <span className="text-yellow-400">Tip:</span> Nëse ke link të website-it aktual ose
-                IG/TikTok, shkruaje te mesazhi — na ndihmon për audit.
+                <span className="text-yellow-400">
+                  {locale === "sq" ? "Tip:" : locale === "de" ? "Tipp:" : "Tip:"}
+                </span>{" "}
+                {locale === "sq"
+                  ? "Nëse ke link të website-it aktual ose IG/TikTok, shkruaje te mesazhi — na ndihmon për audit."
+                  : locale === "de"
+                  ? "Wenn Sie einen Link zu Ihrer aktuellen Website oder IG/TikTok haben, schreiben Sie ihn in die Nachricht — hilft uns beim Audit."
+                  : "If you have a link to your current website or IG/TikTok, add it to the message — it helps us with the audit."}
               </p>
             </div>
           </div>
@@ -938,25 +1007,47 @@ function ControlledSelectField({
   required?: boolean;
   locale?: string;
 }) {
+  const [open, setOpen] = useState(false);
   const isRequired = required || label.includes("*");
-  
+  const placeholder = isRequired ? (locale === "sq" ? "Zgjidh..." : locale === "de" ? "Wählen..." : "Select...") : label;
+
   return (
     <label className="grid gap-2">
       <span className="text-sm text-white/70">{label}</span>
-      <select
-        name={name}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        required={isRequired}
-        className="h-11 rounded-xl border border-white/15 bg-black/40 px-4 text-white outline-none focus:border-[#c8a55c]/40 invalid:border-red-500/50"
-      >
-        <option value="">{isRequired ? (locale === "sq" ? "Zgjidh..." : locale === "de" ? "Wählen..." : "Select...") : label}</option>
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <input type="hidden" name={name} value={value} required={isRequired} />
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          className="flex h-11 w-full items-center justify-between rounded-xl border border-white/15 bg-black/40 px-4 text-left text-white outline-none focus:border-[#c8a55c]/40"
+        >
+          <span className={value ? "" : "text-white/50"}>{value || placeholder}</span>
+          <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        {open && (
+          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-xl border border-white/15 bg-[#2a2a2a] py-1 shadow-xl">
+            {options.map((o) => (
+              <button
+                key={o}
+                type="button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onChange(o);
+                  setOpen(false);
+                }}
+                className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
+                  value === o ? "bg-[#c8a55c] text-black" : "text-white hover:bg-[#c8a55c]/80 hover:text-black"
+                }`}
+              >
+                {o}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </label>
   );
 }

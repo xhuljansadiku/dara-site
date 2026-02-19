@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import LocaleLink from "@/components/site/LocaleLink";
 import { TRAININGS, type Locale } from "@/lib/trainings-data";
+import { useRecaptchaToken } from "@/components/RecaptchaProvider";
+import { trackEvent } from "@/lib/analytics";
+import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -18,9 +21,6 @@ const COPY: Record<
     messageLabel: string;
     messagePlaceholder: string;
     submit: string;
-    successTitle: string;
-    successMessage: string;
-    backToTrainings: string;
     selectTraining: string;
   }
 > = {
@@ -33,9 +33,6 @@ const COPY: Record<
     messageLabel: "Mesazh (opsional)",
     messagePlaceholder: "Pyetje ose shënime...",
     submit: "Dërgo kërkesën",
-    successTitle: "U dërgua!",
-    successMessage: "Do të kontaktojmë së shpejti për regjistrimin.",
-    backToTrainings: "Kthehu te trajnimet",
     selectTraining: "Zgjidh trajnimin...",
   },
   en: {
@@ -47,9 +44,6 @@ const COPY: Record<
     messageLabel: "Message (optional)",
     messagePlaceholder: "Questions or notes...",
     submit: "Submit request",
-    successTitle: "Sent!",
-    successMessage: "We'll contact you soon about registration.",
-    backToTrainings: "Back to trainings",
     selectTraining: "Select training...",
   },
   de: {
@@ -61,15 +55,14 @@ const COPY: Record<
     messageLabel: "Nachricht (optional)",
     messagePlaceholder: "Fragen oder Anmerkungen...",
     submit: "Anfrage senden",
-    successTitle: "Gesendet!",
-    successMessage: "Wir melden uns bald zur Anmeldung.",
-    backToTrainings: "Zurück zu Trainings",
     selectTraining: "Training wählen...",
   },
 };
 
 export default function TrainingRegisterPage() {
   const params = useParams();
+  const router = useRouter();
+  const { getToken } = useRecaptchaToken();
   const locale = (params?.locale as Locale) || "sq";
   const copy = COPY[locale];
 
@@ -84,10 +77,13 @@ export default function TrainingRegisterPage() {
 
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setStatus("loading");
+
+    const hpInput = (e.target as HTMLFormElement).elements.namedItem("hp") as HTMLInputElement | null;
+    const hpValue = hpInput?.value?.trim() ?? "";
 
     if (!formData.name.trim() || formData.name.trim().length < 2) {
       setStatus("error");
@@ -109,6 +105,8 @@ export default function TrainingRegisterPage() {
     const trainingTitle = training ? training.title[locale] : formData.training;
     const fullMessage = `${locale === "sq" ? "Regjistrim për trajnim" : locale === "de" ? "Anmeldung für Training" : "Training registration"}: ${trainingTitle}\n${formData.message.trim() ? `\n${formData.message.trim()}` : ""}`;
 
+    const recaptchaToken = await getToken("training_register");
+
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -117,21 +115,24 @@ export default function TrainingRegisterPage() {
           name: formData.name.trim(),
           email: formData.email.trim(),
           message: fullMessage.trim(),
-          hp: "",
+          hp: hpValue,
+          recaptchaToken,
+          locale,
         }),
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         setStatus("error");
-        setError(data?.error ? String(data.error) : locale === "sq" ? "Diçka shkoi keq. Provo prap." : locale === "de" ? "Etwas ist schief gelaufen." : "Something went wrong. Please try again.");
+        setError(getApiErrorMessage(data?.error, locale));
         return;
       }
 
-      setStatus("success");
+      trackEvent("Training Register Submit");
+      router.push(`/${locale}/trainings/register/thank-you`);
     } catch {
       setStatus("error");
-      setError(locale === "sq" ? "Gabim rrjeti. Provo prap." : locale === "de" ? "Netzwerkfehler." : "Network error. Please try again.");
+      setError(NETWORK_ERROR_MESSAGES[locale]);
     }
   };
 
@@ -155,24 +156,8 @@ export default function TrainingRegisterPage() {
 
       <section className="pb-16 md:pb-24">
         <div className="mx-auto max-w-xl">
-          {status === "success" ? (
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20">
-                <svg className="h-8 w-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h2 className="text-xl font-semibold text-white">{copy.successTitle}</h2>
-              <p className="mt-2 text-white/70">{copy.successMessage}</p>
-              <LocaleLink
-                href="/trainings"
-                className="mt-6 inline-flex h-12 items-center justify-center rounded-full border border-[#c8a55c]/40 bg-[#c8a55c]/10 px-6 font-medium text-[#c8a55c] transition hover:bg-[#c8a55c]/20"
-              >
-                {copy.backToTrainings}
-              </LocaleLink>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
+              <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden" aria-hidden="true" />
               <div className="grid gap-4">
                 <label className="grid gap-2">
                   <span className="text-sm text-white/70">{copy.nameLabel}</span>
@@ -245,7 +230,6 @@ export default function TrainingRegisterPage() {
                   : copy.submit}
               </button>
             </form>
-          )}
         </div>
       </section>
     </>

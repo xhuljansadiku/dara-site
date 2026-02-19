@@ -886,7 +886,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monthly reporting and optimization recommendations",
         "Ongoing support for any issue or need",
       ],
-      priceNote: "From €100/month for basic maintenance. Optimizations and larger projects as needed.",
+      priceNote: "From €120/month for basic maintenance. Optimizations and larger projects as needed.",
     },
     de: {
       whatIncluded: [
@@ -912,7 +912,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monatliche Berichte und Optimierungsempfehlungen",
         "Laufender Support bei jedem Problem oder Bedarf",
       ],
-      priceNote: "Ab 100€/Monat für Basis-Wartung. Optimierungen und größere Projekte nach Bedarf.",
+      priceNote: "Ab 120€/Monat für Basis-Wartung. Optimierungen und größere Projekte nach Bedarf.",
     },
   },
 };

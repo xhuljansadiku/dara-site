@@ -200,29 +200,53 @@ const projectsSq: Project[] = [
 // 🇬🇧 ENGLISH
 // ----------------------
 
-const projectsEn: Project[] = projectsSq.map((p) => ({
-  ...p,
-  desc:
-    p.category === "brand"
-      ? "Logo and brand identity."
-      : p.category === "website"
-      ? "Website design and development."
-      : "Social media management and strategy.",
-}));
+const projectsEn: Project[] = [
+  { ...projectsSq[0], desc: "Management and growth of social media presence." },
+  { ...projectsSq[1], desc: "Strategy and content for audience growth." },
+  { ...projectsSq[2], desc: "Visual identity and creative content." },
+  { ...projectsSq[3], desc: "Building online presence." },
+  { ...projectsSq[4], desc: "Social media management for beauty brand." },
+  { ...projectsSq[5], desc: "Strategy for food brand." },
+  { ...projectsSq[6], desc: "Marketing for e-commerce." },
+  { ...projectsSq[7], desc: "Communication for technology brand." },
+  { ...projectsSq[8], desc: "Personal brand management." },
+  { ...projectsSq[9], desc: "Management for multiple businesses." },
+  { ...projectsSq[10], desc: "Logo and visual identity." },
+  { ...projectsSq[11], desc: "Logo and visual identity." },
+  { ...projectsSq[12], desc: "Logo and visual identity." },
+  { ...projectsSq[13], desc: "Logo and visual identity." },
+  { ...projectsSq[14], desc: "Logo and visual identity." },
+  { ...projectsSq[15], desc: "Logo and visual identity." },
+  { ...projectsSq[16], desc: "Corporate website for construction and metal structure assembly company." },
+  { ...projectsSq[17], desc: "Website for construction and renovation company in London, presenting services, projects and contact for residential and commercial clients." },
+  { ...projectsSq[18], desc: "Website for property cleaning, maintenance and care services in Niederbayern, with service presentation and contact for quotes." },
+  { ...projectsSq[19], desc: "Online training and nutrition platform with personalised plans, client results and health and fitness subscription package." },
+  { ...projectsSq[20], desc: "Website for local Imbiss in Weiden in der Oberpfalz with food menu, opening hours and contact for orders or on-site visits." },
+];
 
-// ----------------------
-// 🇩🇪 GERMAN
-// ----------------------
-
-const projectsDe: Project[] = projectsSq.map((p) => ({
-  ...p,
-  desc:
-    p.category === "brand"
-      ? "Logo und Markenidentität."
-      : p.category === "website"
-      ? "Webdesign und Entwicklung."
-      : "Social-Media-Management und Strategie.",
-}));
+const projectsDe: Project[] = [
+  { ...projectsSq[0], desc: "Management und Steigerung der Social-Media-Präsenz." },
+  { ...projectsSq[1], desc: "Strategie und Content für Reichweitenwachstum." },
+  { ...projectsSq[2], desc: "Visuelle Identität und kreative Inhalte." },
+  { ...projectsSq[3], desc: "Aufbau der Online-Präsenz." },
+  { ...projectsSq[4], desc: "Social-Media-Management für Beauty-Marke." },
+  { ...projectsSq[5], desc: "Strategie für Food-Brand." },
+  { ...projectsSq[6], desc: "Marketing für E-Commerce." },
+  { ...projectsSq[7], desc: "Kommunikation für Technologie-Marke." },
+  { ...projectsSq[8], desc: "Personal-Brand-Management." },
+  { ...projectsSq[9], desc: "Management für mehrere Unternehmen." },
+  { ...projectsSq[10], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[11], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[12], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[13], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[14], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[15], desc: "Logo und visuelle Identität." },
+  { ...projectsSq[16], desc: "Unternehmenswebsite für Bau- und Metallbauunternehmen." },
+  { ...projectsSq[17], desc: "Website für Bau- und Renovierungsunternehmen in London mit Darstellung von Leistungen, Projekten und Kontakt für Wohn- und Gewerbekunden." },
+  { ...projectsSq[18], desc: "Website für Objektreinigung, Wartung und Pflege in Niederbayern mit Leistungspräsentation und Kontakt für Angebote." },
+  { ...projectsSq[19], desc: "Online-Trainings- und Ernährungsplattform mit personalisierten Plänen, Kundenergebnissen und Abo-Paket für Gesundheit und Fitness." },
+  { ...projectsSq[20], desc: "Website für lokalen Imbiss in Weiden in der Oberpfalz mit Speisekarte, Öffnungszeiten und Kontakt für Bestellungen oder Vor-Ort-Besuche." },
+];
 
 export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {
   sq: projectsSq,

@@ -53,6 +53,13 @@ html {
 .animate-fade-in-up-delay-3 { animation-delay: 0.3s; }
 .animate-fade-in-up-delay-4 { animation-delay: 0.4s; }
 
+/* Contact form select: gold accent instead of blue */
+select option:checked,
+select option:hover {
+  background-color: #c8a55c;
+  color: #1a1a1a;
+}
+
 /* Scroll-triggered reveal (used with AnimateIn component) */
 .animate-reveal {
   opacity: 0;

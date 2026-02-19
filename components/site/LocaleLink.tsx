@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { ReactNode } from "react";
+import { defaultLocale } from "@/i18n";
 
 type Props = {
   href: string; // p.sh. "/", "/contact", "/services"
@@ -13,7 +14,7 @@ type Props = {
 
 export default function LocaleLink({ href, className, children, onClick }: Props) {
   const params = useParams();
-  const locale = String(params?.locale ?? "en");
+  const locale = String(params?.locale ?? defaultLocale);
 
   const normalized = href.startsWith("/") ? href : `/${href}`;
   const finalHref = normalized === "/" ? `/${locale}` : `/${locale}${normalized}`;

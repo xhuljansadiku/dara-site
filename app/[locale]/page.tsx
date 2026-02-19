@@ -317,8 +317,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const yearsExp = getYearsOfExperienceFormatted();
   // Replace years in description dynamically
   const description = meta.description.replace(/7\+/, yearsExp);
-  const base = "https://daramarketing.eu";
-  const path = l === "en" ? "" : `/${l}`;
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+  const path = `/${l}`;
   const url = `${base}${path}`;
   return {
     title: meta.title,
@@ -354,11 +354,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MarketingAgency",
     name: "DARA Marketing Agency",
-    url: "https://daramarketing.eu",
+    url: siteUrl,
     description: "We bring brand stories to life through bold strategies and results-oriented marketing.",
     address: { "@type": "PostalAddress", streetAddress: "Rruga Donika Kastrioti, Bllok", addressLocality: "Tirana", addressCountry: "AL" },
     email: "daramarketing.eu@gmail.com",
@@ -751,7 +752,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
                     {locale === "sq" ? "NEWSLETTER" : locale === "de" ? "NEWSLETTER" : "NEWSLETTER"}
                   </h4>
-                  <NewsletterForm />
+                  <NewsletterForm locale={locale} />
                   <p className="mt-4 flex items-center gap-2 text-xs text-white/50">
                     <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />

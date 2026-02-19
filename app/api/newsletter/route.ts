@@ -3,6 +3,9 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { verifyRecaptcha } from "@/lib/recaptcha";
+import { sendNewsletterNotification } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -13,6 +16,14 @@ const FILE_PATH = path.join(DATA_DIR, "newsletter.json");
 
 export async function POST(req: Request) {
   try {
+    const rateLimit = checkRateLimit(req);
+    if (!rateLimit.ok) {
+      return NextResponse.json(
+        { ok: false, error: "RATE_LIMITED" },
+        { status: 429, headers: rateLimit.retryAfter ? { "Retry-After": String(rateLimit.retryAfter) } : undefined }
+      );
+    }
+
     // 1️⃣ Content-Type validation
     const contentType = req.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {
@@ -55,6 +66,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, bot: true });
     }
 
+    // 4b reCAPTCHA v3
+    const recaptchaToken = typeof obj.recaptchaToken === "string" ? obj.recaptchaToken : "";
+    const captchaValid = await verifyRecaptcha(recaptchaToken);
+    if (!captchaValid) {
+      return NextResponse.json({ ok: false, error: "CAPTCHA_FAILED" }, { status: 400 });
+    }
+
     // 5️⃣ Email validation
     if (!isValidEmail(email)) {
       return NextResponse.json(
@@ -90,6 +108,11 @@ export async function POST(req: Request) {
         "utf8"
       );
     }
+
+    // Send email notification (non-blocking)
+    sendNewsletterNotification(email, !exists).catch((err) =>
+      console.error("NEWSLETTER_EMAIL_ERROR:", err)
+    );
 
     return NextResponse.json({
       ok: true,
