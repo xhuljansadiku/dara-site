@@ -97,7 +97,7 @@ export default function Navbar() {
       { label: nav.packages, href: "/packages" },
       { label: nav.trainings, href: "/trainings" },
       { label: nav.works, href: "/work" },
-      { label: nav.team, href: "/#team" },
+      { label: nav.team, href: "/team" },
       { label: nav.contact, href: "/contact" },
     ],
     [nav]

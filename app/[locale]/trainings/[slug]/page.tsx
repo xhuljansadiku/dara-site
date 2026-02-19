@@ -127,8 +127,8 @@ export default function TrainingSlugPage({ params }: Props) {
             <span className="text-sm text-white/60">{training.duration[locale]}</span>
           </div>
           <div className="flex flex-wrap gap-6">
-            {training.stats.map((stat) => (
-              <div key={stat.value} className="flex items-baseline gap-1.5">
+            {training.stats.map((stat, statIdx) => (
+              <div key={`stat-${statIdx}`} className="flex items-baseline gap-1.5">
                 <span className="text-lg font-semibold text-white">{stat.value}</span>
                 <span className="text-sm text-white/50">{stat.label[locale]}</span>
               </div>
