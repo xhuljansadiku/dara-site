@@ -1,6 +1,5 @@
-import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
-import AnimateIn from "@/components/site/AnimateIn";
+import BrandProjectGallery from "@/components/site/BrandProjectGallery";
 import { BRAND_PROJECTS } from "@/lib/projects";
 import type { Locale } from "@/lib/projects";
 import type { Metadata } from "next";
@@ -61,26 +60,7 @@ export default function BrandPage({ params }: Props) {
       </section>
 
       <section className="py-8 md:py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {BRAND_PROJECTS.map((project, idx) => (
-            <AnimateIn key={project.title} delay={idx * 60}>
-              <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition hover:border-[#c8a55c]/20 hover:bg-white/[0.06]">
-                <div className="relative flex h-40 w-full items-center justify-center bg-white/5 rounded-xl">
-                  <Image
-                    src={project.thumbnail ?? ""}
-                    alt={project.title}
-                    width={200}
-                    height={120}
-                    className="max-h-32 w-auto object-contain"
-                  />
-                </div>
-                <h3 className="mt-4 text-center font-medium text-white/95">
-                  {project.title}
-                </h3>
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
+        <BrandProjectGallery projects={BRAND_PROJECTS} />
       </section>
 
       <section className="py-8">

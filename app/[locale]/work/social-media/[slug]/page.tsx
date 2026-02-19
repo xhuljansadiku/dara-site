@@ -1,6 +1,5 @@
-import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
-import AnimateIn from "@/components/site/AnimateIn";
+import SocialMediaProjectGallery from "@/components/site/SocialMediaProjectGallery";
 import {
   getSocialMediaProjectBySlug,
   SOCIAL_MEDIA_SLUGS,
@@ -68,21 +67,7 @@ export default function SocialMediaProjectPage({ params }: Props) {
       </section>
 
       <section className="py-8 md:py-12">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {images.map((src, idx) => (
-            <AnimateIn key={src} delay={idx * 50}>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-                <Image
-                  src={src}
-                  alt={`${project.title} - ${idx + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-            </AnimateIn>
-          ))}
-        </div>
+        <SocialMediaProjectGallery images={images} projectTitle={project.title} />
       </section>
 
       <section className="py-8">

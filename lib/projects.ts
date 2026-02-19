@@ -127,15 +127,25 @@ const SM_DTEC = {
     "/images/projects/social-media/dtec/dtec_2.webp",
     "/images/projects/social-media/dtec/dtec_3.webp",
     "/images/projects/social-media/dtec/dtec_4.webp",
+    "/images/projects/social-media/dtec/dtec_5.webp",
+    "/images/projects/social-media/dtec/dtec_6.webp",
+    "/images/projects/social-media/dtec/dtec_7.webp",
+    "/images/projects/social-media/dtec/dtec_8.webp",
+    "/images/projects/social-media/dtec/dtec_9.webp",
   ],
 };
 const SM_GENTJANA = {
   slug: "gentjana-marku",
   images: [
-    "/images/projects/social-media/gentjana/gentjana_1.webp",
+    "/images/projects/social-media/gentjana/gentjana_1.jpg",
     "/images/projects/social-media/gentjana/gentjana_2.webp",
     "/images/projects/social-media/gentjana/gentjana_3.webp",
     "/images/projects/social-media/gentjana/gentjana_4.webp",
+    "/images/projects/social-media/gentjana/gentjana_5.webp",
+    "/images/projects/social-media/gentjana/gentjana_6.webp",
+    "/images/projects/social-media/gentjana/gentjana_7.webp",
+    "/images/projects/social-media/gentjana/gentjana_8.webp",
+    "/images/projects/social-media/gentjana/gentjana_9.webp",
   ],
 };
 const SM_LA_CAMPAGNA = {
@@ -179,10 +189,10 @@ const projectsSq: Project[] = [
   { title: "Marku Real Estate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/mre.png" },
 
   // --- Website (no internal page, link directly to URL) ---
-  { title: "ESM GROUP", tag: "Website", desc: "Website korporativ për kompani ndërtimi dhe montimi strukturash metalike.", category: "website", thumbnail: "/images/projects/website/esm-project.png", websiteUrl: "https://esmgroup.al" },
+  { title: "ESM GROUP", tag: "Website", desc: "Website korporativ për kompani ndërtimi dhe montimi strukturash metalike.", category: "website", thumbnail: "/images/projects/website/esm-project.png", websiteUrl: "https://esm-group.eu/" },
   { title: "Palushi Brothers", tag: "Website", desc: "Website për kompani ndërtimi dhe rinovimi në Londër, që prezanton shërbimet, projektet dhe kontaktin për klientët e banimit dhe komerciale.", category: "website", thumbnail: "/images/projects/website/pb.png", websiteUrl: "https://palushibrothers.co.uk" },
   { title: "HAUSWERK Niederbayern", tag: "Website", desc: "Website për shërbime objektesh pastrim, mirëmbajtje dhe kujdes shtëpie/zyre në Niederbayern, me prezantim të shërbimeve dhe kontakt për oferta.", category: "website", thumbnail: "/images/projects/website/hn.png", websiteUrl: "https://hauswerk-niederbayern.de" },
-  { title: "Bardhi Wellness", tag: "Website", desc: "Platformë online trajnimi dhe nutricioni me plane të personalizuara, rezultate klientësh dhe paketë abonimi për shëndet dhe fitnes.", category: "website", thumbnail: "/images/projects/website/bw.png", websiteUrl: "https://bardhiwellness.com" },
+  { title: "Bardhi Wellness", tag: "Website", desc: "Platformë online trajnimi dhe nutricioni me plane të personalizuara, rezultate klientësh dhe paketë abonimi për shëndet dhe fitnes.", category: "website", thumbnail: "/images/projects/website/bw.png", websiteUrl: "https://www.bardhiwellness.com/" },
   { title: "Besi's Imbiss", tag: "Website", desc: "Website për Imbiss lokal në Weiden in der Oberpfalz me menu ushqimesh, orare dhe kontakt për porosi ose vizitë në vend.", category: "website", thumbnail: "/images/projects/website/bi.png", websiteUrl: "https://besis-imbiss.de" },
 ];
 

@@ -185,7 +185,7 @@ export default function Navbar() {
                     {isServicesActive && (
                       <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
                     )}
-                    <span className="relative z-10">{it.label}</span>
+                    <span className="relative z-10 whitespace-nowrap">{it.label}</span>
                     <span className="relative z-10 ml-0.5 text-[10px] opacity-70">▾</span>
                   </button>
                   {servicesOpen && (
@@ -225,7 +225,7 @@ export default function Navbar() {
                 {active && (
                   <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
                 )}
-                <span className="relative z-10">{it.label}</span>
+                <span className="relative z-10 whitespace-nowrap">{it.label}</span>
               </Link>
             );
           })}
@@ -253,7 +253,7 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition hover:bg-[#b6944f] md:inline-flex"
+            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition hover:bg-[#b6944f] md:inline-flex md:whitespace-nowrap"
           >
             {nav.getQuote}
           </Link>
@@ -382,7 +382,7 @@ export default function Navbar() {
             <Link
               href={withLocale("/contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)]"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] whitespace-nowrap"
             >
               {nav.getQuote}
             </Link>
