@@ -395,7 +395,7 @@ export default function TrainingsSection({ locale }: Props) {
                   {copy.ctaSubtext}
                 </p>
                 <LocaleLink
-                  href="/contact"
+                  href="/trainings/register"
                   className="mt-6 inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#c8a55c] to-[#b6944f] px-10 font-semibold text-black shadow-lg shadow-[#c8a55c]/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#c8a55c]/40"
                 >
                   {copy.registerNow}

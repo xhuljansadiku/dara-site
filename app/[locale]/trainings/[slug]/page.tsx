@@ -76,7 +76,7 @@ export default function TrainingSlugPage({ params }: Props) {
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <LocaleLink
-                href="/contact"
+                href="/trainings/register"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f]"
               >
                 {cta.register}
@@ -185,7 +185,7 @@ export default function TrainingSlugPage({ params }: Props) {
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               <LocaleLink
-                href="/contact"
+                href="/trainings/register"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f]"
               >
                 {cta.register}
