@@ -20,6 +20,21 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 
 export type ServiceDetail = { title: string; desc: string; price?: string };
 
+/** Minimum price (EUR) per service - used to filter budget options in contact form */
+export const SERVICE_MIN_PRICE_EUR: Record<ServiceSlug, number> = {
+  "social-media": 250,
+  content: 200,
+  strategy: 400,
+  branding: 500,
+  ads: 150,
+  consulting: 100,
+  training: 250,
+  "website-landing": 400,
+  ecommerce: 1200,
+  saas: 4000,
+  maintenance: 120,
+};
+
 export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
   sq: [
     {

@@ -4,7 +4,18 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import NewsletterForm from "@/components/NewsletterForm";
-import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, type Locale } from "@/lib/services-data";
+import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
+
+// Services shown in contact form (exclude training - has its own form at /trainings/register)
+const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
+
+// Budget options: [label, minEur] - only show options where minEur >= service's minimum price
+const BUDGET_OPTIONS: { sq: string[]; en: string[]; de: string[] } = {
+  sq: ["Nuk jam i sigurt", "€100–€400", "€400–€800", "€800–€1.200", "€1.200–€2.500", "€2.500+"],
+  en: ["Not sure", "€100–€400", "€400–€800", "€800–€1,200", "€1,200–€2,500", "€2,500+"],
+  de: ["Nicht sicher", "€100–€400", "€400–€800", "€800–€1.200", "€1.200–€2.500", "€2.500+"],
+};
+const BUDGET_MIN_EUR = [0, 100, 400, 800, 1200, 2500]; // index matches BUDGET_OPTIONS (0 = "not sure")
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2 | 3 | 4 | 5 | 6;
@@ -45,12 +56,31 @@ export default function ContactPage() {
   const handleInputChange = (name: string, value: string) => {
     // For name field, only allow letters and spaces (no numbers or special characters)
     if (name === "name") {
-      // Allow only letters (including Albanian characters like ë, ç, etc.) and spaces
       const filteredValue = value.replace(/[^a-zA-ZëçÇË\s]/g, "");
       setFormData((prev) => ({ ...prev, [name]: filteredValue }));
+    } else if (name === "service") {
+      // When service changes, reset budget if it's now below service minimum
+      const serviceMin = value ? SERVICE_MIN_PRICE_EUR[value as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0 : 0;
+      setFormData((prev) => {
+        let newBudget = prev.budget;
+        if (prev.budget) {
+          const budgetIdx = BUDGET_OPTIONS[locale].indexOf(prev.budget);
+          if (budgetIdx >= 0 && BUDGET_MIN_EUR[budgetIdx] < serviceMin) {
+            newBudget = "";
+          }
+        }
+        return { ...prev, service: value, budget: newBudget };
+      });
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const getFilteredBudgetOptions = () => {
+    const opts = BUDGET_OPTIONS[locale];
+    if (!formData.service) return opts;
+    const serviceMin = SERVICE_MIN_PRICE_EUR[formData.service as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
+    return opts.filter((_, i) => i === 0 || BUDGET_MIN_EUR[i] >= serviceMin);
   };
 
   const handleNext = (e?: React.MouseEvent) => {
@@ -310,7 +340,7 @@ export default function ContactPage() {
                         {locale === "sq" ? "Zgjidh shërbimin*" : locale === "de" ? "Service wählen*" : "Select service*"}
                       </span>
                       <div className="grid gap-3 sm:grid-cols-2">
-                        {SERVICE_SLUGS.map((slug) => {
+                        {CONTACT_SERVICE_SLUGS.map((slug) => {
                           const serviceIndex = SERVICE_SLUGS.indexOf(slug);
                           const service = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex];
                           if (!service) return null;
@@ -484,13 +514,7 @@ export default function ContactPage() {
                       value={formData.budget}
                       onChange={(v) => handleInputChange("budget", v)}
                       locale={locale}
-                      options={
-                        locale === "sq"
-                          ? ["Nuk jam i sigurt", "€300–€700", "€700–€1500", "€1500+"]
-                          : locale === "de"
-                          ? ["Nicht sicher", "€300–€700", "€700–€1500", "€1500+"]
-                          : ["Not sure", "€300–€700", "€700–€1500", "€1500+"]
-                      }
+                      options={getFilteredBudgetOptions()}
                     />
                     <ControlledTextArea
                       label={locale === "sq" ? "Mesazh shtesë (opsional)" : locale === "de" ? "Zusätzliche Nachricht (optional)" : "Additional message (optional)"}
