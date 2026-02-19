@@ -17,7 +17,7 @@ const FOOTER_BY_LOCALE: Record<
     contactTitle: string;
     followUs: string;
     services: string[];
-    links: { home: string; about: string; services: string; packages: string; work: string; team: string; contact: string };
+    links: { home: string; about: string; services: string; packages: string; trainings: string; work: string; team: string; contact: string };
     legal: { privacy: string; terms: string };
   }
 > = {
@@ -46,6 +46,7 @@ const FOOTER_BY_LOCALE: Record<
       about: "Rreth nesh", 
       services: "Shërbimet", 
       packages: "Paketa", 
+      trainings: "Trajnime", 
       work: "Punët", 
       team: "Ekipi", 
       contact: "Kontakt" 
@@ -77,6 +78,7 @@ const FOOTER_BY_LOCALE: Record<
       about: "About", 
       services: "Services", 
       packages: "Packages", 
+      trainings: "Training", 
       work: "Work", 
       team: "Team", 
       contact: "Contact" 
@@ -108,6 +110,7 @@ const FOOTER_BY_LOCALE: Record<
       about: "Über uns", 
       services: "Leistungen", 
       packages: "Pakete", 
+      trainings: "Training", 
       work: "Referenzen", 
       team: "Team", 
       contact: "Kontakt" 
@@ -233,6 +236,14 @@ export default function Footer({ locale }: { locale: string }) {
                   className="transition-colors hover:text-[#c8a55c]"
                 >
                   {t.links.packages}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink
+                  href="/trainings"
+                  className="transition-colors hover:text-[#c8a55c]"
+                >
+                  {t.links.trainings}
                 </LocaleLink>
               </li>
               <li>

@@ -17,6 +17,7 @@ const NAV_TRANSLATIONS: Record<
     services: string;
     viewAllServices: string;
     packages: string;
+    trainings: string;
     about: string;
     works: string;
     team: string;
@@ -30,6 +31,7 @@ const NAV_TRANSLATIONS: Record<
     services: "Shërbime",
     viewAllServices: "Të gjitha shërbimet",
     packages: "Paketa",
+    trainings: "Trajnime",
     about: "Rreth nesh",
     works: "Punët",
     team: "Ekipi",
@@ -42,6 +44,7 @@ const NAV_TRANSLATIONS: Record<
     services: "Services",
     viewAllServices: "All services",
     packages: "Packages",
+    trainings: "Training",
     about: "About",
     works: "Work",
     team: "Team",
@@ -54,6 +57,7 @@ const NAV_TRANSLATIONS: Record<
     services: "Leistungen",
     viewAllServices: "Alle Leistungen",
     packages: "Pakete",
+    trainings: "Training",
     about: "Über uns",
     works: "Referenzen",
     team: "Team",
@@ -91,6 +95,7 @@ export default function Navbar() {
       { label: nav.about, href: "/about" },
       { label: nav.services, href: "/services" },
       { label: nav.packages, href: "/packages" },
+      { label: nav.trainings, href: "/trainings" },
       { label: nav.works, href: "/work" },
       { label: nav.team, href: "/#team" },
       { label: nav.contact, href: "/contact" },

@@ -104,9 +104,8 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Full Brand", subtitle: "Identitet i plotë", price: "Ofertë", points: ["Brand Pack +", "Tone of voice", "Aplikime (kartëvizita, etj.)"] },
     ],
     training: [
-      { title: "1 Ditë", subtitle: "Workshop", price: "Nga 250€", points: ["1 sesion", "Materiale digitale", "Pyetje-përgjigje"] },
-      { title: "2 Ditë", subtitle: "Program i plotë", price: "Nga 450€", points: ["2 ditë", "Ushtrime praktike", "Rekomandime pas trajnimit"] },
-      { title: "Custom", subtitle: "Për ekipin tuaj", price: "Ofertë", points: ["Modulet e nevojshme", "Kohëzgjatje fleksibël", "Ndjekje opsionale"] },
+      { title: "Trajnime SMM", subtitle: "1 muaj", price: "250€", points: ["1 muaj (3 herë në javë)", "12 mësime / tema", "Praktike"] },
+      { title: "Trajnim SMM 1:1", subtitle: "1 muaj", price: "600€", points: ["Mësime", "Praktike", "Intensiv"] },
     ],
     websiteLanding: [
       { title: "Landing Page", subtitle: "Një faqe", price: "400€", priceOriginal: "450€", points: ["1 faqe (one-page)", "Template profesional", "Responsive (mobile)", "Form kontaktimi", "SEO bazë", "1 rishikim"] },
@@ -141,9 +140,8 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Full Brand", subtitle: "Complete identity", price: "On request", points: ["Brand Pack +", "Tone of voice", "Applications (cards, etc.)"] },
     ],
     training: [
-      { title: "1 Day", subtitle: "Workshop", price: "From €250", points: ["1 session", "Digital materials", "Q&A"] },
-      { title: "2 Days", subtitle: "Full programme", price: "From €450", points: ["2 days", "Practical exercises", "Post-training recommendations"] },
-      { title: "Custom", subtitle: "For your team", price: "On request", points: ["Required modules", "Flexible duration", "Optional follow-up"] },
+      { title: "SMM Training", subtitle: "1 month", price: "€250", points: ["1 month (3 times per week)", "12 lessons / topics", "Practical exercises"] },
+      { title: "SMM 1:1 Training", subtitle: "1 month", price: "€600", points: ["Lessons", "Practical exercises", "Intensive"] },
     ],
     websiteLanding: [
       { title: "Landing Page", subtitle: "Single page", price: "€400", priceOriginal: "€450", points: ["1 page (one-page)", "Professional template", "Responsive (mobile)", "Contact form", "Basic SEO", "1 revision"] },
@@ -178,9 +176,8 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Full Brand", subtitle: "Komplette Identität", price: "Auf Anfrage", points: ["Brand Pack +", "Tone of Voice", "Anwendungen (Karten etc.)"] },
     ],
     training: [
-      { title: "1 Tag", subtitle: "Workshop", price: "Ab 250€", points: ["1 Session", "Digitale Unterlagen", "Frage-Antwort"] },
-      { title: "2 Tage", subtitle: "Vollprogramm", price: "Ab 450€", points: ["2 Tage", "Praktische Übungen", "Empfehlungen danach"] },
-      { title: "Custom", subtitle: "Für Ihr Team", price: "Auf Anfrage", points: ["Benötigte Module", "Flexible Dauer", "Optionale Nachbetreuung"] },
+      { title: "SMM Training", subtitle: "1 Monat", price: "250€", points: ["1 Monat (3× pro Woche)", "12 Lektionen / Themen", "Praktische Übungen"] },
+      { title: "SMM 1:1 Training", subtitle: "1 Monat", price: "600€", points: ["Lektionen", "Praktische Übungen", "Intensiv"] },
     ],
     websiteLanding: [
       { title: "Landing Page", subtitle: "Eine Seite", price: "400€", priceOriginal: "450€", points: ["1 Seite (One-Page)", "Professionelles Template", "Responsive (Mobile)", "Kontaktformular", "Basis-SEO", "1 Überarbeitung"] },

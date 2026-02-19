@@ -4,6 +4,7 @@ import { use } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
+import TrainingsSection from "@/components/site/TrainingsSection";
 import HomeWorkSection from "@/components/site/HomeWorkSection";
 import AnimateIn from "@/components/site/AnimateIn";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
@@ -520,6 +521,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         testimonial={TESTIMONIAL_BY_LOCALE[locale]}
         copy={SERVICES_SECTION_COPY[locale]}
       />
+
+      <TrainingsSection locale={locale} />
 
       <HomeWorkSection locale={locale} />
 
