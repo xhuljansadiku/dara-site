@@ -64,7 +64,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Rritje e dukshmërisë dhe e njohjes së brand-it",
         "Angazhim më i lartë me audiencën dhe lidhje më të fortë",
-        "Kohë e kursyer — ne kujdesemi për planifikimin dhe ekzekutimin",
+        "Kohë e kursyer , ne kujdesemi për planifikimin dhe ekzekutimin",
       ],
       howWeWork: [
         "Bisedë fillestare për të kuptuar qëllimet, tonin dhe audiencën",
@@ -90,7 +90,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Increased brand visibility and recognition",
         "Stronger engagement and connection with your audience",
-        "Time saved — we handle planning and execution",
+        "Time saved , we handle planning and execution",
       ],
       howWeWork: [
         "Initial call to understand goals, tone and audience",
@@ -116,7 +116,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Höhere Sichtbarkeit und Wiedererkennung der Marke",
         "Stärkeres Engagement und bessere Beziehung zur Zielgruppe",
-        "Zeitersparnis — wir übernehmen Planung und Umsetzung",
+        "Zeitersparnis , wir übernehmen Planung und Umsetzung",
       ],
       howWeWork: [
         "Auftaktgespräch zu Zielen, Tonalität und Zielgruppe",
@@ -143,7 +143,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Përmbajtje që reflekton identitetin e brand-it dhe tërheq audiencën",
-        "Kohë dhe burime të kursyera — prodhim profesional i gatshëm",
+        "Kohë dhe burime të kursyera , prodhim profesional i gatshëm",
         "Reels dhe video që rrisin arritjen organike",
       ],
       howWeWork: [
@@ -219,7 +219,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startup-e që po përgatiten për rritje",
       ],
       benefits: [
-        "Drejtim i qartë — e dini se çfarë të bëni dhe në çfarë radhe",
+        "Drejtim i qartë , e dini se çfarë të bëni dhe në çfarë radhe",
         "Objektiva të matshme dhe raportim të fokusuar",
         "Shmangie të “të bësh gjithçka” pa prioritete",
       ],
@@ -245,7 +245,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startups preparing for growth",
       ],
       benefits: [
-        "Clear direction — you know what to do and in what order",
+        "Clear direction , you know what to do and in what order",
         "Measurable objectives and focused reporting",
         "Avoid spreading efforts without priorities",
       ],
@@ -271,7 +271,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startups in der Wachstumsvorbereitung",
       ],
       benefits: [
-        "Klarer Kurs — Sie wissen, was wann zu tun ist",
+        "Klarer Kurs , Sie wissen, was wann zu tun ist",
         "Messbare Ziele und fokussiertes Reporting",
         "Kein „alles gleichzeitig“ ohne Prioritäten",
       ],
@@ -531,7 +531,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Njohuri të zbatueshme menjëherë, jo vetëm teori",
-        "Ekipi i njëjtë që punon me klientë — përvojë reale",
+        "Ekipi i njëjtë që punon me klientë , përvojë reale",
         "Kurs i përshtatshëm për nevojat dhe nivelin e ekipit",
       ],
       howWeWork: [
@@ -557,7 +557,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Immediately applicable knowledge, not just theory",
-        "Same team that works with real clients — real-world experience",
+        "Same team that works with real clients , real-world experience",
         "Content tailored to your team's level and needs",
       ],
       howWeWork: [
@@ -583,7 +583,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Sofort anwendbares Wissen, keine reine Theorie",
-        "Dasselbe Team, das mit echten Kunden arbeitet — Praxisnähe",
+        "Dasselbe Team, das mit echten Kunden arbeitet , Praxisnähe",
         "Inhalt und Niveau an Ihr Team angepasst",
       ],
       howWeWork: [
@@ -611,8 +611,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Prezencë profesionale në internet që konverton",
-        "Shpejtë dhe e përballueshme — nga landing te website me disa faqe",
-        "Një partner që kupton edhe marketingu — jo vetëm kod",
+        "Shpejtë dhe e përballueshme , nga landing te website me disa faqe",
+        "Një partner që kupton edhe marketingu , jo vetëm kod",
       ],
       howWeWork: [
         "Bisedë për qëllimet, audiencën dhe përmbajtjen",
@@ -637,7 +637,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Professional online presence that converts",
-        "Fast and affordable — from landing to multi-page website",
+        "Fast and affordable , from landing to multi-page website",
         "A partner who understands marketing, not just code",
       ],
       howWeWork: [
@@ -663,8 +663,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Professioneller Internetauftritt, der konvertiert",
-        "Schnell und bezahlbar — von Landing bis Mehrseiter",
-        "Ein Partner, der auch Marketing versteht — nicht nur Code",
+        "Schnell und bezahlbar , von Landing bis Mehrseiter",
+        "Ein Partner, der auch Marketing versteht , nicht nur Code",
       ],
       howWeWork: [
         "Gespräch zu Zielen, Zielgruppe und Inhalten",
@@ -850,9 +850,9 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Marka që duan që website-i të jetë gjithmonë i përditësuar dhe i sigurt",
       ],
       benefits: [
-        "Website i sigurt dhe i përditësuar — pa probleme teknike",
+        "Website i sigurt dhe i përditësuar , pa probleme teknike",
         "Performancë më e mirë dhe shpejtësi më e lartë",
-        "Pa stres — ne kujdesemi për të gjitha detajet teknike",
+        "Pa stres , ne kujdesemi për të gjitha detajet teknike",
       ],
       howWeWork: [
         "Audit fillestar i website/e-commerce tuaj",
@@ -876,9 +876,9 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Brands that want their website always updated and secure",
       ],
       benefits: [
-        "Secure and updated website — no technical issues",
+        "Secure and updated website , no technical issues",
         "Better performance and higher speed",
-        "No stress — we handle all technical details",
+        "No stress , we handle all technical details",
       ],
       howWeWork: [
         "Initial audit of your website/e-commerce",
@@ -902,9 +902,9 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Marken, die ihre Website immer aktualisiert und sicher haben wollen",
       ],
       benefits: [
-        "Sichere und aktualisierte Website — keine technischen Probleme",
+        "Sichere und aktualisierte Website , keine technischen Probleme",
         "Bessere Performance und höhere Geschwindigkeit",
-        "Kein Stress — wir kümmern uns um alle technischen Details",
+        "Kein Stress , wir kümmern uns um alle technischen Details",
       ],
       howWeWork: [
         "Erstes Audit Ihrer Website/E-Commerce",

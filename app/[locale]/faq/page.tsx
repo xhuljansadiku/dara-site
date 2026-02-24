@@ -28,7 +28,7 @@ export default function FaqPage() {
         {faqs.map((faq, i) => (
           <div
             key={i}
-            className="rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden"
+            className="card overflow-hidden"
           >
             <button
               type="button"

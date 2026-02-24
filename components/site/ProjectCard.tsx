@@ -15,7 +15,7 @@ type Props = {
 export default function ProjectCard({ project: p, locale, setLightbox }: Props) {
   const viewLabel = locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project";
   const cardClass =
-    "group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] transition hover:border-[#c8a55c]/25 hover:bg-white/[0.08] hover:shadow-[0_0_30px_rgba(200,165,92,0.06)]";
+    "card card-lift group flex h-full flex-col overflow-hidden";
 
   const isImageGallery = p.category === "social-media" || p.category === "brand";
   const galleryImages =
@@ -63,13 +63,13 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
   const cardContent = (
     <>
       {imageSection}
-      <div className="p-5">
+      <div className="flex min-h-[140px] flex-1 flex-col p-5">
         <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
           {p.tag}
         </span>
         <h3 className="mt-3 font-medium text-white/95 group-hover:text-[#c8a55c]/90">{p.title}</h3>
         <p className="mt-2 text-sm text-white/60 line-clamp-2">{p.desc}</p>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
+        <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
           {viewLabel}
           <span className="transition group-hover:translate-x-0.5">→</span>
         </span>

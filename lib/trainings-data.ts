@@ -46,17 +46,17 @@ export const TRAININGS: Training[] = [
     fullDescription: {
       sq: [
         "Trajnimi SMM është programi ynë më i zgjedhur për të mësuar Social Media Marketing nga zero. Përfshin 12 mësime të strukturuara që mbulojnë të gjitha aspektet e nevojshme: nga krijimi i strategjisë deri te menaxhimi i përditshëm të rrjetave sociale.",
-        "Çdo sesion zgjat rreth 2 orë dhe zhvillohet 3 herë në javë. Kombinon teori dhe praktikë — çdo mësim përfundon me ushtrime që mund të aplikosh menjëherë në biznesin tënd.",
+        "Çdo sesion zgjat rreth 2 orë dhe zhvillohet 3 herë në javë. Kombinon teori dhe praktikë , çdo mësim përfundon me ushtrime që mund të aplikosh menjëherë në biznesin tënd.",
         "Pas përfundimit të trajnimit, ofrojmë 2 javë ndjekje për pyetje dhe rekomandime. Materialet e studimit përfshijnë prezantime, template dhe udhëzues praktik.",
       ],
       en: [
         "The SMM Training is our most popular programme for learning Social Media Marketing from scratch. It includes 12 structured lessons covering all necessary aspects: from strategy creation to daily social media management.",
-        "Each session lasts about 2 hours and takes place 3 times per week. It combines theory and practice — every lesson ends with exercises you can apply immediately to your business.",
+        "Each session lasts about 2 hours and takes place 3 times per week. It combines theory and practice , every lesson ends with exercises you can apply immediately to your business.",
         "After completing the training, we offer 2 weeks of follow-up for questions and recommendations. Study materials include presentations, templates and a practical guide.",
       ],
       de: [
         "Das SMM-Training ist unser beliebtestes Programm zum Erlernen von Social Media Marketing von Grund auf. Es umfasst 12 strukturierte Lektionen, die alle notwendigen Aspekte abdecken: von der Strategieerstellung bis zum täglichen Social-Media-Management.",
-        "Jede Sitzung dauert etwa 2 Stunden und findet 3-mal pro Woche statt. Es verbindet Theorie und Praxis — jede Lektion endet mit Übungen, die Sie sofort in Ihrem Unternehmen anwenden können.",
+        "Jede Sitzung dauert etwa 2 Stunden und findet 3-mal pro Woche statt. Es verbindet Theorie und Praxis , jede Lektion endet mit Übungen, die Sie sofort in Ihrem Unternehmen anwenden können.",
         "Nach Abschluss des Trainings bieten wir 2 Wochen Nachbetreuung für Fragen und Empfehlungen. Die Lernmaterialien umfassen Präsentationen, Vorlagen und einen praktischen Leitfaden.",
       ],
     },

@@ -11,7 +11,7 @@ export async function verifyRecaptcha(token: string | null | undefined): Promise
     secret.includes("xxxxx") ||
     secret.endsWith("...")
   ) {
-    if (secret) console.warn("RECAPTCHA_SECRET_KEY looks like placeholder — captcha verification skipped");
+    if (secret) console.warn("RECAPTCHA_SECRET_KEY looks like placeholder , captcha verification skipped");
     return true;
   }
   if (!token || typeof token !== "string") {

@@ -49,12 +49,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Strategji marketingu digjital",
-      desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale — pozicionim, objektiva dhe ide konkrete zhvillimi.",
+      desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale , pozicionim, objektiva dhe ide konkrete zhvillimi.",
       price: "Nga 400€ / strategji",
     },
     {
       title: "Branding & identitet vizual",
-      desc: "Krijim ose rifreskim i identitetit të brand-it — logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
+      desc: "Krijim ose rifreskim i identitetit të brand-it , logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
       price: "Nga 500€",
     },
     {
@@ -74,12 +74,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & faqe uljeje",
-      desc: "Faqe një-faqe (landing) ose website me disa faqe — prezencë profesionale, forma kontakt, SEO.",
+      desc: "Faqe një-faqe (landing) ose website me disa faqe , prezencë profesionale, forma kontakt, SEO.",
       price: "Nga 400€",
     },
     {
       title: "E-commerce",
-      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim — zgjidhje e përshtatshme për shitje në internet.",
+      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim , zgjidhje e përshtatshme për shitje në internet.",
       price: "Nga 1,200€",
     },
     {
@@ -106,7 +106,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Digital Marketing Strategy",
-      desc: "Business analysis and personalized strategy for real growth — positioning, objectives and concrete ideas.",
+      desc: "Business analysis and personalized strategy for real growth , positioning, objectives and concrete ideas.",
       price: "From €400/strategy",
     },
     {
@@ -131,12 +131,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & landing pages",
-      desc: "Single-page (landing) or multi-page website — professional presence, contact forms, SEO.",
+      desc: "Single-page (landing) or multi-page website , professional presence, contact forms, SEO.",
       price: "From €400",
     },
     {
       title: "E-commerce",
-      desc: "Online store with products, inventory, payment and delivery — tailored solution for selling online.",
+      desc: "Online store with products, inventory, payment and delivery , tailored solution for selling online.",
       price: "From €1,200",
     },
     {
@@ -188,12 +188,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & Landingpages",
-      desc: "Einzelseiten (Landing) oder mehrseitige Website — professioneller Auftritt, Kontaktformulare, SEO.",
+      desc: "Einzelseiten (Landing) oder mehrseitige Website , professioneller Auftritt, Kontaktformulare, SEO.",
       price: "Ab 400€",
     },
     {
       title: "E-Commerce",
-      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand — maßgeschneiderte Lösung für den Verkauf im Internet.",
+      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand , maßgeschneiderte Lösung für den Verkauf im Internet.",
       price: "Ab 1.200€",
     },
     {

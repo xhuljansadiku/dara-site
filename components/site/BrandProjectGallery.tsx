@@ -17,7 +17,7 @@ export default function BrandProjectGallery({ projects }: Props) {
 
   return (
     <>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, idx) => (
           <AnimateIn key={project.title} delay={idx * 60}>
             <button
@@ -27,7 +27,7 @@ export default function BrandProjectGallery({ projects }: Props) {
                 const index = images.indexOf(project.thumbnail);
                 if (index >= 0) setLightbox({ images, index });
               }}
-              className="flex w-full flex-col items-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-left transition hover:border-[#c8a55c]/20 hover:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
+              className="card card-lift flex w-full flex-col items-center p-8 text-left focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
             >
               <div className="relative flex h-40 w-full items-center justify-center bg-white/5 rounded-xl">
                 {project.thumbnail && (

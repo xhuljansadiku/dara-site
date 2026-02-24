@@ -84,7 +84,7 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
         </div>
 
         {/* GRID WITH THUMBNAILS */}
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((p) => (
             <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
           ))}

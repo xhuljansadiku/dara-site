@@ -268,7 +268,7 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#c8a55c]/50 bg-[#444444] text-xs font-semibold text-[#c8a55c] md:h-12 md:w-12">
                     {s.n}
                   </div>
-                  <div className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/[0.06] p-6 transition hover:border-[#c8a55c]/25">
+                  <div className="card card-lift min-w-0 flex-1 p-6">
                     <h3 className="text-lg font-medium text-white/95">{s.title}</h3>
                     <p className="mt-2 text-sm text-white/60">{s.desc}</p>
                     <div className="mt-5 h-px bg-white/10" />

@@ -289,6 +289,37 @@ const TARGET_BY_LOCALE: Record<
       "Tregti & E-commerce",
       "Ndërtim & Pasuri të paluajtshme",
       "Personal Branding & Influencerë",
+      "Dentist & Stomatologji",
+      "Farmaci & Shëndetësi",
+      "Avokati & Konsulencë juridike",
+      "Arkitekt & Dizajn",
+      "Edukim & Trajnime",
+      "Teknologji & Software",
+      "Modë & Tekstil",
+      "Automobila & Transport",
+      "Evente & Catering",
+      "Fotografi & Video",
+      "Fitness & Sport",
+      "Agjenshi udhëtimi",
+      "Sigurime & Financa",
+      "Restorante & Kafe",
+      "Spital & Klinika",
+      "Imobiliare",
+      "Marketing & Reklama",
+      "Startup & SME",
+      "Korporata",
+      "NGO & Fondacione",
+      "Muzikë & Art",
+      "Gastronomi",
+      "Wellness & Spa",
+      "Veterinari",
+      "Bujqësi",
+      "Energji",
+      "Logjistikë",
+      "IT & Web",
+      "Konsumatorë",
+      "B2B",
+      "B2C",
     ],
     b2bTitle: "Kryesor: B2B",
     b2bDesc: "Shërbime marketingu për biznese dhe kompani.",
@@ -318,6 +349,37 @@ const TARGET_BY_LOCALE: Record<
       "Retail & E-commerce",
       "Construction & Real Estate",
       "Personal Branding & Influencers",
+      "Dental & Orthodontics",
+      "Pharmacy & Healthcare",
+      "Legal & Consulting",
+      "Architecture & Design",
+      "Education & Training",
+      "Technology & Software",
+      "Fashion & Textile",
+      "Automotive & Transport",
+      "Events & Catering",
+      "Photography & Video",
+      "Fitness & Sports",
+      "Travel agencies",
+      "Insurance & Finance",
+      "Restaurants & Cafes",
+      "Hospitals & Clinics",
+      "Real estate",
+      "Marketing & Advertising",
+      "Startups & SMEs",
+      "Corporates",
+      "NGOs & Foundations",
+      "Music & Arts",
+      "Gastronomy",
+      "Wellness & Spa",
+      "Veterinary",
+      "Agriculture",
+      "Energy",
+      "Logistics",
+      "IT & Web",
+      "Consumer",
+      "B2B",
+      "B2C",
     ],
     b2bTitle: "Primary: B2B",
     b2bDesc: "Marketing services for businesses and companies.",
@@ -347,6 +409,37 @@ const TARGET_BY_LOCALE: Record<
       "Einzelhandel & E-Commerce",
       "Bau & Immobilien",
       "Personal Branding & Influencer",
+      "Zahnmedizin & Kieferorthopädie",
+      "Apotheke & Gesundheitswesen",
+      "Recht & Beratung",
+      "Architektur & Design",
+      "Bildung & Training",
+      "Technologie & Software",
+      "Mode & Textil",
+      "Automobil & Transport",
+      "Events & Catering",
+      "Fotografie & Video",
+      "Fitness & Sport",
+      "Reisebüros",
+      "Versicherung & Finanzen",
+      "Restaurants & Cafés",
+      "Krankenhäuser & Kliniken",
+      "Immobilien",
+      "Marketing & Werbung",
+      "Startups & KMU",
+      "Konzerne",
+      "NGOs & Stiftungen",
+      "Musik & Kunst",
+      "Gastronomie",
+      "Wellness & Spa",
+      "Tierarzt",
+      "Landwirtschaft",
+      "Energie",
+      "Logistik",
+      "IT & Web",
+      "Verbraucher",
+      "B2B",
+      "B2C",
     ],
     b2bTitle: "Primär: B2B",
     b2bDesc: "Marketingdienstleistungen für Unternehmen.",
@@ -410,244 +503,358 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
   return (
     <>
-      {/* HERO - We are DARA Marketing */}
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.04] to-transparent" />
+      {/* HERO - Full-width modern hero */}
+      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+        {/* Background */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#c8a55c]/[0.06] via-transparent to-transparent" />
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
-          <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-[500px] w-[600px] -translate-x-1/2 rounded-full bg-[#c8a55c]/8 blur-[100px]" />
+          <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute -left-20 bottom-1/4 h-64 w-64 rounded-full bg-[#c8a55c]/5 blur-3xl" />
         </div>
+        <div className="absolute inset-0 -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMS41Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" />
 
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
-              {hero.kicker}
-            </p>
-            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-              {hero.title.includes(" ") ? (
-                <>
-                  {hero.title.split(" ").slice(0, -1).join(" ")}{" "}
-                  <span className="text-[#c8a55c]">{hero.title.split(" ").slice(-1)[0]}</span>
-                </>
-              ) : (
-                <span className="text-[#c8a55c]">{hero.title}</span>
-              )}
-            </h1>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
+            <div className="order-2 lg:order-1">
+              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                {hero.kicker}
+              </span>
+              <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
+                {hero.title.includes(" ") ? (
+                  <>
+                    {hero.title.split(" ").slice(0, -1).join(" ")}{" "}
+                    <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
+                      {hero.title.split(" ").slice(-1)[0]}
+                    </span>
+                  </>
+                ) : (
+                  <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
+                    {hero.title}
+                  </span>
+                )}
+              </h1>
+              <div className="mt-8 space-y-5 text-base leading-relaxed text-white/75 md:text-lg">
+                {hero.paragraphs.map((p, idx) => (
+                  <p key={idx} className="max-w-xl">{p}</p>
+                ))}
+              </div>
 
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-white/70 md:text-lg">
-              {hero.paragraphs.map((p, idx) => (
-                <p key={idx} className="max-w-2xl">{p}</p>
-              ))}
-            </div>
+              {/* Stats - horizontal bar */}
+              <div className="mt-10 flex flex-wrap gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm md:gap-10 md:p-8">
+                {hero.stats.map((s) => (
+                  <div key={s.k} className="flex flex-col">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">{s.k}</span>
+                    <span className="mt-1 text-lg font-bold text-[#c8a55c] md:text-xl">{s.v}</span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {hero.stats.map((s) => (
-                <div
-                  key={s.k}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-[#c8a55c]/30"
+              <div className="mt-10 flex flex-wrap gap-4">
+                <LocaleLink
+                  href="/contact"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black shadow-[0_0_30px_rgba(200,165,92,0.3)] transition hover:bg-[#b6944f] hover:shadow-[0_0_40px_rgba(200,165,92,0.4)] sm:w-auto"
                 >
-                  <p className="text-xs text-white/60">{s.k}</p>
-                  <p className="mt-1 font-medium text-white/90">{s.v}</p>
+                  {hero.ctaContact}
+                </LocaleLink>
+                <LocaleLink
+                  href="/work"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 font-medium text-white/90 transition hover:border-[#c8a55c]/50 hover:bg-white/10 sm:w-auto"
+                >
+                  {hero.ctaWork}
+                </LocaleLink>
+              </div>
+            </div>
+
+            <div className="relative order-1 lg:order-2">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30 lg:rounded-3xl">
+                <div className="aspect-[4/3] overflow-hidden lg:aspect-[5/4]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
+                    alt="DARA Marketing Agency — team and collaboration"
+                    width={900}
+                    height={600}
+                    className="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
-              ))}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <p className="text-sm font-medium text-white/90">DARA Marketing Agency</p>
+                  <p className="text-xs text-white/70">{hero.stats[1]?.v}</p>
+                </div>
+              </div>
+              <div className="absolute -bottom-6 -right-6 -z-10 h-48 w-48 rounded-full bg-[#c8a55c]/20 blur-3xl" />
             </div>
-
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <LocaleLink
-                href="/contact"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black shadow-[0_0_24px_rgba(200,165,92,0.25)] transition hover:bg-[#b6944f] sm:w-auto"
-              >
-                {hero.ctaContact}
-              </LocaleLink>
-              <LocaleLink
-                href="/work"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 text-white/90 transition hover:border-[#c8a55c]/40 hover:bg-white/10 sm:w-auto"
-              >
-                {hero.ctaWork}
-              </LocaleLink>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl lg:aspect-[5/4] lg:rounded-3xl">
-              <Image
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                alt="DARA Marketing Agency — team and collaboration"
-                width={900}
-                height={600}
-                className="h-full w-full object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div className="absolute -bottom-4 -right-4 -z-10 h-3/4 w-full rounded-3xl bg-[#c8a55c]/10 blur-2xl" />
           </div>
         </div>
       </section>
 
-      {/* PROCESS - How we work */}
-      <section id="process" className="py-14 md:py-20">
-        <AnimateIn delay={0}>
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
-            {process.sectionTitle}
-          </p>
-        </AnimateIn>
-        <AnimateIn delay={100}>
-          <h2 className="mt-4 font-display text-2xl font-semibold md:text-3xl lg:text-4xl">
-            {process.sectionTitle}
-          </h2>
-          <p className="mt-3 max-w-2xl text-white/60">{process.sectionDesc}</p>
-        </AnimateIn>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {process.steps.map((step, idx) => (
-            <AnimateIn key={step.n} delay={idx * 100}>
-              <div className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 transition-all duration-300 hover:border-[#c8a55c]/30 hover:bg-gradient-to-br hover:from-white/[0.1] hover:to-white/[0.05] hover:shadow-[0_0_30px_rgba(200,165,92,0.1)]">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="text-3xl font-bold text-[#c8a55c]/30">{step.n}</span>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#c8a55c]/20 to-transparent ml-4" />
-                </div>
-                <h3 className="text-lg font-semibold text-white/95 transition group-hover:text-[#c8a55c]/90">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/70">{step.desc}</p>
-                <ul className="mt-5 space-y-2">
-                  {step.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start gap-2 text-xs text-white/60">
-                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c8a55c]" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-[#c8a55c]/0 to-[#c8a55c]/0 transition group-hover:from-[#c8a55c]/5 group-hover:to-transparent" />
-              </div>
+      {/* PROCESS - Modern grid */}
+      <section id="process" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <AnimateIn delay={0}>
+              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                {process.sectionTitle}
+              </span>
             </AnimateIn>
-          ))}
+            <AnimateIn delay={100}>
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                {process.sectionTitle}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{process.sectionDesc}</p>
+            </AnimateIn>
+          </div>
+
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {process.steps.map((step, idx) => (
+              <AnimateIn key={step.n} delay={idx * 80}>
+                <div className="card card-lift group relative flex h-full flex-col overflow-hidden p-6">
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#c8a55c]/25 to-[#c8a55c]/10 text-sm font-bold text-[#c8a55c]">
+                      {step.n}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">{step.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{step.desc}</p>
+                  <ul className="mt-6 space-y-2">
+                    {step.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-center gap-2 text-xs text-white/60">
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-[#c8a55c]" />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* MISSION & VISION */}
-      <section className="py-14 md:py-20">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
-          {missionVision.sectionTitle}
-        </p>
-        <p className="mt-2 max-w-2xl text-white/60">{missionVision.sectionDesc}</p>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-[#c8a55c]/20 md:p-8">
-            <h3 className="text-lg font-semibold text-[#c8a55c]">{missionVision.missionTitle}</h3>
-            <p className="mt-4 leading-relaxed text-white/70">{missionVision.missionText}</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-[#c8a55c]/20 md:p-8">
-            <h3 className="text-lg font-semibold text-[#c8a55c]">{missionVision.visionTitle}</h3>
-            <p className="mt-4 leading-relaxed text-white/70">{missionVision.visionText}</p>
+      <section className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <AnimateIn delay={0}>
+                <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                  {missionVision.sectionTitle}
+                </span>
+              </AnimateIn>
+              <AnimateIn delay={100}>
+                <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl">
+                  {missionVision.sectionTitle}
+                </h2>
+                <p className="mt-4 text-lg text-white/60">{missionVision.sectionDesc}</p>
+              </AnimateIn>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+              <AnimateIn delay={150}>
+                <div className="card card-lift relative overflow-hidden p-8">
+                  <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#c8a55c]/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/20">
+                      <svg className="h-6 w-6 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#c8a55c]">{missionVision.missionTitle}</h3>
+                    <p className="mt-4 leading-relaxed text-white/75">{missionVision.missionText}</p>
+                  </div>
+                </div>
+              </AnimateIn>
+              <AnimateIn delay={200}>
+                <div className="card card-lift relative overflow-hidden p-8">
+                  <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#c8a55c]/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/20">
+                      <svg className="h-6 w-6 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#c8a55c]">{missionVision.visionTitle}</h3>
+                    <p className="mt-4 leading-relaxed text-white/75">{missionVision.visionText}</p>
+                  </div>
+                </div>
+              </AnimateIn>
+            </div>
           </div>
         </div>
       </section>
 
       {/* WHAT MAKES US DIFFERENT */}
-      <section className="py-14 md:py-20">
-        <h2 className="font-display text-2xl font-semibold md:text-3xl">
-          {differentiators.sectionTitle.includes(" ") ? (
-            <>
-              {differentiators.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-[#c8a55c]">{differentiators.sectionTitle.split(" ").slice(-1)[0]}</span>
-            </>
-          ) : (
-            <span className="text-[#c8a55c]">{differentiators.sectionTitle}</span>
-          )}
-        </h2>
-        <p className="mt-2 max-w-2xl text-white/60">{differentiators.sectionDesc}</p>
+      <section className="relative overflow-hidden py-20 md:py-28">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.03] to-transparent" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <AnimateIn delay={0}>
+              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                {differentiators.sectionTitle}
+              </span>
+            </AnimateIn>
+            <AnimateIn delay={100}>
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                {differentiators.sectionTitle.includes(" ") ? (
+                  <>
+                    {differentiators.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
+                    <span className="text-[#c8a55c]">{differentiators.sectionTitle.split(" ").slice(-1)[0]}</span>
+                  </>
+                ) : (
+                  <span className="text-[#c8a55c]">{differentiators.sectionTitle}</span>
+                )}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{differentiators.sectionDesc}</p>
+            </AnimateIn>
+          </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {differentiators.items.map((d) => (
-            <div
-              key={d.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:-translate-y-0.5 hover:border-[#c8a55c]/30 hover:shadow-lg"
-            >
-              <h3 className="text-lg font-medium text-white/90">{d.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{d.desc}</p>
-            </div>
-          ))}
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {differentiators.items.map((d, idx) => (
+              <AnimateIn key={d.title} delay={idx * 60}>
+                <div className="card card-lift group relative flex h-full flex-col p-6">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-[#c8a55c]/15 text-[#c8a55c] transition group-hover:bg-[#c8a55c]/25">
+                    <span className="text-lg font-bold">{idx + 1}</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">{d.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/65">{d.desc}</p>
+                </div>
+              </AnimateIn>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* TARGET AUDIENCE */}
-      <section className="py-12 md:py-16">
-        <h2 className="font-display text-2xl font-semibold md:text-3xl">
-          {target.sectionTitle.includes(" ") ? (
-            <>
-              {target.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-[#c8a55c]">{target.sectionTitle.split(" ").slice(-1)[0]}</span>
-            </>
-          ) : (
-            <span className="text-[#c8a55c]">{target.sectionTitle}</span>
-          )}
-        </h2>
-        <p className="mt-2 max-w-2xl text-white/60">{target.sectionDesc}</p>
-
-        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-medium text-[#c8a55c]">{target.idealTitle}</h3>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              {target.idealItems.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-medium text-[#c8a55c]">{target.localTitle}</h3>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              {target.localItems.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-medium text-[#c8a55c]">{target.industriesTitle}</h3>
-            <ul className="mt-3 space-y-1 text-sm text-white/70">
-              {target.industriesItems.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <AnimateIn delay={0}>
+              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                {target.sectionTitle}
+              </span>
+            </AnimateIn>
+            <AnimateIn delay={100}>
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                {target.sectionTitle.includes(" ") ? (
+                  <>
+                    {target.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
+                    <span className="text-[#c8a55c]">{target.sectionTitle.split(" ").slice(-1)[0]}</span>
+                  </>
+                ) : (
+                  <span className="text-[#c8a55c]">{target.sectionTitle}</span>
+                )}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{target.sectionDesc}</p>
+            </AnimateIn>
           </div>
 
-          <div className="rounded-2xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-6 md:col-span-2 lg:col-span-3">
-            <div className="grid gap-6 md:grid-cols-2">
-              <div>
-                <h3 className="text-base font-medium text-[#c8a55c]">{target.b2bTitle}</h3>
-                <p className="mt-1 text-sm text-white/70">{target.b2bDesc}</p>
+          <div className="mt-16 space-y-6">
+            {/* Rreshti 1: Klienti ideal + Lokal ose online */}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <AnimateIn delay={150}>
+                <div className="card h-full p-6">
+                  <h3 className="text-lg font-semibold text-[#c8a55c]">{target.idealTitle}</h3>
+                  <ul className="mt-4 space-y-3">
+                    {target.idealItems.map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-sm text-white/75">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
+              <AnimateIn delay={200}>
+                <div className="card h-full p-6">
+                  <h3 className="text-lg font-semibold text-[#c8a55c]">{target.localTitle}</h3>
+                  <ul className="mt-4 space-y-3">
+                    {target.localItems.map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-sm text-white/75">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
+            </div>
+            {/* Rreshti 2: Industritë - full width */}
+            <AnimateIn delay={250}>
+              <div className="card p-6">
+                <h3 className="text-lg font-semibold text-[#c8a55c]">{target.industriesTitle}</h3>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {target.industriesItems.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80 transition hover:border-[#c8a55c]/30 hover:bg-[#c8a55c]/10"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-medium text-[#c8a55c]">{target.b2cTitle}</h3>
-                <p className="mt-1 text-sm text-white/70">{target.b2cDesc}</p>
+            </AnimateIn>
+          </div>
+
+          <AnimateIn delay={300}>
+            <div className="mt-8 rounded-2xl border border-[#c8a55c]/25 bg-gradient-to-br from-[#c8a55c]/10 to-[#c8a55c]/5 p-8 backdrop-blur-sm md:p-10">
+              <div className="grid gap-8 md:grid-cols-2">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#c8a55c]/20">
+                    <span className="text-lg font-bold text-[#c8a55c]">B2B</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#c8a55c]">{target.b2bTitle}</h3>
+                    <p className="mt-2 text-white/75">{target.b2bDesc}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#c8a55c]/20">
+                    <span className="text-lg font-bold text-[#c8a55c]">B2C</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#c8a55c]">{target.b2cTitle}</h3>
+                    <p className="mt-2 text-white/75">{target.b2cDesc}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </AnimateIn>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-12 md:py-16">
-        <div className="rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-6 md:p-10">
-          <h2 className="font-display text-2xl font-semibold md:text-3xl">
-            {cta.titleRest}
-            <span className="text-[#c8a55c]">{cta.titleHighlight}</span>
-          </h2>
-          <p className="mt-2 max-w-2xl text-white/70">{cta.subtitle}</p>
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl border border-[#c8a55c]/30 bg-gradient-to-br from-[#c8a55c]/15 via-[#c8a55c]/10 to-transparent p-10 shadow-2xl shadow-black/20 md:p-16 lg:p-20">
+            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c8a55c]/20 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+            <div className="relative text-center">
+              <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                {cta.titleRest}
+                <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
+                  {cta.titleHighlight}
+                </span>
+              </h2>
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">{cta.subtitle}</p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <LocaleLink
-              href="/contact"
-              className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-[#c8a55c] px-5 font-medium text-black hover:bg-[#b6944f] sm:w-auto"
-            >
-              {cta.contact}
-            </LocaleLink>
-            <LocaleLink
-              href="/work"
-              className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-white/90 hover:border-white/25 hover:bg-white/10 sm:w-auto"
-            >
-              {cta.viewWork}
-            </LocaleLink>
+              <div className="mt-10 flex flex-wrap justify-center gap-4">
+                <LocaleLink
+                  href="/contact"
+                  className="inline-flex h-14 items-center justify-center rounded-full bg-[#c8a55c] px-10 font-semibold text-black shadow-[0_0_40px_rgba(200,165,92,0.4)] transition hover:bg-[#b6944f] hover:shadow-[0_0_50px_rgba(200,165,92,0.5)] sm:w-auto"
+                >
+                  {cta.contact}
+                </LocaleLink>
+                <LocaleLink
+                  href="/work"
+                  className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white/20 bg-white/5 px-10 font-medium text-white/90 transition hover:border-[#c8a55c]/50 hover:bg-white/10 sm:w-auto"
+                >
+                  {cta.viewWork}
+                </LocaleLink>
+              </div>
+            </div>
           </div>
         </div>
       </section>

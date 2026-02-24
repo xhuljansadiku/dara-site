@@ -79,7 +79,7 @@ function PackageCard({ pkg, locale }: { pkg: Pkg; locale: Locale }) {
   const ctaType = pkg.cta ?? "quote";
   const ctaLabel = CTA_LABELS[locale][ctaType];
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 transition-all duration-300 hover:border-[#c8a55c]/30 hover:bg-gradient-to-br hover:from-white/[0.1] hover:to-white/[0.05] hover:shadow-[0_0_40px_rgba(200,165,92,0.15)]">
+    <div className="card card-lift group relative flex min-h-[380px] flex-col overflow-hidden p-6">
       {pkg.badge && (
         <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-xs font-medium text-[#c8a55c]">
           <span aria-hidden>⭐</span> {pkg.badge}
@@ -93,7 +93,7 @@ function PackageCard({ pkg, locale }: { pkg: Pkg; locale: Locale }) {
         )}
         <span className="text-lg font-semibold text-[#c8a55c]">{pkg.price}</span>
       </div>
-      <ul className="mt-5 space-y-2.5">
+      <ul className="mt-5 flex-1 space-y-2.5">
         {pkg.points.map((point) => (
           <li key={point} className="flex items-start gap-2.5 text-sm text-white/70">
             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
@@ -101,7 +101,7 @@ function PackageCard({ pkg, locale }: { pkg: Pkg; locale: Locale }) {
           </li>
         ))}
       </ul>
-      <div className="mt-6">
+      <div className="mt-6 shrink-0">
         <LocaleLink
           href="/contact"
           className="inline-flex h-10 w-full items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black transition hover:bg-[#b6944f]"
@@ -206,7 +206,7 @@ export default function PackagesPageContent({ locale }: Props) {
               <AnimateIn key={groupKey} delay={groupIdx * 100}>
                 <div>
                   <h2 className="mb-6 text-xl font-semibold text-[#c8a55c] md:text-2xl">{groupLabel}</h2>
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {groupPackages.map((pkg) => (
                       <PackageCard key={pkg.title} pkg={pkg} locale={locale} />
                     ))}

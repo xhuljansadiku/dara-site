@@ -137,8 +137,8 @@ export default function ServicesSection({
             <div
               className={
                 indices.length === 1
-                  ? "grid gap-4 sm:grid-cols-1 md:max-w-md"
-                  : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                  ? "grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-1 md:max-w-md"
+                  : "grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
               }
             >
               {indices.map((i) => {
@@ -148,7 +148,7 @@ export default function ServicesSection({
                 return (
                   <div
                     key={s.title}
-                    className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/30 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:shadow-[#c8a55c]/5 md:p-6"
+                    className="card card-lift group relative flex min-h-[320px] flex-col overflow-hidden rounded-xl p-5 md:p-6"
                   >
                     <div className="absolute right-0 top-0 h-20 w-20 translate-x-6 -translate-y-6 rounded-full bg-[#c8a55c]/5 blur-xl transition group-hover:bg-[#c8a55c]/10" />
                     <div className="relative flex flex-1 flex-col">
@@ -276,11 +276,11 @@ export default function ServicesSection({
               <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#c8a55c]/90">
                 {packageGroupLabels[groupKey]}
               </h4>
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
                 {packagesByGroup[groupKey].map((pkg) => (
                   <div
                     key={`${groupKey}-${pkg.title}`}
-                    className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#c8a55c]/20 md:p-6"
+                    className="card card-lift relative flex min-h-[340px] flex-col rounded-2xl p-5 md:p-6"
                   >
                     {pkg.badge && (
                       <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-[10px] font-medium text-[#c8a55c]">
@@ -295,7 +295,7 @@ export default function ServicesSection({
                       )}
                       <span className="text-sm font-semibold text-[#c8a55c]">{pkg.price}</span>
                     </div>
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-4 flex-1 space-y-2">
                       {pkg.points.map((point) => (
                         <li key={point} className="flex items-center gap-2 text-sm text-white/70">
                           <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
@@ -303,7 +303,7 @@ export default function ServicesSection({
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-5">
+                    <div className="mt-5 shrink-0">
                       <LocaleLink
                         href="/contact"
                         className="inline-flex h-9 items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black hover:bg-[#b6944f]"

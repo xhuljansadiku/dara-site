@@ -399,7 +399,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
-              href="#services"
+              href="/services"
               className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-7 font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
             >
               {hero.ctaSecondary}
@@ -556,7 +556,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               : "Marketing professionals and creatives who bring brands to life."}
           </p>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? `${yearsExperienceFormatted} vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve.` : locale === "de" ? `${yearsExperienceFormatted} Jahre im Marketing. Experte für Strategie und Unternehmenswachstum.` : `${yearsExperienceFormatted} years in marketing. Expert in strategy and business growth.`, img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
             { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
@@ -564,7 +564,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           ].map((member) => (
             <div
               key={member.name}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-[#c8a55c]/30 hover:shadow-[0_0_40px_rgba(200,165,92,0.08)]"
+              className="card card-lift group relative overflow-hidden"
             >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
@@ -629,7 +629,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </div>
 
                 {/* Why DARA Section */}
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                <div className="card p-6 backdrop-blur-sm">
                   <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
                     {cta.whyTitle}
                   </h3>
@@ -755,7 +755,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </div>
 
                 {/* Newsletter Section */}
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                <div className="card p-6 backdrop-blur-sm">
                   <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
                     {locale === "sq" ? "NEWSLETTER" : locale === "de" ? "NEWSLETTER" : "NEWSLETTER"}
                   </h4>

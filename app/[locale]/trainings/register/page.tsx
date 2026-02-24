@@ -156,7 +156,7 @@ export default function TrainingRegisterPage() {
 
       <section className="pb-16 md:pb-24">
         <div className="mx-auto max-w-xl">
-          <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="card p-6 md:p-8">
               <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden" aria-hidden="true" />
               <div className="grid gap-4">
                 <label className="grid gap-2">

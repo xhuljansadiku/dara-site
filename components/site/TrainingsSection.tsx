@@ -202,7 +202,7 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Stats bar */}
         <AnimateIn delay={80}>
-          <div className="mx-auto mt-12 flex max-w-xl flex-wrap justify-center gap-8 rounded-2xl border border-white/10 bg-white/[0.02] px-8 py-6 md:mt-16">
+          <div className="card mx-auto mt-12 flex max-w-xl flex-wrap justify-center gap-8 px-8 py-6 md:mt-16">
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-[#c8a55c] md:text-3xl">50+</span>
               <span className="text-sm text-white/60">{copy.studentsLabel}</span>
@@ -216,16 +216,16 @@ export default function TrainingsSection({ locale }: Props) {
         </AnimateIn>
 
         {/* Training cards */}
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:gap-8">
+        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:gap-8">
           {TRAININGS.map((training, idx) => {
             const isDisabled = training.comingSoon;
             return (
               <AnimateIn key={training.slug} delay={idx * 100}>
                 <div
-                  className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  className={`group relative flex min-h-[420px] flex-col overflow-hidden rounded-2xl border transition-all duration-300 ${
                     isDisabled
                       ? "cursor-not-allowed border-white/5 bg-white/[0.01] opacity-80"
-                      : "border-white/10 bg-white/[0.02] hover:-translate-y-2 hover:border-[#c8a55c]/25 hover:bg-white/[0.05] hover:shadow-[0_24px_48px_rgba(0,0,0,0.4)] hover:shadow-[#c8a55c]/5"
+                      : "card card-lift hover:-translate-y-1"
                   }`}
                 >
                   {/* Accent bar */}
@@ -286,7 +286,7 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Reviews */}
         <AnimateIn delay={150}>
-          <div className="mt-20 rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:mt-24 md:p-8">
+          <div className="card mt-20 p-6 md:mt-24 md:p-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h3 className="font-display text-xl font-semibold text-white md:text-2xl">

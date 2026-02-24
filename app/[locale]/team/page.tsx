@@ -117,10 +117,10 @@ export default function TeamPage({ params }: Props) {
       </section>
 
       <section className="py-8 md:py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM_MEMBERS.map((member, idx) => (
             <AnimateIn key={member.name} delay={idx * 80}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-[#c8a55c]/30 hover:shadow-[0_0_40px_rgba(200,165,92,0.08)]">
+              <div className="card card-lift group relative overflow-hidden">
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <Image
                     src={member.img}

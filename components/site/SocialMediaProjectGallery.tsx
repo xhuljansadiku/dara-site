@@ -15,13 +15,13 @@ export default function SocialMediaProjectGallery({ images, projectTitle }: Prop
 
   return (
     <>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {images.map((src, idx) => (
           <AnimateIn key={src} delay={idx * 50}>
             <button
               type="button"
               onClick={() => setLightbox({ images, index: idx })}
-              className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-left transition hover:border-[#c8a55c]/30 focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
+              className="card card-lift group relative aspect-[4/3] w-full overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
             >
               <Image
                 src={src}

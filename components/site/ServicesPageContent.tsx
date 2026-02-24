@@ -245,14 +245,14 @@ export default function ServicesPageContent({ locale }: Props) {
 
       {/* SERVICE GRID */}
       <section className="py-12 md:py-16">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredServices.map(({ slug, index, service }, idx) => {
             if (!service) return null;
             return (
-              <AnimateIn key={slug} delay={idx * 50}>
+              <AnimateIn key={slug} delay={idx * 50} className="h-full">
                 <LocaleLink
                   href={`/services/${slug}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 transition-all duration-300 hover:border-[#c8a55c]/30 hover:bg-gradient-to-br hover:from-white/[0.1] hover:to-white/[0.05] hover:shadow-[0_0_40px_rgba(200,165,92,0.15)]"
+                  className="card card-lift group relative flex h-full min-h-[340px] flex-col overflow-hidden p-6"
                 >
                   {/* Icon */}
                   <div className="mb-4 inline-flex rounded-xl bg-[#c8a55c]/10 p-3 text-[#c8a55c] transition group-hover:bg-[#c8a55c]/20 group-hover:scale-110">
