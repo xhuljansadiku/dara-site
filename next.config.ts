@@ -15,6 +15,11 @@ export default withNextIntl({
         hostname: "source.unsplash.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "flagcdn.com",
+        pathname: "/**",
+      },
     ],
   },
 });

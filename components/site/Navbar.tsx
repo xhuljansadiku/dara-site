@@ -13,6 +13,7 @@ type NavItem = { label: string; href: string };
 const NAV_TRANSLATIONS: Record<
   (typeof LOCALES)[number],
   {
+    tagline: string;
     home: string;
     services: string;
     viewAllServices: string;
@@ -29,6 +30,7 @@ const NAV_TRANSLATIONS: Record<
   }
 > = {
   sq: {
+    tagline: "Marketing Agency",
     home: "Kreu",
     services: "Shërbime",
     viewAllServices: "Të gjitha shërbimet",
@@ -44,6 +46,7 @@ const NAV_TRANSLATIONS: Record<
     language: "Gjuha",
   },
   en: {
+    tagline: "Marketing Agency",
     home: "Home",
     services: "Services",
     viewAllServices: "All services",
@@ -59,6 +62,7 @@ const NAV_TRANSLATIONS: Record<
     language: "Language",
   },
   de: {
+    tagline: "Marketing Agency",
     home: "Startseite",
     services: "Leistungen",
     viewAllServices: "Alle Leistungen",
@@ -90,7 +94,15 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  const LOCALE_FLAGS: Record<(typeof LOCALES)[number], { flagSrc: string; label: string }> = {
+    sq: { flagSrc: "https://flagcdn.com/w40/al.png", label: "Shqip" },
+    en: { flagSrc: "https://flagcdn.com/w40/gb.png", label: "English" },
+    de: { flagSrc: "https://flagcdn.com/w40/de.png", label: "Deutsch" },
+  };
 
   const currentLocale = (LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])
     ? locale
@@ -127,6 +139,15 @@ export default function Navbar() {
   useEffect(() => {
     if (!open) setMobileServicesOpen(false);
   }, [open]);
+
+  useEffect(() => {
+    if (!langDropdownOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) setLangDropdownOpen(false);
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [langDropdownOpen]);
 
   function withLocale(href: string) {
     const normalized = href.startsWith("/") ? href : `/${href}`;
@@ -169,8 +190,8 @@ export default function Navbar() {
               className="h-9 w-auto object-contain sm:h-10 md:h-11"
               priority
             />
-            <span className="text-[9px] uppercase tracking-[0.16em] text-white/60 sm:text-[10px]">
-              Marketing Agency
+            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-white/60 sm:text-[10px]">
+              {nav.tagline}
             </span>
           </div>
         </Link>
@@ -242,22 +263,51 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/30 p-1 md:flex">
-            {LOCALES.map((l) => {
-              const active = l === locale;
-              return (
-                <Link
-                  key={l}
-                  href={switchLocale(l)}
-                  className={[
-                    "rounded-full px-2.5 py-1 text-xs font-medium transition-colors",
-                    active ? "bg-[#c8a55c] text-black" : "text-white/70 hover:text-white",
-                  ].join(" ")}
-                >
-                  {l.toUpperCase()}
-                </Link>
-              );
-            })}
+          <div ref={langDropdownRef} className="relative hidden md:block">
+            <button
+              type="button"
+              onClick={() => setLangDropdownOpen((o) => !o)}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-2 text-sm font-medium text-white/90 transition hover:border-[#c8a55c]/40 hover:bg-black/50"
+              aria-expanded={langDropdownOpen}
+              aria-haspopup="true"
+              aria-label={nav.language}
+            >
+              {LOCALE_FLAGS[locale as (typeof LOCALES)[number]] && (
+                <Image
+                  src={LOCALE_FLAGS[locale as (typeof LOCALES)[number]].flagSrc}
+                  alt=""
+                  width={24}
+                  height={18}
+                  className="h-4 w-6 rounded-sm object-cover"
+                />
+              )}
+              <span className="text-xs">{LOCALE_FLAGS[locale as (typeof LOCALES)[number]]?.label ?? locale.toUpperCase()}</span>
+              <svg className={`h-4 w-4 text-white/60 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {langDropdownOpen && (
+              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-white/10 bg-[#2b2b2b] py-1 shadow-xl">
+                {LOCALES.map((l) => {
+                  const active = l === locale;
+                  const info = LOCALE_FLAGS[l];
+                  return (
+                    <Link
+                      key={l}
+                      href={switchLocale(l)}
+                      onClick={() => setLangDropdownOpen(false)}
+                      className={[
+                        "flex items-center gap-3 px-4 py-2.5 text-sm transition-colors",
+                        active ? "bg-[#c8a55c]/20 text-[#c8a55c]" : "text-white/80 hover:bg-white/10 hover:text-white",
+                      ].join(" ")}
+                    >
+                      <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
+                      <span>{info.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <Link
@@ -370,19 +420,21 @@ export default function Navbar() {
                 <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
                   const active = l === locale;
+                  const info = LOCALE_FLAGS[l];
                   return (
                     <Link
                       key={l}
                       href={switchLocale(l)}
                       onClick={() => setOpen(false)}
                       className={[
-                        "flex-1 rounded-full px-3 py-2 text-center text-xs font-medium transition-colors",
+                        "flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-center text-xs font-medium transition-colors",
                         active
                           ? "bg-[#c8a55c] text-black"
                           : "border border-white/10 text-white/80 hover:bg-white/10",
                       ].join(" ")}
                     >
-                      {l.toUpperCase()}
+                      <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
+                      <span>{info.label}</span>
                     </Link>
                   );
                 })}

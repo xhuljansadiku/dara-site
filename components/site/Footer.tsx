@@ -78,7 +78,7 @@ const FOOTER_BY_LOCALE: Record<
     legal: { privacy: "Privacy policy", terms: "Terms & conditions" },
   },
   de: {
-    tagline: "Marketing Agentur",
+    tagline: "Marketing Agency",
     desc: "Wage es, anders zu sein. Wir arbeiten mit Marken, die mutige Strategie, Premium-Content und messbares Wachstum wollen.",
     copyright: "Copyright © {year} DARA. Alle Rechte vorbehalten.",
     servicesTitle: "Leistungen",
