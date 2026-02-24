@@ -15,7 +15,6 @@ const staticPaths = [
   "/process",
   "/privacy",
   "/services",
-  "/team",
   "/terms",
   "/trainings",
   "/trainings/register",

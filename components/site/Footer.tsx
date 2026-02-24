@@ -283,14 +283,6 @@ export default function Footer({ locale }: { locale: string }) {
               </li>
               <li>
                 <LocaleLink
-                  href="/team"
-                  className="transition-colors duration-200 hover:text-[#c8a55c]"
-                >
-                  {t.links.team}
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink
                   href="/contact"
                   className="transition-colors duration-200 hover:text-[#c8a55c]"
                 >

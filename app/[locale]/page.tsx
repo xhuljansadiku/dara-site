@@ -6,6 +6,7 @@ import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
 import TrainingsSection from "@/components/site/TrainingsSection";
 import HomeWorkSection from "@/components/site/HomeWorkSection";
+import HomeFaqSection from "@/components/site/HomeFaqSection";
 import AnimateIn from "@/components/site/AnimateIn";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
@@ -16,6 +17,8 @@ import {
 import { SERVICE_DETAILS_BY_LOCALE } from "@/lib/services-data";
 
 type Locale = "sq" | "en" | "de";
+
+const SHOW_TEAM = false; // Vendos true kur të kesh foto
 
 const HERO_BY_LOCALE: Record<
   Locale,
@@ -527,7 +530,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeWorkSection locale={locale} />
 
+      <HomeFaqSection locale={locale} />
+
       {/* OUR TEAM  bios on hover, social links structure */}
+      {SHOW_TEAM && (
       <section id="team" className="py-12 md:py-20">
         <div className="mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
@@ -584,6 +590,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           ))}
         </div>
       </section>
+      )}
 
       {/* CTA Section - Modern Redesign */}
       <section className="py-16 md:py-24" aria-labelledby="cta-heading">

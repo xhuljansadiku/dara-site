@@ -20,6 +20,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: string;
     about: string;
     works: string;
+    faq: string;
     team: string;
     contact: string;
     getQuote: string;
@@ -34,6 +35,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Trajnime",
     about: "Rreth nesh",
     works: "Punët",
+    faq: "FAQ",
     team: "Ekipi",
     contact: "Kontakt",
     getQuote: "Merr ofertë",
@@ -47,6 +49,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Training",
     about: "About",
     works: "Work",
+    faq: "FAQ",
     team: "Team",
     contact: "Contact",
     getQuote: "Get a quote",
@@ -60,6 +63,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Training",
     about: "Über uns",
     works: "Referenzen",
+    faq: "FAQ",
     team: "Team",
     contact: "Kontakt",
     getQuote: "Angebot anfragen",
@@ -97,7 +101,7 @@ export default function Navbar() {
       { label: nav.packages, href: "/packages" },
       { label: nav.trainings, href: "/trainings" },
       { label: nav.works, href: "/work" },
-      { label: nav.team, href: "/team" },
+      { label: nav.faq, href: "/faq" },
       { label: nav.contact, href: "/contact" },
     ],
     [nav]
