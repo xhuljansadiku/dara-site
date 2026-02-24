@@ -125,7 +125,7 @@ export default function ServicesSection({
       {/* Groups + cards */}
       <div className="space-y-12 md:space-y-16">
         {visibleGroups.map(({ indices, groupIndex, groupLabel }, boxIdx) => (
-          <div key={boxIdx} className="rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8">
+          <div key={boxIdx} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 backdrop-blur-sm md:p-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#c8a55c]/15 text-[#c8a55c]">
                 {GROUP_ICONS[activeTab === 0 ? groupIndex : (activeTab - 1) % GROUP_ICONS.length]}
@@ -146,72 +146,76 @@ export default function ServicesSection({
                 const result = resultByIndex[i];
                 const anchor = serviceAnchors[i];
                 return (
-                  <div
+                  <LocaleLink
                     key={s.title}
-                    className="card card-lift group relative flex min-h-[320px] flex-col overflow-hidden rounded-xl p-5 md:p-6"
+                    href={`/services/${anchor}`}
+                    className="group relative flex min-h-[320px] flex-col rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c8a55c]/15 md:p-6"
                   >
-                    <div className="absolute right-0 top-0 h-20 w-20 translate-x-6 -translate-y-6 rounded-full bg-[#c8a55c]/5 blur-xl transition group-hover:bg-[#c8a55c]/10" />
+                    {/* Top gold line */}
+                    <div className="absolute left-6 right-6 top-0 h-0.5 rounded-full bg-[#c8a55c]/50" />
+
                     <div className="relative flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
-                        <span className="rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-white/60">
+                        <span className="font-mono text-xs font-medium text-white/40">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         {result && (
-                          <span className="rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-[10px] font-medium text-[#c8a55c]">
+                          <span className="rounded-md bg-[#c8a55c]/20 px-2 py-0.5 text-[10px] font-medium text-[#c8a55c]">
                             {result}
                           </span>
                         )}
                       </div>
-                      <h4 className="mt-3 text-base font-semibold text-white md:text-lg">{s.title}</h4>
-                      <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60">{s.desc}</p>
 
-                      {/* Price + tooltip */}
-                      <div className="mt-4 border-t border-white/10 pt-3">
+                      <h4 className="mt-4 text-lg font-semibold text-white md:text-xl">
+                        {s.title}
+                      </h4>
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-white/60 line-clamp-3">
+                        {s.desc}
+                      </p>
+
+                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
                         {s.price ? (
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] uppercase tracking-wider text-white/50">
-                              {copy.from}
-                            </span>
-                            <span className="text-sm font-semibold text-[#c8a55c]">{s.price}</span>
+                          <>
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-[10px] uppercase tracking-wider text-white/40">
+                                {copy.from}
+                              </span>
+                              <span className="font-semibold text-[#c8a55c]">{s.price}</span>
+                            </div>
                             <span
-                              className="relative flex h-4 w-4 shrink-0 cursor-help items-center justify-center rounded-full border border-white/20 bg-white/5 text-[10px] text-white/50"
+                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-white/15 text-[10px] text-white/40"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
                               onMouseEnter={() => setTooltipCard(i)}
                               onMouseLeave={() => setTooltipCard(null)}
                               title={priceTooltip}
                             >
                               ?
                               {tooltipCard === i && (
-                                <span className="absolute bottom-full left-1/2 z-10 mb-1 w-48 -translate-x-1/2 rounded-lg border border-white/10 bg-[#2b2b2b] px-2 py-1.5 text-[10px] text-white/80 shadow-xl">
+                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-lg border border-white/10 bg-[#2b2b2b] px-3 py-2 text-xs text-white/90 shadow-xl">
                                   {priceTooltip}
                                 </span>
                               )}
                             </span>
-                          </div>
+                          </>
                         ) : (
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] text-white/50">{copy.quoteRequest}</span>
+                          <>
+                            <span className="text-xs text-white/50">{copy.quoteRequest}</span>
                             <span
-                              className="flex h-4 w-4 shrink-0 cursor-help items-center justify-center rounded-full border border-white/20 bg-white/5 text-[10px] text-white/50"
+                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-white/15 text-[10px] text-white/40"
                               title={priceTooltip}
                             >
                               ?
                             </span>
-                          </div>
+                          </>
                         )}
                       </div>
 
-                      {/* Më shumë → faqja e shërbimit */}
-                      <div className="mt-3">
-                        <LocaleLink
-                          href={`/services/${anchor}`}
-                          className="inline-flex items-center gap-1 text-xs font-medium text-[#c8a55c] transition hover:text-[#d4b86a]"
-                        >
-                          {copy.more}
-                          <span>→</span>
-                        </LocaleLink>
+                      <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#c8a55c]">
+                        {copy.more}
+                        <span className="text-xs opacity-70 group-hover:opacity-100">→</span>
                       </div>
                     </div>
-                  </div>
+                  </LocaleLink>
                 );
               })}
             </div>
