@@ -99,22 +99,22 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Scale", subtitle: "Paketë e plotë", price: "Ofertë", points: ["Growth +", "Konsulencë", "Optimizim i vazhdueshëm"] },
     ],
     brand: [
-      { title: "Logo", subtitle: "Identitet bazë", price: "Nga 300€", points: ["Koncept logo", "2–3 drejtime", "Formatet e nevojshme"] },
-      { title: "Brand Pack", subtitle: "Paketë e plotë", price: "Nga 600€", points: ["Logo +", "Paletë ngjyrash", "Style guide bazë"] },
+      { title: "Logo", subtitle: "Identitet bazë", price: "Nga 250€", points: ["Koncept logo", "2–3 drejtime", "Formatet e nevojshme"] },
+      { title: "Brand Pack", subtitle: "Paketë e plotë", price: "Nga 500€", points: ["Logo +", "Paletë ngjyrash", "Style guide bazë"] },
       { title: "Full Brand", subtitle: "Identitet i plotë", price: "Ofertë", points: ["Brand Pack +", "Tone of voice", "Aplikime (kartëvizita, etj.)"] },
     ],
     training: [
       { title: "Trajnime SMM", subtitle: "1 muaj", price: "250€", points: ["1 muaj (3 herë në javë)", "12 mësime / tema", "Praktike"] },
-      { title: "Trajnim SMM 1:1", subtitle: "1 muaj", price: "600€", points: ["Mësime", "Praktike", "Intensiv"] },
+      { title: "Trajnim SMM 1:1", subtitle: "1 muaj", price: "500€", points: ["Mësime", "Praktike", "Intensiv"] },
     ],
     websiteLanding: [
-      { title: "Landing Page", subtitle: "Një faqe", price: "400€", priceOriginal: "450€", points: ["1 faqe (one-page)", "Template profesional", "Responsive (mobile)", "Form kontaktimi", "SEO bazë", "1 rishikim"] },
-      { title: "Business Website", subtitle: "Multi-faqe", price: "900€", priceOriginal: "1,200€", badge: "Paketa më e zgjedhur", points: ["Deri 5–7 faqe", "Dizajn i personalizuar", "Strukturë SEO bazë", "Integrim analytics", "Panel administrimi", "2 rishikime"] },
-      { title: "Premium Website", subtitle: "Dizajn unik", price: "Nga 1,800€", points: ["Dizajn unik (UI/UX)", "SEO i optimizuar", "Integrime marketingu", "Optimizim performance", "Trajnim përdorimi", "3 rishikime"] },
+      { title: "Landing Page", subtitle: "Një faqe", price: "500€", priceOriginal: "550€", points: ["1 faqe (one-page)", "Template profesional", "Responsive (mobile)", "Form kontaktimi", "SEO bazë", "1 rishikim"] },
+      { title: "Business Website", subtitle: "Multi-faqe", price: "1.000€", priceOriginal: "1.200€", badge: "Paketa më e zgjedhur", points: ["Deri 5–7 faqe", "Dizajn i personalizuar", "Strukturë SEO bazë", "Integrim analytics", "Panel administrimi", "2 rishikime"] },
+      { title: "Premium Website", subtitle: "Dizajn unik", price: "Nga 2.000€", points: ["Dizajn unik (UI/UX)", "SEO i optimizuar", "Integrime marketingu", "Optimizim performance", "Trajnim përdorimi", "3 rishikime"] },
     ],
     ecommerce: [
-      { title: "Basic Shop", subtitle: "Dyqan bazë", price: "1,200€", priceOriginal: "1,500€", points: ["Deri 30 produkte", "Pagesë online", "Setup transporti", "SEO bazë", "1 rishikim"] },
-      { title: "Standard Shop", subtitle: "Dyqan i optimizuar", price: "Nga 2,200€", badge: "Paketa më e zgjedhur", points: ["Deri 150 produkte", "Faqe kategori të optimizuara", "Email automation bazë", "Optimizim performance", "2 rishikime"] },
+      { title: "Basic Shop", subtitle: "Dyqan bazë", price: "1.000€", priceOriginal: "1.200€", points: ["Deri 30 produkte", "Pagesë online", "Setup transporti", "SEO bazë", "1 rishikim"] },
+      { title: "Standard Shop", subtitle: "Dyqan i optimizuar", price: "Nga 2.000€", badge: "Paketa më e zgjedhur", points: ["Deri 150 produkte", "Faqe kategori të optimizuara", "Email automation bazë", "Optimizim performance", "2 rishikime"] },
       { title: "Premium Shop", subtitle: "Dyqan premium", price: "Nga 4,000€", points: ["Produkte pa limit", "UX i personalizuar", "Automatizime marketingu", "Integrime ERP/CRM", "Optimizim konvertimi"] },
     ],
     saas: [
@@ -124,7 +124,7 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
     ],
     maintenance: [
       { title: "Bazë", subtitle: "Website, E-commerce, SaaS", price: "Nga 100€/muaj", points: ["Updates dhe backups", "Monitoring bazë", "Support email", "Siguri bazë", "Website, E-commerce dhe SaaS"] },
-      { title: "Standard", subtitle: "+ Optimizim", price: "Nga 200€/muaj", points: ["Bazë +", "Optimizim shpejtësie", "SEO monitoring", "Raportim mujor", "Mirembajtje E-commerce dhe SaaS"] },
+      { title: "Standard", subtitle: "+ Optimizim", price: "Nga 250€/muaj", points: ["Bazë +", "Optimizim shpejtësie", "SEO monitoring", "Raportim mujor", "Mirembajtje E-commerce dhe SaaS"] },
       { title: "Premium", subtitle: "Paketë e plotë", price: "Ofertë", points: ["Standard +", "Mirembajtje e plotë E-commerce", "Mirembajtje SaaS dhe aplikacione", "Optimizim i vazhdueshëm", "Support prioritet"] },
     ],
   },
@@ -135,22 +135,22 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Scale", subtitle: "Full package", price: "On request", points: ["Growth +", "Consulting", "Ongoing optimization"] },
     ],
     brand: [
-      { title: "Logo", subtitle: "Basic identity", price: "From €300", points: ["Logo concept", "2–3 directions", "Required formats"] },
-      { title: "Brand Pack", subtitle: "Full package", price: "From €600", points: ["Logo +", "Colour palette", "Basic style guide"] },
+      { title: "Logo", subtitle: "Basic identity", price: "From €250", points: ["Logo concept", "2–3 directions", "Required formats"] },
+      { title: "Brand Pack", subtitle: "Full package", price: "From €500", points: ["Logo +", "Colour palette", "Basic style guide"] },
       { title: "Full Brand", subtitle: "Complete identity", price: "On request", points: ["Brand Pack +", "Tone of voice", "Applications (cards, etc.)"] },
     ],
     training: [
       { title: "SMM Training", subtitle: "1 month", price: "€250", points: ["1 month (3 times per week)", "12 lessons / topics", "Practical exercises"] },
-      { title: "SMM 1:1 Training", subtitle: "1 month", price: "€600", points: ["Lessons", "Practical exercises", "Intensive"] },
+      { title: "SMM 1:1 Training", subtitle: "1 month", price: "€500", points: ["Lessons", "Practical exercises", "Intensive"] },
     ],
     websiteLanding: [
-      { title: "Landing Page", subtitle: "Single page", price: "€400", priceOriginal: "€450", points: ["1 page (one-page)", "Professional template", "Responsive (mobile)", "Contact form", "Basic SEO", "1 revision"] },
-      { title: "Business Website", subtitle: "Multi-page", price: "€900", priceOriginal: "€1,200", badge: "Most popular package", points: ["Up to 5–7 pages", "Custom design", "Basic SEO structure", "Analytics integration", "Admin panel", "2 revisions"] },
-      { title: "Premium Website", subtitle: "Unique design", price: "From €1,800", points: ["Unique design (UI/UX)", "Optimised SEO", "Marketing integrations", "Performance optimisation", "Usage training", "3 revisions"] },
+      { title: "Landing Page", subtitle: "Single page", price: "€500", priceOriginal: "€550", points: ["1 page (one-page)", "Professional template", "Responsive (mobile)", "Contact form", "Basic SEO", "1 revision"] },
+      { title: "Business Website", subtitle: "Multi-page", price: "€1,000", priceOriginal: "€1,200", badge: "Most popular package", points: ["Up to 5–7 pages", "Custom design", "Basic SEO structure", "Analytics integration", "Admin panel", "2 revisions"] },
+      { title: "Premium Website", subtitle: "Unique design", price: "From €2,000", points: ["Unique design (UI/UX)", "Optimised SEO", "Marketing integrations", "Performance optimisation", "Usage training", "3 revisions"] },
     ],
     ecommerce: [
-      { title: "Basic Shop", subtitle: "Basic store", price: "€1,200", priceOriginal: "€1,500", points: ["Up to 30 products", "Online payment", "Shipping setup", "Basic SEO", "1 revision"] },
-      { title: "Standard Shop", subtitle: "Optimised store", price: "From €2,200", badge: "Most popular package", points: ["Up to 150 products", "Optimised category pages", "Basic email automation", "Performance optimisation", "2 revisions"] },
+      { title: "Basic Shop", subtitle: "Basic store", price: "€1,000", priceOriginal: "€1,200", points: ["Up to 30 products", "Online payment", "Shipping setup", "Basic SEO", "1 revision"] },
+      { title: "Standard Shop", subtitle: "Optimised store", price: "From €2,000", badge: "Most popular package", points: ["Up to 150 products", "Optimised category pages", "Basic email automation", "Performance optimisation", "2 revisions"] },
       { title: "Premium Shop", subtitle: "Premium store", price: "From €4,000", points: ["Unlimited products", "Custom UX", "Marketing automation", "ERP/CRM integrations", "Conversion optimisation"] },
     ],
     saas: [
@@ -171,18 +171,18 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
       { title: "Scale", subtitle: "Vollpaket", price: "Auf Anfrage", points: ["Growth +", "Beratung", "Laufende Optimierung"] },
     ],
     brand: [
-      { title: "Logo", subtitle: "Basis-Identität", price: "Ab 300€", points: ["Logo-Konzept", "2–3 Richtungen", "Erforderliche Formate"] },
-      { title: "Brand Pack", subtitle: "Vollpaket", price: "Ab 600€", points: ["Logo +", "Farbpalette", "Basis-Styleguide"] },
+      { title: "Logo", subtitle: "Basis-Identität", price: "Ab 250€", points: ["Logo-Konzept", "2–3 Richtungen", "Erforderliche Formate"] },
+      { title: "Brand Pack", subtitle: "Vollpaket", price: "Ab 500€", points: ["Logo +", "Farbpalette", "Basis-Styleguide"] },
       { title: "Full Brand", subtitle: "Komplette Identität", price: "Auf Anfrage", points: ["Brand Pack +", "Tone of Voice", "Anwendungen (Karten etc.)"] },
     ],
     training: [
       { title: "SMM Training", subtitle: "1 Monat", price: "250€", points: ["1 Monat (3× pro Woche)", "12 Lektionen / Themen", "Praktische Übungen"] },
-      { title: "SMM 1:1 Training", subtitle: "1 Monat", price: "600€", points: ["Lektionen", "Praktische Übungen", "Intensiv"] },
+      { title: "SMM 1:1 Training", subtitle: "1 Monat", price: "500€", points: ["Lektionen", "Praktische Übungen", "Intensiv"] },
     ],
     websiteLanding: [
-      { title: "Landing Page", subtitle: "Eine Seite", price: "400€", priceOriginal: "450€", points: ["1 Seite (One-Page)", "Professionelles Template", "Responsive (Mobile)", "Kontaktformular", "Basis-SEO", "1 Überarbeitung"] },
-      { title: "Business Website", subtitle: "Mehrseitig", price: "900€", priceOriginal: "1.200€", badge: "Beliebtestes Paket", points: ["Bis 5–7 Seiten", "Individuelles Design", "Basis-SEO-Struktur", "Analytics-Integration", "Admin-Panel", "2 Überarbeitungen"] },
-      { title: "Premium Website", subtitle: "Einzigartiges Design", price: "Ab 1.800€", points: ["Einzigartiges Design (UI/UX)", "Optimiertes SEO", "Marketing-Integrationen", "Performance-Optimierung", "Nutzerschulung", "3 Überarbeitungen"] },
+      { title: "Landing Page", subtitle: "Eine Seite", price: "500€", priceOriginal: "550€", points: ["1 Seite (One-Page)", "Professionelles Template", "Responsive (Mobile)", "Kontaktformular", "Basis-SEO", "1 Überarbeitung"] },
+      { title: "Business Website", subtitle: "Mehrseitig", price: "1.000€", priceOriginal: "1.200€", badge: "Beliebtestes Paket", points: ["Bis 5–7 Seiten", "Individuelles Design", "Basis-SEO-Struktur", "Analytics-Integration", "Admin-Panel", "2 Überarbeitungen"] },
+      { title: "Premium Website", subtitle: "Einzigartiges Design", price: "Ab 2.000€", points: ["Einzigartiges Design (UI/UX)", "Optimiertes SEO", "Marketing-Integrationen", "Performance-Optimierung", "Nutzerschulung", "3 Überarbeitungen"] },
     ],
     ecommerce: [
       { title: "Basic Shop", subtitle: "Basis-Shop", price: "1.200€", priceOriginal: "1.500€", points: ["Bis 30 Produkte", "Online-Zahlung", "Versand-Setup", "Basis-SEO", "1 Überarbeitung"] },
@@ -196,7 +196,7 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
     ],
     maintenance: [
       { title: "Basis", subtitle: "Website, E-Commerce, SaaS", price: "Ab 100€/Monat", points: ["Updates und Backups", "Basis-Monitoring", "E-Mail-Support", "Basis-Sicherheit", "Website, E-Commerce und SaaS"] },
-      { title: "Standard", subtitle: "+ Optimierung", price: "Ab 200€/Monat", points: ["Basis +", "Geschwindigkeitsoptimierung", "SEO-Monitoring", "Monatsreporting", "E-Commerce- und SaaS-Wartung"] },
+      { title: "Standard", subtitle: "+ Optimierung", price: "Ab 250€/Monat", points: ["Basis +", "Geschwindigkeitsoptimierung", "SEO-Monitoring", "Monatsreporting", "E-Commerce- und SaaS-Wartung"] },
       { title: "Premium", subtitle: "Vollpaket", price: "Auf Anfrage", points: ["Standard +", "Vollständige E-Commerce-Wartung", "SaaS- und Anwendungs-Wartung", "Laufende Optimierung", "Prioritäts-Support"] },
     ],
   },

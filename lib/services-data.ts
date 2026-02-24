@@ -20,19 +20,19 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 
 export type ServiceDetail = { title: string; desc: string; price?: string };
 
-/** Minimum price (EUR) per service - used to filter budget options in contact form */
+/** Minimum price (EUR) per service - used to filter budget options in contact form. Values align with BUDGET_TIERS_EUR. */
 export const SERVICE_MIN_PRICE_EUR: Record<ServiceSlug, number> = {
   "social-media": 250,
-  content: 200,
-  strategy: 400,
+  content: 100,
+  strategy: 250,
   branding: 500,
-  ads: 150,
+  ads: 100,
   consulting: 100,
   training: 250,
-  "website-landing": 400,
-  ecommerce: 1200,
+  "website-landing": 250,
+  ecommerce: 1000,
   saas: 4000,
-  maintenance: 120,
+  maintenance: 100,
 };
 
 export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
@@ -50,7 +50,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Strategji marketingu digjital",
       desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale , pozicionim, objektiva dhe ide konkrete zhvillimi.",
-      price: "Nga 400€ / strategji",
+      price: "Nga 500€ / strategji",
     },
     {
       title: "Branding & identitet vizual",
@@ -60,7 +60,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Menaxhim reklamash (Meta & Google)",
       desc: "Krijim dhe optimizim fushatash reklamash në Meta & Google për rritje shitjesh, lead‑esh dhe njohje brand-i.",
-      price: "Nga 150€ / muaj (pa buxhetin e reklamës)",
+      price: "Nga 250€ / muaj (pa buxhetin e reklamës)",
     },
     {
       title: "Konsulencë marketingu",
@@ -73,24 +73,24 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 250€ / program",
     },
     {
-      title: "Website & faqe uljeje",
+      title: "Website",
       desc: "Faqe një-faqe (landing) ose website me disa faqe , prezencë profesionale, forma kontakt, SEO.",
-      price: "Nga 400€",
+      price: "Nga 500€",
     },
     {
       title: "E-commerce",
       desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim , zgjidhje e përshtatshme për shitje në internet.",
-      price: "Nga 1,200€",
+      price: "Nga 1.000€",
     },
     {
       title: "SaaS & aplikacione",
       desc: "Aplikacione, platforma ose produkte software të personalizuara për biznese ose përdorues.",
-      price: "Nga 4,000€",
+      price: "Nga 4.000€",
     },
     {
       title: "Mirembajtje & Optimizim",
       desc: "Mirembajtje website dhe e-commerce (updates, backups, siguri), optimizim website të vjetra (shpejtësi, SEO, modernizim), monitoring dhe support.",
-      price: "Nga 120€ / muaj",
+      price: "Nga 100€ / muaj",
     },
   ],
   en: [
@@ -107,7 +107,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Digital Marketing Strategy",
       desc: "Business analysis and personalized strategy for real growth , positioning, objectives and concrete ideas.",
-      price: "From €400/strategy",
+      price: "From €500/strategy",
     },
     {
       title: "Branding & Visual Identity",
@@ -117,7 +117,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Ads Management (Meta & Google)",
       desc: "Creation and optimisation of Meta & Google campaigns to increase sales, leads and brand recognition.",
-      price: "From €150/month (ad spend not included)",
+      price: "From €250/month (ad spend not included)",
     },
     {
       title: "Marketing Consulting",
@@ -132,12 +132,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Website & landing pages",
       desc: "Single-page (landing) or multi-page website , professional presence, contact forms, SEO.",
-      price: "From €400",
+      price: "From €500",
     },
     {
       title: "E-commerce",
       desc: "Online store with products, inventory, payment and delivery , tailored solution for selling online.",
-      price: "From €1,200",
+      price: "From €1,000",
     },
     {
       title: "SaaS & applications",
@@ -147,7 +147,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Maintenance & Optimization",
       desc: "Website and e-commerce maintenance (updates, backups, security), optimization of old websites (speed, SEO, modernization), monitoring and support.",
-      price: "From €120/month",
+      price: "From €100/month",
     },
   ],
   de: [
@@ -164,7 +164,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Digitale Marketingstrategie",
       desc: "Business‑Analyse und individuelle Strategie für echtes Wachstum – Positionierung, Ziele und konkrete Maßnahmen.",
-      price: "Ab 400€ / Strategie",
+      price: "Ab 500€ / Strategie",
     },
     {
       title: "Branding & visuelle Identität",
@@ -174,7 +174,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Ads Management (Meta & Google)",
       desc: "Erstellung und Optimierung von Kampagnen auf Meta & Google, um Verkäufe, Leads und Markenbekanntheit zu steigern.",
-      price: "Ab 150€ / Monat (exkl. Media‑Budget)",
+      price: "Ab 250€ / Monat (exkl. Media‑Budget)",
     },
     {
       title: "Marketing‑Beratung",
@@ -189,12 +189,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Website & Landingpages",
       desc: "Einzelseiten (Landing) oder mehrseitige Website , professioneller Auftritt, Kontaktformulare, SEO.",
-      price: "Ab 400€",
+      price: "Ab 500€",
     },
     {
       title: "E-Commerce",
       desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand , maßgeschneiderte Lösung für den Verkauf im Internet.",
-      price: "Ab 1.200€",
+      price: "Ab 1.000€",
     },
     {
       title: "SaaS & Anwendungen",
@@ -204,7 +204,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Wartung & Optimierung",
       desc: "Website- und E-Commerce-Wartung (Updates, Backups, Sicherheit), Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung), Monitoring und Support.",
-      price: "Ab 120€ / Monat",
+      price: "Ab 100€ / Monat",
     },
   ],
 };

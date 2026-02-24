@@ -57,7 +57,7 @@ export default function HomeWorkSection({ locale }: Props) {
               ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
               : locale === "de"
               ? "Verschiedene Projekte von Strategie und Social Media bis Brand und Schulungen."
-              : "From strategy and social media to brand and training — a selection of what we deliver."}
+              : "From strategy and social media to brand and training. A selection of what we deliver."}
           </p>
         </div>
         <LocaleLink
@@ -90,7 +90,7 @@ export default function HomeWorkSection({ locale }: Props) {
         ))}
       </div>
 
-      <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {displayProjects.map((p) => (
           <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
         ))}

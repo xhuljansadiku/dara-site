@@ -11,7 +11,7 @@ type Locale = "sq" | "en" | "de";
 export const metadata: Metadata = {
   title: "About DARA",
   description:
-    "DARA Marketing Agency — established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
+    "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
 };
 
 const HERO_BY_LOCALE: Record<
@@ -29,7 +29,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Rreth nesh",
     title: "Ne jemi DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency është agjencia juaj e marketingut — themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
+      "DARA Marketing Agency është agjencia juaj e marketingut. Themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
       "Ekipi ynë kombinojnë kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset lokale dhe ndërkombëtare të bëhen histori suksesi.",
     ],
@@ -46,7 +46,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "About us",
     title: "We are DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency is your marketing partner — established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
+      "DARA Marketing Agency is your marketing partner. Established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
       "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
       "Our team combines creativity, experience and a hands-on approach to help local and international businesses become success stories.",
     ],
@@ -63,7 +63,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Über uns",
     title: "Wir sind DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency ist Ihre Marketing-Partnerin — gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
+      "DARA Marketing Agency ist Ihre Marketing-Partnerin. Gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
       "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
       "Unser Team verbindet Kreativität, Erfahrung und einen praxisnahen Ansatz, um lokale und internationale Unternehmen zu Erfolgsgeschichten zu machen.",
     ],
@@ -84,7 +84,7 @@ const PROCESS_BY_LOCALE: Record<
 > = {
   sq: {
     sectionTitle: "Si punojmë",
-    sectionDesc: "Proces i qartë me hapa të përcaktuar — nga audit te optimizim dhe rritje.",
+    sectionDesc: "Proces i qartë me hapa të përcaktuar. Nga audit te optimizim dhe rritje.",
     steps: [
       {
         n: "01",
@@ -114,7 +114,7 @@ const PROCESS_BY_LOCALE: Record<
   },
   en: {
     sectionTitle: "How we work",
-    sectionDesc: "Clear process with defined steps — from audit to optimization and growth.",
+    sectionDesc: "Clear process with defined steps. From audit to optimization and growth.",
     steps: [
       {
         n: "01",
@@ -144,7 +144,7 @@ const PROCESS_BY_LOCALE: Record<
   },
   de: {
     sectionTitle: "Wie wir arbeiten",
-    sectionDesc: "Klarer Prozess mit definierten Schritten — vom Audit bis zur Optimierung und zum Wachstum.",
+    sectionDesc: "Klarer Prozess mit definierten Schritten. Vom Audit bis zur Optimierung und zum Wachstum.",
     steps: [
       {
         n: "01",
@@ -215,11 +215,11 @@ const DIFFERENTIATORS_BY_LOCALE: Record<Locale, { sectionTitle: string; sectionD
     sectionTitle: "Çfarë na bën të ndryshëm",
     sectionDesc: "Pse bizneset zgjedhin DARA ndaj agjencive të tjera.",
     items: [
-      { title: "Strategji të personalizuara", desc: "Jo modele kopjimi — çdo biznes merr një qasje të përshtatur." },
+      { title: "Strategji të personalizuara", desc: "Jo modele kopjimi. Çdo biznes merr një qasje të përshtatur." },
       { title: "Fokus te rezultatet reale", desc: "Rritje biznesi dhe rezultate të matshme, jo metrika të zbrazëta." },
       { title: "Kreativitet modern + analizë strategjike", desc: "Ide kreative mbështetur nga të dhëna dhe insight." },
       { title: "Komunikim i drejtpërdrejtë", desc: "Bashkëpunim i ngushtë dhe partneritet transparent me çdo klient." },
-      { title: "Mendësi biznesi", desc: "Jo vetëm postime në rrjetet sociale — mendojmë si pronarë biznesi." },
+      { title: "Mendësi biznesi", desc: "Jo vetëm postime në rrjetet sociale. Mendojmë si pronarë biznesi." },
       { title: "Energji & qasje praktike", desc: "Futemi thellë në çdo projekt dhe punojmë me duar." },
     ],
   },
@@ -227,11 +227,11 @@ const DIFFERENTIATORS_BY_LOCALE: Record<Locale, { sectionTitle: string; sectionD
     sectionTitle: "What makes us different",
     sectionDesc: "Why businesses choose DARA over other agencies.",
     items: [
-      { title: "Personalized strategies", desc: "Not copy-paste models — every business gets a tailored approach." },
+      { title: "Personalized strategies", desc: "Not copy-paste models. Every business gets a tailored approach." },
       { title: "Focus on real results", desc: "Business growth and measurable outcomes, not vanity metrics." },
       { title: "Modern creativity + strategic analysis", desc: "Creative ideas backed by data-driven insights." },
       { title: "Direct communication", desc: "Close collaboration and transparent partnership with every client." },
-      { title: "Business mentality", desc: "Not just posts on social networks — we think like business owners." },
+      { title: "Business mentality", desc: "Not just posts on social networks. We think like business owners." },
       { title: "Energy & hands-on approach", desc: "We roll up our sleeves and dive deep into every project." },
     ],
   },
@@ -239,11 +239,11 @@ const DIFFERENTIATORS_BY_LOCALE: Record<Locale, { sectionTitle: string; sectionD
     sectionTitle: "Was uns unterscheidet",
     sectionDesc: "Warum Unternehmen DARA wählen.",
     items: [
-      { title: "Individuelle Strategien", desc: "Kein Copy-Paste — jedes Unternehmen erhält einen maßgeschneiderten Ansatz." },
+      { title: "Individuelle Strategien", desc: "Kein Copy-Paste. Jedes Unternehmen erhält einen maßgeschneiderten Ansatz." },
       { title: "Fokus auf echte Ergebnisse", desc: "Wachstum und messbare Ergebnisse, keine Eitelkeits-Metriken." },
       { title: "Moderne Kreativität + strategische Analyse", desc: "Kreative Ideen mit datengetriebenen Insights." },
       { title: "Direkte Kommunikation", desc: "Enge Zusammenarbeit und transparente Partnerschaft mit jedem Kunden." },
-      { title: "Business-Denke", desc: "Nicht nur Social-Media-Posts — wir denken wie Unternehmer." },
+      { title: "Business-Denke", desc: "Nicht nur Social-Media-Posts. Wir denken wie Unternehmer." },
       { title: "Energie & Praxisnähe", desc: "Wir packen mit an und tauchen tief in jedes Projekt ein." },
     ],
   },
@@ -571,7 +571,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 <div className="aspect-[4/3] overflow-hidden lg:aspect-[5/4]">
                   <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                    alt="DARA Marketing Agency — team and collaboration"
+                    alt="DARA Marketing Agency. Team and collaboration"
                     width={900}
                     height={600}
                     className="h-full w-full object-cover"

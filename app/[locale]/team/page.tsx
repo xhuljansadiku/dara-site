@@ -192,9 +192,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: locale === "sq" ? "Ekipi" : locale === "de" ? "Team" : "Team",
     description:
       locale === "sq"
-        ? "Njihuni me ekipin e DARA — profesionistët e marketingut që sjellin brandet në jetë."
+        ? "Njihuni me ekipin e DARA. Profesionistët e marketingut që sjellin brandet në jetë."
         : locale === "de"
-        ? "Lernen Sie das DARA-Team kennen — Marketingprofis, die Marken zum Leben erwecken."
-        : "Meet the DARA team — marketing professionals who bring brands to life.",
+        ? "Lernen Sie das DARA-Team kennen. Marketingprofis, die Marken zum Leben erwecken."
+        : "Meet the DARA team. Marketing professionals who bring brands to life.",
   };
 }

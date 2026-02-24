@@ -8,17 +8,17 @@ const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
     title: "Paketa",
     description:
-      "Paketa të gatshme për marketing, brand, trajnime dhe website. Zgjidhje që përshtaten me biznesin tuaj — nga Starter te Premium.",
+      "Paketa të gatshme për marketing, brand, trajnime dhe website. Zgjidhje që përshtaten me biznesin tuaj. Nga Starter te Premium.",
   },
   en: {
     title: "Packages",
     description:
-      "Ready-made packages for marketing, brand, training and website. Solutions that fit your business — from Starter to Premium.",
+      "Ready-made packages for marketing, brand, training and website. Solutions that fit your business. From Starter to Premium.",
   },
   de: {
     title: "Pakete",
     description:
-      "Fertige Pakete für Marketing, Marke, Training und Website. Lösungen, die zu Ihrem Unternehmen passen — von Starter bis Premium.",
+      "Fertige Pakete für Marketing, Marke, Training und Website. Lösungen, die zu Ihrem Unternehmen passen. Von Starter bis Premium.",
   },
 };
 

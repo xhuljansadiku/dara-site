@@ -21,7 +21,7 @@ const FOOTER_BY_LOCALE: Record<
     contactTitle: string;
     followUs: string;
     whatsAppHover: string;
-    links: { home: string; about: string; services: string; packages: string; trainings: string; work: string; team: string; contact: string; faq: string };
+    links: { home: string; about: string; services: string; packages: string; trainings: string; work: string; careers: string; team: string; contact: string; faq: string };
     legal: { privacy: string; terms: string };
   }
 > = {
@@ -44,6 +44,7 @@ const FOOTER_BY_LOCALE: Record<
       packages: "Paketa", 
       trainings: "Trajnime", 
       work: "Punët", 
+      careers: "Karrierë",
       team: "Ekipi", 
       contact: "Kontakt",
       faq: "FAQ",
@@ -69,6 +70,7 @@ const FOOTER_BY_LOCALE: Record<
       packages: "Packages", 
       trainings: "Training", 
       work: "Work", 
+      careers: "Careers",
       team: "Team", 
       contact: "Contact",
       faq: "FAQ",
@@ -94,6 +96,7 @@ const FOOTER_BY_LOCALE: Record<
       packages: "Pakete", 
       trainings: "Training", 
       work: "Referenzen", 
+      careers: "Karriere",
       team: "Team", 
       contact: "Kontakt",
       faq: "FAQ",
@@ -279,6 +282,14 @@ export default function Footer({ locale }: { locale: string }) {
                   className="transition-colors duration-200 hover:text-[#c8a55c]"
                 >
                   {t.links.work}
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink
+                  href="/careers"
+                  className="transition-colors duration-200 hover:text-[#c8a55c]"
+                >
+                  {t.links.careers}
                 </LocaleLink>
               </li>
               <li>

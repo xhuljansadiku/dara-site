@@ -217,7 +217,7 @@ const SERVICES_SECTION_COPY: Record<
     packagesKicker: "Paketa",
     packagesTitleBefore: "Paketa për ",
     packagesTitleHighlight: "çdo nevojë",
-    packagesIntro: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website — paketa që përshtaten me biznesin tuaj.",
+    packagesIntro: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website. Paketa që përshtaten me biznesin tuaj.",
     packagesAll: "Të gjitha",
   },
   en: {
@@ -234,7 +234,7 @@ const SERVICES_SECTION_COPY: Record<
     packagesKicker: "Packages",
     packagesTitleBefore: "Packages for ",
     packagesTitleHighlight: "every need",
-    packagesIntro: "Ready-made solutions for marketing, brand, training and website — packages that fit your business.",
+    packagesIntro: "Ready-made solutions for marketing, brand, training and website. Packages that fit your business.",
     packagesAll: "All",
   },
   de: {
@@ -251,7 +251,7 @@ const SERVICES_SECTION_COPY: Record<
     packagesKicker: "Pakete",
     packagesTitleBefore: "Pakete für ",
     packagesTitleHighlight: "jeden Bedarf",
-    packagesIntro: "Fertige Lösungen für Marketing, Marke, Training und Website — Pakete, die zu Ihrem Unternehmen passen.",
+    packagesIntro: "Fertige Lösungen für Marketing, Marke, Training und Website. Pakete, die zu Ihrem Unternehmen passen.",
     packagesAll: "Alle",
   },
 };
@@ -295,6 +295,30 @@ const CTA_BY_LOCALE: Record<
       "Erfahrenes Team", // Years will be added dynamically
     ],
     newsletterNote: "Kein Spam. Jederzeit abmelden.",
+  },
+};
+
+const CAREER_BY_LOCALE: Record<Locale, { kicker: string; title: string; subtitle: string; roles: string[]; cta: string }> = {
+  sq: {
+    kicker: "Karrierë",
+    title: "Po zgjerojmë ekipin",
+    subtitle: "Po kërkojmë njerëz të talentuar për të bashkëpunuar me ne.",
+    roles: ["Graphic Design", "Video Maker", "Social Media Manager"],
+    cta: "Apliko tani",
+  },
+  en: {
+    kicker: "Careers",
+    title: "We are expanding our team",
+    subtitle: "We are looking for talented people to join us.",
+    roles: ["Graphic Design", "Video Maker", "Social Media Manager"],
+    cta: "Apply now",
+  },
+  de: {
+    kicker: "Karriere",
+    title: "Wir erweitern unser Team",
+    subtitle: "Wir suchen talentierte Menschen für unser Team.",
+    roles: ["Grafikdesign", "Video Maker", "Social Media Manager"],
+    cta: "Jetzt bewerben",
   },
 };
 
@@ -356,6 +380,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const services = SERVICES_BY_LOCALE[locale];
   const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
+  const career = CAREER_BY_LOCALE[locale];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
   const jsonLd = {
@@ -530,6 +555,67 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeWorkSection locale={locale} />
 
+      {/* KARRIERË / CAREERS */}
+      <section id="careers" className="relative overflow-hidden py-20 md:py-28">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.03] to-transparent" />
+          <div className="absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/4 rounded-full bg-[#c8a55c]/[0.06] blur-[120px]" />
+          <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#c8a55c]/[0.04] blur-[80px]" />
+        </div>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <AnimateIn delay={0}>
+                <span className="inline-block text-[11px] font-medium uppercase tracking-[0.25em] text-[#c8a55c]">
+                  {career.kicker}
+                </span>
+              </AnimateIn>
+              <AnimateIn delay={80}>
+                <h2 className="mt-5 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem]">
+                  {career.title}
+                  <span className="text-[#c8a55c]">.</span>
+                </h2>
+              </AnimateIn>
+              <AnimateIn delay={120}>
+                <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
+                  {career.subtitle}
+                </p>
+              </AnimateIn>
+              <AnimateIn delay={160}>
+                <LocaleLink
+                  href="/careers"
+                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black shadow-[0_0_40px_rgba(200,165,92,0.2)] transition hover:bg-[#d4b86a] hover:shadow-[0_0_50px_rgba(200,165,92,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+                >
+                  {career.cta}
+                </LocaleLink>
+              </AnimateIn>
+            </div>
+            <div className="lg:col-span-7">
+              <div className="grid gap-4 sm:grid-cols-3 sm:items-stretch">
+                {career.roles.map((role, idx) => (
+                  <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
+                    <LocaleLink
+                      href="/careers"
+                      className="group flex h-full min-h-[140px] flex-col rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/25 hover:bg-white/[0.06] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]"
+                    >
+                      <span className="font-mono text-xs font-medium tabular-nums text-[#c8a55c]/90">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <span className="mt-3 flex-1 text-lg font-semibold text-white group-hover:text-[#c8a55c]">
+                        {role}
+                      </span>
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm text-white/50 transition group-hover:text-[#c8a55c]/80">
+                        {locale === "sq" ? "Apliko →" : locale === "de" ? "Bewerben →" : "Apply →"}
+                      </span>
+                    </LocaleLink>
+                  </AnimateIn>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <HomeFaqSection locale={locale} />
 
       {/* OUR TEAM  bios on hover, social links structure */}
@@ -592,179 +678,122 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
       )}
 
-      {/* CTA Section - Modern Redesign */}
-      <section className="py-16 md:py-24" aria-labelledby="cta-heading">
-        <div className="relative overflow-hidden rounded-3xl border border-[#c8a55c]/30 bg-gradient-to-br from-[#1a1a1a] via-[#1f1f1f] to-[#1a1a1a] p-8 shadow-2xl shadow-black/50 md:p-12 lg:p-16">
-          {/* Decorative gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#c8a55c]/10 via-transparent to-[#c8a55c]/5 opacity-50" />
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c8a55c]/10 blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#c8a55c]/5 blur-3xl" />
-          
-          <div className="relative z-10">
-            {/* Trusted By Section */}
-            <div className="mb-12 text-center">
-              <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
-                {locale === "sq" ? "NA BESOJNË" : locale === "de" ? "VERTRAUEN UNS" : "TRUSTED BY"}
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+      {/* CTA Section - Professional */}
+      <section className="py-20 md:py-28" aria-labelledby="cta-heading">
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0f0f0f]">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#c8a55c]/[0.03] via-transparent to-transparent" />
+          <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[#c8a55c]/[0.04] blur-[100px]" />
+          <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
+            {/* Trusted By - minimal */}
+            <div className="mb-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-b border-white/[0.06] pb-10">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40">
+                {locale === "sq" ? "Na besojnë" : locale === "de" ? "Vertrauen uns" : "Trusted by"}
+              </span>
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
                 {["Don Mare Hotel", "Zorada", "City Fitness", "Cara Dental", "Nova Real Estate"].map((name) => (
-                  <span key={name} className="text-sm font-medium text-white/70 transition-colors hover:text-[#c8a55c]">
+                  <span key={name} className="text-sm font-medium text-white/50">
                     {name}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Main Content Grid */}
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-              {/* Left Column - CTA Content */}
-              <div className="space-y-8">
-                <div>
-                  <h2 id="cta-heading" className="font-display text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
-                    {cta.title}
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-white/80 md:text-lg">
-                    {cta.subtitle}
-                  </p>
+            <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+              {/* Left - CTA */}
+              <div>
+                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-white md:text-4xl lg:text-[2.75rem]">
+                  {cta.title}
+                </h2>
+                <p className="mt-5 text-base leading-relaxed text-white/70">
+                  {cta.subtitle}
+                </p>
+                <div className="mt-8 space-y-4">
+                  {cta.whyBullets.map((bullet, idx) => {
+                    const displayBullet = idx === 2 && (bullet.includes("Ekip") || bullet.includes("team") || bullet.includes("Team"))
+                      ? locale === "sq"
+                        ? `Ekip me përvojë ${yearsExperienceFormatted} vjet në marketingu`
+                        : locale === "de"
+                        ? `Erfahrenes Team ${yearsExperienceFormatted} Jahre im Marketing`
+                        : `Experienced team ${yearsExperienceFormatted} years in marketing`
+                      : bullet;
+                    return (
+                      <div key={idx} className="flex items-center gap-3">
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#c8a55c]/20">
+                          <svg className="h-2.5 w-2.5 text-[#c8a55c]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </span>
+                        <span className="text-sm text-white/85">{displayBullet}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-
-                {/* Why DARA Section */}
-                <div className="card p-6 backdrop-blur-sm">
-                  <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
-                    {cta.whyTitle}
-                  </h3>
-                  <ul className="space-y-4">
-                    {cta.whyBullets.map((bullet, idx) => {
-                      const displayBullet = idx === 2 && (bullet.includes("Ekip") || bullet.includes("team") || bullet.includes("Team"))
-                        ? locale === "sq"
-                          ? `Ekip me përvojë ${yearsExperienceFormatted} vjet në marketingu`
-                          : locale === "de"
-                          ? `Erfahrenes Team ${yearsExperienceFormatted} Jahre im Marketing`
-                          : `Experienced team ${yearsExperienceFormatted} years in marketing`
-                        : bullet;
-                      return (
-                        <li key={idx} className="flex items-start gap-4">
-                          <div className="mt-1.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#c8a55c]/20">
-                            <svg className="h-3 w-3 text-[#c8a55c]" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <span className="text-sm leading-relaxed text-white/90 md:text-base">{displayBullet}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-
-                {/* CTA Button */}
                 <LocaleLink
                   href="/contact"
-                  className="group relative inline-flex h-14 w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-[#c8a55c] to-[#b6944f] px-8 font-semibold text-black shadow-lg shadow-[#c8a55c]/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#c8a55c]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] sm:w-auto"
+                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black transition hover:bg-[#d4b86a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
                 >
-                  <span className="relative z-10">{cta.button}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+                  {cta.button}
                 </LocaleLink>
               </div>
 
-              {/* Right Column - Contact & Newsletter */}
-              <div className="flex flex-col gap-8 lg:justify-between">
-                {/* Contact Section */}
-                <div className="space-y-6">
-                  <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
-                    {locale === "sq" ? "KONTAKT" : locale === "de" ? "KONTAKT" : "CONTACT"}
-                  </h4>
-                  <div className="space-y-4 text-sm text-white/80">
+              {/* Right - Contact & Newsletter */}
+              <div className="space-y-10">
+                <div>
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                    {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
+                  </h3>
+                  <div className="mt-5 space-y-4 text-sm">
+                    <a href="mailto:daramarketing.eu@gmail.com" className="flex items-center gap-3 text-white/80 transition hover:text-[#c8a55c]">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
+                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </span>
+                      daramarketing.eu@gmail.com
+                    </a>
                     <div className="flex items-center gap-3">
-                      <svg className="h-5 w-5 shrink-0 text-[#c8a55c]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      <a href="mailto:daramarketing.eu@gmail.com" className="transition-colors hover:text-[#c8a55c] focus-visible:underline">
-                        daramarketing.eu@gmail.com
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
+                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </span>
+                      <a href="tel:+355688009988" className="text-white/80 transition hover:text-[#c8a55c]">+355 68 800 9988</a>
+                      <a href="https://wa.me/355688009988" target="_blank" rel="noreferrer" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] transition hover:scale-105" aria-label="WhatsApp">
+                        <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                       </a>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <svg className="h-5 w-5 shrink-0 text-[#c8a55c]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                      <a href="tel:+355688009988" className="transition-colors hover:text-[#c8a55c] focus-visible:underline">
-                        +355 68 800 9988
-                      </a>
-                      <a
-                        href="https://wa.me/355688009988"
-                        target="_blank"
-                        rel="noreferrer"
-                        title={locale === "sq" ? "Na shkruaj në WhatsApp" : locale === "de" ? "Auf WhatsApp schreiben" : "Chat on WhatsApp"}
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#25D366] transition-all hover:scale-110 hover:shadow-[0_0_16px_rgba(37,211,102,0.5)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
-                        aria-label="WhatsApp"
-                      >
-                        <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-white/80 transition hover:text-[#c8a55c]">
+                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
+                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                      </a>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <svg className="mt-0.5 h-5 w-5 shrink-0 text-[#c8a55c]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <a
-                        href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="transition-colors hover:text-[#c8a55c] focus-visible:underline"
-                      >
-                        Rruga Donika Kastrioti, Bllok, Tiranë, Albania
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-4 pt-2">
-                      <a 
-                        href="https://instagram.com/daramarketing.eu" 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:border-[#c8a55c]/50 hover:bg-[#c8a55c]/10"
-                        aria-label="Instagram"
-                      >
-                        <svg className="h-5 w-5 text-white/70 transition-colors hover:text-[#c8a55c]" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                      </a>
-                      <a 
-                        href="https://facebook.com/daramarketing.eu" 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:border-[#c8a55c]/50 hover:bg-[#c8a55c]/10"
-                        aria-label="Facebook"
-                      >
-                        <svg className="h-5 w-5 text-white/70 transition-colors hover:text-[#c8a55c]" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                      </a>
-                      <a 
-                        href="https://linkedin.com/company/daramarketing" 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:border-[#c8a55c]/50 hover:bg-[#c8a55c]/10"
-                        aria-label="LinkedIn"
-                      >
-                        <svg className="h-5 w-5 text-white/70 transition-colors hover:text-[#c8a55c]" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                      </a>
-                    </div>
+                      </span>
+                      Rruga Donika Kastrioti, Bllok, Tiranë
+                    </a>
+                  </div>
+                  <div className="mt-6 flex gap-3">
+                    <a href="https://instagram.com/daramarketing.eu" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="Instagram">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://facebook.com/daramarketing.eu" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="Facebook">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://linkedin.com/company/daramarketing" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="LinkedIn">
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
                   </div>
                 </div>
-
-                {/* Newsletter Section */}
-                <div className="card p-6 backdrop-blur-sm">
-                  <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#c8a55c]">
-                    {locale === "sq" ? "NEWSLETTER" : locale === "de" ? "NEWSLETTER" : "NEWSLETTER"}
-                  </h4>
+                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                    Newsletter
+                  </h3>
                   <NewsletterForm locale={locale} />
-                  <p className="mt-4 flex items-center gap-2 text-xs text-white/50">
-                    <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <p className="mt-3 flex items-center gap-2 text-xs text-white/45">
+                    <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
-                    {cta.newsletterNote} · GDPR compliant
+                    {cta.newsletterNote} · GDPR
                   </p>
                 </div>
               </div>

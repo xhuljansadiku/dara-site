@@ -13,7 +13,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "DARA — Dare to be Different",
+    default: "DARA · Dare to be Different",
     template: "%s | DARA Marketing Agency",
   },
   description:
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: SITE_URL,
     siteName: "DARA Marketing Agency",
-    title: "DARA — Dare to be Different",
+    title: "DARA · Dare to be Different",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "DARA Marketing Agency" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DARA — Dare to be Different",
+    title: "DARA · Dare to be Different",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: ["/og-image.svg"],

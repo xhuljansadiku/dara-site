@@ -20,6 +20,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: string;
     about: string;
     works: string;
+    careers: string;
     faq: string;
     team: string;
     contact: string;
@@ -35,6 +36,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Trajnime",
     about: "Rreth nesh",
     works: "Punët",
+    careers: "Karrierë",
     faq: "FAQ",
     team: "Ekipi",
     contact: "Kontakt",
@@ -49,6 +51,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Training",
     about: "About",
     works: "Work",
+    careers: "Careers",
     faq: "FAQ",
     team: "Team",
     contact: "Contact",
@@ -63,6 +66,7 @@ const NAV_TRANSLATIONS: Record<
     trainings: "Training",
     about: "Über uns",
     works: "Referenzen",
+    careers: "Karriere",
     faq: "FAQ",
     team: "Team",
     contact: "Kontakt",
@@ -101,6 +105,7 @@ export default function Navbar() {
       { label: nav.packages, href: "/packages" },
       { label: nav.trainings, href: "/trainings" },
       { label: nav.works, href: "/work" },
+      { label: nav.careers, href: "/careers" },
       { label: nav.faq, href: "/faq" },
       { label: nav.contact, href: "/contact" },
     ],

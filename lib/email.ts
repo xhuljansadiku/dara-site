@@ -92,6 +92,50 @@ export async function sendAutoReplyToLead(lead: { name: string; email: string },
   return { ok: true };
 }
 
+export async function sendJobNotification(job: {
+  name: string;
+  email: string;
+  role: string;
+  phone?: string;
+  message: string;
+  cvAttachment?: { filename: string; content: Buffer };
+}): Promise<{ ok: boolean; error?: string }> {
+  if (!resend) {
+    console.warn("RESEND_API_KEY not set, job saved to file only, no email sent");
+    return { ok: true };
+  }
+
+  const html = `
+    <h2>Aplikim i ri për pune</h2>
+    <p><strong>Emri:</strong> ${escapeHtml(job.name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(job.email)}</p>
+    <p><strong>Pozicioni:</strong> ${escapeHtml(job.role)}</p>
+    ${job.phone ? `<p><strong>Telefoni:</strong> ${escapeHtml(job.phone)}</p>` : ""}
+    <p><strong>Mesazhi:</strong></p>
+    <pre style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 8px;">${escapeHtml(job.message)}</pre>
+    ${job.cvAttachment ? `<p><strong>CV:</strong> ${escapeHtml(job.cvAttachment.filename)} (bashkangjitur)</p>` : ""}
+    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website (Karriere) , ${new Date().toISOString()}</p>
+  `;
+
+  const attachments = job.cvAttachment
+    ? [{ filename: job.cvAttachment.filename, content: job.cvAttachment.content }]
+    : undefined;
+
+  const { error } = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: [TO_EMAIL],
+    subject: `[DARA Karriere] Aplikim: ${job.name} – ${job.role}`,
+    html,
+    attachments,
+  });
+
+  if (error) {
+    console.error("RESEND_ERROR:", error);
+    return { ok: false, error: String(error) };
+  }
+  return { ok: true };
+}
+
 export async function sendNewsletterNotification(email: string, isNew: boolean): Promise<{ ok: boolean; error?: string }> {
   if (!resend) {
     console.warn("RESEND_API_KEY not set , newsletter saved to file only, no email sent");

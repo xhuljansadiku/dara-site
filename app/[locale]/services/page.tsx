@@ -10,17 +10,17 @@ const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
     title: "Shërbimet",
     description:
-      "Menaxhim rrjeteve sociale, krijim përmbajtjeje, strategji, branding, reklama, konsulencë, trajnime — website & landing, e-commerce dhe SaaS të personalizuar.",
+      "Menaxhim rrjeteve sociale, krijim përmbajtjeje, strategji, branding, reklama, konsulencë, trajnime. Website & landing, e-commerce dhe SaaS të personalizuar.",
   },
   en: {
     title: "Services",
     description:
-      "Social Media Management, Content Creation, Strategy, Branding, Ads, Consulting, Training — website & landing pages, e-commerce and custom SaaS.",
+      "Social Media Management, Content Creation, Strategy, Branding, Ads, Consulting, Training. Website & landing pages, e-commerce and custom SaaS.",
   },
   de: {
     title: "Leistungen",
     description:
-      "Social-Media-Management, Content-Erstellung, Strategie, Branding, Ads, Beratung, Training — Website & Landingpages, E-Commerce und individuelle SaaS.",
+      "Social-Media-Management, Content-Erstellung, Strategie, Branding, Ads, Beratung, Training. Website & Landingpages, E-Commerce und individuelle SaaS.",
   },
 };
 

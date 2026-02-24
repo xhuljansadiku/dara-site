@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
+import PackageCard from "@/components/site/PackageCard";
 import type { Pkg, PackageGroup } from "@/lib/packages-data";
 
 type Locale = "sq" | "en" | "de";
@@ -225,7 +226,7 @@ export default function ServicesSection({
               <div className="mt-8 rounded-xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-5 md:p-6">
                 <p className="text-sm italic text-white/80">&ldquo;{testimonial.quote}&rdquo;</p>
                 <p className="mt-3 text-xs font-medium text-[#c8a55c]">
-                  — {testimonial.name}, {testimonial.role}
+                  {testimonial.name}, {testimonial.role}
                   {testimonial.company && ` · ${testimonial.company}`}
                 </p>
               </div>
@@ -274,48 +275,15 @@ export default function ServicesSection({
             </button>
           ))}
         </div>
-        <div className="space-y-10">
+        <div className="space-y-14">
           {visiblePackageGroups.map((groupKey) => (
             <div key={groupKey}>
-              <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-[#c8a55c]/90">
+              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c] md:text-xs">
                 {packageGroupLabels[groupKey]}
               </h4>
-              <div className="grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
+              <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {packagesByGroup[groupKey].map((pkg) => (
-                  <div
-                    key={`${groupKey}-${pkg.title}`}
-                    className="card card-lift relative flex min-h-[340px] flex-col rounded-2xl p-5 md:p-6"
-                  >
-                    {pkg.badge && (
-                      <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-[10px] font-medium text-[#c8a55c]">
-                        <span aria-hidden>⭐</span> {pkg.badge}
-                      </span>
-                    )}
-                    <p className="text-xs font-medium uppercase tracking-wider text-[#c8a55c]">{pkg.subtitle}</p>
-                    <h5 className="mt-2 text-lg font-semibold text-white">{pkg.title}</h5>
-                    <div className="mt-2 flex flex-wrap items-baseline gap-2">
-                      {pkg.priceOriginal && (
-                        <span className="text-sm text-white/50 line-through">{pkg.priceOriginal}</span>
-                      )}
-                      <span className="text-sm font-semibold text-[#c8a55c]">{pkg.price}</span>
-                    </div>
-                    <ul className="mt-4 flex-1 space-y-2">
-                      {pkg.points.map((point) => (
-                        <li key={point} className="flex items-center gap-2 text-sm text-white/70">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#c8a55c]" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-5 shrink-0">
-                      <LocaleLink
-                        href="/contact"
-                        className="inline-flex h-9 items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black hover:bg-[#b6944f]"
-                      >
-                        {copy.requestQuoteForGroup}
-                      </LocaleLink>
-                    </div>
-                  </div>
+                  <PackageCard key={`${groupKey}-${pkg.title}`} pkg={pkg} locale={locale} ctaLabel={copy.requestQuoteForGroup} />
                 ))}
               </div>
             </div>

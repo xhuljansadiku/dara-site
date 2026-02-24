@@ -25,6 +25,16 @@ export const API_ERROR_MESSAGES: Record<
     en: "Message must be at least 10 characters long.",
     de: "Die Nachricht muss mindestens 10 Zeichen lang sein.",
   },
+  INVALID_ROLE: {
+    sq: "Zgjidh pozicionin për të cilin aplikon.",
+    en: "Please select the position you're applying for.",
+    de: "Bitte wählen Sie die Position, für die Sie sich bewerben.",
+  },
+  INVALID_CV: {
+    sq: "Ngarko CV-në në format PDF (maks. 5 MB).",
+    en: "Please upload your CV in PDF format (max 5 MB).",
+    de: "Bitte laden Sie Ihren CV im PDF-Format hoch (max 5 MB).",
+  },
   INVALID_CONTENT_TYPE: {
     sq: "Lloji i kërkesës nuk është i vlefshëm.",
     en: "Invalid request content type.",

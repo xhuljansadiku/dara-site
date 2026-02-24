@@ -372,7 +372,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       whoIsItFor: [
         "Biznese që duan të rrisin shitjet ose lead-et me reklama të strukturuara",
-        "Marka që kanë tashmë website/faqe uljeje dhe duan trafik të kualifikuar",
+        "Marka që kanë tashmë website (landing pages) dhe duan trafik të kualifikuar",
         "Kompani që duan të testojnë treg të ri ose produkt të ri me buxhet të kontrolluar",
       ],
       benefits: [
@@ -606,7 +606,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       whoIsItFor: [
         "Biznese që nuk kanë ende website ose kanë nevojë për një të ri",
-        "Marka që duan një faqe uljeje për reklama ose lead",
+        "Marka që duan një website (landing page) për reklama ose lead",
         "Profesionistë që duan prezencë online të thjeshtë dhe profesionale",
       ],
       benefits: [
@@ -620,7 +620,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim dhe testim",
         "Lansim dhe (opsional) mbështetje",
       ],
-      priceNote: "Landing Page nga 400€; Business Website nga 900€; Premium Website nga 1,800€. Oferta pas diskutimit të nevojave.",
+      priceNote: "Landing Page nga 500€; Business Website nga 1.000€; Premium Website nga 2.000€. Oferta pas diskutimit të nevojave.",
     },
     en: {
       whatIncluded: [
@@ -646,7 +646,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Development and testing",
         "Launch and (optional) support",
       ],
-      priceNote: "Landing Page from €400; Business Website from €900; Premium Website from €1,800. Quote after discussing your needs.",
+      priceNote: "Landing Page from €500; Business Website from €1,000; Premium Website from €2,000. Quote after discussing your needs.",
     },
     de: {
       whatIncluded: [
@@ -672,7 +672,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung und Test",
         "Launch und optional Support",
       ],
-      priceNote: "Landing Page ab 400€; Business Website ab 900€; Premium Website ab 1.800€. Angebot nach Bedarfsgespräch.",
+      priceNote: "Landing Page ab 500€; Business Website ab 1.000€; Premium Website ab 2.000€. Angebot nach Bedarfsgespräch.",
     },
   },
   ecommerce: {
@@ -700,7 +700,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim, testim dhe integrim pagesash",
         "Lansim dhe mbështetje të vazhdueshme",
       ],
-      priceNote: "Basic Shop nga 1,200€; Standard Shop nga 2,200€; Premium Shop nga 4,000€. Oferta pas diskutimit.",
+      priceNote: "Basic Shop nga 1.000€; Standard Shop nga 2.000€; Premium Shop nga 4.000€. Oferta pas diskutimit.",
     },
     en: {
       whatIncluded: [
@@ -726,7 +726,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Development, testing and payment integration",
         "Launch and ongoing support",
       ],
-      priceNote: "Basic Shop from €1,200; Standard Shop from €2,200; Premium Shop from €4,000. Quote after discussion.",
+      priceNote: "Basic Shop from €1,000; Standard Shop from €2,000; Premium Shop from €4,000. Quote after discussion.",
     },
     de: {
       whatIncluded: [
@@ -752,7 +752,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung, Test und Zahlungsintegration",
         "Launch und laufender Support",
       ],
-      priceNote: "Basic Shop ab 1.200€; Standard Shop ab 2.200€; Premium Shop ab 4.000€. Angebot nach Gespräch.",
+      priceNote: "Basic Shop ab 1.000€; Standard Shop ab 2.000€; Premium Shop ab 4.000€. Angebot nach Gespräch.",
     },
   },
   saas: {

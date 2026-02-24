@@ -15,7 +15,7 @@ type Props = {
 export default function ProjectCard({ project: p, locale, setLightbox }: Props) {
   const viewLabel = locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project";
   const cardClass =
-    "card card-lift group flex h-full flex-col overflow-hidden";
+    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 hover:border-[#c8a55c]/40 hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:shadow-[#c8a55c]/10";
 
   const isImageGallery = p.category === "social-media" || p.category === "brand";
   const galleryImages =
@@ -31,7 +31,7 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
 
   const imageSection = (
     <div
-      className={`relative aspect-[4/3] overflow-hidden bg-white/5 ${isImageGallery ? "cursor-pointer" : ""}`}
+      className={`relative aspect-[4/3] overflow-hidden ${isImageGallery ? "cursor-pointer" : ""}`}
       onClick={isImageGallery ? openLightbox : undefined}
       role={isImageGallery ? "button" : undefined}
       tabIndex={isImageGallery ? 0 : undefined}
@@ -53,26 +53,29 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className={
           isImageGallery
-            ? "object-contain transition duration-300 group-hover:scale-105"
-            : "object-cover transition duration-300 group-hover:scale-105"
+            ? "object-contain transition duration-500 group-hover:scale-110"
+            : "object-cover transition duration-500 group-hover:scale-110"
         }
       />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
+      {/* Tag on image */}
+      <span className="absolute left-4 top-4 rounded-md bg-[#c8a55c]/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-black">
+        {p.tag}
+      </span>
     </div>
   );
 
   const cardContent = (
     <>
       {imageSection}
-      <div className="flex min-h-[140px] flex-1 flex-col p-5">
-        <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">
-          {p.tag}
-        </span>
-        <h3 className="mt-3 font-medium text-white/95 group-hover:text-[#c8a55c]/90">{p.title}</h3>
-        <p className="mt-2 text-sm text-white/60 line-clamp-2">{p.desc}</p>
-        <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-xs font-medium text-[#c8a55c]/80 group-hover:text-[#c8a55c]">
-          {viewLabel}
-          <span className="transition group-hover:translate-x-0.5">→</span>
-        </span>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-lg font-semibold text-white group-hover:text-[#c8a55c]">{p.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60 line-clamp-2">{p.desc}</p>
+        <div className="mt-4 flex items-center gap-2 text-sm font-medium text-[#c8a55c]">
+          <span>{viewLabel}</span>
+          <span className="transition group-hover:translate-x-1">→</span>
+        </div>
       </div>
     </>
   );

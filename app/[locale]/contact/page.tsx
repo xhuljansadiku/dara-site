@@ -7,57 +7,11 @@ import NewsletterForm from "@/components/NewsletterForm";
 import { useRecaptchaToken } from "@/components/RecaptchaProvider";
 import { trackEvent } from "@/lib/analytics";
 import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
+import { BUDGET_OPTIONS, BUDGET_TIERS_EUR } from "@/lib/budget-prices";
 import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 
 // Services shown in contact form (exclude training - has its own form at /trainings/register)
 const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
-
-// Budget options: first option = service min, then sequence (100→250→500→1000→2000→4000)
-const BUDGET_OPTIONS: { sq: string[]; en: string[]; de: string[] } = {
-  sq: [
-    "Nuk jam i sigurt",
-    "€100–€250",
-    "€120–€250",
-    "€150–€250",
-    "€200–€500",
-    "€250–€500",
-    "€400–€800",
-    "€500–€1.000",
-    "€1.000–€2.000",
-    "€1.200–€2.000",
-    "€2.000–€4.000",
-    "€4.000+",
-  ],
-  en: [
-    "Not sure",
-    "€100–€250",
-    "€120–€250",
-    "€150–€250",
-    "€200–€500",
-    "€250–€500",
-    "€400–€800",
-    "€500–€1,000",
-    "€1,000–€2,000",
-    "€1,200–€2,000",
-    "€2,000–€4,000",
-    "€4,000+",
-  ],
-  de: [
-    "Nicht sicher",
-    "€100–€250",
-    "€120–€250",
-    "€150–€250",
-    "€200–€500",
-    "€250–€500",
-    "€400–€800",
-    "€500–€1.000",
-    "€1.000–€2.000",
-    "€1.200–€2.000",
-    "€2.000–€4.000",
-    "€4.000+",
-  ],
-};
-const BUDGET_MIN_EUR = [0, 100, 120, 150, 200, 250, 400, 500, 1000, 1200, 2000, 4000];
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -109,7 +63,7 @@ export default function ContactPage() {
         let newBudget = prev.budget;
         if (prev.budget) {
           const budgetIdx = BUDGET_OPTIONS[locale].indexOf(prev.budget);
-          if (budgetIdx >= 0 && BUDGET_MIN_EUR[budgetIdx] < serviceMin) {
+          if (budgetIdx >= 0 && BUDGET_TIERS_EUR[budgetIdx] < serviceMin) {
             newBudget = "";
           }
         }
@@ -124,7 +78,7 @@ export default function ContactPage() {
     const opts = BUDGET_OPTIONS[locale];
     if (!formData.service) return opts;
     const serviceMin = SERVICE_MIN_PRICE_EUR[formData.service as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
-    return opts.filter((_, i) => i === 0 || BUDGET_MIN_EUR[i] >= serviceMin);
+    return opts.filter((_, i) => i === 0 || BUDGET_TIERS_EUR[i] >= serviceMin);
   };
 
   const handleNext = (e?: React.MouseEvent) => {
@@ -323,10 +277,10 @@ export default function ContactPage() {
               </h2>
               <p className="mt-2 text-sm text-white/60">
                 {locale === "sq" 
-                  ? "Plotëso detajet — 1–2 min. (E-maili përdoret vetëm për kontakt.)"
+                  ? "Plotëso detajet (1–2 min). (E-maili përdoret vetëm për kontakt.)"
                   : locale === "de"
-                  ? "Füllen Sie die Details aus — 1–2 Min. (E-Mail wird nur für Kontakt verwendet.)"
-                  : "Fill in the details — 1–2 min. (Email is used for contact only.)"}
+                  ? "Füllen Sie die Details aus (1–2 Min). (E-Mail wird nur für Kontakt verwendet.)"
+                  : "Fill in the details (1–2 min). (Email is used for contact only.)"}
               </p>
 
               {/* Step Indicator */}
@@ -885,10 +839,10 @@ export default function ContactPage() {
                   {locale === "sq" ? "Tip:" : locale === "de" ? "Tipp:" : "Tip:"}
                 </span>{" "}
                 {locale === "sq"
-                  ? "Nëse ke link të website-it aktual ose IG/TikTok, shkruaje te mesazhi — na ndihmon për audit."
+                  ? "Nëse ke link të website-it aktual ose IG/TikTok, shkruaje te mesazhi. Na ndihmon për audit."
                   : locale === "de"
-                  ? "Wenn Sie einen Link zu Ihrer aktuellen Website oder IG/TikTok haben, schreiben Sie ihn in die Nachricht — hilft uns beim Audit."
-                  : "If you have a link to your current website or IG/TikTok, add it to the message — it helps us with the audit."}
+                  ? "Wenn Sie einen Link zu Ihrer aktuellen Website oder IG/TikTok haben, schreiben Sie ihn in die Nachricht. Hilft uns beim Audit."
+                  : "If you have a link to your current website or IG/TikTok, add it to the message. It helps us with the audit."}
               </p>
             </div>
           </div>

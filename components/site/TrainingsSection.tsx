@@ -27,9 +27,9 @@ const GOOGLE_REVIEWS: {
     lastName: "Tahiri",
     rating: 5,
     text: {
-      sq: "Kam qenë pjesë e trajnimit për Social Media Manager nga Dara Marketing Agency, dhe përvoja ka qenë jashtëzakonisht e vlefshme. Gjatë trajnimit fitova aftësi reale që mund t'i aplikoj menjëherë në punë — nga strategjia e përmbajtjes deri te menaxhimi i platformave dhe analiza e rezultateve. E rekomandoj Dara Marketing Agency për këdo që dëshiron të zhvillohet në fushën e marketingut digjital dhe të fitojë përvojë!",
-      en: "I was part of the Social Media Manager training from Dara Marketing Agency, and the experience was exceptionally valuable. During the training I gained real skills that I can apply immediately at work — from content strategy to platform management and results analysis. I recommend Dara Marketing Agency to anyone who wants to develop in digital marketing and gain experience!",
-      de: "Ich war Teil des Social Media Manager Trainings von Dara Marketing Agency, und die Erfahrung war außergewöhnlich wertvoll. Während des Trainings habe ich echte Fähigkeiten erworben, die ich sofort im Beruf anwenden kann — von der Content-Strategie bis zum Plattformmanagement und der Ergebnisanalyse. Ich empfehle Dara Marketing Agency jedem, der sich im digitalen Marketing weiterentwickeln möchte!",
+      sq: "Kam qenë pjesë e trajnimit për Social Media Manager nga Dara Marketing Agency, dhe përvoja ka qenë jashtëzakonisht e vlefshme. Gjatë trajnimit fitova aftësi reale që mund t'i aplikoj menjëherë në punë. Nga strategjia e përmbajtjes deri te menaxhimi i platformave dhe analiza e rezultateve. E rekomandoj Dara Marketing Agency për këdo që dëshiron të zhvillohet në fushën e marketingut digjital dhe të fitojë përvojë!",
+      en: "I was part of the Social Media Manager training from Dara Marketing Agency, and the experience was exceptionally valuable. During the training I gained real skills that I can apply immediately at work. From content strategy to platform management and results analysis. I recommend Dara Marketing Agency to anyone who wants to develop in digital marketing and gain experience!",
+      de: "Ich war Teil des Social Media Manager Trainings von Dara Marketing Agency, und die Erfahrung war außergewöhnlich wertvoll. Während des Trainings habe ich echte Fähigkeiten erworben, die ich sofort im Beruf anwenden kann. Von der Content-Strategie bis zum Plattformmanagement und der Ergebnisanalyse. Ich empfehle Dara Marketing Agency jedem, der sich im digitalen Marketing weiterentwickeln möchte!",
     },
   },
   {
@@ -47,9 +47,9 @@ const GOOGLE_REVIEWS: {
     lastName: "Doku",
     rating: 5,
     text: {
-      sq: "Shumë e rekomanduar. Jo vetëm përmirësova aftësitë e mia në social media që më ndihmojnë të mbaj dhe rrit bizneset e mia, por edhe u argëtova gjatë procesit. Pavarësisht nëse dëshiron të punosh në Marketing, të marketosh biznesin tënd, të bëhesh influencer ose thjesht të krijosh memorje më të mira online — Dara është më e mira. Faleminderit!",
-      en: "Highly recommended. Not only did I enhance my social media skills that will help me better maintain and grow my businesses but I also had fun doing so. Whether you want to work in Marketing, market your own business, become an influencer or simply like to create better memories online — Dara is the best. Thank you!",
-      de: "Sehr empfehlenswert. Ich habe nicht nur meine Social-Media-Fähigkeiten verbessert, die mir helfen, meine Unternehmen zu pflegen und auszubauen, sondern hatte dabei auch viel Spaß. Ob Sie im Marketing arbeiten, Ihr eigenes Unternehmen vermarkten, Influencer werden oder einfach bessere Erinnerungen online schaffen möchten — Dara ist die Beste. Danke!",
+      sq: "Shumë e rekomanduar. Jo vetëm përmirësova aftësitë e mia në social media që më ndihmojnë të mbaj dhe rrit bizneset e mia, por edhe u argëtova gjatë procesit. Pavarësisht nëse dëshiron të punosh në Marketing, të marketosh biznesin tënd, të bëhesh influencer ose thjesht të krijosh memorje më të mira online. Dara është më e mira. Faleminderit!",
+      en: "Highly recommended. Not only did I enhance my social media skills that will help me better maintain and grow my businesses but I also had fun doing so. Whether you want to work in Marketing, market your own business, become an influencer or simply like to create better memories online. Dara is the best. Thank you!",
+      de: "Sehr empfehlenswert. Ich habe nicht nur meine Social-Media-Fähigkeiten verbessert, die mir helfen, meine Unternehmen zu pflegen und auszubauen, sondern hatte dabei auch viel Spaß. Ob Sie im Marketing arbeiten, Ihr eigenes Unternehmen vermarkten, Influencer werden oder einfach bessere Erinnerungen online schaffen möchten. Dara ist die Beste. Danke!",
     },
   },
   {

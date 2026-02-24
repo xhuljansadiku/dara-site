@@ -73,7 +73,7 @@ export const TRAININGS: Training[] = [
       en: "Personalised one-on-one training. Intensive focus on your specific needs.",
       de: "Personalisierte Einzelbetreuung. Intensiver Fokus auf Ihre spezifischen Bedürfnisse.",
     },
-    price: "600€",
+    price: "500€",
     duration: {
       sq: "1 muaj intensiv",
       en: "1 month intensive",
@@ -174,9 +174,9 @@ export const TRAININGS: Training[] = [
       de: "Demnächst",
     },
     stats: [
-      { value: "—", label: { sq: "module", en: "modules", de: "Module" } },
-      { value: "—", label: { sq: "orë", en: "hours", de: "Stunden" } },
-      { value: "—", label: { sq: "nivel", en: "level", de: "Niveau" } },
+      { value: "·", label: { sq: "module", en: "modules", de: "Module" } },
+      { value: "·", label: { sq: "orë", en: "hours", de: "Stunden" } },
+      { value: "·", label: { sq: "nivel", en: "level", de: "Niveau" } },
     ],
     highlights: {
       sq: ["Kompjuteri dhe sistemi operativ", "Internet dhe siguria", "Aplikacione zyrtare", "Përdorim praktik"],

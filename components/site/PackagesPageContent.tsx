@@ -9,8 +9,8 @@ import {
   PACKAGE_FILTER_TABS_BY_LOCALE,
   PACKAGE_GROUP_LABELS,
   PACKAGE_GROUPS,
-  type Pkg,
 } from "@/lib/packages-data";
+import PackageCard from "@/components/site/PackageCard";
 
 const HERO_BY_LOCALE: Record<
   Locale,
@@ -20,7 +20,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Paketa",
     title: "Paketa për ",
     titleAccent: "çdo nevojë",
-    subtitle: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website — paketa që përshtaten me biznesin tuaj.",
+    subtitle: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website. Paketa që përshtaten me biznesin tuaj.",
     getQuote: "Merr ofertë",
     viewServices: "Shiko shërbimet",
   },
@@ -28,7 +28,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Packages",
     title: "Packages for ",
     titleAccent: "every need",
-    subtitle: "Ready-made solutions for marketing, brand, training and website — packages that fit your business.",
+    subtitle: "Ready-made solutions for marketing, brand, training and website. Packages that fit your business.",
     getQuote: "Get a quote",
     viewServices: "View services",
   },
@@ -36,7 +36,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Pakete",
     title: "Pakete für ",
     titleAccent: "jeden Bedarf",
-    subtitle: "Fertige Lösungen für Marketing, Marke, Training und Website — Pakete, die zu Ihrem Unternehmen passen.",
+    subtitle: "Fertige Lösungen für Marketing, Marke, Training und Website. Pakete, die zu Ihrem Unternehmen passen.",
     getQuote: "Angebot anfragen",
     viewServices: "Leistungen ansehen",
   },
@@ -68,50 +68,6 @@ const CTA_BY_LOCALE: Record<
     backHome: "Zur Startseite",
   },
 };
-
-const CTA_LABELS: Record<Locale, Record<"quote" | "consult", string>> = {
-  sq: { quote: "Kërko ofertë", consult: "Kërko konsultim" },
-  en: { quote: "Get a quote", consult: "Request consultation" },
-  de: { quote: "Angebot anfragen", consult: "Beratung anfragen" },
-};
-
-function PackageCard({ pkg, locale }: { pkg: Pkg; locale: Locale }) {
-  const ctaType = pkg.cta ?? "quote";
-  const ctaLabel = CTA_LABELS[locale][ctaType];
-  return (
-    <div className="card card-lift group relative flex min-h-[380px] flex-col overflow-hidden p-6">
-      {pkg.badge && (
-        <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-[#c8a55c]/20 px-2.5 py-1 text-xs font-medium text-[#c8a55c]">
-          <span aria-hidden>⭐</span> {pkg.badge}
-        </span>
-      )}
-      <p className="text-xs font-medium uppercase tracking-wider text-[#c8a55c]">{pkg.subtitle}</p>
-      <h3 className="mt-2 text-xl font-semibold text-white transition group-hover:text-[#c8a55c]/90">{pkg.title}</h3>
-      <div className="mt-3 flex flex-wrap items-baseline gap-2">
-        {pkg.priceOriginal && (
-          <span className="text-sm text-white/50 line-through">{pkg.priceOriginal}</span>
-        )}
-        <span className="text-lg font-semibold text-[#c8a55c]">{pkg.price}</span>
-      </div>
-      <ul className="mt-5 flex-1 space-y-2.5">
-        {pkg.points.map((point) => (
-          <li key={point} className="flex items-start gap-2.5 text-sm text-white/70">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
-            <span>{point}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-6 shrink-0">
-        <LocaleLink
-          href="/contact"
-          className="inline-flex h-10 w-full items-center justify-center rounded-full bg-[#c8a55c] px-4 text-sm font-medium text-black transition hover:bg-[#b6944f]"
-        >
-          {ctaLabel}
-        </LocaleLink>
-      </div>
-    </div>
-  );
-}
 
 type Props = {
   locale: Locale;
@@ -175,7 +131,7 @@ export default function PackagesPageContent({ locale }: Props) {
       </section>
 
       {/* FILTER TABS */}
-      <section className="py-6">
+      <section className="py-8">
         <div className="-mx-4 overflow-x-auto px-4">
           <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap">
             {filterTabs.map((tab, idx) => (
@@ -183,10 +139,10 @@ export default function PackagesPageContent({ locale }: Props) {
                 key={idx}
                 type="button"
                 onClick={() => setActiveFilter(idx)}
-                className={`rounded-full px-5 py-2.5 text-sm font-medium transition ${
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition ${
                   activeFilter === idx
-                    ? "bg-[#c8a55c] text-black shadow-[0_0_20px_rgba(200,165,92,0.3)]"
-                    : "border border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                    ? "bg-[#c8a55c] text-black"
+                    : "border border-white/[0.08] bg-white/[0.02] text-white/60 hover:border-[#c8a55c]/30 hover:bg-white/[0.05] hover:text-white"
                 }`}
               >
                 {tab.label}
@@ -197,15 +153,17 @@ export default function PackagesPageContent({ locale }: Props) {
       </section>
 
       {/* PACKAGES GRID */}
-      <section className="py-12 md:py-16">
-        <div className="space-y-12">
+      <section className="py-12 md:py-20">
+        <div className="space-y-14">
           {visibleGroups.map((groupKey, groupIdx) => {
             const groupPackages = packages[groupKey];
             const groupLabel = groupLabels[groupKey];
             return (
-              <AnimateIn key={groupKey} delay={groupIdx * 100}>
+              <AnimateIn key={groupKey} delay={groupIdx * 80}>
                 <div>
-                  <h2 className="mb-6 text-xl font-semibold text-[#c8a55c] md:text-2xl">{groupLabel}</h2>
+                  <h2 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c] md:text-xs">
+                    {groupLabel}
+                  </h2>
                   <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {groupPackages.map((pkg) => (
                       <PackageCard key={pkg.title} pkg={pkg} locale={locale} />
