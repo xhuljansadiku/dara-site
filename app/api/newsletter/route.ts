@@ -3,7 +3,6 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { verifyRecaptcha } from "@/lib/recaptcha";
 import { sendNewsletterNotification } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
@@ -66,13 +65,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, bot: true });
     }
 
-    // 4b reCAPTCHA v3
-    const recaptchaToken = typeof obj.recaptchaToken === "string" ? obj.recaptchaToken : "";
-    const captchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!captchaValid) {
-      return NextResponse.json({ ok: false, error: "CAPTCHA_FAILED" }, { status: 400 });
-    }
-
     // 5️⃣ Email validation
     if (!isValidEmail(email)) {
       return NextResponse.json(
@@ -113,6 +105,16 @@ export async function POST(req: Request) {
     sendNewsletterNotification(email, !exists).catch((err) =>
       console.error("NEWSLETTER_EMAIL_ERROR:", err)
     );
+
+    // Add to Google Sheets (non-blocking)
+    const sheetsUrl = process.env.GOOGLE_SHEETS_NEWSLETTER_URL;
+    if (sheetsUrl && !exists) {
+      fetch(sheetsUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      }).catch((err) => console.error("SHEETS_ERROR:", err));
+    }
 
     return NextResponse.json({
       ok: true,

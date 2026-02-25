@@ -3,8 +3,7 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { verifyRecaptcha } from "@/lib/recaptcha";
-import { sendJobNotification } from "@/lib/email";
+import { sendJobNotification, sendAutoReplyToLead } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 function isValidEmail(email: string) {
@@ -53,17 +52,14 @@ export async function POST(req: Request) {
     const hp = clean(formData.get("hp"), 200);
     if (hp) return NextResponse.json({ ok: true, bot: true });
 
-    const recaptchaToken = typeof formData.get("recaptchaToken") === "string" ? formData.get("recaptchaToken") as string : "";
-    const captchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!captchaValid) {
-      return NextResponse.json({ ok: false, error: "CAPTCHA_FAILED" }, { status: 400 });
-    }
-
     const name = clean(formData.get("name"), 120);
     const email = clean(formData.get("email"), 200).toLowerCase();
     const role = clean(formData.get("role"), 100);
     const phone = clean(formData.get("phone"), 50) || undefined;
     const message = clean(formData.get("message"), 4000);
+    const locale = ["sq", "en", "de"].includes(clean(formData.get("locale"), 5))
+      ? clean(formData.get("locale"), 5)
+      : "en";
 
     if (!name || name.length < 2) {
       return NextResponse.json({ ok: false, error: "INVALID_NAME" }, { status: 400 });
@@ -126,6 +122,10 @@ export async function POST(req: Request) {
       ...job,
       cvAttachment: { filename: cvFilename, content: buffer },
     }).catch((err) => console.error("JOB_EMAIL_ERROR:", err));
+
+    sendAutoReplyToLead({ name, email }, locale).catch((err) =>
+      console.error("AUTO_REPLY_ERROR:", err)
+    );
 
     return NextResponse.json({ ok: true, saved: true });
   } catch (e) {

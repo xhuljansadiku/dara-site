@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { useRecaptchaToken } from "@/components/RecaptchaProvider";
 import { trackEvent } from "@/lib/analytics";
 
 type Locale = "sq" | "en" | "de";
@@ -54,7 +53,6 @@ export default function NewsletterForm({ locale: localeProp }: { locale?: Locale
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { getToken } = useRecaptchaToken();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -65,11 +63,10 @@ export default function NewsletterForm({ locale: localeProp }: { locale?: Locale
     const hp = hpInput?.value?.trim() ?? "";
 
     try {
-      const recaptchaToken = await getToken("newsletter_subscribe");
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, hp, recaptchaToken }),
+        body: JSON.stringify({ email, hp }),
       });
 
       const data = await res.json().catch(() => null);

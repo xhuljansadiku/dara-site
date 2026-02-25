@@ -2,7 +2,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
-import RecaptchaProviderWrap from "@/components/RecaptchaProvider";
 import { Analytics } from "@/components/Analytics";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
@@ -47,10 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable}`}>
       <body className={`min-h-screen bg-[#444444] text-white antialiased ${montserrat.className}`} suppressHydrationWarning>
-        <RecaptchaProviderWrap>
+        <>
           {children}
           <Analytics />
-        </RecaptchaProviderWrap>
+        </>
       </body>
     </html>
   );

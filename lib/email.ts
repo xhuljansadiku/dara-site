@@ -1,12 +1,23 @@
 /**
- * Email sending via Resend.
- * Set RESEND_API_KEY in .env.local to enable.
+ * Email sending via Nodemailer (Gmail SMTP).
+ * Set SMTP_USER and SMTP_PASS in .env.local to enable.
  */
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 const TO_EMAIL = "daramarketing.eu@gmail.com";
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "DARA Website <onboarding@resend.dev>";
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST ?? "smtp.gmail.com",
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+const isConfigured = !!(process.env.SMTP_USER && process.env.SMTP_PASS);
+const FROM_EMAIL = process.env.SMTP_FROM_EMAIL ?? "DARA Website <daramarketing.eu@gmail.com>";
 
 export async function sendLeadNotification(lead: {
   name: string;
@@ -15,8 +26,8 @@ export async function sendLeadNotification(lead: {
   budget?: string;
   message: string;
 }): Promise<{ ok: boolean; error?: string }> {
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set , lead saved to file only, no email sent");
+  if (!isConfigured) {
+    console.warn("SMTP not configured, lead saved to file only, no email sent");
     return { ok: true };
   }
 
@@ -31,18 +42,18 @@ export async function sendLeadNotification(lead: {
     <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website , ${new Date().toISOString()}</p>
   `;
 
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [TO_EMAIL],
-    subject: `[DARA] Lead i ri: ${lead.name}`,
-    html,
-  });
-
-  if (error) {
-    console.error("RESEND_ERROR:", error);
-    return { ok: false, error: String(error) };
+  try {
+    await transporter.sendMail({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      subject: `[DARA] Lead i ri: ${lead.name}`,
+      html,
+    });
+    return { ok: true };
+  } catch (err) {
+    console.error("SMTP_ERROR:", err);
+    return { ok: false, error: String(err) };
   }
-  return { ok: true };
 }
 
 const AUTO_REPLY_HTML = (name: string, locale: string) => {
@@ -76,20 +87,21 @@ const AUTO_REPLY_HTML = (name: string, locale: string) => {
 };
 
 export async function sendAutoReplyToLead(lead: { name: string; email: string }, locale = "en"): Promise<{ ok: boolean; error?: string }> {
-  if (!resend) return { ok: true };
+  if (!isConfigured) return { ok: true };
   const copy = { sq: "Faleminderit", en: "Thank you", de: "Vielen Dank" };
   const subject = `${copy[locale as keyof typeof copy] ?? copy.en} , DARA Marketing Agency`;
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [lead.email],
-    subject,
-    html: AUTO_REPLY_HTML(lead.name, locale),
-  });
-  if (error) {
-    console.error("AUTO_REPLY_ERROR:", error);
-    return { ok: false, error: String(error) };
+  try {
+    await transporter.sendMail({
+      from: FROM_EMAIL,
+      to: lead.email,
+      subject,
+      html: AUTO_REPLY_HTML(lead.name, locale),
+    });
+    return { ok: true };
+  } catch (err) {
+    console.error("AUTO_REPLY_ERROR:", err);
+    return { ok: false, error: String(err) };
   }
-  return { ok: true };
 }
 
 export async function sendJobNotification(job: {
@@ -100,8 +112,8 @@ export async function sendJobNotification(job: {
   message: string;
   cvAttachment?: { filename: string; content: Buffer };
 }): Promise<{ ok: boolean; error?: string }> {
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set, job saved to file only, no email sent");
+  if (!isConfigured) {
+    console.warn("SMTP not configured, job saved to file only, no email sent");
     return { ok: true };
   }
 
@@ -121,24 +133,24 @@ export async function sendJobNotification(job: {
     ? [{ filename: job.cvAttachment.filename, content: job.cvAttachment.content }]
     : undefined;
 
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [TO_EMAIL],
-    subject: `[DARA Karriere] Aplikim: ${job.name} – ${job.role}`,
-    html,
-    attachments,
-  });
-
-  if (error) {
-    console.error("RESEND_ERROR:", error);
-    return { ok: false, error: String(error) };
+  try {
+    await transporter.sendMail({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      subject: `[DARA Karriere] Aplikim: ${job.name} – ${job.role}`,
+      html,
+      attachments,
+    });
+    return { ok: true };
+  } catch (err) {
+    console.error("SMTP_ERROR:", err);
+    return { ok: false, error: String(err) };
   }
-  return { ok: true };
 }
 
 export async function sendNewsletterNotification(email: string, isNew: boolean): Promise<{ ok: boolean; error?: string }> {
-  if (!resend) {
-    console.warn("RESEND_API_KEY not set , newsletter saved to file only, no email sent");
+  if (!isConfigured) {
+    console.warn("SMTP not configured, newsletter saved to file only, no email sent");
     return { ok: true };
   }
 
@@ -149,18 +161,18 @@ export async function sendNewsletterNotification(email: string, isNew: boolean):
     <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website , ${new Date().toISOString()}</p>
   `;
 
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: [TO_EMAIL],
-    subject,
-    html,
-  });
-
-  if (error) {
-    console.error("RESEND_ERROR:", error);
-    return { ok: false, error: String(error) };
+  try {
+    await transporter.sendMail({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      subject,
+      html,
+    });
+    return { ok: true };
+  } catch (err) {
+    console.error("SMTP_ERROR:", err);
+    return { ok: false, error: String(err) };
   }
-  return { ok: true };
 }
 
 function escapeHtml(s: string): string {
@@ -170,4 +182,4 @@ function escapeHtml(s: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-}
+} 

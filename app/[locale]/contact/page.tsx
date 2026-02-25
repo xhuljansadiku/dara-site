@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import NewsletterForm from "@/components/NewsletterForm";
-import { useRecaptchaToken } from "@/components/RecaptchaProvider";
 import { trackEvent } from "@/lib/analytics";
 import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
 import { BUDGET_OPTIONS, BUDGET_TIERS_EUR } from "@/lib/budget-prices";
@@ -19,7 +18,6 @@ type Step = 1 | 2 | 3 | 4 | 5;
 export default function ContactPage() {
   const params = useParams();
   const router = useRouter();
-  const { getToken } = useRecaptchaToken();
   const locale = (params?.locale as Locale) || "sq";
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>("idle");
@@ -182,7 +180,6 @@ export default function ContactPage() {
     const hpInput = (e.target as HTMLFormElement).elements.namedItem("hp") as HTMLInputElement | null;
     const hp = hpInput?.value?.trim() ?? "";
 
-    const recaptchaToken = await getToken("contact_submit");
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),
@@ -190,7 +187,6 @@ export default function ContactPage() {
       budget: formData.budget.trim(),
       message: fullMessage || formData.message.trim(),
       hp,
-      recaptchaToken,
       locale,
     };
 

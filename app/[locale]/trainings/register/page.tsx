@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import LocaleLink from "@/components/site/LocaleLink";
 import { TRAININGS, type Locale } from "@/lib/trainings-data";
-import { useRecaptchaToken } from "@/components/RecaptchaProvider";
 import { trackEvent } from "@/lib/analytics";
 import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 
@@ -62,7 +61,6 @@ const COPY: Record<
 export default function TrainingRegisterPage() {
   const params = useParams();
   const router = useRouter();
-  const { getToken } = useRecaptchaToken();
   const locale = (params?.locale as Locale) || "sq";
   const copy = COPY[locale];
 
@@ -105,8 +103,6 @@ export default function TrainingRegisterPage() {
     const trainingTitle = training ? training.title[locale] : formData.training;
     const fullMessage = `${locale === "sq" ? "Regjistrim për trajnim" : locale === "de" ? "Anmeldung für Training" : "Training registration"}: ${trainingTitle}\n${formData.message.trim() ? `\n${formData.message.trim()}` : ""}`;
 
-    const recaptchaToken = await getToken("training_register");
-
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -116,7 +112,6 @@ export default function TrainingRegisterPage() {
           email: formData.email.trim(),
           message: fullMessage.trim(),
           hp: hpValue,
-          recaptchaToken,
           locale,
         }),
       });

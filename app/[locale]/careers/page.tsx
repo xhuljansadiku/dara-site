@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useRecaptchaToken } from "@/components/RecaptchaProvider";
 import { trackEvent } from "@/lib/analytics";
 import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 import { CAREER_COPY_BY_LOCALE, CAREER_ROLES_BY_LOCALE, type Locale } from "@/lib/careers-data";
@@ -14,7 +13,6 @@ const MAX_CV_SIZE = 5 * 1024 * 1024; // 5 MB
 export default function CareersPage() {
   const params = useParams();
   const router = useRouter();
-  const { getToken } = useRecaptchaToken();
   const cvInputRef = useRef<HTMLInputElement>(null);
   const locale = (params?.locale as Locale) || "sq";
   const copy = CAREER_COPY_BY_LOCALE[locale];
@@ -89,8 +87,6 @@ export default function CareersPage() {
       return;
     }
 
-    const recaptchaToken = await getToken("career_apply");
-
     try {
       const fd = new FormData();
       fd.append("name", formData.name.trim());
@@ -100,7 +96,7 @@ export default function CareersPage() {
       fd.append("message", formData.message.trim());
       fd.append("cv", cvFile);
       fd.append("hp", hpValue);
-      fd.append("recaptchaToken", recaptchaToken);
+      fd.append("locale", locale);
 
       const res = await fetch("/api/jobs", {
         method: "POST",

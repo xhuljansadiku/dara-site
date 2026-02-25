@@ -3,7 +3,6 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { verifyRecaptcha } from "@/lib/recaptcha";
 import { sendLeadNotification, sendAutoReplyToLead } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
@@ -60,13 +59,6 @@ export async function POST(req: Request) {
     // honeypot
     const hp = clean(obj.hp, 200);
     if (hp) return NextResponse.json({ ok: true, bot: true });
-
-    // reCAPTCHA v3
-    const recaptchaToken = typeof obj.recaptchaToken === "string" ? obj.recaptchaToken : "";
-    const captchaValid = await verifyRecaptcha(recaptchaToken);
-    if (!captchaValid) {
-      return NextResponse.json({ ok: false, error: "CAPTCHA_FAILED" }, { status: 400 });
-    }
 
     const name = clean(obj.name, 120);
     const email = clean(obj.email, 200).toLowerCase();
