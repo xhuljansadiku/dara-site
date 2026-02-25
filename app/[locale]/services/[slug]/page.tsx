@@ -5,9 +5,12 @@ import {
   getServicePageContent,
   SECTION_LABELS_BY_LOCALE,
 } from "@/lib/services-page-content";
+import { buildAlternates } from "@/lib/seo-utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { use } from "react";
+
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -86,8 +89,29 @@ export default function ServiceSlugPage({ params }: Props) {
   const labels = SECTION_LABELS_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
 
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: locale === "sq" ? "Kryefaqe" : locale === "de" ? "Startseite" : "Home", item: `${BASE}/${locale}` },
+      { "@type": "ListItem", position: 2, name: locale === "sq" ? "Shërbimet" : locale === "de" ? "Leistungen" : "Services", item: `${BASE}/${locale}/services` },
+      { "@type": "ListItem", position: 3, name: service.title, item: `${BASE}/${locale}/services/${slug}` },
+    ],
+  };
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.desc,
+    provider: { "@type": "Organization", name: "DARA Marketing Agency" },
+    ...(service.price && { offers: { "@type": "Offer", price: service.price } }),
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <section className="relative overflow-hidden py-8 md:py-12">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
@@ -180,9 +204,11 @@ export function generateMetadata({ params }: Props): Promise<Metadata> {
       : "sq";
     const service = getServiceBySlug(locale, slug);
     if (!service) return { title: "Service" };
+    const { canonical, languages } = buildAlternates(`services/${slug}`, locale);
     return {
       title: service.title,
       description: service.desc,
+      alternates: { canonical, languages },
     };
   })();
 }

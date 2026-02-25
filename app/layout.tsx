@@ -1,6 +1,7 @@
 // app/layout.tsx - Root layout (no locale)
 import "./globals.css";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 
@@ -42,9 +43,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers();
+  const locale = headersList.get("x-next-locale") ?? "en";
+  const lang = locale === "sq" ? "sq" : locale === "de" ? "de" : "en";
+
   return (
-    <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable}`}>
+    <html lang={lang} suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable}`}>
       <body className={`min-h-screen bg-[#444444] text-white antialiased ${montserrat.className}`} suppressHydrationWarning>
         <>
           {children}
