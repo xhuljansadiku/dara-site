@@ -115,19 +115,19 @@ export default function NewsletterForm({ locale: localeProp }: { locale?: Locale
           type="email"
           required
           placeholder={copy.placeholder}
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-[#c8a96a]/60"
+          className="w-full rounded-2xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-500 outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="rounded-2xl bg-[#c8a96a] px-5 py-3 text-sm font-medium text-black hover:bg-[#e2c37a] disabled:opacity-70"
+          className="rounded-2xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
         >
           {loading ? copy.submitting : copy.submit}
         </button>
       </form>
 
-      {msg && <p className="mt-3 text-sm text-white/70">{msg}</p>}
+      {msg && <p className="mt-3 text-sm text-gray-600">{msg}</p>}
     </div>
   );
 }

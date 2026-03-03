@@ -505,47 +505,38 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
     <>
       {/* HERO - Full-width modern hero */}
       <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
-        {/* Background */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#c8a55c]/[0.06] via-transparent to-transparent" />
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[600px] -translate-x-1/2 rounded-full bg-[#c8a55c]/8 blur-[100px]" />
-          <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
-          <div className="absolute -left-20 bottom-1/4 h-64 w-64 rounded-full bg-[#c8a55c]/5 blur-3xl" />
-        </div>
-        <div className="absolute inset-0 -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMS41Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" />
-
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
             <div className="order-2 lg:order-1">
-              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+              <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {hero.kicker}
               </span>
-              <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
+              <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl xl:text-7xl">
                 {hero.title.includes(" ") ? (
                   <>
                     {hero.title.split(" ").slice(0, -1).join(" ")}{" "}
-                    <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
+                    <span className="text-gray-900">
                       {hero.title.split(" ").slice(-1)[0]}
                     </span>
                   </>
                 ) : (
-                  <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
+                  <span className="text-gray-900">
                     {hero.title}
                   </span>
                 )}
               </h1>
-              <div className="mt-8 space-y-5 text-base leading-relaxed text-white/75 md:text-lg">
+              <div className="mt-8 space-y-5 text-base leading-relaxed text-gray-600 md:text-lg">
                 {hero.paragraphs.map((p, idx) => (
                   <p key={idx} className="max-w-xl">{p}</p>
                 ))}
               </div>
 
               {/* Stats - horizontal bar */}
-              <div className="mt-10 flex flex-wrap gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm md:gap-10 md:p-8">
+              <div className="mt-10 flex flex-wrap gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:gap-10 md:p-8">
                 {hero.stats.map((s) => (
                   <div key={s.k} className="flex flex-col">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">{s.k}</span>
-                    <span className="mt-1 text-lg font-bold text-[#c8a55c] md:text-xl">{s.v}</span>
+                    <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-500">{s.k}</span>
+                    <span className="mt-1 text-lg font-bold text-gray-900 md:text-xl">{s.v}</span>
                   </div>
                 ))}
               </div>
@@ -553,13 +544,13 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               <div className="mt-10 flex flex-wrap gap-4">
                 <LocaleLink
                   href="/contact"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black shadow-[0_0_30px_rgba(200,165,92,0.3)] transition hover:bg-[#b6944f] hover:shadow-[0_0_40px_rgba(200,165,92,0.4)] sm:w-auto"
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
                 >
                   {hero.ctaContact}
                 </LocaleLink>
                 <LocaleLink
                   href="/work"
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 font-medium text-white/90 transition hover:border-[#c8a55c]/50 hover:bg-white/10 sm:w-auto"
+                  className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
                 >
                   {hero.ctaWork}
                 </LocaleLink>
@@ -567,7 +558,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
             </div>
 
             <div className="relative order-1 lg:order-2">
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30 lg:rounded-3xl">
+              <div className="relative overflow-hidden rounded-2xl border border-gray-200 shadow-lg lg:rounded-3xl">
                 <div className="aspect-[4/3] overflow-hidden lg:aspect-[5/4]">
                   <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
@@ -579,12 +570,11 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <p className="text-sm font-medium text-white/90">DARA Marketing Agency</p>
-                  <p className="text-xs text-white/70">{hero.stats[1]?.v}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                  <p className="text-sm font-medium text-white">DARA Marketing Agency</p>
+                  <p className="text-xs text-white/90">{hero.stats[1]?.v}</p>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -right-6 -z-10 h-48 w-48 rounded-full bg-[#c8a55c]/20 blur-3xl" />
             </div>
           </div>
         </div>
@@ -595,15 +585,15 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
-              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+              <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {process.sectionTitle}
               </span>
             </AnimateIn>
             <AnimateIn delay={100}>
-              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
                 {process.sectionTitle}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{process.sectionDesc}</p>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">{process.sectionDesc}</p>
             </AnimateIn>
           </div>
 
@@ -612,16 +602,16 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               <AnimateIn key={step.n} delay={idx * 80}>
                 <div className="card card-lift group relative flex h-full flex-col overflow-hidden p-6">
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#c8a55c]/25 to-[#c8a55c]/10 text-sm font-bold text-[#c8a55c]">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900 text-sm font-bold text-white">
                       {step.n}
                     </span>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{step.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{step.desc}</p>
+                  <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600">{step.desc}</p>
                   <ul className="mt-6 space-y-2">
                     {step.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-center gap-2 text-xs text-white/60">
-                        <span className="h-1 w-1 shrink-0 rounded-full bg-[#c8a55c]" />
+                      <li key={bullet} className="flex items-center gap-2 text-xs text-gray-600">
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-gray-400" />
                         {bullet}
                       </li>
                     ))}
@@ -639,44 +629,42 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <div>
               <AnimateIn delay={0}>
-                <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                   {missionVision.sectionTitle}
                 </span>
               </AnimateIn>
               <AnimateIn delay={100}>
-                <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl">
+                <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
                   {missionVision.sectionTitle}
                 </h2>
-                <p className="mt-4 text-lg text-white/60">{missionVision.sectionDesc}</p>
+                <p className="mt-4 text-lg text-gray-600">{missionVision.sectionDesc}</p>
               </AnimateIn>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
               <AnimateIn delay={150}>
                 <div className="card card-lift relative overflow-hidden p-8">
-                  <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#c8a55c]/10" />
                   <div className="relative">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/20">
-                      <svg className="h-6 w-6 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900">
+                      <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-semibold text-[#c8a55c]">{missionVision.missionTitle}</h3>
-                    <p className="mt-4 leading-relaxed text-white/75">{missionVision.missionText}</p>
+                    <h3 className="text-xl font-semibold text-gray-900">{missionVision.missionTitle}</h3>
+                    <p className="mt-4 leading-relaxed text-gray-600">{missionVision.missionText}</p>
                   </div>
                 </div>
               </AnimateIn>
               <AnimateIn delay={200}>
                 <div className="card card-lift relative overflow-hidden p-8">
-                  <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#c8a55c]/10" />
                   <div className="relative">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/20">
-                      <svg className="h-6 w-6 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900">
+                      <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-semibold text-[#c8a55c]">{missionVision.visionTitle}</h3>
-                    <p className="mt-4 leading-relaxed text-white/75">{missionVision.visionText}</p>
+                    <h3 className="text-xl font-semibold text-gray-900">{missionVision.visionTitle}</h3>
+                    <p className="mt-4 leading-relaxed text-gray-600">{missionVision.visionText}</p>
                   </div>
                 </div>
               </AnimateIn>
@@ -687,26 +675,18 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* WHAT MAKES US DIFFERENT */}
       <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.03] to-transparent" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
-              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+              <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {differentiators.sectionTitle}
               </span>
             </AnimateIn>
             <AnimateIn delay={100}>
-              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                {differentiators.sectionTitle.includes(" ") ? (
-                  <>
-                    {differentiators.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
-                    <span className="text-[#c8a55c]">{differentiators.sectionTitle.split(" ").slice(-1)[0]}</span>
-                  </>
-                ) : (
-                  <span className="text-[#c8a55c]">{differentiators.sectionTitle}</span>
-                )}
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
+                {differentiators.sectionTitle}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{differentiators.sectionDesc}</p>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">{differentiators.sectionDesc}</p>
             </AnimateIn>
           </div>
 
@@ -714,11 +694,11 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
             {differentiators.items.map((d, idx) => (
               <AnimateIn key={d.title} delay={idx * 60}>
                 <div className="card card-lift group relative flex h-full flex-col p-6">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-[#c8a55c]/15 text-[#c8a55c] transition group-hover:bg-[#c8a55c]/25">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 text-white transition group-hover:bg-gray-800">
                     <span className="text-lg font-bold">{idx + 1}</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{d.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/65">{d.desc}</p>
+                  <h3 className="text-lg font-semibold text-gray-900">{d.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600">{d.desc}</p>
                 </div>
               </AnimateIn>
             ))}
@@ -731,35 +711,27 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
-              <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+              <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {target.sectionTitle}
               </span>
             </AnimateIn>
             <AnimateIn delay={100}>
-              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                {target.sectionTitle.includes(" ") ? (
-                  <>
-                    {target.sectionTitle.split(" ").slice(0, -1).join(" ")}{" "}
-                    <span className="text-[#c8a55c]">{target.sectionTitle.split(" ").slice(-1)[0]}</span>
-                  </>
-                ) : (
-                  <span className="text-[#c8a55c]">{target.sectionTitle}</span>
-                )}
+              <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
+                {target.sectionTitle}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">{target.sectionDesc}</p>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">{target.sectionDesc}</p>
             </AnimateIn>
           </div>
 
           <div className="mt-16 space-y-6">
-            {/* Rreshti 1: Klienti ideal + Lokal ose online */}
             <div className="grid gap-6 sm:grid-cols-2">
               <AnimateIn delay={150}>
                 <div className="card h-full p-6">
-                  <h3 className="text-lg font-semibold text-[#c8a55c]">{target.idealTitle}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">{target.idealTitle}</h3>
                   <ul className="mt-4 space-y-3">
                     {target.idealItems.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-sm text-white/75">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                      <li key={item} className="flex items-start gap-3 text-sm text-gray-600">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
                         {item}
                       </li>
                     ))}
@@ -768,11 +740,11 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               </AnimateIn>
               <AnimateIn delay={200}>
                 <div className="card h-full p-6">
-                  <h3 className="text-lg font-semibold text-[#c8a55c]">{target.localTitle}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">{target.localTitle}</h3>
                   <ul className="mt-4 space-y-3">
                     {target.localItems.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-sm text-white/75">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                      <li key={item} className="flex items-start gap-3 text-sm text-gray-600">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
                         {item}
                       </li>
                     ))}
@@ -780,15 +752,14 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 </div>
               </AnimateIn>
             </div>
-            {/* Rreshti 2: Industritë - full width */}
             <AnimateIn delay={250}>
               <div className="card p-6">
-                <h3 className="text-lg font-semibold text-[#c8a55c]">{target.industriesTitle}</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{target.industriesTitle}</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {target.industriesItems.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80 transition hover:border-[#c8a55c]/30 hover:bg-[#c8a55c]/10"
+                      className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs text-gray-700 transition hover:border-gray-300 hover:bg-gray-100"
                     >
                       {item}
                     </span>
@@ -799,24 +770,24 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           </div>
 
           <AnimateIn delay={300}>
-            <div className="mt-8 rounded-2xl border border-[#c8a55c]/25 bg-gradient-to-br from-[#c8a55c]/10 to-[#c8a55c]/5 p-8 backdrop-blur-sm md:p-10">
+            <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
               <div className="grid gap-8 md:grid-cols-2">
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#c8a55c]/20">
-                    <span className="text-lg font-bold text-[#c8a55c]">B2B</span>
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900">
+                    <span className="text-lg font-bold text-white">B2B</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#c8a55c]">{target.b2bTitle}</h3>
-                    <p className="mt-2 text-white/75">{target.b2bDesc}</p>
+                    <h3 className="text-lg font-semibold text-gray-900">{target.b2bTitle}</h3>
+                    <p className="mt-2 text-gray-600">{target.b2bDesc}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#c8a55c]/20">
-                    <span className="text-lg font-bold text-[#c8a55c]">B2C</span>
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900">
+                    <span className="text-lg font-bold text-white">B2C</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-[#c8a55c]">{target.b2cTitle}</h3>
-                    <p className="mt-2 text-white/75">{target.b2cDesc}</p>
+                    <h3 className="text-lg font-semibold text-gray-900">{target.b2cTitle}</h3>
+                    <p className="mt-2 text-gray-600">{target.b2cDesc}</p>
                   </div>
                 </div>
               </div>
@@ -828,28 +799,24 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
       {/* CTA */}
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl border border-[#c8a55c]/30 bg-gradient-to-br from-[#c8a55c]/15 via-[#c8a55c]/10 to-transparent p-10 shadow-2xl shadow-black/20 md:p-16 lg:p-20">
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#c8a55c]/20 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+          <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-10 md:p-16 lg:p-20">
             <div className="relative text-center">
-              <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
                 {cta.titleRest}
-                <span className="bg-gradient-to-r from-[#c8a55c] to-[#d4b86a] bg-clip-text text-transparent">
-                  {cta.titleHighlight}
-                </span>
+                <span className="text-gray-900">{cta.titleHighlight}</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">{cta.subtitle}</p>
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">{cta.subtitle}</p>
 
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <LocaleLink
                   href="/contact"
-                  className="inline-flex h-14 items-center justify-center rounded-full bg-[#c8a55c] px-10 font-semibold text-black shadow-[0_0_40px_rgba(200,165,92,0.4)] transition hover:bg-[#b6944f] hover:shadow-[0_0_50px_rgba(200,165,92,0.5)] sm:w-auto"
+                  className="inline-flex h-14 items-center justify-center rounded-full bg-gray-900 px-10 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
                 >
                   {cta.contact}
                 </LocaleLink>
                 <LocaleLink
                   href="/work"
-                  className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white/20 bg-white/5 px-10 font-medium text-white/90 transition hover:border-[#c8a55c]/50 hover:bg-white/10 sm:w-auto"
+                  className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-300 px-10 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
                 >
                   {cta.viewWork}
                 </LocaleLink>

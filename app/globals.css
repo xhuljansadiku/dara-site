@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
-/* DARA Brand Guidelines */
+/* Light theme - white background, dark text */
 @theme {
-  /* Brand colors - Canva */
-  --color-dara-gold: #c8a55c;
-  --color-dara-gold-dark: #b6944f;
-  --color-dara-bg: #444444;
+  --color-dara-gold: #171717;
+  --color-dara-gold-dark: #262626;
+  --color-dara-bg: #ffffff;
   /* Typography */
-  --font-display: "Playfair Display", serif;
+  --font-display: "Oswald", sans-serif;
   --font-body: "Montserrat", sans-serif;
 }
 
 :root {
-  --background: #444444;
-  --foreground: #ffffff;
-  --accent: #c8a55c;
-  --accent-hover: #b6944f;
+  --background: #ffffff;
+  --foreground: #171717;
+  --accent: #171717;
+  --accent-hover: #262626;
 }
 
 html {
@@ -24,12 +23,12 @@ html {
 
 /* A11y: visible focus for keyboard users */
 *:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #171717;
   outline-offset: 2px;
 }
 
 .font-display {
-  font-family: var(--font-playfair, "Playfair Display"), "Playfair Display", serif;
+  font-family: var(--font-oswald, "Oswald"), sans-serif;
 }
 
 /* Entry animations */
@@ -53,11 +52,11 @@ html {
 .animate-fade-in-up-delay-3 { animation-delay: 0.3s; }
 .animate-fade-in-up-delay-4 { animation-delay: 0.4s; }
 
-/* Contact form select: gold accent instead of blue */
+/* Contact form select: white accent */
 select option:checked,
 select option:hover {
-  background-color: #c8a55c;
-  color: #1a1a1a;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 /* Scroll-triggered reveal (used with AnimateIn component) */
@@ -72,18 +71,25 @@ select option:hover {
   transform: translateY(0);
 }
 
-/* Shared card styles - modern glassmorphism */
+/* Shared card styles - light theme, visible & polished */
 .card {
-  @apply rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-md transition-all duration-300;
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.05);
+  @apply rounded-2xl border border-gray-200 bg-white transition-all duration-300;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
 }
 .card-lift {
   @apply transition-all duration-300;
 }
 .card-lift:hover {
-  @apply border-[#c8a55c]/40 -translate-y-0.5;
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 60px rgba(200,165,92,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
+  @apply border-gray-300 -translate-y-0.5;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Trifid-style marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
 }
 

@@ -21,9 +21,9 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#444444] px-4 text-white">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#444444] px-4 text-gray-900">
       <h1 className="text-4xl font-semibold">{copy.title}</h1>
-      <p className="mt-2 text-white/70">{copy.desc}</p>
+      <p className="mt-2 text-gray-900/70">{copy.desc}</p>
       <div className="mt-6 flex gap-4">
         <button
           onClick={reset}
@@ -33,7 +33,7 @@ export default function Error({
         </button>
         <Link
           href={`/${locale}`}
-          className="rounded-full bg-[#c8a55c] px-6 py-3 font-medium text-black transition hover:bg-[#e2c37a]"
+          className="rounded-full bg-[white] px-6 py-3 font-medium text-black transition hover:bg-[white/90]"
         >
           {copy.goHome}
         </Link>

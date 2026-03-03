@@ -2,11 +2,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Montserrat, Playfair_Display } from "next/font/google";
+import { Montserrat, Oswald } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 
@@ -49,8 +49,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const lang = locale === "sq" ? "sq" : locale === "de" ? "de" : "en";
 
   return (
-    <html lang={lang} suppressHydrationWarning className={`${montserrat.variable} ${playfair.variable}`}>
-      <body className={`min-h-screen bg-[#444444] text-white antialiased ${montserrat.className}`} suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning className={`${montserrat.variable} ${oswald.variable}`}>
+      <body className={`min-h-screen bg-[#FFFFFF] text-gray-900 antialiased ${montserrat.className}`} suppressHydrationWarning>
         <>
           {children}
           <Analytics />

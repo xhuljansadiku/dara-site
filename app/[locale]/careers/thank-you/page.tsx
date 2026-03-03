@@ -33,7 +33,7 @@ export default function CareersThankYouPage() {
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+        <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
       </div>
       <div className="mx-auto max-w-xl text-center">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
@@ -46,7 +46,7 @@ export default function CareersThankYouPage() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <LocaleLink
             href="/careers"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black transition hover:bg-[#e2c37a]"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[white] px-6 font-medium text-black transition hover:bg-[white/90]"
           >
             {copy.backToCareers}
           </LocaleLink>

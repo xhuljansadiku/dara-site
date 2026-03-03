@@ -177,7 +177,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#2b2b2b]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white backdrop-blur-xl">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2 md:h-20">
         {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
         <Link href={`/${locale}`} className="flex items-center gap-3" onClick={() => setOpen(false)}>
@@ -190,14 +190,14 @@ export default function Navbar() {
               className="h-9 w-auto object-contain sm:h-10 md:h-11"
               priority
             />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-white/60 sm:text-[10px]">
+            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-gray-900/60 sm:text-[10px]">
               {nav.tagline}
             </span>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/20 px-2 py-1 md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-2 py-1 md:flex">
           {items.map((it) => {
             if (it.href === "/services") {
               return (
@@ -207,23 +207,23 @@ export default function Navbar() {
                     onClick={() => setServicesOpen((o) => !o)}
                     className={[
                       "relative flex items-center gap-0.5 rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                      isServicesActive ? "text-[#c8a55c]" : "text-white/70 hover:text-white",
+                      isServicesActive ? "text-gray-900" : "text-gray-600 hover:text-gray-900",
                     ].join(" ")}
                     aria-expanded={servicesOpen}
                     aria-haspopup="true"
                   >
                     {isServicesActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-gray-900" />
                     )}
                     <span className="relative z-10 whitespace-nowrap">{it.label}</span>
                     <span className="relative z-10 ml-0.5 text-[10px] opacity-70">▾</span>
                   </button>
                   {servicesOpen && (
-                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[220px] rounded-2xl border border-white/10 bg-[#2b2b2b] py-2 shadow-xl">
+                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[220px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
                       <Link
                         href={withLocale("/services")}
                         onClick={() => setServicesOpen(false)}
-                        className="block border-b border-white/10 px-4 py-2.5 text-sm font-medium text-[#c8a55c] hover:bg-white/5"
+                        className="block border-b border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-white/5"
                       >
                         {nav.viewAllServices}
                       </Link>
@@ -232,7 +232,7 @@ export default function Navbar() {
                           key={slug}
                           href={withLocale(`/services/${slug}`)}
                           onClick={() => setServicesOpen(false)}
-                          className="block px-4 py-2 text-sm text-white/85 hover:bg-white/5 hover:text-white"
+                          className="block px-4 py-2 text-sm text-gray-900/85 hover:bg-white/5 hover:text-gray-900"
                         >
                           {label}
                         </Link>
@@ -249,12 +249,12 @@ export default function Navbar() {
                 href={withLocale(it.href)}
                 className={[
                   "relative rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                  active ? "text-[#c8a55c]" : "text-white/70 hover:text-white",
+                  active ? "text-gray-900" : "text-gray-600 hover:text-gray-900",
                 ].join(" ")}
               >
-                {active && (
-                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
-                )}
+{active && (
+                <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-gray-900" />
+              )}
                 <span className="relative z-10 whitespace-nowrap">{it.label}</span>
               </Link>
             );
@@ -267,7 +267,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-2 text-sm font-medium text-white/90 transition hover:border-[#c8a55c]/40 hover:bg-black/50"
+              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 transition hover:border-gray-300 hover:bg-gray-50"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -282,12 +282,12 @@ export default function Navbar() {
                 />
               )}
               <span className="text-xs">{LOCALE_FLAGS[locale as (typeof LOCALES)[number]]?.label ?? locale.toUpperCase()}</span>
-              <svg className={`h-4 w-4 text-white/60 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`h-4 w-4 text-gray-900/60 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {langDropdownOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-white/10 bg-[#2b2b2b] py-1 shadow-xl">
+              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-gray-200 bg-white py-1 shadow-xl">
                 {LOCALES.map((l) => {
                   const active = l === locale;
                   const info = LOCALE_FLAGS[l];
@@ -298,7 +298,7 @@ export default function Navbar() {
                       onClick={() => setLangDropdownOpen(false)}
                       className={[
                         "flex items-center gap-3 px-4 py-2.5 text-sm transition-colors",
-                        active ? "bg-[#c8a55c]/20 text-[#c8a55c]" : "text-white/80 hover:bg-white/10 hover:text-white",
+                        active ? "bg-gray-100 text-gray-900 font-medium" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
                       ].join(" ")}
                     >
                       <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
@@ -312,14 +312,14 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition hover:bg-[#b6944f] md:inline-flex md:whitespace-nowrap"
+            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#1e222a] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#2a3039] md:inline-flex md:whitespace-nowrap"
           >
             {nav.getQuote}
           </Link>
 
           <button
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/30 text-white/80 hover:bg-black/40 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white/30 text-gray-900/80 hover:bg-white/40 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -330,7 +330,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-white/10 bg-[#2b2b2b]/95 md:hidden">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-200 bg-white/95 md:hidden">
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {
@@ -338,18 +338,18 @@ export default function Navbar() {
                   return (
                     <div
                       key="services-mobile"
-                      className={`space-y-1 ${mobileServicesOpen ? "border-b border-white/10 pb-3 mb-2" : ""}`}
+                      className={`space-y-1 ${mobileServicesOpen ? "border-b border-gray-200 pb-3 mb-2" : ""}`}
                     >
                       <button
                         type="button"
                         onClick={() => setMobileServicesOpen((o) => !o)}
-                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white/90 hover:bg-white/10"
+                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-900/90 hover:bg-gray-100"
                         aria-expanded={mobileServicesOpen}
                         aria-controls="mobile-services-list"
                         id="mobile-services-button"
                       >
                         <span>{nav.services}</span>
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-lg font-medium text-white/90" aria-hidden>
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-lg font-medium text-gray-900/90" aria-hidden>
                           {mobileServicesOpen ? "−" : "+"}
                         </span>
                       </button>
@@ -366,12 +366,12 @@ export default function Navbar() {
                             className={[
                               "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
                               pathname === withLocale("/services")
-                                ? "bg-[#c8a55c]/15 text-[#c8a55c]"
-                                : "bg-white/5 text-white/80 hover:bg-white/10",
+                                ? "bg-gray-100 text-gray-900"
+                                : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
                             ].join(" ")}
                           >
                             <span>{nav.viewAllServices}</span>
-                            <span className="text-white/40">→</span>
+                            <span className="text-gray-900/40">→</span>
                           </Link>
                           {serviceNavItems.map(({ slug, label }) => (
                             <Link
@@ -381,12 +381,12 @@ export default function Navbar() {
                               className={[
                                 "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
                                 pathname === withLocale(`/services/${slug}`)
-                                  ? "bg-[#c8a55c]/15 text-[#c8a55c]"
-                                  : "bg-white/5 text-white/80 hover:bg-white/10",
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
                               ].join(" ")}
                             >
                               <span>{label}</span>
-                              <span className="text-white/40">→</span>
+                              <span className="text-gray-900/40">→</span>
                             </Link>
                           ))}
                         </div>
@@ -403,20 +403,20 @@ export default function Navbar() {
                     className={[
                       "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
                       active
-                        ? "bg-[#c8a55c]/15 text-[#c8a55c]"
-                        : "bg-white/5 text-white/80 hover:bg-white/10",
+                        ? "bg-gray-100 text-gray-900"
+                        : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
                     ].join(" ")}
                   >
                     <span>{it.label}</span>
-                    <span className="text-white/40">→</span>
+                    <span className="text-gray-900/40">→</span>
                   </Link>
                 );
               })}
             </div>
 
-            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/30 p-3">
+            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-white/30 p-3">
               <div className="flex-1">
-                <p className="text-xs text-white/60">{nav.language}</p>
+                <p className="text-xs text-gray-900/60">{nav.language}</p>
                 <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
                   const active = l === locale;
@@ -429,8 +429,8 @@ export default function Navbar() {
                       className={[
                         "flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-center text-xs font-medium transition-colors",
                         active
-                          ? "bg-[#c8a55c] text-black"
-                          : "border border-white/10 text-white/80 hover:bg-white/10",
+                          ? "bg-[#1e222a] text-white"
+                          : "border border-gray-200 text-gray-700 hover:bg-gray-100",
                       ].join(" ")}
                     >
                       <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
@@ -445,7 +445,7 @@ export default function Navbar() {
             <Link
               href={withLocale("/contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-medium text-black shadow-[0_10px_25px_rgba(0,0,0,0.35)] whitespace-nowrap"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1e222a] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#2a3039] whitespace-nowrap"
             >
               {nav.getQuote}
             </Link>

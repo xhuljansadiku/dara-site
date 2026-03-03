@@ -39,14 +39,14 @@ function ContentSection({
 }) {
   if (!items.length) return null;
   return (
-    <div>
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-[#c8a55c]/90">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
         {title}
       </h3>
       <ul className="mt-2 space-y-1.5">
         {items.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-sm text-white/85">
-            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+          <li key={item} className="flex items-start gap-2.5 text-sm text-gray-700">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
             {item}
           </li>
         ))}
@@ -58,14 +58,14 @@ function ContentSection({
 function HowWeWorkSection({ title, steps }: { title: string; steps: string[] }) {
   if (!steps.length) return null;
   return (
-    <div>
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-[#c8a55c]/90">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
         {title}
       </h3>
       <ol className="mt-2 space-y-2">
         {steps.map((step, i) => (
-          <li key={i} className="flex gap-2.5 text-sm text-white/85">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#c8a55c]/20 text-xs font-medium text-[#c8a55c]">
+          <li key={i} className="flex gap-2.5 text-sm text-gray-700">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-medium text-gray-900">
               {i + 1}
             </span>
             {step}
@@ -118,30 +118,33 @@ export default function ServiceSlugPage({ params }: Props) {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
-          {locale === "sq" ? "Shërbim" : locale === "de" ? "Leistung" : "Service"}
-        </p>
-
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-          {service.title}
-        </h1>
-
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/80">
-          {service.desc}
-        </p>
-
-        {service.price && (
-          <p className="mt-3 text-sm font-medium text-[#c8a55c]">
-            {locale === "sq" && "Çmim referues: "}
-            {locale === "en" && "Indicative price: "}
-            {locale === "de" && "Richtpreis: "}
-            {service.price}
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
+            {locale === "sq" ? "Shërbim" : locale === "de" ? "Leistung" : "Service"}
           </p>
-        )}
+
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">
+            {service.title}
+          </h1>
+
+          <p className="mt-4 mx-auto max-w-2xl text-base leading-relaxed text-gray-600">
+            {service.desc}
+          </p>
+
+          {service.price && (
+            <p className="mt-3 text-sm font-medium text-gray-900">
+              {locale === "sq" && "Çmim referues: "}
+              {locale === "en" && "Indicative price: "}
+              {locale === "de" && "Richtpreis: "}
+              {service.price}
+            </p>
+          )}
+        </div>
       </section>
 
       {content && (
         <section className="py-8 md:py-10">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 md:grid-cols-2 md:gap-8">
             <ContentSection title={labels.whatIncluded} items={content.whatIncluded} />
             <ContentSection title={labels.whoIsItFor} items={content.whoIsItFor} />
@@ -150,44 +153,47 @@ export default function ServiceSlugPage({ params }: Props) {
               <HowWeWorkSection title={labels.howWeWork} steps={content.howWeWork} />
             </div>
             {content.priceNote && (
-              <div className="md:col-span-2 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-2.5">
-                <p className="text-xs font-medium uppercase tracking-wider text-white/50">
+              <div className="md:col-span-2 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2.5">
+                <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
                   {labels.priceNote}
                 </p>
-                <p className="mt-1.5 text-sm text-white/70">{content.priceNote}</p>
+                <p className="mt-1.5 text-sm text-gray-700">{content.priceNote}</p>
               </div>
             )}
+          </div>
           </div>
         </section>
       )}
 
       <section className="py-8 md:py-10">
-        <div className="flex flex-col items-center gap-4 rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-5 md:p-8">
-          <h2 className="text-center text-xl font-semibold md:text-2xl">
-            {locale === "sq" && <>Gati të filloni? <span className="text-[#c8a55c]">Na kontaktoni për një ofertë.</span></>}
-            {locale === "en" && <>Ready to get started? <span className="text-[#c8a55c]">Contact us for a tailored quote.</span></>}
-            {locale === "de" && <>Bereit loszulegen? <span className="text-[#c8a55c]">Kontaktieren Sie uns für ein Angebot.</span></>}
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center gap-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-10">
+          <h2 className="text-center text-xl font-semibold text-gray-900 md:text-2xl">
+            {locale === "sq" && <>Gati të filloni? <span className="text-gray-900">Na kontaktoni për një ofertë.</span></>}
+            {locale === "en" && <>Ready to get started? <span className="text-gray-900">Contact us for a tailored quote.</span></>}
+            {locale === "de" && <>Bereit loszulegen? <span className="text-gray-900">Kontaktieren Sie uns für ein Angebot.</span></>}
           </h2>
           <div className="flex flex-wrap justify-center gap-2.5">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black transition hover:bg-[#b6944f]"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-6 font-medium text-white transition hover:bg-gray-800"
             >
               {cta.getQuote}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+              className="inline-flex h-11 items-center justify-center rounded-xl border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
             >
               {cta.allServices}
             </LocaleLink>
             <LocaleLink
               href="/"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+              className="inline-flex h-11 items-center justify-center rounded-xl border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
             >
               {cta.backHome}
             </LocaleLink>
           </div>
+        </div>
         </div>
       </section>
 

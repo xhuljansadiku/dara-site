@@ -68,41 +68,33 @@ export default function ServicesSection({
   const [activePackageTab, setActivePackageTab] = useState<number>(0);
   const [tooltipCard, setTooltipCard] = useState<number | null>(null);
 
-  const packageTabLabels = packageFilterTabs.map((t) => t.label);
+  const filteredPackageTabs = packageFilterTabs.filter((tab) => tab.groups.length > 0);
+  const packageTabLabels = filteredPackageTabs.map((t) => t.label);
 
   const visiblePackageGroups =
-    activePackageTab === 0 || packageFilterTabs[activePackageTab]?.groups.length === 0
-      ? (["marketing", "brand", "training", "websiteLanding", "ecommerce", "saas", "maintenance"] as PackageGroup[])
-      : packageFilterTabs[activePackageTab].groups;
+    filteredPackageTabs[activePackageTab]?.groups ?? ([] as PackageGroup[]);
 
-  const visibleGroups =
-    activeTab === 0
-      ? groupIndices.map((indices, i) => ({ indices: [...indices], groupIndex: i, groupLabel: groupLabels[i] }))
-      : [{ indices: filterTabs[activeTab - 1].indices, groupIndex: 0, groupLabel: filterTabs[activeTab - 1].label }];
+  const visibleGroups = filterTabs[activeTab]
+    ? [{ indices: filterTabs[activeTab].indices, groupIndex: 0, groupLabel: filterTabs[activeTab].label }]
+    : [];
 
-  const tabLabels = [copy.allServices, ...filterTabs.map((t) => t.label)];
+  const tabLabels = filterTabs.map((t) => t.label);
 
   return (
     <section id="services" className="relative py-16 md:py-24">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.02] to-transparent" />
-
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-gray-100 to-transparent" />
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
         <div>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-gray-900">
             {copy.sectionKicker}
           </span>
           <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
             {copy.sectionTitleBefore}
-            <span className="text-[#c8a55c]">{copy.sectionTitleHighlight}</span>
+            <span className="text-gray-900">{copy.sectionTitleHighlight}</span>
           </h2>
-          <p className="mt-3 max-w-xl text-sm text-white/60">{copy.sectionIntro}</p>
+          <p className="mt-3 max-w-xl text-sm text-gray-600">{copy.sectionIntro}</p>
         </div>
-        <LocaleLink
-          href="/services"
-          className="shrink-0 text-sm font-medium text-[#c8a55c] transition hover:text-[#d4b86a]"
-        >
-          {copy.allServices} →
-        </LocaleLink>
       </div>
 
       {/* Tabs */}
@@ -114,8 +106,8 @@ export default function ServicesSection({
             onClick={() => setActiveTab(idx)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activeTab === idx
-                ? "bg-[#c8a55c] text-black"
-                : "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                ? "bg-[#1e222a] text-white shadow-sm ring-2 ring-[#1e222a] ring-offset-2 ring-offset-white"
+                : "border border-gray-200 bg-gray-100 text-gray-600 hover:border-gray-300 hover:bg-gray-200 hover:text-gray-900"
             }`}
           >
             {label}
@@ -126,12 +118,12 @@ export default function ServicesSection({
       {/* Groups + cards */}
       <div className="space-y-12 md:space-y-16">
         {visibleGroups.map(({ indices, groupIndex, groupLabel }, boxIdx) => (
-          <div key={boxIdx} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 backdrop-blur-sm md:p-8">
+          <div key={boxIdx} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
             <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#c8a55c]/15 text-[#c8a55c]">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-200 text-gray-900">
                 {GROUP_ICONS[activeTab === 0 ? groupIndex : (activeTab - 1) % GROUP_ICONS.length]}
               </span>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-gray-900">
                 {groupLabel}
               </h3>
             </div>
@@ -150,41 +142,41 @@ export default function ServicesSection({
                   <LocaleLink
                     key={s.title}
                     href={`/services/${anchor}`}
-                    className="group relative flex min-h-[320px] flex-col rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#c8a55c]/15 md:p-6"
+                    className="group relative flex min-h-[320px] flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-lg md:p-6"
                   >
                     {/* Top gold line */}
-                    <div className="absolute left-6 right-6 top-0 h-0.5 rounded-full bg-[#c8a55c]/50" />
+                    <div className="absolute left-6 right-6 top-0 h-0.5 rounded-full bg-gray-300" />
 
                     <div className="relative flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
-                        <span className="font-mono text-xs font-medium text-white/40">
+                        <span className="font-mono text-xs font-medium text-gray-500">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         {result && (
-                          <span className="rounded-md bg-[#c8a55c]/20 px-2 py-0.5 text-[10px] font-medium text-[#c8a55c]">
+                          <span className="rounded-md bg-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-900">
                             {result}
                           </span>
                         )}
                       </div>
 
-                      <h4 className="mt-4 text-lg font-semibold text-white md:text-xl">
+                      <h4 className="mt-4 text-lg font-semibold text-gray-900 md:text-xl">
                         {s.title}
                       </h4>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-white/60 line-clamp-3">
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600 line-clamp-3">
                         {s.desc}
                       </p>
 
-                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
+                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-gray-200 pt-4">
                         {s.price ? (
                           <>
                             <div className="flex items-baseline gap-2">
-                              <span className="text-[10px] uppercase tracking-wider text-white/40">
+                              <span className="text-[10px] uppercase tracking-wider text-gray-500">
                                 {copy.from}
                               </span>
-                              <span className="font-semibold text-[#c8a55c]">{s.price}</span>
+                              <span className="font-semibold text-gray-900">{s.price}</span>
                             </div>
                             <span
-                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-white/15 text-[10px] text-white/40"
+                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-gray-200 text-[10px] text-gray-500"
                               onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
                               onMouseEnter={() => setTooltipCard(i)}
                               onMouseLeave={() => setTooltipCard(null)}
@@ -192,7 +184,7 @@ export default function ServicesSection({
                             >
                               ?
                               {tooltipCard === i && (
-                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-lg border border-white/10 bg-[#2b2b2b] px-3 py-2 text-xs text-white/90 shadow-xl">
+                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-xs text-gray-900 shadow-xl">
                                   {priceTooltip}
                                 </span>
                               )}
@@ -200,9 +192,9 @@ export default function ServicesSection({
                           </>
                         ) : (
                           <>
-                            <span className="text-xs text-white/50">{copy.quoteRequest}</span>
+                            <span className="text-xs text-gray-500">{copy.quoteRequest}</span>
                             <span
-                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-white/15 text-[10px] text-white/40"
+                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-gray-200 text-[10px] text-gray-500"
                               title={priceTooltip}
                             >
                               ?
@@ -211,7 +203,7 @@ export default function ServicesSection({
                         )}
                       </div>
 
-                      <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-[#c8a55c]">
+                      <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-gray-900">
                         {copy.more}
                         <span className="text-xs opacity-70 group-hover:opacity-100">→</span>
                       </div>
@@ -221,11 +213,11 @@ export default function ServicesSection({
               })}
             </div>
 
-            {/* Testimonial pas përmbajtjes (grupi 1 ose filter Marketing) */}
-            {(groupIndex === 1 || activeTab === 1) && (
-              <div className="mt-8 rounded-xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-5 md:p-6">
-                <p className="text-sm italic text-white/80">&ldquo;{testimonial.quote}&rdquo;</p>
-                <p className="mt-3 text-xs font-medium text-[#c8a55c]">
+            {/* Testimonial pas përmbajtjes (filter Marketing) */}
+            {activeTab === 0 && (
+              <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-5 md:p-6">
+                <p className="text-sm italic text-gray-900/80">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="mt-3 text-xs font-medium text-gray-900">
                   {testimonial.name}, {testimonial.role}
                   {testimonial.company && ` · ${testimonial.company}`}
                 </p>
@@ -236,7 +228,7 @@ export default function ServicesSection({
             <div className="mt-6">
               <LocaleLink
                 href="/contact"
-                className="inline-flex h-10 items-center justify-center rounded-full border border-[#c8a55c]/40 bg-[#c8a55c]/10 px-5 text-sm font-medium text-[#c8a55c] transition hover:bg-[#c8a55c]/20"
+                className="inline-flex h-10 items-center justify-center rounded-full border-2 border-gray-300 bg-white px-5 text-sm font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-900 hover:text-white"
               >
                 {copy.requestQuoteForGroup}
               </LocaleLink>
@@ -249,14 +241,14 @@ export default function ServicesSection({
       <div className="mt-16 md:mt-20">
         <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
           <div>
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-gray-900">
               {copy.packagesKicker}
             </span>
             <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
               {copy.packagesTitleBefore}
-              <span className="text-[#c8a55c]">{copy.packagesTitleHighlight}</span>
+              <span className="text-gray-900">{copy.packagesTitleHighlight}</span>
             </h2>
-            <p className="mt-3 max-w-xl text-sm text-white/60">{copy.packagesIntro}</p>
+            <p className="mt-3 max-w-xl text-sm text-gray-600">{copy.packagesIntro}</p>
           </div>
         </div>
         <div className="mb-6 flex flex-wrap gap-2">
@@ -267,8 +259,8 @@ export default function ServicesSection({
               onClick={() => setActivePackageTab(idx)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activePackageTab === idx
-                  ? "bg-[#c8a55c] text-black"
-                  : "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                  ? "bg-[#1e222a] text-white shadow-sm ring-2 ring-[#1e222a] ring-offset-2 ring-offset-white"
+                  : "border border-gray-200 bg-gray-100 text-gray-600 hover:border-gray-300 hover:bg-gray-200 hover:text-gray-900"
               }`}
             >
               {label}
@@ -278,7 +270,7 @@ export default function ServicesSection({
         <div className="space-y-14">
           {visiblePackageGroups.map((groupKey) => (
             <div key={groupKey}>
-              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c] md:text-xs">
+              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900 md:text-xs">
                 {packageGroupLabels[groupKey]}
               </h4>
               <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -289,6 +281,7 @@ export default function ServicesSection({
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

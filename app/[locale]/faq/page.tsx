@@ -20,24 +20,25 @@ export default function FaqPage() {
 
   return (
     <section className="py-14 md:py-20">
-      <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">FAQ</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">{title}</h1>
-      <p className="mt-4 max-w-xl text-white/70">{subtitle}</p>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <p className="text-xs uppercase tracking-[0.2em] text-gray-600">FAQ</p>
+      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">{title}</h1>
+      <p className="mt-4 max-w-xl text-gray-600">{subtitle}</p>
 
       <div className="mt-10 space-y-3">
         {faqs.map((faq, i) => (
           <div
             key={i}
-            className="card overflow-hidden"
+            className="card overflow-hidden shadow-md"
           >
             <button
               type="button"
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="flex w-full items-center justify-between px-6 py-4 text-left transition hover:bg-white/5"
+              className="flex w-full items-center justify-between px-6 py-4 text-left transition hover:bg-gray-50"
             >
-              <span className="font-medium text-white">{faq.q}</span>
+              <span className="font-medium text-gray-900">{faq.q}</span>
               <svg
-                className={`h-5 w-5 shrink-0 text-[#c8a55c] transition-transform ${openIndex === i ? "rotate-180" : ""}`}
+                className={`h-5 w-5 shrink-0 text-gray-600 transition-transform ${openIndex === i ? "rotate-180" : ""}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -46,12 +47,13 @@ export default function FaqPage() {
               </svg>
             </button>
             {openIndex === i && (
-              <div className="border-t border-white/10 px-6 py-4 text-white/70">
+              <div className="border-t border-gray-200 px-6 py-4 text-gray-600">
                 {faq.a}
               </div>
             )}
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

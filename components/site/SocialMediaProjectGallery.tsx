@@ -21,7 +21,7 @@ export default function SocialMediaProjectGallery({ images, projectTitle }: Prop
             <button
               type="button"
               onClick={() => setLightbox({ images, index: idx })}
-              className="card card-lift group relative aspect-[4/3] w-full overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
+              className="card card-lift group relative aspect-[4/3] w-full overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-[white] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
             >
               <Image
                 src={src}

@@ -174,17 +174,11 @@ export default function TrainingsSection({ locale }: Props) {
 
   return (
     <section id="trainings" className="relative overflow-hidden py-20 md:py-28">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.04] to-transparent" />
-      <div className="absolute -right-32 top-40 h-96 w-96 rounded-full bg-[#c8a55c]/5 blur-3xl" />
-      <div className="absolute -left-32 bottom-40 h-80 w-80 rounded-full bg-[#c8a55c]/5 blur-3xl" />
-      <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#c8a55c]/10 to-transparent" />
-
-      <div className="w-full">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <AnimateIn>
-            <span className="inline-block rounded-full border border-[#c8a55c]/40 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-[#c8a55c]">
+            <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-gray-700">
               {copy.kicker}
             </span>
           </AnimateIn>
@@ -194,7 +188,7 @@ export default function TrainingsSection({ locale }: Props) {
             </h2>
           </AnimateIn>
           <AnimateIn delay={100}>
-            <p className="mt-4 text-lg text-white/70 md:text-xl">
+            <p className="mt-4 text-lg text-gray-600 md:text-xl">
               {copy.subtitle}
             </p>
           </AnimateIn>
@@ -202,68 +196,68 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Stats bar */}
         <AnimateIn delay={80}>
-          <div className="card mx-auto mt-12 flex max-w-xl flex-wrap justify-center gap-8 px-8 py-6 md:mt-16">
+          <div className="card mx-auto mt-12 flex max-w-xl flex-wrap justify-center gap-8 px-8 py-6 shadow-md md:mt-16">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#c8a55c] md:text-3xl">50+</span>
-              <span className="text-sm text-white/60">{copy.studentsLabel}</span>
+              <span className="text-2xl font-bold text-gray-900 md:text-3xl">50+</span>
+              <span className="text-sm font-medium text-gray-600">{copy.studentsLabel}</span>
             </div>
-            <div className="hidden h-8 w-px bg-white/20 sm:block" />
+            <div className="hidden h-8 w-px bg-gray-300 sm:block" />
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#c8a55c] md:text-3xl">4</span>
-              <span className="text-sm text-white/60">{copy.programsLabel}</span>
+              <span className="text-2xl font-bold text-gray-900 md:text-3xl">4</span>
+              <span className="text-sm font-medium text-gray-600">{copy.programsLabel}</span>
             </div>
           </div>
         </AnimateIn>
 
         {/* Training cards */}
-        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:gap-8">
+        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:gap-10">
           {TRAININGS.map((training, idx) => {
             const isDisabled = training.comingSoon;
             return (
-              <AnimateIn key={training.slug} delay={idx * 100}>
+              <AnimateIn key={training.slug} delay={idx * 80}>
                 <div
-                  className={`group relative flex min-h-[420px] flex-col overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  className={`group relative flex min-h-0 flex-col overflow-hidden rounded-2xl border transition-all duration-300 ease-out ${
                     isDisabled
-                      ? "cursor-not-allowed border-white/5 bg-white/[0.01] opacity-80"
-                      : "card card-lift hover:-translate-y-1"
+                      ? "cursor-not-allowed border-gray-200 bg-gray-50 opacity-90 shadow-sm"
+                      : "card card-lift shadow-md hover:shadow-xl hover:-translate-y-0.5"
                   }`}
                 >
                   {/* Accent bar */}
                   {!isDisabled && (
-                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#c8a55c] to-[#b6944f] opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#1e222a] to-gray-600 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
                   )}
-                  <div className="relative flex flex-1 flex-col p-6 md:p-8">
+                  <div className="relative flex flex-1 flex-col p-8 md:p-10">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-lg border border-[#c8a55c]/40 bg-[#c8a55c]/10 px-3 py-1.5 text-sm font-semibold text-[#c8a55c]">
+                      <span className="rounded-lg bg-[#1e222a] px-3 py-1.5 text-sm font-semibold text-white">
                         {training.price}
                       </span>
                       {isDisabled && (
-                        <span className="rounded-lg border border-white/20 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/50">
+                        <span className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-500">
                           {copy.comingSoon}
                         </span>
                       )}
-                      <span className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80">
+                      <span className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700">
                         {training.duration[locale]}
                       </span>
                     </div>
-                    <h3 className="mt-4 text-xl font-semibold text-white md:text-2xl">
+                    <h3 className="mt-5 text-xl font-semibold text-gray-900 md:text-2xl">
                       {training.title[locale]}
                     </h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-white/65">
+                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-gray-600">
                       {training.shortDesc[locale]}
                     </p>
                     <div className="mt-6 flex flex-wrap gap-6">
                       {training.stats.map((stat, statIdx) => (
                         <div key={`${training.slug}-stat-${statIdx}`} className="flex items-baseline gap-1.5">
-                          <span className="text-lg font-bold text-[#c8a55c]">{stat.value}</span>
-                          <span className="text-xs text-white/50">{stat.label[locale]}</span>
+                          <span className="text-lg font-bold text-gray-900">{stat.value}</span>
+                          <span className="text-xs font-medium text-gray-500">{stat.label[locale]}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="mt-6">
+                    <div className="mt-8">
                       {isDisabled ? (
                         <span
-                          className="inline-flex h-11 cursor-not-allowed items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 text-sm font-medium text-white/40"
+                          className="inline-flex h-11 cursor-not-allowed items-center justify-center rounded-xl border border-gray-200 bg-gray-100 px-6 text-sm font-medium text-gray-400"
                           aria-disabled
                         >
                           {copy.comingSoon}
@@ -271,7 +265,7 @@ export default function TrainingsSection({ locale }: Props) {
                       ) : (
                         <LocaleLink
                           href={`/trainings/${training.slug}`}
-                          className="inline-flex h-11 items-center justify-center rounded-xl border border-[#c8a55c]/40 bg-[#c8a55c]/10 px-6 text-sm font-medium text-[#c8a55c] transition hover:bg-[#c8a55c]/20 hover:border-[#c8a55c]/60"
+                          className="inline-flex h-11 items-center justify-center rounded-xl bg-[#1e222a] px-6 text-sm font-medium text-white transition-all duration-300 ease-out hover:bg-gray-800"
                         >
                           {copy.learnDetails} →
                         </LocaleLink>
@@ -286,19 +280,19 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Reviews */}
         <AnimateIn delay={150}>
-          <div className="card mt-20 p-6 md:mt-24 md:p-8">
+          <div className="card mt-20 p-6 shadow-md md:mt-24 md:p-8">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h3 className="font-display text-xl font-semibold text-white md:text-2xl">
+                <h3 className="font-display text-xl font-semibold text-gray-900 md:text-2xl">
                   {REVIEWS_COPY[locale].title}
                 </h3>
-                <p className="mt-1 text-sm text-[#c8a55c]">{REVIEWS_COPY[locale].subtitle}</p>
+                <p className="mt-1 text-sm text-gray-600">{REVIEWS_COPY[locale].subtitle}</p>
               </div>
               <a
                 href={GOOGLE_MAPS_PLACE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/5 px-4 py-2 text-sm font-medium text-[#c8a55c] transition hover:border-[#c8a55c]/50 hover:bg-[#c8a55c]/10"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-200"
               >
                 {REVIEWS_COPY[locale].viewOnGoogle}
                 <span aria-hidden>→</span>
@@ -319,23 +313,23 @@ export default function TrainingsSection({ locale }: Props) {
                       idx === activeIndex ? "relative z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
                     }`}
                   >
-                    <div className="mx-auto max-w-2xl rounded-xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-300 md:p-8 hover:border-[#c8a55c]/15">
-                      <div className="flex items-center gap-2 text-[#c8a55c]">
+                    <div className="mx-auto max-w-2xl rounded-xl border border-gray-200 bg-white p-6 shadow-md transition-all duration-300 ease-out md:p-8 hover:border-gray-300 hover:shadow-xl">
+                      <div className="flex items-center gap-2 text-amber-500">
                         <span className="text-2xl">"</span>
                         <span className="flex flex-shrink-0" aria-label={`${review.rating} stars`}>
                           {"★".repeat(review.rating)}
                         </span>
                       </div>
                       <div className="mt-4 flex items-center gap-3">
-                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#c8a55c]/20 text-sm font-semibold text-[#c8a55c]">
+                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#1e222a] text-sm font-semibold text-white">
                           {review.firstName.charAt(0)}
                           {review.lastName?.charAt(0) ?? ""}
                         </div>
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-gray-900">
                           {formatReviewerName(review.firstName, review.lastName)}
                         </span>
                       </div>
-                      <p className="mt-4 text-sm leading-relaxed text-white/80 md:text-base">
+                      <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">
                         {review.text[locale]}
                       </p>
                     </div>
@@ -347,7 +341,7 @@ export default function TrainingsSection({ locale }: Props) {
                   type="button"
                   onClick={prev}
                   aria-label={locale === "sq" ? "Review i mëparshëm" : locale === "de" ? "Vorherige Bewertung" : "Previous review"}
-                  className="rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-[#c8a55c]"
+                  className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -362,7 +356,7 @@ export default function TrainingsSection({ locale }: Props) {
                       aria-label={`${locale === "sq" ? "Shiko review" : locale === "de" ? "Bewertung anzeigen" : "View review"} ${idx + 1}`}
                       aria-current={idx === activeIndex ? "true" : undefined}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? "w-8 bg-[#c8a55c]" : "w-2 bg-white/30 hover:bg-white/50"
+                        idx === activeIndex ? "w-8 bg-[#1e222a]" : "w-2 bg-gray-300 hover:bg-gray-400"
                       }`}
                     />
                   ))}
@@ -371,7 +365,7 @@ export default function TrainingsSection({ locale }: Props) {
                   type="button"
                   onClick={next}
                   aria-label={locale === "sq" ? "Review tjetër" : locale === "de" ? "Nächste Bewertung" : "Next review"}
-                  className="rounded-full p-2 text-white/50 transition hover:bg-white/5 hover:text-[#c8a55c]"
+                  className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -385,18 +379,17 @@ export default function TrainingsSection({ locale }: Props) {
         {/* CTA */}
         <AnimateIn delay={200}>
           <div className="mt-16 md:mt-20">
-            <div className="relative overflow-hidden rounded-2xl border border-[#c8a55c]/20 bg-gradient-to-br from-[#c8a55c]/10 to-transparent p-8 md:p-12">
-              <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-8 shadow-md md:p-12">
               <div className="relative flex flex-col items-center text-center">
-                <h3 className="font-display text-xl font-semibold text-white md:text-2xl">
+                <h3 className="font-display text-xl font-semibold text-gray-900 md:text-2xl">
                   {locale === "sq" ? "Gati të fillosh?" : locale === "de" ? "Bereit zu starten?" : "Ready to start?"}
                 </h3>
-                <p className="mt-2 text-sm text-white/60">
+                <p className="mt-2 text-sm text-gray-600">
                   {copy.ctaSubtext}
                 </p>
                 <LocaleLink
                   href="/trainings/register"
-                  className="mt-6 inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#c8a55c] to-[#b6944f] px-10 font-semibold text-black shadow-lg shadow-[#c8a55c]/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#c8a55c]/40"
+                  className="mt-6 inline-flex h-14 items-center justify-center rounded-full bg-[#1e222a] px-10 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:bg-gray-800 hover:shadow-xl"
                 >
                   {copy.registerNow}
                 </LocaleLink>

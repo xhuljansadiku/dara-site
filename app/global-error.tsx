@@ -15,7 +15,7 @@ export default function GlobalError({
 
   return (
     <html lang={defaultLocale}>
-      <body style={{ margin: 0, padding: "2rem", background: "#444", color: "#fff", fontFamily: "system-ui" }}>
+      <body style={{ margin: 0, padding: "2rem", background: "#000", color: "#fff", fontFamily: "system-ui" }}>
         <div style={{ maxWidth: "32rem", margin: "0 auto", textAlign: "center" }}>
           <h1 style={{ fontSize: "1.5rem" }}>{copy.title}</h1>
           <p style={{ opacity: 0.8, marginTop: "0.5rem" }}>{copy.desc}</p>
@@ -24,7 +24,7 @@ export default function GlobalError({
             style={{
               marginTop: "1.5rem",
               padding: "0.75rem 1.5rem",
-              background: "#c8a55c",
+              background: "#fff",
               color: "#000",
               border: "none",
               borderRadius: "9999px",
@@ -41,7 +41,7 @@ export default function GlobalError({
               marginTop: "1rem",
               marginLeft: "0.5rem",
               padding: "0.75rem 1.5rem",
-              background: "#c8a55c",
+              background: "#fff",
               color: "#000",
               textDecoration: "none",
               borderRadius: "9999px",

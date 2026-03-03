@@ -15,7 +15,7 @@ type Props = {
 export default function ProjectCard({ project: p, locale, setLightbox }: Props) {
   const viewLabel = locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project";
   const cardClass =
-    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 hover:border-[#c8a55c]/40 hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:shadow-[#c8a55c]/10";
+    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-0.5";
 
   const isImageGallery = p.category === "social-media" || p.category === "brand";
   const galleryImages =
@@ -60,7 +60,7 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
       {/* Tag on image */}
-      <span className="absolute left-4 top-4 rounded-md bg-[#c8a55c]/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-black">
+      <span className="absolute left-4 top-4 rounded-lg bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-900 shadow-sm border border-gray-200">
         {p.tag}
       </span>
     </div>
@@ -70,9 +70,9 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
     <>
       {imageSection}
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-semibold text-white group-hover:text-[#c8a55c]">{p.title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60 line-clamp-2">{p.desc}</p>
-        <div className="mt-4 flex items-center gap-2 text-sm font-medium text-[#c8a55c]">
+        <h3 className="text-lg font-semibold text-gray-900">{p.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600 line-clamp-2">{p.desc}</p>
+        <div className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-900 group-hover:text-[#1e222a]">
           <span>{viewLabel}</span>
           <span className="transition group-hover:translate-x-1">→</span>
         </div>

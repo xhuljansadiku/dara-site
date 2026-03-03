@@ -53,7 +53,7 @@ export default function ImageLightbox({
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#c8a55c]"
+        className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-gray-900 transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[white]"
         aria-label="Close"
       >
         <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@ export default function ImageLightbox({
               e.stopPropagation();
               onPrev();
             }}
-            className="absolute -left-4 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#c8a55c] md:-left-16"
+            className="absolute -left-4 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-gray-900 transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[white] md:-left-16"
             aria-label="Previous image"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,7 +104,7 @@ export default function ImageLightbox({
               e.stopPropagation();
               onNext();
             }}
-            className="absolute -right-4 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[#c8a55c] md:-right-16"
+            className="absolute -right-4 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-gray-900 transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-[white] md:-right-16"
             aria-label="Next image"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ export default function ImageLightbox({
 
       {/* Counter */}
       {hasMultiple && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/90">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-2 text-sm text-gray-900/90">
           {currentIndex + 1} / {images.length}
         </div>
       )}

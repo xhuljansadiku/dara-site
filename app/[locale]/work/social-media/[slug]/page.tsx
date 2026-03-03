@@ -43,17 +43,17 @@ export default function SocialMediaProjectPage({ params }: Props) {
     <>
       <section className="relative overflow-hidden py-8 md:py-12">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
         </div>
 
         <LocaleLink
           href="/work"
-          className="inline-flex items-center gap-2 text-sm font-medium text-[#c8a55c] transition hover:text-[#d4b86a]"
+          className="inline-flex items-center gap-2 text-sm font-medium text-[white] transition hover:text-[white/90]"
         >
           ← {cta.backToWork}
         </LocaleLink>
 
-        <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
+        <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[white]/80">
           {project.tag}
         </p>
 
@@ -74,7 +74,7 @@ export default function SocialMediaProjectPage({ params }: Props) {
         <div className="flex flex-wrap gap-3">
           <LocaleLink
             href="/work"
-            className="inline-flex h-11 items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black transition hover:bg-[#b6944f]"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-[white] px-6 font-medium text-black transition hover:bg-[#b6944f]"
           >
             {cta.allProjects}
           </LocaleLink>

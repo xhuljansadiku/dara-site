@@ -241,37 +241,40 @@ export default function ContactPage() {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
           {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
         </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-6xl">
           {locale === "sq" ? (
-            <>Le të flasim për <span className="text-yellow-400">rritjen</span> tënde</>
+            <>Le të flasim për <span className="text-gray-900">rritjen</span> tënde</>
           ) : locale === "de" ? (
-            <>Lass uns über dein <span className="text-yellow-400">Wachstum</span> sprechen</>
+            <>Lass uns über dein <span className="text-gray-900">Wachstum</span> sprechen</>
           ) : (
-            <>Let&apos;s talk about your <span className="text-yellow-400">growth</span></>
+            <>Let&apos;s talk about your <span className="text-gray-900">growth</span></>
           )}
         </h1>
-        <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">
+        <p className="mt-5 max-w-2xl text-base text-gray-600 md:text-lg">
           {locale === "sq"
             ? "Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe çfarë rezultati synojmë."
             : locale === "de"
             ? "Senden Sie eine Nachricht und wir melden uns mit einem kurzen Plan: was wir tun, wie lange es dauert und welches Ergebnis wir anstreben."
             : "Send a message and we'll get back with a short plan: what we do, how long it takes and what result we aim for."}
         </p>
+        </div>
       </section>
 
       {/* GRID */}
       <section className="py-12 md:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-6 md:grid-cols-5">
           {/* LEFT: Form */}
           <div className="md:col-span-3">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <h2 className="text-xl font-semibold">
+            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
+              <h2 className="text-xl font-semibold text-gray-900">
                 {locale === "sq" ? "Kërko ofertë" : locale === "de" ? "Angebot anfragen" : "Request quote"}
               </h2>
-              <p className="mt-2 text-sm text-white/60">
+              <p className="mt-2 text-sm text-gray-600">
                 {locale === "sq" 
                   ? "Plotëso detajet (1–2 min). (E-maili përdoret vetëm për kontakt.)"
                   : locale === "de"
@@ -285,12 +288,12 @@ export default function ContactPage() {
                   <div key={step} className="flex items-center gap-2">
                     <div
                       className={`h-2 flex-1 rounded-full transition ${
-                        currentStep >= step ? "bg-[#c8a55c]" : "bg-white/10"
+                        currentStep >= step ? "bg-gray-900" : "bg-gray-200"
                       }`}
                     />
                     {step < 5 && (
                       <div className={`h-2 w-2 rounded-full transition ${
-                        currentStep > step ? "bg-[#c8a55c]" : "bg-white/10"
+                        currentStep > step ? "bg-gray-900" : "bg-gray-200"
                       }`} />
                     )}
                   </div>
@@ -349,7 +352,7 @@ export default function ContactPage() {
                 {currentStep === 2 && (
                   <div className="grid gap-4">
                     <label className="grid gap-2">
-                      <span className="text-sm text-white/70">
+                      <span className="text-sm font-medium text-gray-700">
                         {locale === "sq" ? "Zgjidh shërbimin*" : locale === "de" ? "Service wählen*" : "Select service*"}
                       </span>
                       <div className="grid gap-3 sm:grid-cols-2">
@@ -364,13 +367,13 @@ export default function ContactPage() {
                               onClick={() => handleInputChange("service", slug)}
                               className={`rounded-xl border p-4 text-left transition ${
                                 formData.service === slug
-                                  ? "border-[#c8a55c] bg-[#c8a55c]/10"
-                                  : "border-white/15 bg-black/40 hover:border-white/25"
+                                  ? "border-gray-900 bg-gray-100"
+                                  : "border-gray-200 bg-gray-50 hover:border-gray-300"
                               }`}
                             >
-                              <div className="font-medium text-white">{service.title}</div>
+                              <div className="font-medium text-gray-900">{service.title}</div>
                               {service.price && (
-                                <div className="mt-1 text-xs text-[#c8a55c]">{service.price}</div>
+                                <div className="mt-1 text-xs text-gray-600">{service.price}</div>
                               )}
                             </button>
                           );
@@ -384,7 +387,7 @@ export default function ContactPage() {
                 {currentStep === 3 && (
                   <div className="grid gap-4">
                     {!formData.service && (
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-gray-600">
                         {locale === "sq" ? "Ju lutem zgjidhni një shërbim në hapin e mëparshëm." : locale === "de" ? "Bitte wählen Sie einen Service im vorherigen Schritt." : "Please select a service in the previous step."}
                       </p>
                     )}
@@ -543,8 +546,8 @@ export default function ContactPage() {
                 {/* Step 5: Review */}
                 {currentStep === 5 && (
                   <div className="grid gap-4">
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <h3 className="mb-4 text-lg font-semibold text-white">
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <h3 className="mb-4 text-lg font-semibold text-gray-900">
                         {locale === "sq" ? "Përmbledhje e kërkesës" : locale === "de" ? "Zusammenfassung der Anfrage" : "Request Summary"}
                       </h3>
                       <div className="grid gap-3 text-sm">
@@ -654,8 +657,8 @@ export default function ContactPage() {
                         )}
                       </div>
                     </div>
-                    <div className="rounded-xl border border-yellow-400/20 bg-yellow-400/5 p-4">
-                      <p className="text-sm text-white/80">
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="text-sm text-gray-700">
                         {locale === "sq"
                           ? "Ju lutem kontrolloni të gjitha të dhënat para dërgimit. Pas dërgimit, do të kontaktojmë së shpejti."
                           : locale === "de"
@@ -667,7 +670,7 @@ export default function ContactPage() {
                 )}
 
                 {status === "error" && (
-                  <p className="mt-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                     {error ?? (locale === "sq" ? "Diçka shkoi keq." : locale === "de" ? "Etwas ist schief gelaufen." : "Something went wrong.")}
                   </p>
                 )}
@@ -679,7 +682,7 @@ export default function ContactPage() {
                       <button
                         type="button"
                         onClick={handleBack}
-                        className="inline-flex h-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 font-medium text-white hover:bg-white/10"
+                        className="inline-flex h-11 items-center justify-center rounded-xl border-2 border-gray-300 px-5 font-medium text-gray-900 hover:border-gray-900 hover:bg-gray-50"
                       >
                         {locale === "sq" ? "Kthehu" : locale === "de" ? "Zurück" : "Back"}
                       </button>
@@ -688,7 +691,7 @@ export default function ContactPage() {
                       <button
                         type="button"
                         onClick={(e) => handleNext(e)}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-[#c8a55c] px-5 font-medium text-black hover:bg-[#b6944f]"
+                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800"
                       >
                         {locale === "sq" ? "Vazhdo" : locale === "de" ? "Weiter" : "Next"}
                       </button>
@@ -696,7 +699,7 @@ export default function ContactPage() {
                       <button
                         type="button"
                         onClick={(e) => handleNext(e)}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-[#c8a55c] px-5 font-medium text-black hover:bg-[#b6944f]"
+                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800"
                       >
                         {locale === "sq" ? "Kontrollo" : locale === "de" ? "Überprüfen" : "Review"}
                       </button>
@@ -704,7 +707,7 @@ export default function ContactPage() {
                       <button
                         type="submit"
                         disabled={status === "loading"}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-[#c8a55c] px-5 font-medium text-black hover:bg-[#b6944f] disabled:opacity-60"
+                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800 disabled:opacity-60"
                       >
                         {status === "loading"
                           ? locale === "sq" ? "Duke dërguar..." : locale === "de" ? "Wird gesendet..." : "Sending..."
@@ -715,7 +718,7 @@ export default function ContactPage() {
                 )}
 
                 {currentStep <= 5 && (
-                  <p className="mt-4 text-xs text-white/50">
+                  <p className="mt-4 text-xs text-gray-500">
                     {locale === "sq"
                       ? "Duke dërguar, pranon të të kontaktojmë për këtë kërkesë."
                       : locale === "de"
@@ -729,8 +732,8 @@ export default function ContactPage() {
 
           {/* RIGHT: Info */}
           <div className="md:col-span-2">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-              <h3 className="text-lg font-semibold">
+            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {locale === "sq" ? "Info e shpejtë" : locale === "de" ? "Schnellinfo" : "Quick info"}
               </h3>
 
@@ -767,12 +770,12 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-5">
-                <p className="text-sm font-semibold text-white/80">
+                <p className="text-sm font-semibold text-gray-700">
                   {locale === "sq" ? "Social" : locale === "de" ? "Social" : "Social"}
                 </p>
                 <div className="mt-2 flex items-center gap-3">
                   <a
-                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    className="text-gray-600 hover:text-gray-900 transition"
                     href="https://instagram.com/daramarketing.eu"
                     target="_blank"
                     rel="noreferrer"
@@ -783,7 +786,7 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    className="text-gray-600 hover:text-gray-900 transition"
                     href="https://facebook.com/daramarketing.eu"
                     target="_blank"
                     rel="noreferrer"
@@ -794,7 +797,7 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    className="text-white/70 hover:text-[#c8a55c] transition"
+                    className="text-gray-600 hover:text-gray-900 transition"
                     href="https://linkedin.com/company/daramarketing"
                     target="_blank"
                     rel="noreferrer"
@@ -807,12 +810,12 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="mt-6 h-px w-full bg-white/10" />
+              <div className="mt-6 h-px w-full bg-gray-200" />
 
-              <h4 className="mt-6 text-sm font-semibold text-white/80">
+              <h4 className="mt-6 text-sm font-semibold text-gray-700">
                 {locale === "sq" ? "Preferon newsletter?" : locale === "de" ? "Newsletter bevorzugt?" : "Prefer newsletter?"}
               </h4>
-              <p className="mt-2 text-sm text-white/60">
+              <p className="mt-2 text-sm text-gray-600">
                 {locale === "sq"
                   ? "Merr tips javore për content, growth dhe ads."
                   : locale === "de"
@@ -824,13 +827,13 @@ export default function ContactPage() {
                 <NewsletterForm locale={locale} />
               </div>
 
-              <p className="mt-3 text-xs text-white/50">
+              <p className="mt-3 text-xs text-gray-500">
                 {locale === "sq" ? "Pa spam. Çabohu kur të duash." : locale === "de" ? "Kein Spam. Jederzeit abmelden." : "No spam. Unsubscribe anytime."}
               </p>
             </div>
 
             <div className="mt-6 rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6">
-              <p className="text-sm text-white/70">
+              <p className="text-sm font-medium text-gray-700">
                 <span className="text-yellow-400">
                   {locale === "sq" ? "Tip:" : locale === "de" ? "Tipp:" : "Tip:"}
                 </span>{" "}
@@ -842,6 +845,7 @@ export default function ContactPage() {
               </p>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -881,7 +885,7 @@ function ControlledField({
   
   return (
     <label className="grid gap-2">
-      <span className="text-sm text-white/70">{label}</span>
+      <span className="text-sm font-medium text-gray-700">{label}</span>
       <input
         name={name}
         type={type}
@@ -892,7 +896,7 @@ function ControlledField({
         pattern={pattern}
         minLength={minLength}
         maxLength={maxLength}
-        className="h-11 rounded-xl border border-white/15 bg-black/40 px-4 text-white placeholder:text-white/40 outline-none focus:border-[#c8a55c]/40 invalid:border-red-500/50"
+        className="h-11 rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900 invalid:border-red-500/50"
         title={pattern && name === "name" ? (locale === "sq" ? "Vetëm shkronja dhe hapësira" : locale === "de" ? "Nur Buchstaben und Leerzeichen" : "Only letters and spaces") : undefined}
       />
     </label>
@@ -924,7 +928,7 @@ function ControlledTextArea({
   
   return (
     <label className="grid gap-2">
-      <span className="text-sm text-white/70">{label}</span>
+      <span className="text-sm font-medium text-gray-700">{label}</span>
       <textarea
         name={name}
         rows={rows}
@@ -934,7 +938,7 @@ function ControlledTextArea({
         required={isRequired}
         minLength={minLength}
         maxLength={maxLength}
-        className="rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-white placeholder:text-white/40 outline-none focus:border-[#c8a55c]/40 invalid:border-red-500/50"
+        className="rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900 invalid:border-red-500/50"
       />
     </label>
   );
@@ -963,22 +967,22 @@ function ControlledSelectField({
 
   return (
     <label className="grid gap-2">
-      <span className="text-sm text-white/70">{label}</span>
+      <span className="text-sm font-medium text-gray-700">{label}</span>
       <div className="relative">
         <input type="hidden" name={name} value={value} required={isRequired} />
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
-          className="flex h-11 w-full items-center justify-between rounded-xl border border-white/15 bg-black/40 px-4 text-left text-white outline-none focus:border-[#c8a55c]/40"
+          className="flex h-11 w-full items-center justify-between rounded-xl border-2 border-gray-200 bg-white px-4 text-left text-gray-900 outline-none focus:border-gray-900"
         >
-          <span className={value ? "" : "text-white/50"}>{value || placeholder}</span>
+          <span className={value ? "" : "text-gray-500"}>{value || placeholder}</span>
           <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
         {open && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-xl border border-white/15 bg-[#2a2a2a] py-1 shadow-xl">
+          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-xl border border-gray-200 bg-white py-1 shadow-xl">
             {options.map((o) => (
               <button
                 key={o}
@@ -989,7 +993,7 @@ function ControlledSelectField({
                   setOpen(false);
                 }}
                 className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                  value === o ? "bg-[#c8a55c] text-black" : "text-white hover:bg-[#c8a55c]/80 hover:text-black"
+                  value === o ? "bg-gray-900 text-white" : "text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 {o}
@@ -1004,23 +1008,23 @@ function ControlledSelectField({
 
 function ReviewRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-white/5 pb-2 last:border-0 last:pb-0">
-      <span className="text-white/60">{label}:</span>
-      <span className="text-right text-white">{value}</span>
+    <div className="flex items-start justify-between gap-4 border-b border-gray-200 pb-2 last:border-0 last:pb-0">
+      <span className="text-gray-600">{label}:</span>
+      <span className="text-right font-medium text-gray-900">{value}</span>
     </div>
   );
 }
 
 function InfoRow({ k, v, href, className = "" }: { k: string; v: string; href?: string; className?: string }) {
   return (
-    <div className={`flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 ${className}`}>
-      <span className="text-white/60">{k}</span>
+    <div className={`flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 ${className}`}>
+      <span className="text-gray-600">{k}</span>
       {href ? (
-        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="text-right text-white hover:text-[#c8a55c]">
+        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="text-right font-medium text-gray-900 hover:text-gray-700">
           {v}
         </a>
       ) : (
-        <span className="text-white">{v}</span>
+        <span className="font-medium text-gray-900">{v}</span>
       )}
     </div>
   );

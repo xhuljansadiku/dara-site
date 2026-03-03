@@ -119,47 +119,47 @@ export default function CareersPage() {
   };
 
   const inputClass =
-    "h-12 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 text-white placeholder:text-white/40 outline-none transition focus:border-[#c8a55c]/50 focus:bg-white/[0.06] focus:ring-2 focus:ring-[#c8a55c]/20";
+    "h-12 w-full rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 placeholder:text-gray-500 outline-none transition focus:border-gray-900";
 
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/[0.06] py-20 md:py-28">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#c8a55c]/[0.06] blur-[120px]" />
-        </div>
-        <div className="mx-auto max-w-3xl">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a55c]">
+      <section className="relative overflow-hidden border-b border-gray-200 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-600">
             {copy.kicker}
           </span>
-          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-[3.5rem] leading-[1.1]">
+          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-[3.5rem] leading-[1.1]">
             {copy.title}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-white/60 max-w-2xl">
+          <p className="mt-6 mx-auto text-lg leading-relaxed text-gray-600 max-w-2xl">
             {copy.subtitle}
           </p>
+        </div>
         </div>
       </section>
 
       {/* Main content */}
       <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           {/* Sidebar - Open positions */}
           <aside className="lg:col-span-4">
-            <div className="sticky top-28 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 md:p-8">
-              <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+            <div className="sticky top-28 rounded-2xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-600">
                 {locale === "sq" ? "Pozicionet e hapura" : locale === "de" ? "Offene Stellen" : "Open positions"}
               </h3>
               <ul className="mt-8 space-y-3">
                 {roles.map((role, idx) => (
                   <li
                     key={role}
-                    className="flex items-center gap-4 rounded-xl border border-white/[0.05] bg-white/[0.02] px-5 py-4 transition hover:border-[#c8a55c]/20 hover:bg-white/[0.04]"
+                    className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 transition hover:border-gray-300 hover:bg-gray-100"
                   >
-                    <span className="font-mono text-xs tabular-nums text-[#c8a55c]/90">
+                    <span className="font-mono text-xs tabular-nums text-gray-500">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-medium text-white/95">{role}</span>
+                    <span className="font-medium text-gray-900">{role}</span>
                   </li>
                 ))}
               </ul>
@@ -170,7 +170,7 @@ export default function CareersPage() {
           <div className="lg:col-span-8">
             <form
               onSubmit={handleSubmit}
-              className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 md:p-12"
+              className="rounded-2xl border border-gray-200 bg-white p-8 shadow-md md:p-12"
             >
               <input
                 type="text"
@@ -181,15 +181,15 @@ export default function CareersPage() {
                 aria-hidden
               />
               <div className="mb-10">
-                <h2 className="text-2xl font-semibold tracking-tight text-white">
+                <h2 className="text-2xl font-semibold tracking-tight text-gray-900">
                   {copy.formTitle}
                 </h2>
-                <p className="mt-2 text-sm text-white/55">{copy.formSubtitle}</p>
+                <p className="mt-2 text-sm text-gray-600">{copy.formSubtitle}</p>
               </div>
 
               <div className="grid gap-6 sm:grid-cols-2">
                 <label className="grid gap-2 sm:col-span-1">
-                  <span className="text-sm font-medium text-white/80">{copy.nameLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.nameLabel}</span>
                   <input
                     type="text"
                     value={formData.name}
@@ -203,7 +203,7 @@ export default function CareersPage() {
                   />
                 </label>
                 <label className="grid gap-2 sm:col-span-1">
-                  <span className="text-sm font-medium text-white/80">{copy.emailLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.emailLabel}</span>
                   <input
                     type="email"
                     value={formData.email}
@@ -214,7 +214,7 @@ export default function CareersPage() {
                   />
                 </label>
                 <label className="grid gap-2 sm:col-span-1">
-                  <span className="text-sm font-medium text-white/80">{copy.phoneLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.phoneLabel}</span>
                   <input
                     type="tel"
                     value={formData.phone}
@@ -224,15 +224,15 @@ export default function CareersPage() {
                   />
                 </label>
                 <div className="sm:col-span-2">
-                  <span className="block text-sm font-medium text-white/80 mb-3">{copy.roleLabel}</span>
+                  <span className="block text-sm font-medium text-gray-700 mb-3">{copy.roleLabel}</span>
                   <div className="grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label={copy.roleLabel}>
                     {roles.map((role) => (
                       <label
                         key={role}
                         className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3.5 transition ${
                           formData.role === role
-                            ? "border-[#c8a55c]/50 bg-[#c8a55c]/15"
-                            : "border-white/[0.08] bg-white/[0.04] hover:border-[#c8a55c]/30 hover:bg-white/[0.06]"
+                            ? "border-gray-900 bg-gray-100"
+                            : "border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100"
                         }`}
                       >
                         <input
@@ -247,7 +247,7 @@ export default function CareersPage() {
                         <span className="font-mono text-xs tabular-nums text-[#c8a55c]">
                           {String(roles.indexOf(role) + 1).padStart(2, "0")}
                         </span>
-                        <span className="font-medium text-white">{role}</span>
+                        <span className="font-medium text-gray-900">{role}</span>
                       </label>
                     ))}
                   </div>
@@ -255,13 +255,13 @@ export default function CareersPage() {
 
                 {/* CV Upload - PDF only */}
                 <div className="sm:col-span-2">
-                  <span className="block text-sm font-medium text-white/80 mb-3">{copy.cvLabel}</span>
+                  <span className="block text-sm font-medium text-gray-700 mb-3">{copy.cvLabel}</span>
                   <div
                     onClick={() => cvInputRef.current?.click()}
                     className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-10 transition ${
                       cvFile
-                        ? "border-[#c8a55c]/40 bg-[#c8a55c]/10"
-                        : "border-white/[0.12] bg-white/[0.02] hover:border-[#c8a55c]/30 hover:bg-white/[0.04]"
+                        ? "border-gray-400 bg-gray-100"
+                        : "border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100"
                     }`}
                   >
                     <input
@@ -273,33 +273,33 @@ export default function CareersPage() {
                     />
                     {cvFile ? (
                       <>
-                        <svg className="h-12 w-12 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <p className="mt-3 font-medium text-white">{cvFile.name}</p>
-                        <p className="mt-1 text-xs text-white/50">
+                        <p className="mt-3 font-medium text-gray-900">{cvFile.name}</p>
+                        <p className="mt-1 text-xs text-gray-500">
                           {(cvFile.size / 1024).toFixed(1)} KB
                         </p>
-                        <p className="mt-2 text-xs text-[#c8a55c]/80">
+                        <p className="mt-2 text-xs text-gray-600">
                           {locale === "sq" ? "Kliko për të ndryshuar" : locale === "de" ? "Klicken zum Ändern" : "Click to change"}
                         </p>
                       </>
                     ) : (
                       <>
-                        <svg className="h-12 w-12 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
-                        <p className="mt-3 text-sm font-medium text-white/80">
+                        <p className="mt-3 text-sm font-medium text-gray-700">
                           {locale === "sq" ? "Ngarko CV-në tënde" : locale === "de" ? "CV hochladen" : "Upload your CV"}
                         </p>
-                        <p className="mt-1 text-xs text-white/50">{copy.cvHint}</p>
+                        <p className="mt-1 text-xs text-gray-500">{copy.cvHint}</p>
                       </>
                     )}
                   </div>
                 </div>
 
                 <label className="grid gap-2 sm:col-span-2">
-                  <span className="text-sm font-medium text-white/80">{copy.messageLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.messageLabel}</span>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
@@ -313,7 +313,7 @@ export default function CareersPage() {
               </div>
 
               {error && (
-                <p className="mt-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <p className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                   {error}
                 </p>
               )}
@@ -321,7 +321,7 @@ export default function CareersPage() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="mt-10 w-full rounded-xl bg-[#c8a55c] py-4 font-semibold text-black shadow-[0_0_40px_rgba(200,165,92,0.15)] transition hover:bg-[#d4b86a] hover:shadow-[0_0_50px_rgba(200,165,92,0.2)] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="mt-10 w-full rounded-xl bg-gray-900 py-4 font-semibold text-white transition hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {status === "loading"
                   ? locale === "sq"
@@ -333,6 +333,7 @@ export default function CareersPage() {
               </button>
             </form>
           </div>
+        </div>
         </div>
       </section>
     </>

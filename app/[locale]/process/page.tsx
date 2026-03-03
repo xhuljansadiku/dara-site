@@ -206,29 +206,29 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
       {/* HERO */}
       <section className="relative overflow-hidden py-12 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">{hero.kicker}</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-600">{hero.kicker}</p>
 
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-6xl">
           {hero.title}
-          <span className="text-[#c8a55c]">{hero.titleAccent}</span>
+          <span className="text-gray-900">{hero.titleAccent}</span>
         </h1>
 
-        <p className="mt-5 max-w-2xl text-base text-white/70 md:text-lg">{hero.subtitle}</p>
+        <p className="mt-5 max-w-2xl text-base text-gray-600 md:text-lg">{hero.subtitle}</p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <LocaleLink
             href="/contact"
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 font-medium text-black transition hover:bg-[#b6944f] sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-gray-900 px-5 font-medium text-white transition hover:bg-gray-800 sm:w-auto"
           >
             {hero.ctaAudit}
           </LocaleLink>
           <LocaleLink
             href="/services"
-            className="inline-flex h-11 w-full items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 text-white/90 transition hover:border-white/25 hover:bg-white/10 sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full border-2 border-gray-300 px-5 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
           >
             {hero.ctaServices}
           </LocaleLink>
@@ -237,16 +237,16 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
 
       {/* DELIVERABLES */}
       <section className="py-8">
-        <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 md:p-8">
-          <p className="text-xs uppercase tracking-widest text-[#c8a55c]/80">{deliverables.title}</p>
+        <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-8">
+          <p className="text-xs uppercase tracking-widest text-gray-600">{deliverables.title}</p>
           <div className="mt-5 grid gap-3 md:grid-cols-2">
             {deliverables.items.map((d) => (
               <div
                 key={d.label}
-                className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/30 px-4 py-3"
+                className="flex items-center justify-between rounded-2xl border border-gray-200 bg-white px-4 py-3"
               >
-                <span className="text-sm font-medium">{d.label}</span>
-                <span className="text-xs text-white/60">{d.desc}</span>
+                <span className="text-sm font-medium text-gray-900">{d.label}</span>
+                <span className="text-xs text-gray-600">{d.desc}</span>
               </div>
             ))}
           </div>
@@ -255,27 +255,26 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
 
       {/* STEPS - Timeline */}
       <section className="py-12 md:py-16">
-        <h2 className="text-2xl font-semibold md:text-3xl">{stepsSection.title}</h2>
-        <p className="mt-2 max-w-2xl text-white/60">{stepsSection.subtitle}</p>
+        <h2 className="text-2xl font-semibold text-gray-900 md:text-3xl">{stepsSection.title}</h2>
+        <p className="mt-2 max-w-2xl text-gray-600">{stepsSection.subtitle}</p>
 
         <div className="mt-10">
           <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-[#c8a55c]/20 md:left-6" />
+            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gray-200 md:left-6" />
             <ul className="space-y-8 md:space-y-10">
               {steps.map((s, i) => (
                 <li key={s.n} className="relative flex gap-6 md:gap-8">
-                  <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#c8a55c]/50 bg-[#444444] text-xs font-semibold text-[#c8a55c] md:h-12 md:w-12">
+                  <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-900 text-xs font-semibold text-white md:h-12 md:w-12">
                     {s.n}
                   </div>
                   <div className="card card-lift min-w-0 flex-1 p-6">
-                    <h3 className="text-lg font-medium text-white/95">{s.title}</h3>
-                    <p className="mt-2 text-sm text-white/60">{s.desc}</p>
-                    <div className="mt-5 h-px bg-white/10" />
-                    <ul className="mt-4 grid gap-2 text-sm text-white/70 sm:grid-cols-2">
+                    <h3 className="text-lg font-medium text-gray-900">{s.title}</h3>
+                    <p className="mt-2 text-sm text-gray-600">{s.desc}</p>
+                    <div className="mt-5 h-px bg-gray-200" />
+                    <ul className="mt-4 grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
                       {s.bullets.map((b) => (
                         <li key={b} className="flex items-center gap-2">
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]/70" />
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
                           {b}
                         </li>
                       ))}
@@ -290,22 +289,22 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
 
       {/* CTA */}
       <section className="py-12 md:py-16">
-        <div className="rounded-3xl border border-[#c8a55c]/20 bg-[#c8a55c]/5 p-6 md:p-10">
-          <h2 className="text-2xl font-semibold md:text-3xl">
+        <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-10">
+          <h2 className="text-2xl font-semibold text-gray-900 md:text-3xl">
             {cta.title}
-            <span className="text-[#c8a55c]">{cta.titleAccent}</span>
+            <span className="text-gray-900">{cta.titleAccent}</span>
           </h2>
-          <p className="mt-2 max-w-2xl text-white/70">{cta.subtitle}</p>
+          <p className="mt-2 max-w-2xl text-gray-600">{cta.subtitle}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 font-medium text-black transition hover:bg-[#b6944f] sm:w-auto"
+              className="inline-flex h-11 w-full items-center justify-center rounded-full bg-gray-900 px-5 font-medium text-white transition hover:bg-gray-800 sm:w-auto"
             >
               {cta.ctaContact}
             </LocaleLink>
             <LocaleLink
               href="/work"
-              className="inline-flex h-11 w-full items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 text-white/90 transition hover:border-white/25 hover:bg-white/10 sm:w-auto"
+              className="inline-flex h-11 w-full items-center justify-center rounded-full border-2 border-gray-300 px-5 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
             >
               {cta.ctaWork}
             </LocaleLink>

@@ -27,7 +27,7 @@ export default function BrandProjectGallery({ projects }: Props) {
                 const index = images.indexOf(project.thumbnail);
                 if (index >= 0) setLightbox({ images, index });
               }}
-              className="card card-lift flex w-full flex-col items-center p-8 text-left focus:outline-none focus:ring-2 focus:ring-[#c8a55c] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
+              className="card card-lift flex w-full flex-col items-center p-8 text-left focus:outline-none focus:ring-2 focus:ring-[white] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
             >
               <div className="relative flex h-40 w-full items-center justify-center bg-white/5 rounded-xl">
                 {project.thumbnail && (
@@ -40,7 +40,7 @@ export default function BrandProjectGallery({ projects }: Props) {
                   />
                 )}
               </div>
-              <h3 className="mt-4 text-center font-medium text-white/95">{project.title}</h3>
+              <h3 className="mt-4 text-center font-medium text-gray-900/95">{project.title}</h3>
             </button>
           </AnimateIn>
         ))}

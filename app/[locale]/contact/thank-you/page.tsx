@@ -46,7 +46,7 @@ export default function ContactThankYouPage() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <LocaleLink
             href="/contact"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-6 font-medium text-black transition hover:bg-[#e2c37a]"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[white] px-6 font-medium text-black transition hover:bg-[white/90]"
           >
             {copy.backToContact}
           </LocaleLink>

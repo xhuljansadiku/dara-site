@@ -135,16 +135,16 @@ export default function TrainingRegisterPage() {
     <>
       <section className="relative overflow-hidden py-14 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
           {locale === "sq" ? "Trajnime" : locale === "de" ? "Training" : "Training"}
         </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">
           {copy.title}
         </h1>
-        <p className="mt-4 max-w-xl text-base text-white/70">
+        <p className="mt-4 max-w-xl text-base text-gray-600">
           {copy.subtitle}
         </p>
       </section>
@@ -155,34 +155,34 @@ export default function TrainingRegisterPage() {
               <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden" aria-hidden="true" />
               <div className="grid gap-4">
                 <label className="grid gap-2">
-                  <span className="text-sm text-white/70">{copy.nameLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.nameLabel}</span>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value.replace(/[^a-zA-ZëçÇË\s]/g, "") }))}
                     placeholder={locale === "sq" ? "Emri juaj" : locale === "de" ? "Ihr Name" : "Your name"}
-                    className="h-11 rounded-xl border border-white/15 bg-black/40 px-4 text-white placeholder:text-white/40 outline-none focus:border-[#c8a55c]/40"
+                    className="h-11 rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900"
                     required
                     minLength={2}
                   />
                 </label>
                 <label className="grid gap-2">
-                  <span className="text-sm text-white/70">{copy.emailLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.emailLabel}</span>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                     placeholder="you@email.com"
-                    className="h-11 rounded-xl border border-white/15 bg-black/40 px-4 text-white placeholder:text-white/40 outline-none focus:border-[#c8a55c]/40"
+                    className="h-11 rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900"
                     required
                   />
                 </label>
                 <label className="grid gap-2">
-                  <span className="text-sm text-white/70">{copy.trainingLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.trainingLabel}</span>
                   <select
                     value={formData.training}
                     onChange={(e) => setFormData((p) => ({ ...p, training: e.target.value }))}
-                    className="h-11 rounded-xl border border-white/15 bg-black/40 px-4 text-white outline-none focus:border-[#c8a55c]/40"
+                    className="h-11 rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 outline-none focus:border-gray-900"
                     required
                   >
                     <option value="">{copy.selectTraining}</option>
@@ -194,13 +194,13 @@ export default function TrainingRegisterPage() {
                   </select>
                 </label>
                 <label className="grid gap-2">
-                  <span className="text-sm text-white/70">{copy.messageLabel}</span>
+                  <span className="text-sm font-medium text-gray-700">{copy.messageLabel}</span>
                   <textarea
                     value={formData.message}
                     onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
                     placeholder={copy.messagePlaceholder}
                     rows={4}
-                    className="rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-white placeholder:text-white/40 outline-none focus:border-[#c8a55c]/40"
+                    className="rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900"
                   />
                 </label>
               </div>
@@ -214,7 +214,7 @@ export default function TrainingRegisterPage() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="mt-6 w-full rounded-full bg-gradient-to-r from-[#c8a55c] to-[#b6944f] py-3 font-semibold text-black transition hover:opacity-90 disabled:opacity-60"
+                className="mt-6 w-full rounded-full bg-gray-900 py-3 font-semibold text-white transition hover:bg-gray-800 disabled:opacity-60"
               >
                 {status === "loading"
                   ? locale === "sq"

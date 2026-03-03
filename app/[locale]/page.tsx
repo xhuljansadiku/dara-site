@@ -400,58 +400,42 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* HERO  background, scroll indicator, social proof, fade-in */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center px-4 py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.08)_0%,transparent_60%)]" aria-hidden />
-        <div className="absolute inset-0 -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMS41Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-60" aria-hidden />
-
-        <div className="mx-auto w-full max-w-3xl">
-          <h1 className="animate-fade-in-up text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+      {/* HERO - Trifid style: full viewport, bold typography */}
+      <section className="relative min-h-screen flex flex-col justify-center px-6 py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-[#FFFFFF]" aria-hidden />
+        <div className="mx-auto w-full max-w-5xl">
+          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-gray-500 md:text-xs">
+            {hero.kicker}
+          </p>
+          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-gray-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             {hero.titleA}{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-[#c8a55c]">{hero.titleB}</span>
-              <span className="absolute bottom-1 left-0 right-0 z-0 h-3 -translate-y-0.5 bg-[#c8a55c]/25 md:bottom-1.5 md:h-4" aria-hidden />
-            </span>
+            <span className="block">{hero.titleB}</span>
           </h1>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-1 mt-8 max-w-lg text-base leading-relaxed text-white/65 md:text-lg">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mt-10 max-w-2xl text-base leading-relaxed text-gray-900/70 md:text-lg lg:text-xl">
             {hero.desc}
           </p>
-          <div className="animate-fade-in-up animate-fade-in-up-delay-2 mt-12 flex flex-wrap items-center gap-4">
+          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mt-14 flex flex-wrap items-center gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-7 font-semibold text-black transition hover:bg-[#b6944f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-900 bg-gray-900 px-10 font-semibold text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
             >
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-7 font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-300 px-10 font-medium text-gray-900 transition hover:border-gray-300 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
             >
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-3 mt-8 text-sm text-white/50">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mt-10 text-sm text-gray-900/50">
             {hero.socialProof}
           </p>
         </div>
 
-        <div className="animate-fade-in-up animate-fade-in-up-delay-4 mt-20 flex items-center gap-4 md:mt-24">
-          <Image
-            src="/logo.png"
-            alt="DARA Marketing Agency"
-            width={120}
-            height={38}
-            className="h-8 w-auto opacity-70"
-          />
-          <span className="h-px w-12 bg-white/20" aria-hidden />
-          <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/40">
-            Marketing Agency
-          </span>
-        </div>
-
         <a
           href="#about"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 text-xs font-medium tracking-wider hover:text-[#c8a55c]/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] focus-visible:rounded"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 text-xs font-medium tracking-wider hover:text-gray-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 focus-visible:rounded"
           aria-label={hero.scrollHint}
         >
           {hero.scrollHint}
@@ -461,14 +445,87 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </a>
       </section>
 
+      {/* Marquee banner - Trifid style */}
+      <section className="relative py-6 overflow-hidden border-y border-gray-200">
+        <div className="animate-marquee flex w-max gap-16">
+          {[...Array(8)].map((_, i) => (
+            <span key={i} className="shrink-0 font-display text-2xl font-bold uppercase tracking-wider text-gray-900 md:text-4xl lg:text-5xl">
+              {locale === "sq" ? "Përmbajtja është mbret · " : locale === "de" ? "Content ist König · " : "Content is King · "}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Value pillars - Trifid style (4 cards) */}
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {(
+              locale === "sq"
+                ? [
+                    { title: "KREATIVITETI", desc: "Kreativiteti është të shpikësh, eksperimentosh, rritesh, marrësh rreziqe dhe thyesh rregullat." },
+                    { title: "UNIKALITETI", desc: "Për të qenë i pazëvendësueshëm, duhet gjithmonë të jesh i ndryshëm." },
+                    { title: "INOVACIONI", desc: "Inovacioni është të shohësh çfarë të gjithë kanë parë dhe të mendosh çfarë askush nuk ka menduar." },
+                    { title: "REZULTATET", desc: "DARA është një partner që fokuson te rezultatet dhe rritja e matshme e biznesit." },
+                  ]
+                : locale === "de"
+                ? [
+                    { title: "KREATIVITÄT", desc: "Kreativität bedeutet erfinden, experimentieren, wachsen, Risiken eingehen und Regeln brechen." },
+                    { title: "EINZIGARTIGKEIT", desc: "Um unersetzlich zu sein, muss man immer anders sein." },
+                    { title: "INNOVATION", desc: "Innovation ist zu sehen, was alle gesehen haben, und zu denken, was niemand gedacht hat." },
+                    { title: "ERGEBNISSE", desc: "DARA ist ein Partner, der sich auf messbare Geschäftsergebnisse und Wachstum konzentriert." },
+                  ]
+                : [
+                    { title: "CREATIVITY", desc: "Creativity is inventing, experimenting, growing, taking risks, breaking rules." },
+                    { title: "UNIQUE", desc: "In order to be irreplaceable, one must always be different." },
+                    { title: "INNOVATION", desc: "Innovation is seeing what everybody has seen and thinking what nobody has thought." },
+                    { title: "RESULTS", desc: "DARA is a partner focused on measurable business results and growth." },
+                  ]
+            ).map((pillar, idx) => (
+              <AnimateIn key={pillar.title} delay={idx * 80}>
+                <div className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5">
+                  <h3 className="font-display text-xl font-bold uppercase tracking-wider text-gray-900 md:text-2xl">
+                    {pillar.title}
+                  </h3>
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-gray-600">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </AnimateIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Numbered services slider - Trifid style */}
+      <section className="border-y border-gray-200 py-8">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 md:gap-x-16">
+            {services.slice(0, 6).map((s, idx) => (
+              <LocaleLink
+                key={idx}
+                href="/services"
+                className="group flex items-center gap-3 text-gray-600 transition hover:text-gray-900"
+              >
+                <span className="font-mono text-sm font-medium tabular-nums text-gray-500 group-hover:text-gray-900">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <span className="text-sm font-medium md:text-base">{s.title}</span>
+              </LocaleLink>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT US  scroll animations, stats visuals */}
       <section id="about" className="relative py-20 md:py-28">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(200,165,92,0.04)_50%,transparent_100%)]" />
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10 lg:p-12">
+        <div className="mx-auto max-w-7xl px-6">
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)]" />
+        <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
             <div>
               <AnimateIn>
-                <span className="inline-block rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-[#c8a55c]">
+                <span className="inline-block rounded-full border border-gray-300 bg-gray-100 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-gray-900">
                   {about.kicker}
                 </span>
               </AnimateIn>
@@ -478,18 +535,18 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </h2>
               </AnimateIn>
               <AnimateIn delay={100}>
-                <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">
+                <p className="mt-5 text-base leading-relaxed text-gray-900/70 md:text-lg">
                   {about.paragraphs[0]}
                 </p>
               </AnimateIn>
               <AnimateIn delay={150}>
-                <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+                <p className="mt-4 text-base leading-relaxed text-gray-500 md:text-lg">
                   {about.paragraphs[1]}
                 </p>
               </AnimateIn>
               {about.paragraphs[2] && (
                 <AnimateIn delay={200}>
-                  <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+                  <p className="mt-4 text-base leading-relaxed text-gray-500 md:text-lg">
                     {about.paragraphs[2]}
                   </p>
                 </AnimateIn>
@@ -498,8 +555,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 <div className="mt-10 flex flex-wrap gap-6 sm:gap-8">
                   {aboutStats.map((stat) => (
                     <div key={stat.label} className="flex flex-col">
-                      <span className="text-3xl font-bold text-[#c8a55c] md:text-4xl">{stat.value}</span>
-                      <span className="mt-0.5 text-sm text-white/70">{stat.label}</span>
+                      <span className="text-3xl font-bold text-gray-900 md:text-4xl">{stat.value}</span>
+                      <span className="mt-0.5 text-sm text-gray-900/70">{stat.label}</span>
                     </div>
                   ))}
                 </div>
@@ -508,7 +565,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 <div className="mt-10">
                   <LocaleLink
                     href="/about"
-                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+                    className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-900 bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                   >
                     {about.readMore}
                   </LocaleLink>
@@ -517,7 +574,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             </div>
             <AnimateIn delay={100}>
               <div className="relative lg:pl-4">
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-white/5 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
+                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
                   <Image
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
                     alt="DARA Marketing Agency  team and collaboration"
@@ -528,10 +585,11 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     loading="lazy"
                   />
                 </div>
-                <div className="absolute -left-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-[#c8a55c]/20 lg:-left-4 lg:-top-4" aria-hidden />
+                <div className="absolute -left-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-gray-200 lg:-left-4 lg:-top-4" aria-hidden />
               </div>
             </AnimateIn>
           </div>
+        </div>
         </div>
       </section>
 
@@ -558,33 +616,33 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       {/* KARRIERË / CAREERS */}
       <section id="careers" className="relative overflow-hidden py-20 md:py-28">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#c8a55c]/[0.03] to-transparent" />
-          <div className="absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/4 rounded-full bg-[#c8a55c]/[0.06] blur-[120px]" />
-          <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#c8a55c]/[0.04] blur-[80px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[white]/[0.03] to-transparent" />
+          <div className="absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/4 rounded-full bg-gray-200 blur-[120px]" />
+          <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[white]/[0.04] blur-[80px]" />
         </div>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
               <AnimateIn delay={0}>
-                <span className="inline-block text-[11px] font-medium uppercase tracking-[0.25em] text-[#c8a55c]">
+                <span className="inline-block text-[11px] font-medium uppercase tracking-[0.25em] text-gray-900">
                   {career.kicker}
                 </span>
               </AnimateIn>
               <AnimateIn delay={80}>
                 <h2 className="mt-5 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem]">
                   {career.title}
-                  <span className="text-[#c8a55c]">.</span>
+                  <span className="text-gray-900">.</span>
                 </h2>
               </AnimateIn>
               <AnimateIn delay={120}>
-                <p className="mt-5 max-w-md text-base leading-relaxed text-white/65">
+                <p className="mt-5 max-w-md text-base leading-relaxed text-gray-900/65">
                   {career.subtitle}
                 </p>
               </AnimateIn>
               <AnimateIn delay={160}>
                 <LocaleLink
                   href="/careers"
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black shadow-[0_0_40px_rgba(200,165,92,0.2)] transition hover:bg-[#d4b86a] hover:shadow-[0_0_50px_rgba(200,165,92,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white shadow-lg transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
                   {career.cta}
                 </LocaleLink>
@@ -596,15 +654,15 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
                     <LocaleLink
                       href="/careers"
-                      className="group flex h-full min-h-[140px] flex-col rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/25 hover:bg-white/[0.06] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)]"
+                      className="group flex h-full min-h-[140px] flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-lg"
                     >
-                      <span className="font-mono text-xs font-medium tabular-nums text-[#c8a55c]/90">
+                      <span className="font-mono text-xs font-medium tabular-nums text-gray-900/90">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <span className="mt-3 flex-1 text-lg font-semibold text-white group-hover:text-[#c8a55c]">
+                      <span className="mt-3 flex-1 text-lg font-semibold text-gray-900 group-hover:text-gray-900">
                         {role}
                       </span>
-                      <span className="mt-4 inline-flex items-center gap-1 text-sm text-white/50 transition group-hover:text-[#c8a55c]/80">
+                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 transition group-hover:text-gray-900">
                         {locale === "sq" ? "Apliko →" : locale === "de" ? "Bewerben →" : "Apply →"}
                       </span>
                     </LocaleLink>
@@ -622,19 +680,19 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       {SHOW_TEAM && (
       <section id="team" className="py-12 md:py-20">
         <div className="mb-12">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-900/80">
             {locale === "sq" ? "Ekipi ynë" : locale === "de" ? "Unser Team" : "Our Team"}
           </p>
           <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
             {locale === "sq" ? (
-              <>Njerëzit pas <span className="text-[#c8a55c]">DARA</span></>
+              <>Njerëzit pas <span className="text-gray-900">DARA</span></>
             ) : locale === "de" ? (
-              <>Die Menschen hinter <span className="text-[#c8a55c]">DARA</span></>
+              <>Die Menschen hinter <span className="text-gray-900">DARA</span></>
             ) : (
-              <>The people behind <span className="text-[#c8a55c]">DARA</span></>
+              <>The people behind <span className="text-gray-900">DARA</span></>
             )}
           </h2>
-          <p className="mt-3 max-w-xl text-sm text-white/70">
+          <p className="mt-3 max-w-xl text-sm text-gray-900/70">
             {locale === "sq"
               ? "Profesionistë të marketingut dhe krijuesit që sjellin brandet në jetë."
               : locale === "de"
@@ -661,16 +719,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 opacity-0 transition-opacity group-hover:opacity-100">
-                  <p className="text-sm text-white/90">{member.bio}</p>
+                  <p className="text-sm text-gray-900">{member.bio}</p>
                   <div className="mt-4 flex gap-3">
-                    <a href={member.linkedin} className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-[#c8a55c]" aria-label="LinkedIn"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href={member.instagram} className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-[#c8a55c]" aria-label="Instagram"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href={member.linkedin} className="rounded-full p-2 text-gray-900/70 transition hover:bg-white/10 hover:text-gray-900" aria-label="LinkedIn"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href={member.instagram} className="rounded-full p-2 text-gray-900/70 transition hover:bg-white/10 hover:text-gray-900" aria-label="Instagram"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
                   </div>
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="font-medium text-white/95">{member.name}</h3>
-                <p className="mt-1 text-sm text-[#c8a55c]/90">{member.role}</p>
+                <h3 className="font-medium text-gray-900/95">{member.name}</h3>
+                <p className="mt-1 text-sm text-gray-900/90">{member.role}</p>
               </div>
             </div>
           ))}
@@ -680,18 +738,19 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       {/* CTA Section - Professional */}
       <section className="py-20 md:py-28" aria-labelledby="cta-heading">
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0f0f0f]">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#c8a55c]/[0.03] via-transparent to-transparent" />
-          <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[#c8a55c]/[0.04] blur-[100px]" />
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+          <div className="absolute inset-0 bg-gradient-to-b from-[white]/[0.03] via-transparent to-transparent" />
+          <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[white]/[0.04] blur-[100px]" />
           <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
             {/* Trusted By - minimal */}
-            <div className="mb-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-b border-white/[0.06] pb-10">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40">
+            <div className="mb-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-b border-gray-200 pb-10">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-500">
                 {locale === "sq" ? "Na besojnë" : locale === "de" ? "Vertrauen uns" : "Trusted by"}
               </span>
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
                 {["Don Mare Hotel", "Zorada", "City Fitness", "Cara Dental", "Nova Real Estate"].map((name) => (
-                  <span key={name} className="text-sm font-medium text-white/50">
+                  <span key={name} className="text-sm font-medium text-gray-700">
                     {name}
                   </span>
                 ))}
@@ -701,10 +760,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
               {/* Left - CTA */}
               <div>
-                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-white md:text-4xl lg:text-[2.75rem]">
+                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-gray-900 md:text-4xl lg:text-[2.75rem]">
                   {cta.title}
                 </h2>
-                <p className="mt-5 text-base leading-relaxed text-white/70">
+                <p className="mt-5 text-base leading-relaxed text-gray-600">
                   {cta.subtitle}
                 </p>
                 <div className="mt-8 space-y-4">
@@ -718,19 +777,19 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                       : bullet;
                     return (
                       <div key={idx} className="flex items-center gap-3">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#c8a55c]/20">
-                          <svg className="h-2.5 w-2.5 text-[#c8a55c]" fill="currentColor" viewBox="0 0 20 20">
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-200">
+                          <svg className="h-2.5 w-2.5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </span>
-                        <span className="text-sm text-white/85">{displayBullet}</span>
+                        <span className="text-sm text-gray-700">{displayBullet}</span>
                       </div>
                     );
                   })}
                 </div>
                 <LocaleLink
                   href="/contact"
-                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-semibold text-black transition hover:bg-[#d4b86a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
                   {cta.button}
                 </LocaleLink>
@@ -739,32 +798,32 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               {/* Right - Contact & Newsletter */}
               <div className="space-y-10">
                 <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
                     {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
                   </h3>
                   <div className="mt-5 space-y-4 text-sm">
-                    <a href="mailto:daramarketing.eu@gmail.com" className="flex items-center gap-3 text-white/80 transition hover:text-[#c8a55c]">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
-                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="mailto:daramarketing.eu@gmail.com" className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </span>
                       daramarketing.eu@gmail.com
                     </a>
                     <div className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
-                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                       </span>
-                      <a href="tel:+355688009988" className="text-white/80 transition hover:text-[#c8a55c]">+355 68 800 9988</a>
+                      <a href="tel:+355688009988" className="text-gray-900/80 transition hover:text-gray-900">+355 68 800 9988</a>
                       <a href="https://wa.me/355688009988" target="_blank" rel="noreferrer" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] transition hover:scale-105" aria-label="WhatsApp">
-                        <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <svg className="h-4 w-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                       </a>
                     </div>
-                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-white/80 transition hover:text-[#c8a55c]">
-                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">
-                        <svg className="h-4 w-4 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900">
+                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
@@ -773,24 +832,24 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     </a>
                   </div>
                   <div className="mt-6 flex gap-3">
-                    <a href="https://www.instagram.com/daramarketing.al/?hl=en" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="Instagram">
+                    <a href="https://www.instagram.com/daramarketing.al/?hl=en" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="Instagram">
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </a>
     
-                   <a href="https://www.facebook.com/profile.php?id=100082700976706&mibextid=wwXIfr&rdid=th6sqtMyijhWGf4h&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AgQibjNEY%2F%3Fmibextid%3DwwXIfr#" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="Facebook">
+                   <a href="https://www.facebook.com/profile.php?id=100082700976706&mibextid=wwXIfr&rdid=th6sqtMyijhWGf4h&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AgQibjNEY%2F%3Fmibextid%3DwwXIfr#" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="Facebook">
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
-                    <a href="https://www.linkedin.com/company/dara-marketing-agency-al/" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/60 transition hover:border-[#c8a55c]/40 hover:text-[#c8a55c]" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/company/dara-marketing-agency-al/" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="LinkedIn">
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
                   </div>
                 </div>
-                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6">
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#c8a55c]">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
                     Newsletter
                   </h3>
                   <NewsletterForm locale={locale} />
-                  <p className="mt-3 flex items-center gap-2 text-xs text-white/45">
+                  <p className="mt-3 flex items-center gap-2 text-xs text-gray-500">
                     <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
@@ -800,6 +859,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
 

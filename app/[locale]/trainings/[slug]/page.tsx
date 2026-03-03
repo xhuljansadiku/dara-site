@@ -62,38 +62,40 @@ export default function TrainingSlugPage({ params }: Props) {
       <>
         <section className="relative overflow-hidden py-16 md:py-24">
           <div className="pointer-events-none absolute inset-0 -z-10">
-            <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+            <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
           </div>
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center">
-            <span className="rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-2 text-sm font-medium text-[#c8a55c]">
+            <span className="rounded-full border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
               {comingSoonCopy.title}
             </span>
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl">
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">
               {training.title[locale]}
             </h1>
-            <p className="mt-4 max-w-xl text-base text-white/70 md:text-lg">
+            <p className="mt-4 max-w-xl text-base text-gray-600 md:text-lg">
               {comingSoonCopy.subtitle}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <LocaleLink
                 href="/trainings/register"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800"
               >
                 {cta.register}
               </LocaleLink>
               <LocaleLink
                 href="/trainings"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
               >
                 {cta.allTrainings}
               </LocaleLink>
               <LocaleLink
                 href="/"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
               >
                 {cta.backHome}
               </LocaleLink>
             </div>
+          </div>
           </div>
         </section>
         <div className="h-8" />
@@ -105,49 +107,52 @@ export default function TrainingSlugPage({ params }: Props) {
     <>
       <section className="relative overflow-hidden py-8 md:py-12">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
-          {locale === "sq" ? "Trajnim" : locale === "de" ? "Training" : "Training"}
-        </p>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
+            {locale === "sq" ? "Trajnim" : locale === "de" ? "Training" : "Training"}
+          </p>
 
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-          {training.title[locale]}
-        </h1>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+            {training.title[locale]}
+          </h1>
 
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
-          {training.shortDesc[locale]}
-        </p>
+          <p className="mt-4 mx-auto max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
+            {training.shortDesc[locale]}
+          </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-6">
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-[#c8a55c]">{training.price}</span>
-            <span className="text-sm text-white/60">{training.duration[locale]}</span>
-          </div>
-          <div className="flex flex-wrap gap-6">
-            {training.stats.map((stat, statIdx) => (
-              <div key={`stat-${statIdx}`} className="flex items-baseline gap-1.5">
-                <span className="text-lg font-semibold text-white">{stat.value}</span>
-                <span className="text-sm text-white/50">{stat.label[locale]}</span>
-              </div>
-            ))}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-6">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-gray-900">{training.price}</span>
+              <span className="text-sm text-gray-600">{training.duration[locale]}</span>
+            </div>
+            <div className="flex flex-wrap gap-6">
+              {training.stats.map((stat, statIdx) => (
+                <div key={`stat-${statIdx}`} className="flex items-baseline gap-1.5">
+                  <span className="text-lg font-semibold text-gray-900">{stat.value}</span>
+                  <span className="text-sm text-gray-500">{stat.label[locale]}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-8 md:py-10">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 md:gap-12">
           <AnimateIn>
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#c8a55c]/90">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
                 {locale === "sq" ? "Çfarë përfshin" : locale === "de" ? "Was enthalten ist" : "What's included"}
               </h3>
               <ul className="mt-4 space-y-3">
                 {training.highlights[locale].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-white/85">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                  <li key={item} className="flex items-start gap-3 text-sm text-gray-700">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
                     {item}
                   </li>
                 ))}
@@ -155,13 +160,13 @@ export default function TrainingSlugPage({ params }: Props) {
             </div>
           </AnimateIn>
           <AnimateIn delay={50}>
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#c8a55c]/90">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
                 {locale === "sq" ? "Përshkrim i plotë" : locale === "de" ? "Vollständige Beschreibung" : "Full description"}
               </h3>
               <div className="mt-4 space-y-4">
                 {training.fullDescription[locale].map((para, i) => (
-                  <p key={i} className="text-sm leading-relaxed text-white/80">
+                  <p key={i} className="text-sm leading-relaxed text-gray-600">
                     {para}
                   </p>
                 ))}
@@ -169,42 +174,45 @@ export default function TrainingSlugPage({ params }: Props) {
             </div>
           </AnimateIn>
         </div>
+        </div>
       </section>
 
       <section className="py-8 md:py-10">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <AnimateIn>
-          <div className="flex flex-col items-center gap-6 rounded-3xl border border-[#c8a55c]/20 bg-gradient-to-br from-[#c8a55c]/10 via-[#c8a55c]/5 to-transparent p-8 md:p-12">
-            <h2 className="text-center text-2xl font-semibold md:text-3xl">
+          <div className="flex flex-col items-center gap-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-10">
+            <h2 className="text-center text-2xl font-semibold text-gray-900 md:text-3xl">
               {locale === "sq" ? (
-                <>Gati të fillosh? <span className="text-[#c8a55c]">Rregjistrohu tani.</span></>
+                <>Gati të fillosh? <span className="text-gray-900">Rregjistrohu tani.</span></>
               ) : locale === "de" ? (
-                <>Bereit zu starten? <span className="text-[#c8a55c]">Jetzt anmelden.</span></>
+                <>Bereit zu starten? <span className="text-gray-900">Jetzt anmelden.</span></>
               ) : (
-                <>Ready to start? <span className="text-[#c8a55c]">Register now.</span></>
+                <>Ready to start? <span className="text-gray-900">Register now.</span></>
               )}
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               <LocaleLink
                 href="/trainings/register"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#c8a55c] px-8 font-medium text-black transition hover:bg-[#b6944f]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800"
               >
                 {cta.register}
               </LocaleLink>
               <LocaleLink
                 href="/trainings"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
               >
                 {cta.allTrainings}
               </LocaleLink>
               <LocaleLink
                 href="/"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 text-white/90 transition hover:border-white/25 hover:bg-white/10"
+                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
               >
                 {cta.backHome}
               </LocaleLink>
             </div>
           </div>
         </AnimateIn>
+        </div>
       </section>
 
       <div className="h-4" />

@@ -30,29 +30,30 @@ export default function HomeWorkSection({ locale }: Props) {
 
   return (
     <section id="work" className="py-12 md:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-[#c8a55c]/80">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
             {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
           </p>
           <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
             {locale === "sq" && (
               <>
-                Puna jonë <span className="text-[#c8a55c]">e zgjedhur</span>
+                Puna jonë <span className="text-gray-900">e zgjedhur</span>
               </>
             )}
             {locale === "en" && (
               <>
-                Our <span className="text-[#c8a55c]">work</span>
+                Our <span className="text-gray-900">work</span>
               </>
             )}
             {locale === "de" && (
               <>
-                Unsere <span className="text-[#c8a55c]">Arbeiten</span>
+                Unsere <span className="text-gray-900">Arbeiten</span>
               </>
             )}
           </h2>
-          <p className="mt-3 max-w-xl text-sm text-white/70">
+          <p className="mt-3 max-w-xl text-sm text-gray-600">
             {locale === "sq"
               ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
               : locale === "de"
@@ -62,7 +63,7 @@ export default function HomeWorkSection({ locale }: Props) {
         </div>
         <LocaleLink
           href="/work"
-          className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-[#c8a55c] transition hover:text-[#d4b86a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c] focus-visible:rounded"
+          className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-gray-900 transition hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 focus-visible:rounded"
         >
           {locale === "sq"
             ? "Shiko të gjitha projektet"
@@ -81,8 +82,8 @@ export default function HomeWorkSection({ locale }: Props) {
             onClick={() => setActiveFilter(tab.key)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activeFilter === tab.key
-                ? "bg-[#c8a55c] text-black"
-                : "border border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                ? "bg-gray-900 text-white"
+                : "border border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900"
             }`}
           >
             {tab.label}
@@ -118,12 +119,13 @@ export default function HomeWorkSection({ locale }: Props) {
         <div className="mt-8 text-center">
           <LocaleLink
             href="/work"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 px-6 text-sm font-medium text-white/80 transition hover:border-[#c8a55c]/50 hover:text-[#c8a55c]"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-gray-200 px-6 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-50"
           >
             {locale === "sq" ? "Shiko më shumë" : locale === "de" ? "Mehr anzeigen" : "View more"}
           </LocaleLink>
         </div>
       )}
+      </div>
     </section>
   );
 }
