@@ -43,10 +43,10 @@ export default function TrainingsPage({ params }: Props) {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.1)_0%,transparent_60%)]" />
         <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
+          <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {locale === "sq" ? "Trajnime" : locale === "de" ? "Training" : "Training"}
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+          </span>
+          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
             {locale === "sq" ? (
               <>A dëshiron ta <span className="text-gray-900">ndryshosh</span> jetën tënde?</>
             ) : locale === "de" ? (
@@ -55,7 +55,7 @@ export default function TrainingsPage({ params }: Props) {
               <>Do you want to <span className="text-gray-900">change</span> your life?</>
             )}
           </h1>
-          <p className="mt-4 mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
+          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
             {locale === "sq"
               ? "Ndiq trajnimet tona dhe mëso nga ekspertët. 50+ studente kanë ndjekur programet tona."
               : locale === "de"

@@ -210,28 +210,32 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <p className="text-xs uppercase tracking-[0.2em] text-gray-600">{hero.kicker}</p>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
+            {hero.kicker}
+          </span>
 
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-6xl">
-          {hero.title}
-          <span className="text-gray-900">{hero.titleAccent}</span>
-        </h1>
+          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+            {hero.title}
+            <span className="text-gray-900">{hero.titleAccent}</span>
+          </h1>
 
-        <p className="mt-5 max-w-2xl text-base text-gray-600 md:text-lg">{hero.subtitle}</p>
+          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">{hero.subtitle}</p>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <LocaleLink
-            href="/contact"
-            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-gray-900 px-5 font-medium text-white transition hover:bg-gray-800 sm:w-auto"
-          >
-            {hero.ctaAudit}
-          </LocaleLink>
-          <LocaleLink
-            href="/services"
-            className="inline-flex h-11 w-full items-center justify-center rounded-full border-2 border-gray-300 px-5 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
-          >
-            {hero.ctaServices}
-          </LocaleLink>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <LocaleLink
+              href="/contact"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
+            >
+              {hero.ctaAudit}
+            </LocaleLink>
+            <LocaleLink
+              href="/services"
+              className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
+            >
+              {hero.ctaServices}
+            </LocaleLink>
+          </div>
         </div>
       </section>
 

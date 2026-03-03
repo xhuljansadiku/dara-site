@@ -209,9 +209,64 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
   ],
 };
 
+/** Service groups for navbar - Website, Marketing, Branding, Training */
+export const SERVICE_GROUPS = [
+  {
+    id: "website" as const,
+    slugs: ["website-landing", "ecommerce", "saas", "maintenance"] as ServiceSlug[],
+  },
+  {
+    id: "marketing" as const,
+    slugs: ["social-media", "content", "strategy", "ads", "consulting"] as ServiceSlug[],
+  },
+  {
+    id: "branding" as const,
+    slugs: ["branding"] as ServiceSlug[],
+  },
+  {
+    id: "training" as const,
+    slugs: ["training"] as ServiceSlug[],
+  },
+] as const;
+
+export const SERVICE_GROUP_LABELS: Record<Locale, Record<(typeof SERVICE_GROUPS)[number]["id"], string>> = {
+  sq: {
+    website: "Website",
+    marketing: "Marketing",
+    branding: "Branding",
+    training: "Trajnime marketing",
+  },
+  en: {
+    website: "Website",
+    marketing: "Marketing",
+    branding: "Branding",
+    training: "Marketing Training",
+  },
+  de: {
+    website: "Website",
+    marketing: "Marketing",
+    branding: "Branding",
+    training: "Marketing-Training",
+  },
+};
+
 export function getServiceNavItems(locale: Locale): { slug: ServiceSlug; label: string }[] {
   const details = SERVICE_DETAILS_BY_LOCALE[locale];
   return SERVICE_SLUGS.map((slug, i) => ({ slug, label: details[i]?.title ?? slug }));
+}
+
+export function getServiceGroupNavItems(
+  locale: Locale
+): { id: string; label: string; items: { slug: ServiceSlug; label: string }[] }[] {
+  const allItems = getServiceNavItems(locale);
+  const slugToItem = Object.fromEntries(allItems.map((it) => [it.slug, it]));
+  const labels = SERVICE_GROUP_LABELS[locale];
+
+  return SERVICE_GROUPS.map((group) => ({
+    id: group.id,
+    label: labels[group.id],
+    items: group.slugs.map((slug) => slugToItem[slug] ?? { slug, label: slug }).filter(Boolean),
+  }));
 }
 
 export function getServiceBySlug(

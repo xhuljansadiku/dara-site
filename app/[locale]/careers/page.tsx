@@ -127,7 +127,7 @@ export default function CareersPage() {
       <section className="relative overflow-hidden border-b border-gray-200 py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-600">
+          <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {copy.kicker}
           </span>
           <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-[3.5rem] leading-[1.1]">

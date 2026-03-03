@@ -5,16 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
 import { locales as LOCALES, defaultLocale } from "@/i18n";
-import { getServiceNavItems } from "@/lib/services-data";
+import { getServiceGroupNavItems } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
 
-type NavItem = { label: string; href: string };
+type NavItem = { label: string; href: string; hasDropdown?: boolean; serviceGroupId?: string };
 
 const NAV_TRANSLATIONS: Record<
   (typeof LOCALES)[number],
   {
     tagline: string;
-    home: string;
     services: string;
     viewAllServices: string;
     packages: string;
@@ -31,7 +30,6 @@ const NAV_TRANSLATIONS: Record<
 > = {
   sq: {
     tagline: "Marketing Agency",
-    home: "Kreu",
     services: "Shërbime",
     viewAllServices: "Të gjitha shërbimet",
     packages: "Paketa",
@@ -47,7 +45,6 @@ const NAV_TRANSLATIONS: Record<
   },
   en: {
     tagline: "Marketing Agency",
-    home: "Home",
     services: "Services",
     viewAllServices: "All services",
     packages: "Packages",
@@ -63,7 +60,6 @@ const NAV_TRANSLATIONS: Record<
   },
   de: {
     tagline: "Marketing Agency",
-    home: "Startseite",
     services: "Leistungen",
     viewAllServices: "Alle Leistungen",
     packages: "Pakete",
@@ -92,10 +88,16 @@ export default function Navbar() {
   const nav = NAV_TRANSLATIONS[locale as (typeof LOCALES)[number]] ?? NAV_TRANSLATIONS[defaultLocale];
 
   const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [websiteOpen, setWebsiteOpen] = useState(false);
+  const [marketingOpen, setMarketingOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileWebsiteOpen, setMobileWebsiteOpen] = useState(false);
+  const [mobileMarketingOpen, setMobileMarketingOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const websiteRef = useRef<HTMLDivElement>(null);
+  const marketingRef = useRef<HTMLDivElement>(null);
   const langDropdownRef = useRef<HTMLDivElement>(null);
 
   const LOCALE_FLAGS: Record<(typeof LOCALES)[number], { flagSrc: string; label: string }> = {
@@ -107,37 +109,78 @@ export default function Navbar() {
   const currentLocale = (LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])
     ? locale
     : defaultLocale) as Locale;
-  const serviceNavItems = useMemo(() => getServiceNavItems(currentLocale), [currentLocale]);
+  const serviceGroups = useMemo(() => getServiceGroupNavItems(currentLocale), [currentLocale]);
 
   const items: NavItem[] = useMemo(
     () => [
-      { label: nav.home, href: "/" },
-      { label: nav.about, href: "/about" },
-      { label: nav.services, href: "/services" },
+      { label: serviceGroups[0]?.label ?? "Website", href: "/services", hasDropdown: true, serviceGroupId: "website" },
+      { label: serviceGroups[1]?.label ?? "Marketing", href: "/services", hasDropdown: true, serviceGroupId: "marketing" },
+      { label: serviceGroups[2]?.label ?? "Branding", href: "/services/branding" },
       { label: nav.packages, href: "/packages" },
       { label: nav.trainings, href: "/trainings" },
       { label: nav.works, href: "/work" },
+      { label: nav.about, href: "/about", hasDropdown: true },
+    ],
+    [nav, serviceGroups]
+  );
+
+  const aboutDropdownItems = useMemo(
+    () => [
+      { label: nav.about, href: "/about" },
+      { label: nav.team, href: "/team" },
       { label: nav.careers, href: "/careers" },
       { label: nav.faq, href: "/faq" },
-      { label: nav.contact, href: "/contact" },
     ],
     [nav]
   );
 
   const isServicesActive = pathname === withLocale("/services") || pathname.startsWith(withLocale("/services/"));
+  const isWebsiteActive = ["website-landing", "ecommerce", "saas", "maintenance"].some((s) =>
+    pathname.includes(`/services/${s}`)
+  );
+  const isMarketingActive = ["social-media", "content", "strategy", "ads", "consulting"].some((s) =>
+    pathname.includes(`/services/${s}`)
+  );
+  const isAboutActive =
+    pathname === withLocale("/about") ||
+    pathname === withLocale("/team") ||
+    pathname === withLocale("/careers") ||
+    pathname === withLocale("/faq");
 
   useEffect(() => {
-    if (!servicesOpen) return;
+    if (!websiteOpen) return;
     function handleClick(e: MouseEvent) {
-      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) setServicesOpen(false);
+      if (websiteRef.current && !websiteRef.current.contains(e.target as Node)) setWebsiteOpen(false);
     }
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
-  }, [servicesOpen]);
+  }, [websiteOpen]);
 
-  // Kur menuja mobile mbyllet, mbyll edhe nënmenunë e shërbimeve
   useEffect(() => {
-    if (!open) setMobileServicesOpen(false);
+    if (!marketingOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (marketingRef.current && !marketingRef.current.contains(e.target as Node)) setMarketingOpen(false);
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [marketingOpen]);
+
+  useEffect(() => {
+    if (!aboutOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (aboutRef.current && !aboutRef.current.contains(e.target as Node)) setAboutOpen(false);
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [aboutOpen]);
+
+  // Kur menuja mobile mbyllet, mbyll edhe nënmenunë
+  useEffect(() => {
+    if (!open) {
+      setMobileAboutOpen(false);
+      setMobileWebsiteOpen(false);
+      setMobileMarketingOpen(false);
+    }
   }, [open]);
 
   useEffect(() => {
@@ -177,7 +220,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-gray-800/80 bg-gray-900/70 backdrop-blur-xl">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2 md:h-20">
         {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
         <Link href={`/${locale}`} className="flex items-center gap-3" onClick={() => setOpen(false)}>
@@ -190,49 +233,140 @@ export default function Navbar() {
               className="h-9 w-auto object-contain sm:h-10 md:h-11"
               priority
             />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-gray-900/60 sm:text-[10px]">
+            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-gray-400 sm:text-[10px]">
               {nav.tagline}
             </span>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-2 py-1 md:flex">
-          {items.map((it) => {
-            if (it.href === "/services") {
+        <nav className="hidden items-center gap-1 rounded-full border border-gray-700 bg-gray-900/50 px-2 py-1 md:flex">
+          {items.map((it, idx) => {
+            const num = String(idx + 1).padStart(2, "0");
+            if (it.href === "/about" && it.hasDropdown) {
               return (
-                <div key="services" ref={servicesRef} className="relative">
+                <div key="about" ref={aboutRef} className="relative">
                   <button
                     type="button"
-                    onClick={() => setServicesOpen((o) => !o)}
+                    onClick={() => {
+                      setWebsiteOpen(false);
+                      setMarketingOpen(false);
+                      setAboutOpen((o) => !o);
+                    }}
                     className={[
-                      "relative flex items-center gap-0.5 rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                      isServicesActive ? "text-gray-900" : "text-gray-600 hover:text-gray-900",
+                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
+                      isAboutActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
                     ].join(" ")}
-                    aria-expanded={servicesOpen}
+                    aria-expanded={aboutOpen}
                     aria-haspopup="true"
                   >
-                    {isServicesActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-gray-900" />
+                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
+                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
+                      {it.label}
+                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
+                    </span>
+                    {isAboutActive && (
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
                     )}
-                    <span className="relative z-10 whitespace-nowrap">{it.label}</span>
-                    <span className="relative z-10 ml-0.5 text-[10px] opacity-70">▾</span>
                   </button>
-                  {servicesOpen && (
-                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[220px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
-                      <Link
-                        href={withLocale("/services")}
-                        onClick={() => setServicesOpen(false)}
-                        className="block border-b border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-white/5"
-                      >
-                        {nav.viewAllServices}
-                      </Link>
-                      {serviceNavItems.map(({ slug, label }) => (
+                  {aboutOpen && (
+                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[200px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
+                      {aboutDropdownItems.map(({ href, label }) => (
+                        <Link
+                          key={href}
+                          href={withLocale(href)}
+                          onClick={() => setAboutOpen(false)}
+                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            if (it.serviceGroupId === "website" && it.hasDropdown) {
+              const group = serviceGroups[0];
+              if (!group) return null;
+              return (
+                <div key="website" ref={websiteRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAboutOpen(false);
+                      setMarketingOpen(false);
+                      setWebsiteOpen((o) => !o);
+                    }}
+                    className={[
+                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
+                      isWebsiteActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                    ].join(" ")}
+                    aria-expanded={websiteOpen}
+                    aria-haspopup="true"
+                  >
+                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
+                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
+                      {group.label}
+                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
+                    </span>
+                    {isWebsiteActive && (
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                    )}
+                  </button>
+                  {websiteOpen && (
+                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[260px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
+                      {group.items.map(({ slug, label }) => (
                         <Link
                           key={slug}
                           href={withLocale(`/services/${slug}`)}
-                          onClick={() => setServicesOpen(false)}
-                          className="block px-4 py-2 text-sm text-gray-900/85 hover:bg-white/5 hover:text-gray-900"
+                          onClick={() => setWebsiteOpen(false)}
+                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            if (it.serviceGroupId === "marketing" && it.hasDropdown) {
+              const group = serviceGroups[1];
+              if (!group) return null;
+              return (
+                <div key="marketing" ref={marketingRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAboutOpen(false);
+                      setWebsiteOpen(false);
+                      setMarketingOpen((o) => !o);
+                    }}
+                    className={[
+                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
+                      isMarketingActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                    ].join(" ")}
+                    aria-expanded={marketingOpen}
+                    aria-haspopup="true"
+                  >
+                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
+                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
+                      {group.label}
+                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
+                    </span>
+                    {isMarketingActive && (
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                    )}
+                  </button>
+                  {marketingOpen && (
+                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[280px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
+                      {group.items.map(({ slug, label }) => (
+                        <Link
+                          key={slug}
+                          href={withLocale(`/services/${slug}`)}
+                          onClick={() => setMarketingOpen(false)}
+                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
                         >
                           {label}
                         </Link>
@@ -248,14 +382,15 @@ export default function Navbar() {
                 key={it.href}
                 href={withLocale(it.href)}
                 className={[
-                  "relative rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                  active ? "text-gray-900" : "text-gray-600 hover:text-gray-900",
+                  "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
+                  active ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
                 ].join(" ")}
               >
-{active && (
-                <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-gray-900" />
-              )}
+                <span className="text-[10px] font-medium text-gray-500">{num}</span>
                 <span className="relative z-10 whitespace-nowrap">{it.label}</span>
+                {active && (
+                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                )}
               </Link>
             );
           })}
@@ -267,7 +402,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 transition hover:border-gray-300 hover:bg-gray-50"
+              className="flex items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -282,12 +417,12 @@ export default function Navbar() {
                 />
               )}
               <span className="text-xs">{LOCALE_FLAGS[locale as (typeof LOCALES)[number]]?.label ?? locale.toUpperCase()}</span>
-              <svg className={`h-4 w-4 text-gray-900/60 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`h-4 w-4 text-gray-400 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {langDropdownOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-gray-200 bg-white py-1 shadow-xl">
+              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl">
                 {LOCALES.map((l) => {
                   const active = l === locale;
                   const info = LOCALE_FLAGS[l];
@@ -298,7 +433,7 @@ export default function Navbar() {
                       onClick={() => setLangDropdownOpen(false)}
                       className={[
                         "flex items-center gap-3 px-4 py-2.5 text-sm transition-colors",
-                        active ? "bg-gray-100 text-gray-900 font-medium" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                        active ? "bg-gray-800 text-white font-medium" : "text-gray-300 hover:bg-gray-800 hover:text-white",
                       ].join(" ")}
                     >
                       <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
@@ -312,14 +447,14 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#1e222a] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#2a3039] md:inline-flex md:whitespace-nowrap"
+            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b08d45] md:inline-flex md:whitespace-nowrap"
           >
             {nav.getQuote}
           </Link>
 
           <button
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white/30 text-gray-900/80 hover:bg-white/40 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -330,63 +465,148 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-200 bg-white/95 md:hidden">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black md:hidden">
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {
-                if (it.href === "/services") {
+                if (it.href === "/about" && it.hasDropdown) {
                   return (
                     <div
-                      key="services-mobile"
-                      className={`space-y-1 ${mobileServicesOpen ? "border-b border-gray-200 pb-3 mb-2" : ""}`}
+                      key="about-mobile"
+                      className={`space-y-1 ${mobileAboutOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
                     >
                       <button
                         type="button"
-                        onClick={() => setMobileServicesOpen((o) => !o)}
-                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-900/90 hover:bg-gray-100"
-                        aria-expanded={mobileServicesOpen}
-                        aria-controls="mobile-services-list"
-                        id="mobile-services-button"
+                        onClick={() => setMobileAboutOpen((o) => !o)}
+                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
+                        aria-expanded={mobileAboutOpen}
+                        aria-controls="mobile-about-list"
+                        id="mobile-about-button"
                       >
-                        <span>{nav.services}</span>
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-lg font-medium text-gray-900/90" aria-hidden>
-                          {mobileServicesOpen ? "−" : "+"}
+                        <span>{nav.about}</span>
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
+                          {mobileAboutOpen ? "−" : "+"}
                         </span>
                       </button>
                       <div
-                        id="mobile-services-list"
+                        id="mobile-about-list"
                         role="region"
-                        aria-labelledby="mobile-services-button"
-                        className={`overflow-hidden transition-all duration-200 ${mobileServicesOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}
+                        aria-labelledby="mobile-about-button"
+                        className={`overflow-hidden transition-all duration-200 ${mobileAboutOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
                       >
                         <div className="space-y-1 pt-1">
-                          <Link
-                            href={withLocale("/services")}
-                            onClick={() => { setOpen(false); setMobileServicesOpen(false); }}
-                            className={[
-                              "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
-                              pathname === withLocale("/services")
-                                ? "bg-gray-100 text-gray-900"
-                                : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
-                            ].join(" ")}
-                          >
-                            <span>{nav.viewAllServices}</span>
-                            <span className="text-gray-900/40">→</span>
-                          </Link>
-                          {serviceNavItems.map(({ slug, label }) => (
+                          {aboutDropdownItems.map(({ href, label }) => (
                             <Link
-                              key={slug}
-                              href={withLocale(`/services/${slug}`)}
-                              onClick={() => { setOpen(false); setMobileServicesOpen(false); }}
+                              key={href}
+                              href={withLocale(href)}
+                              onClick={() => { setOpen(false); setMobileAboutOpen(false); }}
                               className={[
                                 "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
-                                pathname === withLocale(`/services/${slug}`)
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
+                                pathname === withLocale(href)
+                                  ? "bg-gray-800 text-white"
+                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
                               ].join(" ")}
                             >
                               <span>{label}</span>
-                              <span className="text-gray-900/40">→</span>
+                              <span className="text-gray-500">→</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                if (it.serviceGroupId === "website" && it.hasDropdown) {
+                  const group = serviceGroups[0];
+                  if (!group) return null;
+                  return (
+                    <div
+                      key="website-mobile"
+                      className={`space-y-1 ${mobileWebsiteOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setMobileWebsiteOpen((o) => !o)}
+                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
+                        aria-expanded={mobileWebsiteOpen}
+                        aria-controls="mobile-website-list"
+                        id="mobile-website-button"
+                      >
+                        <span>{group.label}</span>
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
+                          {mobileWebsiteOpen ? "−" : "+"}
+                        </span>
+                      </button>
+                      <div
+                        id="mobile-website-list"
+                        role="region"
+                        aria-labelledby="mobile-website-button"
+                        className={`overflow-hidden transition-all duration-200 ${mobileWebsiteOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        <div className="space-y-1 pt-1">
+                          {group.items.map(({ slug, label }) => (
+                            <Link
+                              key={slug}
+                              href={withLocale(`/services/${slug}`)}
+                              onClick={() => { setOpen(false); setMobileWebsiteOpen(false); }}
+                              className={[
+                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
+                                pathname === withLocale(`/services/${slug}`)
+                                  ? "bg-gray-800 text-white"
+                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
+                              ].join(" ")}
+                            >
+                              <span>{label}</span>
+                              <span className="text-gray-500">→</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                if (it.serviceGroupId === "marketing" && it.hasDropdown) {
+                  const group = serviceGroups[1];
+                  if (!group) return null;
+                  return (
+                    <div
+                      key="marketing-mobile"
+                      className={`space-y-1 ${mobileMarketingOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setMobileMarketingOpen((o) => !o)}
+                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
+                        aria-expanded={mobileMarketingOpen}
+                        aria-controls="mobile-marketing-list"
+                        id="mobile-marketing-button"
+                      >
+                        <span>{group.label}</span>
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
+                          {mobileMarketingOpen ? "−" : "+"}
+                        </span>
+                      </button>
+                      <div
+                        id="mobile-marketing-list"
+                        role="region"
+                        aria-labelledby="mobile-marketing-button"
+                        className={`overflow-hidden transition-all duration-200 ${mobileMarketingOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        <div className="space-y-1 pt-1">
+                          {group.items.map(({ slug, label }) => (
+                            <Link
+                              key={slug}
+                              href={withLocale(`/services/${slug}`)}
+                              onClick={() => { setOpen(false); setMobileMarketingOpen(false); }}
+                              className={[
+                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
+                                pathname === withLocale(`/services/${slug}`)
+                                  ? "bg-gray-800 text-white"
+                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
+                              ].join(" ")}
+                            >
+                              <span>{label}</span>
+                              <span className="text-gray-500">→</span>
                             </Link>
                           ))}
                         </div>
@@ -403,20 +623,20 @@ export default function Navbar() {
                     className={[
                       "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
                       active
-                        ? "bg-gray-100 text-gray-900"
-                        : "bg-white/5 text-gray-900/80 hover:bg-gray-100",
+                        ? "bg-gray-800 text-white"
+                        : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
                     ].join(" ")}
                   >
                     <span>{it.label}</span>
-                    <span className="text-gray-900/40">→</span>
+                    <span className="text-gray-500">→</span>
                   </Link>
                 );
               })}
             </div>
 
-            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-white/30 p-3">
+            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-gray-700 bg-gray-800/50 p-3">
               <div className="flex-1">
-                <p className="text-xs text-gray-900/60">{nav.language}</p>
+                <p className="text-xs text-gray-400">{nav.language}</p>
                 <div className="mt-2 flex gap-2">
                 {LOCALES.map((l) => {
                   const active = l === locale;
@@ -429,8 +649,8 @@ export default function Navbar() {
                       className={[
                         "flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-center text-xs font-medium transition-colors",
                         active
-                          ? "bg-[#1e222a] text-white"
-                          : "border border-gray-200 text-gray-700 hover:bg-gray-100",
+                          ? "bg-white text-black"
+                          : "border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white",
                       ].join(" ")}
                     >
                       <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
@@ -445,7 +665,7 @@ export default function Navbar() {
             <Link
               href={withLocale("/contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#1e222a] px-5 text-sm font-medium text-white shadow-sm transition hover:bg-[#2a3039] whitespace-nowrap"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b08d45] whitespace-nowrap"
             >
               {nav.getQuote}
             </Link>

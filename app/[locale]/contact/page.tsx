@@ -241,11 +241,11 @@ export default function ContactPage() {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+        <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
           {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
-        </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-6xl">
+        </span>
+        <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
           {locale === "sq" ? (
             <>Le të flasim për <span className="text-gray-900">rritjen</span> tënde</>
           ) : locale === "de" ? (
@@ -254,7 +254,7 @@ export default function ContactPage() {
             <>Let&apos;s talk about your <span className="text-gray-900">growth</span></>
           )}
         </h1>
-        <p className="mt-5 max-w-2xl text-base text-gray-600 md:text-lg">
+        <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
           {locale === "sq"
             ? "Dërgo një mesazh dhe kthehemi me një plan të shkurtër: çfarë bëjmë, sa zgjat dhe çfarë rezultati synojmë."
             : locale === "de"

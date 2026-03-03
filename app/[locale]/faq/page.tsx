@@ -21,9 +21,11 @@ export default function FaqPage() {
   return (
     <section className="py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <p className="text-xs uppercase tracking-[0.2em] text-gray-600">FAQ</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">{title}</h1>
-      <p className="mt-4 max-w-xl text-gray-600">{subtitle}</p>
+      <div className="text-center">
+        <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">FAQ</span>
+        <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">{title}</h1>
+        <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">{subtitle}</p>
+      </div>
 
       <div className="mt-10 space-y-3">
         {faqs.map((faq, i) => (

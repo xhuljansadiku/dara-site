@@ -178,12 +178,12 @@ export default function TrainingsSection({ locale }: Props) {
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <AnimateIn>
-            <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-gray-700">
+            <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
               {copy.kicker}
             </span>
           </AnimateIn>
           <AnimateIn delay={50}>
-            <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
               {copy.title}
             </h2>
           </AnimateIn>

@@ -401,41 +401,48 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO - Trifid style: full viewport, bold typography */}
-      <section className="relative min-h-screen flex flex-col justify-center px-6 py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[#FFFFFF]" aria-hidden />
+      <section className="relative min-h-screen min-h-[100dvh] flex flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 md:py-32 overflow-hidden">
+        <img
+          src="/hero-bg-dara.png"
+          alt=""
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
+          aria-hidden
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 -z-10 bg-black/40" aria-hidden />
         <div className="mx-auto w-full max-w-5xl">
-          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-gray-500 md:text-xs">
+          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-white/80 md:text-xs">
             {hero.kicker}
           </p>
-          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-gray-900 sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             {hero.titleA}{" "}
             <span className="block">{hero.titleB}</span>
           </h1>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mt-10 max-w-2xl text-base leading-relaxed text-gray-900/70 md:text-lg lg:text-xl">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mt-10 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
             {hero.desc}
           </p>
           <div className="animate-fade-in-up animate-fade-in-up-delay-3 mt-14 flex flex-wrap items-center gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-900 bg-gray-900 px-10 font-semibold text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white bg-white px-10 font-semibold text-black transition hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-300 px-10 font-medium text-gray-900 transition hover:border-gray-300 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white/60 px-10 font-medium text-white transition hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mt-10 text-sm text-gray-900/50">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mt-10 text-sm text-white/70">
             {hero.socialProof}
           </p>
         </div>
 
         <a
           href="#about"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 text-xs font-medium tracking-wider hover:text-gray-600 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 focus-visible:rounded"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/70 text-xs font-medium tracking-wider hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
           aria-label={hero.scrollHint}
         >
           {hero.scrollHint}
@@ -497,20 +504,20 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
       </section>
 
-      {/* Numbered services slider - Trifid style */}
+      {/* All services with numbers */}
       <section className="border-y border-gray-200 py-8">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 md:gap-x-16">
-            {services.slice(0, 6).map((s, idx) => (
+            {services.map((s, idx) => (
               <LocaleLink
                 key={idx}
-                href="/services"
+                href={`/services/${SERVICE_ANCHORS[idx]}`}
                 className="group flex items-center gap-3 text-gray-600 transition hover:text-gray-900"
               >
                 <span className="font-mono text-sm font-medium tabular-nums text-gray-500 group-hover:text-gray-900">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
-                <span className="text-sm font-medium md:text-base">{s.title}</span>
+                <span className="whitespace-nowrap text-sm font-medium md:text-base">{s.title}</span>
               </LocaleLink>
             ))}
           </div>

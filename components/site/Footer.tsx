@@ -2,7 +2,7 @@
 import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import BackToTop from "@/components/site/BackToTop";
-import { getServiceNavItems } from "@/lib/services-data";
+import { getServiceGroupNavItems } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
 import { PACKAGE_FILTER_TABS_BY_LOCALE } from "@/lib/packages-data";
 import { TRAININGS } from "@/lib/trainings-data";
@@ -108,20 +108,20 @@ const FOOTER_BY_LOCALE: Record<
 export default function Footer({ locale }: { locale: string }) {
   const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const t = FOOTER_BY_LOCALE[currentLocale] ?? FOOTER_BY_LOCALE.en;
-  const serviceNavItems = getServiceNavItems(currentLocale);
+  const serviceGroups = getServiceGroupNavItems(currentLocale).filter((g) => g.id !== "training");
   const packageTabs = PACKAGE_FILTER_TABS_BY_LOCALE[currentLocale].filter((tab) => tab.groups.length > 0);
   const trainings = TRAININGS;
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-gray-200 bg-gray-50">
+    <footer className="relative overflow-hidden border-t border-gray-800 bg-black">
       {/* Top accent line */}
-      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" aria-hidden />
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent" aria-hidden />
       <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20 lg:py-24">
         {/* Row 1: Brand | Services | Packages */}
         <div className="grid gap-10 md:gap-12 lg:grid-cols-3 lg:gap-x-0">
           {/* Column 1: Brand */}
-          <div className="border-b border-gray-200 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-200 lg:pr-12">
+          <div className="border-b border-gray-800 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-800 lg:pr-12">
             <Image
               src="/logo.png"
               alt="DARA Marketing Agency"
@@ -129,12 +129,12 @@ export default function Footer({ locale }: { locale: string }) {
               height={56}
               className="h-12 w-auto object-contain sm:h-14"
             />
-            <p className="mt-3 text-base font-medium text-gray-900/70">{t.tagline}</p>
-            <div className="mt-2 h-px w-12 bg-gray-400" aria-hidden />
-            <p className="mt-4 text-base leading-relaxed text-gray-600 max-w-sm">{t.desc}</p>
+            <p className="mt-3 text-base font-medium text-gray-400">{t.tagline}</p>
+            <div className="mt-2 h-px w-12 bg-gray-600" aria-hidden />
+            <p className="mt-4 text-base leading-relaxed text-gray-400 max-w-sm">{t.desc}</p>
             
             {/* Social Media */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
+            <div className="mt-8 pt-6 border-t border-gray-800">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">{t.followUs}</p>
               <div className="flex gap-2">
                 <a
@@ -142,9 +142,9 @@ export default function Footer({ locale }: { locale: string }) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-gray-100 transition-all hover:border-white/50 hover:bg-white/10"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-600 bg-gray-800 transition-all hover:border-gray-500 hover:bg-gray-700"
                 >
-                  <svg className="h-5 w-5 text-gray-900/70 transition-colors hover:text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 text-gray-400 transition-colors hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </a>
@@ -153,9 +153,9 @@ export default function Footer({ locale }: { locale: string }) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Facebook"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-gray-100 transition-all hover:border-white/50 hover:bg-white/10"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-600 bg-gray-800 transition-all hover:border-gray-500 hover:bg-gray-700"
                 >
-                  <svg className="h-5 w-5 text-gray-900/70 transition-colors hover:text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 text-gray-400 transition-colors hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
                 </a>
@@ -164,9 +164,9 @@ export default function Footer({ locale }: { locale: string }) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-gray-100 transition-all hover:border-white/50 hover:bg-white/10"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-600 bg-gray-800 transition-all hover:border-gray-500 hover:bg-gray-700"
                 >
-                  <svg className="h-5 w-5 text-gray-900/70 transition-colors hover:text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 text-gray-400 transition-colors hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </a>
@@ -174,39 +174,48 @@ export default function Footer({ locale }: { locale: string }) {
             </div>
           </div>
 
-          {/* Column 2: Services */}
-          <div className="border-b border-gray-200 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-200 lg:px-12">
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+          {/* Column 2: Services (grouped: Website, Marketing, Branding, Trajnime) */}
+          <div className="border-b border-gray-800 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-800 lg:px-12">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.servicesTitle}
             </h3>
-            <ul className="space-y-3 text-base text-gray-600">
-              {serviceNavItems.map(({ slug, label }) => (
-                <li key={slug}>
-                  <LocaleLink
-                    href={`/services/${slug}`}
-                    className="transition-colors duration-200 hover:text-gray-900"
-                  >
-                    {label}
-                  </LocaleLink>
-                </li>
+            <div className="space-y-6">
+              {serviceGroups.map((group) => (
+                <div key={group.id}>
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-500">
+                    {group.label}
+                  </p>
+                  <ul className="space-y-2 text-base text-gray-400">
+                    {group.items.map(({ slug, label }) => (
+                      <li key={slug}>
+                        <LocaleLink
+                          href={`/services/${slug}`}
+                          className="transition-colors duration-200 hover:text-white"
+                        >
+                          {label}
+                        </LocaleLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Column 3: Packages */}
           <div className="lg:pl-12">
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.packagesTitle}
             </h3>
-            <ul className="space-y-3 text-base text-gray-600">
+            <ul className="space-y-3 text-base text-gray-400">
               <li>
-                <LocaleLink href="/packages" className="transition-colors duration-200 hover:text-gray-900">
+                <LocaleLink href="/packages" className="transition-colors duration-200 hover:text-white">
                   {t.links.packages}
                 </LocaleLink>
               </li>
               {packageTabs.map((tab) => (
                 <li key={tab.label}>
-                  <LocaleLink href="/packages" className="transition-colors duration-200 hover:text-gray-900">
+                  <LocaleLink href="/packages" className="transition-colors duration-200 hover:text-white">
                     {tab.label}
                   </LocaleLink>
                 </li>
@@ -221,13 +230,13 @@ export default function Footer({ locale }: { locale: string }) {
         {/* Row 2: Trainings | Links | Contact */}
         <div className="grid gap-10 md:gap-12 lg:grid-cols-3 lg:gap-x-0">
           {/* Column 4: Trainings */}
-          <div className="border-b border-gray-200 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-200 lg:pr-12">
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+          <div className="border-b border-gray-800 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-800 lg:pr-12">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.trainingsTitle}
             </h3>
-            <ul className="space-y-3 text-base text-gray-600">
+            <ul className="space-y-3 text-base text-gray-400">
               <li>
-                <LocaleLink href="/trainings" className="transition-colors duration-200 hover:text-gray-900">
+                <LocaleLink href="/trainings" className="transition-colors duration-200 hover:text-white">
                   {t.links.trainings}
                 </LocaleLink>
               </li>
@@ -235,7 +244,7 @@ export default function Footer({ locale }: { locale: string }) {
                 <li key={training.slug}>
                   <LocaleLink
                     href={`/trainings/${training.slug}`}
-                    className="transition-colors duration-200 hover:text-gray-900"
+                    className="transition-colors duration-200 hover:text-white"
                   >
                     {training.title[currentLocale]}
                   </LocaleLink>
@@ -245,15 +254,15 @@ export default function Footer({ locale }: { locale: string }) {
           </div>
 
           {/* Column 5: Links */}
-          <div className="lg:border-r lg:border-gray-200 lg:px-12">
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+          <div className="lg:border-r lg:border-gray-800 lg:px-12">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.linksTitle}
             </h3>
-            <ul className="space-y-3 text-base text-gray-600">
+            <ul className="space-y-3 text-base text-gray-400">
               <li>
                 <LocaleLink
                   href="/"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.home}
                 </LocaleLink>
@@ -261,7 +270,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/about"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.about}
                 </LocaleLink>
@@ -269,7 +278,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/services"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.services}
                 </LocaleLink>
@@ -277,7 +286,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/work"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.work}
                 </LocaleLink>
@@ -285,7 +294,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/careers"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.careers}
                 </LocaleLink>
@@ -293,7 +302,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/contact"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.contact}
                 </LocaleLink>
@@ -301,7 +310,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/faq"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.links.faq}
                 </LocaleLink>
@@ -309,7 +318,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/privacy"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.legal.privacy}
                 </LocaleLink>
@@ -317,7 +326,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <LocaleLink
                   href="/terms"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   {t.legal.terms}
                 </LocaleLink>
@@ -327,29 +336,29 @@ export default function Footer({ locale }: { locale: string }) {
 
           {/* Column 6: Contact */}
           <div className="lg:pl-12">
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.addressTitle}
             </h3>
-            <ul className="mb-8 space-y-3 text-base text-gray-600">
+            <ul className="mb-8 space-y-3 text-base text-gray-400">
               <li>
                 <a
                   href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
                   target="_blank"
                   rel="noreferrer"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   Rruga Donika Kastrioti, Bllok, Tiranë, Albania
                 </a>
               </li>
             </ul>
-            <h3 className="mb-5 border-b border-gray-300 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900">
+            <h3 className="mb-5 border-b border-gray-600 pb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {t.contactTitle}
             </h3>
-            <ul className="space-y-3 text-base text-gray-600">
+            <ul className="space-y-3 text-base text-gray-400">
               <li className="flex items-center gap-3">
                 <a
                   href="tel:+355688009988"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   +355 68 800 9988
                 </a>
@@ -361,7 +370,7 @@ export default function Footer({ locale }: { locale: string }) {
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#25D366] transition-all hover:scale-110 hover:shadow-[0_0_16px_rgba(37,211,102,0.5)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
                   aria-label={t.whatsAppHover}
                 >
-                  <svg className="h-5 w-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                   </svg>
                 </a>
@@ -369,7 +378,7 @@ export default function Footer({ locale }: { locale: string }) {
               <li>
                 <a
                   href="mailto:daramarketing.eu@gmail.com"
-                  className="transition-colors duration-200 hover:text-gray-900"
+                  className="transition-colors duration-200 hover:text-white"
                 >
                   daramarketing.eu@gmail.com
                 </a>
@@ -379,8 +388,8 @@ export default function Footer({ locale }: { locale: string }) {
         </div>
 
         {/* Copyright - Separate at the bottom */}
-        <div className="mt-16 lg:mt-20 flex flex-col items-center gap-4 border-t border-white/[0.08] pt-10">
-          <div className="h-px w-24 bg-gray-1000" aria-hidden />
+        <div className="mt-16 lg:mt-20 flex flex-col items-center gap-4 border-t border-gray-800 pt-10">
+          <div className="h-px w-24 bg-gray-600" aria-hidden />
           <p className="text-center text-sm text-gray-500">
             {t.copyright.replace("{year}", String(year))}
           </p>

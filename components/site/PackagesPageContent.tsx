@@ -99,31 +99,33 @@ export default function PackagesPageContent({ locale }: Props) {
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
         <AnimateIn delay={0}>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">{hero.kicker}</p>
+          <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
+            {hero.kicker}
+          </span>
         </AnimateIn>
 
         <AnimateIn delay={100}>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
             {hero.title}
             <span className="text-gray-900">{hero.titleAccent}</span>
           </h1>
         </AnimateIn>
 
         <AnimateIn delay={200}>
-          <p className="mt-5 mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{hero.subtitle}</p>
+          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">{hero.subtitle}</p>
         </AnimateIn>
 
         <AnimateIn delay={300}>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-12 w-full items-center justify-center rounded-full bg-gray-900 px-6 font-medium text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 sm:w-auto"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
             >
               {hero.getQuote}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-12 w-full items-center justify-center rounded-full border-2 border-gray-300 px-6 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 sm:w-auto"
+              className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
             >
               {hero.viewServices}
             </LocaleLink>
