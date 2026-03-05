@@ -25,12 +25,12 @@ export async function generateStaticParams() {
 /** Hero + gallery images per service slug (optional) */
 const SERVICE_IMAGES: Record<string, string[]> = {
   "website-landing": [
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
-    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-    "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80",
+    "/images/services/website/website-cover.jpg",
+    "/images/services/website/website-1.jpg",
+    "/images/services/website/website-2.jpg",
   ],
   ecommerce: [
-    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
+    "/images/services/e-commerce/e-commerce-cover.jpg",
     "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
     "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
   ],
@@ -40,39 +40,39 @@ const SERVICE_IMAGES: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
   ],
   maintenance: [
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
+    "/images/services/maintenance/maintenance-cover.jpg",
     "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
   ],
   "social-media": [
-    "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80",
-    "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
-    "https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80",
+    "/images/services/social-media/social-media-cover.jpg",
+    "/images/services/social-media/social-media-1.jpg",
+    "/images/services/social-media/social-media-2.jpg",
   ],
   content: [
-    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80",
-    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
-    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
+    "/images/services/content-creation/content-creation-cover.jpg",
+    "/images/services/content-creation/content-creation-1.jpg",
+    "/images/services/content-creation/content-creation-2.jpg",
   ],
   strategy: [
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80",
+    "/images/services/digital-marketing/digital-marketing-cover.jpg",
+    "/images/services/digital-marketing/digital-marketing-1.jpg",
+    "/images/services/digital-marketing/digital-marketing-2.jpg",
   ],
   ads: [
-    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80",
-    "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
-    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+    "/images/services/ads/ads-cover.jpg",
+    "/images/services/ads/ads-1.jpg",
+    "/images/services/ads/ads-2.jpg",
   ],
   consulting: [
-    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
-    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+    "/images/services/consulting/consulting-cover.jpg",
+    "/images/services/consulting/consulting-1.jpg",
+    "/images/services/consulting/consulting-2.jpg",
   ],
   branding: [
-    "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80",
-    "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=800&q=80",
-    "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80",
+    "/images/services/branding/branding-cover.jpg",
+    "/images/services/branding/branding-1.jpg",
+    "/images/services/branding/branding-2.jpg",
   ],
 };
 

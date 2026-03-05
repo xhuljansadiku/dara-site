@@ -470,10 +470,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             {(
               locale === "sq"
                 ? [
-                    { title: "KREATIVITETI", desc: "Kreativiteti është të shpikësh, eksperimentosh, rritesh, marrësh rreziqe dhe thyesh rregullat." },
-                    { title: "UNIKALITETI", desc: "Për të qenë i pazëvendësueshëm, duhet gjithmonë të jesh i ndryshëm." },
-                    { title: "INOVACIONI", desc: "Inovacioni është të shohësh çfarë të gjithë kanë parë dhe të mendosh çfarë askush nuk ka menduar." },
-                    { title: "REZULTATET", desc: "DARA është një partner që fokuson te rezultatet dhe rritja e matshme e biznesit." },
+                    { title: "KREATIVITETI", desc: "Kreativiteti është të krijosh, të provosh gjëra të reja, të zhvillohesh, të marrësh rreziqe dhe të thyesh rregullat për të sjellë ide të reja." },
+                    { title: "UNIK", desc: "Që të jesh i pazëvendësueshëm, duhet gjithmonë të jesh ndryshe." },
+                    { title: "INOVACION", desc: "Inovacioni është të shohësh atë që të gjithë e kanë parë, por të mendosh atë që askush tjetër nuk e ka menduar." },
+                    { title: "REZULTATE", desc: "DARA është një partner që fokusohet në rezultate reale biznesi dhe në rritjen e qëndrueshme të klientëve. 🚀" },
                   ]
                 : locale === "de"
                 ? [
@@ -488,10 +488,20 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     { title: "INNOVATION", desc: "Innovation is seeing what everybody has seen and thinking what nobody has thought." },
                     { title: "RESULTS", desc: "DARA is a partner focused on measurable business results and growth." },
                   ]
-            ).map((pillar, idx) => (
+            ).map((pillar, idx) => {
+              const icons = [
+                <svg key="c" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>,
+                <svg key="u" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>,
+                <svg key="i" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+                <svg key="r" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>,
+              ];
+              return (
               <AnimateIn key={pillar.title} delay={idx * 80}>
                 <div className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5">
-                  <h3 className="font-display text-xl font-bold uppercase tracking-wider text-gray-900 md:text-2xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/10 text-[#c8a55c]">
+                    {icons[idx]}
+                  </div>
+                  <h3 className="mt-4 font-display text-xl font-bold uppercase tracking-wider text-gray-900 md:text-2xl">
                     {pillar.title}
                   </h3>
                   <p className="mt-4 flex-1 text-sm leading-relaxed text-gray-600">
@@ -499,7 +509,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   </p>
                 </div>
               </AnimateIn>
-            ))}
+            );})}
           </div>
         </div>
       </section>
