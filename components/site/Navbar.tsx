@@ -99,6 +99,19 @@ export default function Navbar() {
   const websiteRef = useRef<HTMLDivElement>(null);
   const marketingRef = useRef<HTMLDivElement>(null);
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const scheduleClose = (fn: () => void, delay = 120) => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(fn, delay);
+  };
 
   const LOCALE_FLAGS: Record<(typeof LOCALES)[number], { flagSrc: string; label: string }> = {
     sq: { flagSrc: "https://flagcdn.com/w40/al.png", label: "Shqip" },
@@ -127,7 +140,7 @@ export default function Navbar() {
   const aboutDropdownItems = useMemo(
     () => [
       { label: nav.about, href: "/about" },
-      { label: nav.team, href: "/team" },
+      // { label: nav.team, href: "/team" }, // TODO: shtohet më vonë
       { label: nav.careers, href: "/careers" },
       { label: nav.faq, href: "/faq" },
     ],
@@ -135,15 +148,18 @@ export default function Navbar() {
   );
 
   const isServicesActive = pathname === withLocale("/services") || pathname.startsWith(withLocale("/services/"));
-  const isWebsiteActive = ["website-landing", "ecommerce", "saas", "maintenance"].some((s) =>
-    pathname.includes(`/services/${s}`)
-  );
-  const isMarketingActive = ["social-media", "content", "strategy", "ads", "consulting"].some((s) =>
-    pathname.includes(`/services/${s}`)
-  );
+  const isWebsiteActive =
+    pathname.includes("/services/website") ||
+    ["website-landing", "ecommerce", "saas", "maintenance"].some((s) =>
+      pathname.includes(`/services/${s}`)
+    );
+  const isMarketingActive =
+    pathname.includes("/services/marketing") ||
+    ["social-media", "content", "strategy", "ads", "consulting"].some((s) =>
+      pathname.includes(`/services/${s}`)
+    );
   const isAboutActive =
     pathname === withLocale("/about") ||
-    pathname === withLocale("/team") ||
     pathname === withLocale("/careers") ||
     pathname === withLocale("/faq");
 
@@ -182,6 +198,8 @@ export default function Navbar() {
       setMobileMarketingOpen(false);
     }
   }, [open]);
+
+  useEffect(() => () => clearCloseTimeout(), []);
 
   useEffect(() => {
     if (!langDropdownOpen) return;
@@ -245,7 +263,18 @@ export default function Navbar() {
             const num = String(idx + 1).padStart(2, "0");
             if (it.href === "/about" && it.hasDropdown) {
               return (
-                <div key="about" ref={aboutRef} className="relative">
+                <div
+                  key="about"
+                  ref={aboutRef}
+                  className="relative"
+                  onMouseEnter={() => {
+                    clearCloseTimeout();
+                    setWebsiteOpen(false);
+                    setMarketingOpen(false);
+                    setAboutOpen(true);
+                  }}
+                  onMouseLeave={() => scheduleClose(() => setAboutOpen(false))}
+                >
                   <button
                     type="button"
                     onClick={() => {
@@ -290,14 +319,20 @@ export default function Navbar() {
               const group = serviceGroups[0];
               if (!group) return null;
               return (
-                <div key="website" ref={websiteRef} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAboutOpen(false);
-                      setMarketingOpen(false);
-                      setWebsiteOpen((o) => !o);
-                    }}
+                <div
+                  key="website"
+                  ref={websiteRef}
+                  className="relative"
+                  onMouseEnter={() => {
+                    clearCloseTimeout();
+                    setAboutOpen(false);
+                    setMarketingOpen(false);
+                    setWebsiteOpen(true);
+                  }}
+                  onMouseLeave={() => scheduleClose(() => setWebsiteOpen(false))}
+                >
+                  <Link
+                    href={withLocale("/services/website")}
                     className={[
                       "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
                       isWebsiteActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
@@ -313,7 +348,7 @@ export default function Navbar() {
                     {isWebsiteActive && (
                       <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
                     )}
-                  </button>
+                  </Link>
                   {websiteOpen && (
                     <div className="absolute left-0 top-full z-50 mt-1 min-w-[260px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
                       {group.items.map(({ slug, label }) => (
@@ -335,14 +370,20 @@ export default function Navbar() {
               const group = serviceGroups[1];
               if (!group) return null;
               return (
-                <div key="marketing" ref={marketingRef} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAboutOpen(false);
-                      setWebsiteOpen(false);
-                      setMarketingOpen((o) => !o);
-                    }}
+                <div
+                  key="marketing"
+                  ref={marketingRef}
+                  className="relative"
+                  onMouseEnter={() => {
+                    clearCloseTimeout();
+                    setAboutOpen(false);
+                    setWebsiteOpen(false);
+                    setMarketingOpen(true);
+                  }}
+                  onMouseLeave={() => scheduleClose(() => setMarketingOpen(false))}
+                >
+                  <Link
+                    href={withLocale("/services/marketing")}
                     className={[
                       "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
                       isMarketingActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
@@ -358,7 +399,7 @@ export default function Navbar() {
                     {isMarketingActive && (
                       <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
                     )}
-                  </button>
+                  </Link>
                   {marketingOpen && (
                     <div className="absolute left-0 top-full z-50 mt-1 min-w-[280px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
                       {group.items.map(({ slug, label }) => (

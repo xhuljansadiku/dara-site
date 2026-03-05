@@ -17,6 +17,11 @@ export default withNextIntl({
       },
       {
         protocol: "https",
+        hostname: "unsplash.com",
+        pathname: "/photos/**",
+      },
+      {
+        protocol: "https",
         hostname: "flagcdn.com",
         pathname: "/**",
       },

@@ -507,7 +507,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
       <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
-            <div className="order-2 lg:order-1">
+            <div className="relative order-1 lg:order-2">
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {hero.kicker}
               </span>
@@ -557,12 +557,12 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               </div>
             </div>
 
-            <div className="relative order-1 lg:order-2">
+            <div className="relative order-2 lg:order-1">
               <div className="relative overflow-hidden rounded-2xl border border-gray-200 shadow-lg lg:rounded-3xl">
                 <div className="aspect-[4/3] overflow-hidden lg:aspect-[5/4]">
                   <Image
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                    alt="DARA Marketing Agency. Team and collaboration"
+                    src="https://unsplash.com/photos/QckxruozjRg/download?w=1920&q=80"
+                    alt="Ekipi DARA duke punuar"
                     width={900}
                     height={600}
                     className="h-full w-full object-cover"

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import { getServiceBySlug, SERVICE_SLUGS } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
@@ -20,6 +21,60 @@ export async function generateStaticParams() {
     SERVICE_SLUGS.map((slug) => ({ locale, slug }))
   );
 }
+
+/** Hero + gallery images per service slug (optional) */
+const SERVICE_IMAGES: Record<string, string[]> = {
+  "website-landing": [
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+    "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80",
+  ],
+  ecommerce: [
+    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
+    "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
+    "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
+  ],
+  saas: [
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+  ],
+  maintenance: [
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
+    "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+  ],
+  "social-media": [
+    "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80",
+    "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
+    "https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80",
+  ],
+  content: [
+    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80",
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
+  ],
+  strategy: [
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80",
+  ],
+  ads: [
+    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80",
+    "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+  ],
+  consulting: [
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+  ],
+  branding: [
+    "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80",
+    "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=800&q=80",
+    "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80",
+  ],
+};
 
 const CTA_BY_LOCALE: Record<
   Locale,
@@ -108,10 +163,25 @@ export default function ServiceSlugPage({ params }: Props) {
     ...(service.price && { offers: { "@type": "Offer", price: service.price } }),
   };
 
+  const images = SERVICE_IMAGES[slug];
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      {images && images[0] && (
+        <section className="relative h-56 w-full overflow-hidden md:h-72">
+          <Image
+            src={images[0]}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        </section>
+      )}
       <section className="relative overflow-hidden py-8 md:py-12">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/10 blur-3xl" />
@@ -161,6 +231,26 @@ export default function ServiceSlugPage({ params }: Props) {
               </div>
             )}
           </div>
+          </div>
+        </section>
+      )}
+
+      {images && images.length > 1 && (
+        <section className="py-8 md:py-10">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-4 sm:grid-cols-2 md:gap-6">
+              {images.slice(1).map((src, i) => (
+                <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}

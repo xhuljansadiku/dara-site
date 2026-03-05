@@ -18,7 +18,7 @@ import { SERVICE_DETAILS_BY_LOCALE } from "@/lib/services-data";
 
 type Locale = "sq" | "en" | "de";
 
-const SHOW_TEAM = false; // Vendos true kur të kesh foto
+const SHOW_TEAM = false; // TODO: shtohet më vonë
 
 const HERO_BY_LOCALE: Record<
   Locale,
@@ -530,7 +530,23 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)]" />
         <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
-            <div>
+            <AnimateIn delay={100}>
+              <div className="relative order-2 lg:order-1 lg:pr-4">
+                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
+                  <Image
+                    src="https://unsplash.com/photos/QckxruozjRg/download?w=1920&q=80"
+                    alt="Ekipi DARA duke punuar"
+                    width={900}
+                    height={600}
+                    className="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute -right-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-gray-200 lg:-right-4 lg:-top-4" aria-hidden />
+              </div>
+            </AnimateIn>
+            <div className="order-1 lg:order-2">
               <AnimateIn>
                 <span className="inline-block rounded-full border border-gray-300 bg-gray-100 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-gray-900">
                   {about.kicker}
@@ -579,22 +595,6 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </div>
               </AnimateIn>
             </div>
-            <AnimateIn delay={100}>
-              <div className="relative lg:pl-4">
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80"
-                    alt="DARA Marketing Agency  team and collaboration"
-                    width={900}
-                    height={600}
-                    className="h-full w-full object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="absolute -left-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-gray-200 lg:-left-4 lg:-top-4" aria-hidden />
-              </div>
-            </AnimateIn>
           </div>
         </div>
         </div>
@@ -709,9 +709,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
         <div className="grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? `${yearsExperienceFormatted} vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve.` : locale === "de" ? `${yearsExperienceFormatted} Jahre im Marketing. Experte für Strategie und Unternehmenswachstum.` : `${yearsExperienceFormatted} years in marketing. Expert in strategy and business growth.`, img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
-            { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
-            { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", bio: locale === "sq" ? "Specialist në rrjetet sociale dhe strategji përmbajtjeje." : locale === "de" ? "Spezialistin für Social Media und Content-Strategie." : "Specialist in social media and content strategy.", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? `${yearsExperienceFormatted} vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve.` : locale === "de" ? `${yearsExperienceFormatted} Jahre im Marketing. Experte für Strategie und Unternehmenswachstum.` : `${yearsExperienceFormatted} years in marketing. Expert in strategy and business growth.`, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
+            { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", bio: locale === "sq" ? "Specialist në rrjetet sociale dhe strategji përmbajtjeje." : locale === "de" ? "Spezialistin für Social Media und Content-Strategie." : "Specialist in social media and content strategy.", img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
           ].map((member) => (
             <div
               key={member.name}
