@@ -535,25 +535,25 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ABOUT US  scroll animations, stats visuals */}
-      <section id="about" className="relative py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6">
+      <section id="about" className="relative py-16 sm:py-20 md:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)]" />
-        <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-10 lg:p-12">
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-gray-200 bg-gray-50 p-4 sm:p-6 md:p-10 lg:p-12">
+          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
             <AnimateIn delay={100}>
-              <div className="relative order-2 lg:order-1 lg:pr-4">
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:aspect-auto lg:min-h-[380px]">
-                  <Image
-                    src="https://unsplash.com/photos/QckxruozjRg/download?w=1920&q=80"
-                    alt="Ekipi DARA duke punuar"
-                    width={900}
-                    height={600}
-                    className="h-full w-full object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    loading="lazy"
-                  />
+              <div className="relative order-2 lg:order-1 flex justify-center items-center">
+                <div className="relative w-full max-w-[260px] sm:max-w-[300px] mx-auto">
+                  <div className="aspect-[9/16] overflow-hidden rounded-[1.5rem] border-4 border-gray-200 bg-black shadow-2xl shadow-gray-400/20">
+                    <video
+                      src="/video/about-dara.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
-                <div className="absolute -right-2 -top-2 -z-10 h-full w-full rounded-2xl border-2 border-gray-200 lg:-right-4 lg:-top-4" aria-hidden />
               </div>
             </AnimateIn>
             <div className="order-1 lg:order-2">
@@ -563,7 +563,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </span>
               </AnimateIn>
               <AnimateIn delay={50}>
-                <h2 className="mt-6 font-display text-3xl font-semibold tracking-tight md:text-4xl xl:text-5xl">
+                <h2 className="mt-4 sm:mt-6 font-display text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl xl:text-5xl">
                   {about.title}
                 </h2>
               </AnimateIn>
@@ -585,11 +585,11 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </AnimateIn>
               )}
               <AnimateIn delay={250}>
-                <div className="mt-10 flex flex-wrap gap-6 sm:gap-8">
+                <div className="mt-8 sm:mt-10 flex flex-wrap gap-4 sm:gap-6 md:gap-8">
                   {aboutStats.map((stat) => (
                     <div key={stat.label} className="flex flex-col">
-                      <span className="text-3xl font-bold text-gray-900 md:text-4xl">{stat.value}</span>
-                      <span className="mt-0.5 text-sm text-gray-900/70">{stat.label}</span>
+                      <span className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">{stat.value}</span>
+                      <span className="mt-0.5 text-xs sm:text-sm text-gray-900/70">{stat.label}</span>
                     </div>
                   ))}
                 </div>

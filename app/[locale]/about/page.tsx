@@ -1,5 +1,4 @@
 // app/[locale]/about/page.tsx - About us (company-focused), localized sq/en/de
-import Image from "next/image";
 import { use } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import AnimateIn from "@/components/site/AnimateIn";
@@ -504,9 +503,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
   return (
     <>
       {/* HERO - Full-width modern hero */}
-      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+      <section className="relative overflow-hidden py-16 sm:py-20 md:py-28 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
+          <div className="grid items-center gap-10 sm:gap-14 md:gap-16 lg:grid-cols-2 lg:gap-20">
             <div className="relative order-1 lg:order-2">
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {hero.kicker}
@@ -557,22 +556,21 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               </div>
             </div>
 
-            <div className="relative order-2 lg:order-1">
-              <div className="relative overflow-hidden rounded-2xl border border-gray-200 shadow-lg lg:rounded-3xl">
-                <div className="aspect-[4/3] overflow-hidden lg:aspect-[5/4]">
-                  <Image
-                    src="https://unsplash.com/photos/QckxruozjRg/download?w=1920&q=80"
-                    alt="Ekipi DARA duke punuar"
-                    width={900}
-                    height={600}
+            <div className="relative order-2 lg:order-1 flex justify-center items-center">
+              <div className="relative w-full max-w-[280px] sm:max-w-[320px]">
+                <div className="aspect-[9/16] overflow-hidden rounded-[1.75rem] border-4 border-gray-900/10 bg-black shadow-2xl shadow-gray-900/10">
+                  <video
+                    src="/video/about-dara.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     className="h-full w-full object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                  <p className="text-sm font-medium text-white">DARA Marketing Agency</p>
-                  <p className="text-xs text-white/90">{hero.stats[1]?.v}</p>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <p className="text-sm font-medium text-white">DARA Marketing Agency</p>
+                    <p className="text-xs text-white/90">{hero.stats[1]?.v}</p>
+                  </div>
                 </div>
               </div>
             </div>

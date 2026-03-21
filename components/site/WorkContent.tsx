@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import ImageLightbox from "@/components/site/ImageLightbox";
 import ProjectCard from "@/components/site/ProjectCard";
@@ -84,12 +85,47 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
           ))}
         </div>
 
-        {/* GRID WITH THUMBNAILS */}
-        <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((p) => (
-            <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
-          ))}
-        </div>
+        {/* Social Media = large photos | Others = cards */}
+        {(() => {
+          const smProjects = filteredProjects.filter((p) => p.category === "social-media");
+          const otherProjects = filteredProjects.filter((p) => p.category !== "social-media");
+          return (
+            <div className="mt-10 space-y-10">
+              {smProjects.length > 0 && (
+                <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+                  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                    {smProjects.map((p) => {
+                      const imgs = p.images?.length ? p.images : p.thumbnail ? [p.thumbnail] : [];
+                      return (
+                        <button
+                          key={p.title}
+                          type="button"
+                          onClick={() => imgs.length && setLightbox({ images: imgs, index: 0 })}
+                          className="relative block aspect-[16/9] w-full min-h-[180px] overflow-hidden rounded-lg sm:rounded-xl sm:min-h-[220px] md:min-h-[260px]"
+                        >
+                          <Image
+                            src={p.thumbnail ?? p.images?.[0] ?? ""}
+                            alt={p.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1280px) 80vw, 1280px"
+                            className="object-cover"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+              {otherProjects.length > 0 && (
+                <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {otherProjects.map((p) => (
+                    <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {lightbox && (
           <ImageLightbox
