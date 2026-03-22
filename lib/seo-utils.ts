@@ -26,7 +26,9 @@ export function getAlternates(
   const pathPart = pathNorm ? `/${pathNorm}` : "";
 
   const canonical = `${BASE}/${currentLocale}${pathPart}`;
-  const languages: Record<string, string> = {};
+  const languages: Record<string, string> = {
+    "x-default": BASE, // neutral root for users who prefer no locale prefix
+  };
 
   for (const loc of LOCALES) {
     const url = `${BASE}/${loc}${pathPart}`;

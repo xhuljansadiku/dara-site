@@ -27,7 +27,15 @@ const staticPaths = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const entries: MetadataRoute.Sitemap = [];
+  const entries: MetadataRoute.Sitemap = [
+    // Root (neutral language selector) - x-default for hreflang
+    {
+      url: BASE,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 1,
+    },
+  ];
 
   for (const locale of locales) {
     for (const path of staticPaths) {
