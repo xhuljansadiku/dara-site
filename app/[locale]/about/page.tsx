@@ -7,15 +7,43 @@ import { getYearsOfExperienceFormatted } from "@/lib/experience";
 
 type Locale = "sq" | "en" | "de";
 
-export const metadata: Metadata = {
-  title: "About DARA",
-  description:
-    "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
-  openGraph: {
-    title: "About DARA | DARA Marketing Agency",
-    description: "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
+const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
+  sq: {
+    title: "Rreth nesh | Agjenci marketingu & web design Tiranë",
+    description:
+      "DARA Marketing Agency – agjenci marketingu në Tiranë, Shqipëri. Themeluar 2020. Krijim website, web design, branding dhe marketing digjital për kompani shqiptare dhe ndërkombëtare.",
+  },
+  en: {
+    title: "About DARA",
+    description:
+      "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
+  },
+  de: {
+    title: "Über uns",
+    description:
+      "DARA Marketing Agency. Gegründet 2020. Wir helfen Unternehmen durch kreative Strategien und ergebnisorientiertes Marketing zu wachsen.",
   },
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as Locale;
+  const meta = META_BY_LOCALE[l];
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+  return {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `${base}/${locale}/about`,
+    },
+  };
+}
 
 const HERO_BY_LOCALE: Record<
   Locale,
@@ -32,9 +60,9 @@ const HERO_BY_LOCALE: Record<
     kicker: "Rreth nesh",
     title: "Ne jemi DARA Marketing",
     paragraphs: [
-      "DARA Marketing Agency është agjencia juaj e marketingut. Themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
+      "DARA Marketing Agency është agjenci marketingu dhe web design në Tiranë, Shqipëri. Themeluar më 2020. Ndihmojmë kompanitë shqiptare dhe ndërkombëtare me krijim website, branding dhe marketing digjital që konverton.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
-      "Ekipi ynë kombinojnë kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset lokale dhe ndërkombëtare të bëhen histori suksesi.",
+      "Ekipi ynë kombinojnë kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset në Shqipëri dhe më gjerë të bëhen histori suksesi.",
     ],
     stats: [
       { k: "Themeluar", v: "2020" },
@@ -186,10 +214,10 @@ const MISSION_VISION_BY_LOCALE: Record<
     sectionDesc: "Çfarë përfaqësojmë dhe ku po shkojmë.",
     missionTitle: "Misioni",
     missionText:
-      "Të ndihmojmë bizneset të rriten dhe të pozicionohen fort në treg përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
+      "Të ndihmojmë bizneset në Shqipëri dhe më gjerë të rriten dhe të pozicionohen fort në treg përmes krijim website, web design, branding dhe marketingut digjital të orientuar nga rezultatet.",
     visionTitle: "Vizioni",
     visionText:
-      "Të bëhemi një nga agjencitë më të besuara dhe inovative të marketingut në tregun shqiptar dhe më gjerë, duke ndërtuar marka të forta dhe histori reale suksesi.",
+      "Të bëhemi një nga agjencitë më të besuara të web design dhe marketingut në tregun shqiptar, duke ndërtuar website profesionale, marka të forta dhe histori reale suksesi për kompanitë tona.",
   },
   en: {
     sectionTitle: "Mission & Vision",

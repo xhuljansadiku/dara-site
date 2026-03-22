@@ -17,7 +17,7 @@ export async function generateMetadata({
     l === "sq" ? "Pyetje të shpeshta" : l === "de" ? "Häufige Fragen" : "Frequently asked questions";
   const description =
     l === "sq"
-      ? "Përgjigje të shpejta për pyetjet më të bëra rreth DARA Marketing Agency."
+      ? "Pyetje dhe përgjigje: Sa kushton një website? Sa kohë duhet për webshop? A ofroni SEO dhe mirëmbajtje? DARA – agjenci web design Tiranë."
       : l === "de"
         ? "Schnelle Antworten auf die häufigsten Fragen zu DARA Marketing Agency."
         : "Quick answers to the most common questions about DARA Marketing Agency.";

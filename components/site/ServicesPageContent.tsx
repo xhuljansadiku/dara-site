@@ -101,10 +101,10 @@ const HERO_BY_LOCALE: Record<
   { kicker: string; title: string; titleAccent: string; subtitle: string; getQuote: string; viewWork: string }
 > = {
   sq: {
-    kicker: "Shërbimet",
-    title: "Shërbime për ",
-    titleAccent: "rezultate",
-    subtitle: "Nga rrjete sociale dhe përmbajtje te strategjia, branding, reklama, konsulencë dhe trajnime. Kombinojmë çfarë ju nevojitet për të rritur.",
+    kicker: "Shërbime web design & marketing",
+    title: "Krijim website, branding & ",
+    titleAccent: "marketing digjital",
+    subtitle: "Website profesionale, dyqan online, web design Tirana. Rrjetet sociale, strategji, branding, reklama Meta & Google, mirembajtje website. Sherbime për biznese në Shqipëri.",
     getQuote: "Merr ofertë",
     viewWork: "Shiko punën",
   },

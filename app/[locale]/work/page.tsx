@@ -5,11 +5,37 @@ import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 
-export const metadata: Metadata = {
-  title: "Work & Case Studies",
-  description:
-    "Portfolio of DARA Marketing Agency: social media management, brand identity, websites and e-commerce. Creative projects for local and international businesses.",
+const META_BY_LOCALE: Record<"sq" | "en" | "de", { title: string; description: string }> = {
+  sq: {
+    title: "Punët tona",
+    description:
+      "Portfolio DARA: web design Tirana, krijim website, branding, social media dhe e-commerce. Projekte për biznese në Shqipëri dhe Evropë.",
+  },
+  en: {
+    title: "Work & Case Studies",
+    description:
+      "Portfolio of DARA Marketing Agency: social media management, brand identity, websites and e-commerce. Creative projects for local and international businesses.",
+  },
+  de: {
+    title: "Arbeiten & Case Studies",
+    description:
+      "Portfolio der DARA Marketing Agency: Social Media, Branding, Websites und E-Commerce. Kreative Projekte für lokale und internationale Unternehmen.",
+  },
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as "sq" | "en" | "de";
+  const meta = META_BY_LOCALE[l];
+  return {
+    title: meta.title,
+    description: meta.description,
+  };
+}
 
 export default async function WorkPage({
   params,

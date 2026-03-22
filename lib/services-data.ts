@@ -49,12 +49,12 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Strategji marketingu digjital",
-      desc: "Analizë biznesi dhe ndërtim strategjie të personalizuar për rritje reale , pozicionim, objektiva dhe ide konkrete zhvillimi.",
+      desc: "Marketing digital shqip: analizë biznesi, strategji të personalizuar për rritje, pozicionim dhe objektiva të matshme. Ideal për agjencitë dhe kompani që duan drejtim të qartë.",
       price: "Nga 500€ / strategji",
     },
     {
       title: "Branding & identitet vizual",
-      desc: "Krijim ose rifreskim i identitetit të brand-it , logo, udhëzues vizual, tone komunikimi dhe imazh profesional.",
+      desc: "Krijim ose rifreskim identiteti të brand-it: logo, udhëzues vizual, tone komunikimi. Imazh profesional për kompani dhe biznese në Shqipëri.",
       price: "Nga 500€",
     },
     {
@@ -73,13 +73,13 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 250€ / program",
     },
     {
-      title: "Website",
-      desc: "Faqe një-faqe (landing) ose website me disa faqe , prezencë profesionale, forma kontakt, SEO.",
+      title: "Krijim website & web design",
+      desc: "Website profesionale për biznese në Shqipëri: krijim faqe interneti, web design Tirana, dizajn faqe interneti. Landing pages, website me disa faqe, forma kontakt, SEO. Ideal për kompani, klinika, restorante, ndërtim.",
       price: "Nga 500€",
     },
     {
-      title: "E-commerce",
-      desc: "Dyqan online me produkte, inventar, pagesë dhe dorëzim , zgjidhje e përshtatshme për shitje në internet.",
+      title: "Krijim dyqan online (webshop / e-commerce)",
+      desc: "Krijim webshop për biznese: dyqan online me produkte, inventar, pagesë me kartë dhe dorëzim. Zhvillim website e-commerce për kompani shqiptare. Shitje në internet me profesionalizëm.",
       price: "Nga 1.000€",
     },
     {
@@ -88,8 +88,8 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 4.000€",
     },
     {
-      title: "Mirembajtje & Optimizim",
-      desc: "Mirembajtje website dhe e-commerce (updates, backups, siguri), optimizim website të vjetra (shpejtësi, SEO, modernizim), monitoring dhe support.",
+      title: "Mirembajtje website & optimizim",
+      desc: "Mirembajtje website dhe dyqan online: përditësime, backups, siguri. Optimizim website të vjetra – shpejtësi, SEO, modernizim. Monitoring dhe support teknik për biznese në Shqipëri.",
       price: "Nga 100€ / muaj",
     },
   ],

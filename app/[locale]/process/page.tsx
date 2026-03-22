@@ -5,11 +5,37 @@ import { use } from "react";
 
 type Locale = "sq" | "en" | "de";
 
-export const metadata: Metadata = {
-  title: "Process",
-  description:
-    "Proces i qartë: audit, build, launch, optimize & scale për rezultate të qëndrueshme.",
+const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
+  sq: {
+    title: "Procesi ynë",
+    description:
+      "Si punojmë: audit, strategji, launch dhe optimizim për marketing digjital dhe zhvillim website që sjell rezultate të qëndrueshme.",
+  },
+  en: {
+    title: "Process",
+    description:
+      "Clear process: audit, build, launch, optimize & scale for sustainable results.",
+  },
+  de: {
+    title: "Prozess",
+    description:
+      "Klarer Prozess: Audit, Aufbau, Launch, Optimierung und Skalierung für nachhaltige Ergebnisse.",
+  },
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as Locale;
+  const meta = META_BY_LOCALE[l];
+  return {
+    title: meta.title,
+    description: meta.description,
+  };
+}
 
 const HERO_BY_LOCALE: Record<
   Locale,

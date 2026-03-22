@@ -324,15 +324,16 @@ const CAREER_BY_LOCALE: Record<Locale, { kicker: string; title: string; subtitle
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
-    title: "DARA Marketing Agency  Guxo të jesh ndryshe",
-    description: "DARA Marketing Agency. Ndihmojmë bizneset të rriten përmes strategjive krijuese, marketingu digjital dhe përmbajtjes që konverton. 7+ vite përvojë, 100+ biznese.",
+    title: "DARA · Krijim website, web design Tirana & marketing digjital shqip",
+    description:
+      "Agjenci marketingu në Shqipëri: krijim website, web design Tirana, webshop, branding, marketing digjital. Website profesionale për kompani. 7+ vite përvojë, 100+ biznese.",
   },
   en: {
-    title: "DARA Marketing Agency  Dare to be Different",
+    title: "DARA Marketing Agency · Dare to be Different",
     description: "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content. 7+ years experience, 100+ businesses.",
   },
   de: {
-    title: "DARA Marketing Agency  Wage es, anders zu sein",
+    title: "DARA Marketing Agency · Wage es, anders zu sein",
     description: "DARA Marketing Agency. Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne. 7+ Jahre Erfahrung, 100+ Unternehmen.",
   },
 };
@@ -383,19 +384,34 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const career = CAREER_BY_LOCALE[locale];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+  const jsonLdByLocale: Record<Locale, string> = {
+    sq: "Agjenci marketingu në Tiranë, Shqipëri: krijim website, web design, dyqan online, branding dhe marketing digjital. Website profesionale për kompani shqiptare.",
+    en: "We bring brand stories to life through bold strategies and results-oriented marketing.",
+    de: "Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne.",
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MarketingAgency",
     "@id": `${siteUrl}/#organization`,
     name: "DARA Marketing Agency",
+    alternateName: locale === "sq" ? "DARA Agjenci Marketingu dhe Web Design" : undefined,
     url: siteUrl,
-    description: "We bring brand stories to life through bold strategies and results-oriented marketing.",
-    address: { "@type": "PostalAddress", streetAddress: "Rruga Donika Kastrioti, Bllok", addressLocality: "Tirana", addressCountry: "AL" },
+    inLanguage: locale === "sq" ? "sq" : locale === "de" ? "de" : "en",
+    description: jsonLdByLocale[locale],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Rruga Donika Kastrioti, Bllok",
+      addressLocality: "Tirana",
+      addressRegion: "Tirana",
+      addressCountry: "AL",
+    },
+    areaServed: { "@type": "Country", name: "Albania" },
     email: "daramarketing.eu@gmail.com",
     telephone: "+355688009988",
     sameAs: ["https://www.instagram.com/daramarketing.al/", "https://facebook.com/daramarketing.eu", "https://linkedin.com/company/daramarketing"],
     foundingDate: "2020-01-01",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 3 },
+    priceRange: "€€",
   };
 
   return (

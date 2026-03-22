@@ -14,13 +14,20 @@ export async function generateMetadata({
     de: "Kontakt | DARA Marketing Agency",
   };
   const descriptions: Record<string, string> = {
-    sq: "Kontaktoni DARA Marketing Agency për ofertë, audit ose plan rritjeje. Ndihmojmë bizneset të rriten me strategji marketingu digjital.",
+    sq: "Kontaktoni DARA për ofertë website, webshop, audit ose plan marketingu. Agjenci web design Tiranë. Përgjigje brenda 24 orëve.",
     en: "Contact DARA Marketing Agency for a quote, audit or growth plan. We help businesses grow with digital marketing strategies.",
     de: "Kontaktieren Sie DARA Marketing Agency für ein Angebot, Audit oder Wachstumsplan. Wir helfen Unternehmen mit digitalem Marketing zu wachsen.",
   };
+  const title = titles[locale] ?? titles.en;
+  const description = descriptions[locale] ?? descriptions.en;
   return {
-    title: titles[locale] ?? titles.en,
-    description: descriptions[locale] ?? descriptions.en,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${BASE}/${locale}/contact`,
+    },
   };
 }
 

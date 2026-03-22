@@ -8,9 +8,9 @@ import { use } from "react";
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
-    title: "Shërbimet",
+    title: "Shërbime web design, krijim website & marketing digjital",
     description:
-      "Menaxhim rrjeteve sociale, krijim përmbajtjeje, strategji, branding, reklama, konsulencë, trajnime. Website & landing, e-commerce dhe SaaS të personalizuar.",
+      "Krijim website, web design Tirana, dyqan online, mirembajtje website. Marketing digjital shqip: rrjetet sociale, branding, reklama Meta & Google, strategji. Agjenci për biznese në Shqipëri.",
   },
   en: {
     title: "Services",
@@ -30,7 +30,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = ["sq", "en", "de"].includes(localeParam) ? (localeParam as Locale) : "sq";
   const meta = META_BY_LOCALE[locale];
-  return { title: meta.title, description: meta.description };
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+  return {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `${base}/${locale}/services`,
+    },
+  };
 }
 
 export default function ServicesPage({ params }: Props) {

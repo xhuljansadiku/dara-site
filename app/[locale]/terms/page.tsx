@@ -1,14 +1,58 @@
-export default function TermsPage() {
+import type { Metadata } from "next";
+
+const META_BY_LOCALE: Record<string, { title: string; description: string; h1: string; intro: string }> = {
+  sq: {
+    title: "Kushte dhe rregulla",
+    description: "Kushtet e përdorimit të website-it DARA Marketing Agency. Shërbime web design, krijim website dhe marketingu digjital.",
+    h1: "Kushte dhe rregulla",
+    intro: "Duke përdorur këtë website, ju pranoni kushtet dhe rregullat e mëposhtme.",
+  },
+  en: {
+    title: "Terms & Conditions",
+    description: "Terms of use for DARA Marketing Agency website. Web design, website creation and digital marketing services.",
+    h1: "Terms & Conditions",
+    intro: "By using this website, you accept the following terms and rules.",
+  },
+  de: {
+    title: "Allgemeine Geschäftsbedingungen",
+    description: "Nutzungsbedingungen der Website der DARA Marketing Agency.",
+    h1: "AGB",
+    intro: "Durch die Nutzung dieser Website akzeptieren Sie die folgenden Bedingungen.",
+  },
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const l = ["sq", "en", "de"].includes(locale) ? locale : "sq";
+  const meta = META_BY_LOCALE[l];
+  return {
+    title: meta.title,
+    description: meta.description,
+  };
+}
+
+export default async function TermsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const l = ["sq", "en", "de"].includes(locale) ? locale : "sq";
+  const meta = META_BY_LOCALE[l];
   return (
     <>
       <section className="py-14 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl md:text-6xl font-semibold text-gray-900">
-          Terms & <span className="text-gray-900">Conditions</span>
+          {meta.h1}
         </h1>
 
         <p className="mt-6 max-w-3xl text-gray-600">
-          Duke përdorur këtë website, ju pranoni kushtet dhe rregullat e mëposhtme.
+          {meta.intro}
         </p>
         </div>
       </section>
@@ -40,7 +84,7 @@ export default function TermsPage() {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold text-white">4. Kufizimi i përgjegjësisë</h2>
+          <h2 className="text-xl font-semibold text-gray-900">4. Kufizimi i përgjegjësisë</h2>
           <p className="mt-2">
             DARA nuk mban përgjegjësi për dëme direkte ose indirekte që mund
             të lindin nga përdorimi i website-it.

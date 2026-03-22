@@ -598,29 +598,29 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
   "website-landing": {
     sq: {
       whatIncluded: [
-        "Faqe uljeje (landing) një-faqe për kampanja ose oferta",
-        "Website informativ ose prezantues (kompani, shërbime, kontakt)",
-        "Dizajn i përshtatshëm për mobile dhe SEO bazik",
-        "Forma kontakt, CTA dhe integrim me rrjetet sociale",
-        "Hosting dhe mbështetje sipas marrëveshjes",
+        "Krijim faqe interneti: landing page një-faqe ose website me disa faqe",
+        "Web design modern, i përshtatshëm për mobile dhe SEO",
+        "Dizajn faqe interneti profesionale për kompani, klinika, restorante, ndërtim",
+        "Forma kontakt, butona CTA dhe integrim me rrjetet sociale",
+        "Hosting dhe mbështetje teknike sipas marrëveshjes",
       ],
       whoIsItFor: [
-        "Biznese që nuk kanë ende website ose kanë nevojë për një të ri",
-        "Marka që duan një website (landing page) për reklama ose lead",
-        "Profesionistë që duan prezencë online të thjeshtë dhe profesionale",
+        "Biznese në Shqipëri që nuk kanë ende website ose kanë nevojë për një të ri",
+        "Kompani që duan website profesionale për prezencë online",
+        "Restorante, klinika, ndërtim – secila industri me nevojë të vet",
       ],
       benefits: [
-        "Prezencë profesionale në internet që konverton",
-        "Shpejtë dhe e përballueshme , nga landing te website me disa faqe",
-        "Një partner që kupton edhe marketingu , jo vetëm kod",
+        "Website profesionale që konverton vizitorët në klientë",
+        "Ndërtim website i shpejtë dhe i përballueshëm – nga landing te faqe me shumë seksione",
+        "Agjenci që kupton si web design ashtu edhe marketing digjital",
       ],
       howWeWork: [
-        "Bisedë për qëllimet, audiencën dhe përmbajtjen",
+        "Bisedë për qëllimet, audiencën dhe përmbajtjen e dëshiruar",
         "Propozime strukturë dhe dizajn (wireframe / mockup)",
-        "Zhvillim dhe testim",
-        "Lansim dhe (opsional) mbështetje",
+        "Zhvillim dhe testim – website i gatshëm për lansim",
+        "Lansim dhe (opsional) mirembajtje website",
       ],
-      priceNote: "Landing Page nga 500€; Business Website nga 1.000€; Premium Website nga 2.000€. Oferta pas diskutimit të nevojave.",
+      priceNote: "Landing page nga 500€; website biznesi nga 1.000€; website premium për kompani nga 2.000€. Oferta e personalizuar pas diskutimit.",
     },
     en: {
       whatIncluded: [
@@ -678,29 +678,29 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
   ecommerce: {
     sq: {
       whatIncluded: [
-        "Dyqan online me katalog produktesh dhe kategorii",
-        "Pagesë (kartë, wallet) dhe menaxhim porosish",
-        "Inventar, variante produktesh dhe zbritje",
-        "Dizajn i përshtatshëm për mobile dhe SEO për e-commerce",
-        "Integrime (transport, CRM) sipas nevojës",
+        "Krijim webshop: dyqan online me katalog produktesh dhe kategorii",
+        "Pagesë me kartë, PayPal dhe menaxhim porosish",
+        "Inventar, variante produktesh, zbritje dhe kupon",
+        "Dizajn responsive dhe SEO për dyqan online",
+        "Integrime transport dhe CRM sipas nevojës",
       ],
       whoIsItFor: [
-        "Marka që duan të shesin online me e-commerce",
-        "Biznese me produkte fizike ose dixhitale",
-        "Startup-e që nisën shitjen online",
+        "Kompani shqiptare që duan të shesin online",
+        "Biznese me produkte fizike ose dixhitale – krijim dyqan online",
+        "Marka që nisin shitjen në internet në Shqipëri dhe më gjerë",
       ],
       benefits: [
-        "Një dyqan i gatshëm për të konvertuar vizitorët në blerës",
-        "Zgjidhje e përshtatshme për madhësinë e katalogut dhe vëllimin",
-        "Mbështetje nga një ekip që kupton edhe marketingu",
+        "Dyqan online i gatshëm për të konvertuar vizitorët në blerës",
+        "Zgjidhje e përshtatshme për madhësinë e katalogut – nga pak produkte te shumë",
+        "Ekip që kupton si zhvillim website ashtu edhe marketing për e-commerce",
       ],
       howWeWork: [
-        "Bisedë për produktet, inventarin dhe skenarët e pagesës",
+        "Bisedë për produktet, inventarin, pagesën dhe transportin",
         "Strukturë dyqani, katalog dhe funksione (wireframe)",
-        "Zhvillim, testim dhe integrim pagesash",
-        "Lansim dhe mbështetje të vazhdueshme",
+        "Zhvillim webshop, testim dhe integrim pagesash",
+        "Lansim dhe mbështetje – mirembajtje website sipas nevojës",
       ],
-      priceNote: "Basic Shop nga 1.000€; Standard Shop nga 2.000€; Premium Shop nga 4.000€. Oferta pas diskutimit.",
+      priceNote: "Krijim webshop bazë nga 1.000€; standard nga 2.000€; premium nga 4.000€. Oferta e personalizuar pas diskutimit.",
     },
     en: {
       whatIncluded: [
@@ -838,29 +838,29 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
   maintenance: {
     sq: {
       whatIncluded: [
-        "Mirembajtje website (updates, backups, siguri, patches)",
-        "Mirembajtje e-commerce (sinkronizim inventari, menaxhim porosish, rregullime pagesash)",
-        "Optimizim website të vjetra (shpejtësi, SEO, modernizim, responsive)",
+        "Mirembajtje website: përditësime, backups, siguri dhe patches",
+        "Mirembajtje dyqan online (webshop): inventar, porosi, pagesa",
+        "Optimizim website të vjetra – shpejtësi, SEO, modernizim, responsive",
         "Monitoring dhe raportim i performancës",
-        "Support teknik dhe përditësime të rregullta",
+        "Support teknik dhe përditësime të rregullta për kompani",
       ],
       whoIsItFor: [
-        "Biznese që kanë website ose e-commerce dhe duan mirembajtje të vazhdueshme",
-        "Kompani me website të vjetra që duan optimizim dhe modernizim",
-        "Marka që duan që website-i të jetë gjithmonë i përditësuar dhe i sigurt",
+        "Biznese në Shqipëri me website ose webshop që duan mirembajtje të vazhdueshme",
+        "Kompani me website të vjetra që duan optimizim dhe përditësim",
+        "Marka që duan website-in gjithmonë të përditësuar dhe të sigurt",
       ],
       benefits: [
-        "Website i sigurt dhe i përditësuar , pa probleme teknike",
-        "Performancë më e mirë dhe shpejtësi më e lartë",
-        "Pa stres , ne kujdesemi për të gjitha detajet teknike",
+        "Website i sigurt dhe i përditësuar – pa probleme teknike",
+        "Performancë më e mirë dhe shpejtësi më e lartë – më mirë për SEO",
+        "Pa stres – ne kujdesemi për të gjitha detajet teknike",
       ],
       howWeWork: [
-        "Audit fillestar i website/e-commerce tuaj",
+        "Audit fillestar i website ose webshop-it tuaj",
         "Plan mirembajtjeje mujor (updates, backups, monitoring)",
         "Raportim mujor dhe rekomandime për optimizime",
         "Support i vazhdueshëm për çdo problem ose nevojë",
       ],
-      priceNote: "Çmimi nga 100€/muaj për mirembajtje bazë. Optimizime dhe projekte më të mëdha sipas nevojës.",
+      priceNote: "Mirembajtje website nga 100€/muaj. Optimizime dhe projekte më të mëdha sipas nevojës.",
     },
     en: {
       whatIncluded: [

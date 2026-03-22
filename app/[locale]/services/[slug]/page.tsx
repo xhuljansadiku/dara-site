@@ -301,10 +301,15 @@ export function generateMetadata({ params }: Props): Promise<Metadata> {
     const service = getServiceBySlug(locale, slug);
     if (!service) return { title: "Service" };
     const { canonical, languages } = buildAlternates(`services/${slug}`, locale);
+    const titleSuffix = locale === "sq" ? " | DARA" : locale === "de" ? " | DARA" : " | DARA";
     return {
-      title: service.title,
+      title: service.title + titleSuffix,
       description: service.desc,
       alternates: { canonical, languages },
+      openGraph: {
+        title: service.title + titleSuffix,
+        description: service.desc,
+      },
     };
   })();
 }
