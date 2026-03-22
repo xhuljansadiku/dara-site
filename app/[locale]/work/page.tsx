@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import WorkContent from "@/components/site/WorkContent";
 import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
 
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+
 export const metadata: Metadata = {
   title: "Work & Case Studies",
   description:
-    "Previous projects: Don Mare Hotel, 355 Black, Aia Hotel, Zorada, City Fitness, Cara Dental, Premium Real Estate, Nova Real Estate, Icon Store, DD Store, KOA Consulting, Endis Store, Taxi Service Dhermi.",
+    "Portfolio of DARA Marketing Agency: social media management, brand identity, websites and e-commerce. Creative projects for local and international businesses.",
 };
 
 export default async function WorkPage({
@@ -19,5 +21,19 @@ export default async function WorkPage({
   const projects = PROJECTS_BY_LOCALE[currentLocale];
   const filterTabs = WORK_FILTER_TABS_BY_LOCALE[currentLocale];
 
-  return <WorkContent locale={currentLocale} projects={projects} filterTabs={filterTabs} />;
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: currentLocale === "sq" ? "Kryefaqe" : currentLocale === "de" ? "Startseite" : "Home", item: `${BASE}/${currentLocale}` },
+      { "@type": "ListItem", position: 2, name: currentLocale === "sq" ? "Punët" : currentLocale === "de" ? "Arbeiten" : "Work", item: `${BASE}/${currentLocale}/work` },
+    ],
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }} />
+      <WorkContent locale={currentLocale} projects={projects} filterTabs={filterTabs} />
+    </>
+  );
 }

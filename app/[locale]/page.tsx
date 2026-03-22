@@ -386,13 +386,14 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MarketingAgency",
+    "@id": `${siteUrl}/#organization`,
     name: "DARA Marketing Agency",
     url: siteUrl,
     description: "We bring brand stories to life through bold strategies and results-oriented marketing.",
     address: { "@type": "PostalAddress", streetAddress: "Rruga Donika Kastrioti, Bllok", addressLocality: "Tirana", addressCountry: "AL" },
     email: "daramarketing.eu@gmail.com",
     telephone: "+355688009988",
-    sameAs: ["https://https://www.instagram.com/daramarketing.al/?hl=en", "https://facebook.com/daramarketing.eu", "https://linkedin.com/company/daramarketing"],
+    sameAs: ["https://www.instagram.com/daramarketing.al/", "https://facebook.com/daramarketing.eu", "https://linkedin.com/company/daramarketing"],
     foundingDate: "2020-01-01",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 3 },
   };

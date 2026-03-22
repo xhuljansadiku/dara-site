@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "About DARA",
   description:
     "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
+  openGraph: {
+    title: "About DARA | DARA Marketing Agency",
+    description: "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
+  },
 };
 
 const HERO_BY_LOCALE: Record<
