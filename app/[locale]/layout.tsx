@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
+import CookieConsentBanner from "@/components/site/CookieConsentBanner";
 import { buildAlternates } from "@/lib/seo-utils";
 
 export async function generateMetadata({
@@ -48,6 +49,7 @@ export default async function LocaleLayout({
       <Navbar />
       <main className="min-h-screen">{children}</main>
       <Footer locale={locale} />
+      <CookieConsentBanner />
     </NextIntlClientProvider>
   );
 }

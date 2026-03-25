@@ -1,25 +1,7 @@
+import LegalDocumentBody from "@/components/site/LegalDocumentBody";
+import { TERMS_BY_LOCALE, type LegalLocale } from "@/lib/legal-pages-content";
+import { buildAlternates } from "@/lib/seo-utils";
 import type { Metadata } from "next";
-
-const META_BY_LOCALE: Record<string, { title: string; description: string; h1: string; intro: string }> = {
-  sq: {
-    title: "Kushte dhe rregulla",
-    description: "Kushtet e përdorimit të website-it DARA Marketing Agency. Shërbime web design, krijim website dhe marketingu digjital.",
-    h1: "Kushte dhe rregulla",
-    intro: "Duke përdorur këtë website, ju pranoni kushtet dhe rregullat e mëposhtme.",
-  },
-  en: {
-    title: "Terms & Conditions",
-    description: "Terms of use for DARA Marketing Agency website. Web design, website creation and digital marketing services.",
-    h1: "Terms & Conditions",
-    intro: "By using this website, you accept the following terms and rules.",
-  },
-  de: {
-    title: "Allgemeine Geschäftsbedingungen",
-    description: "Nutzungsbedingungen der Website der DARA Marketing Agency.",
-    h1: "AGB",
-    intro: "Durch die Nutzung dieser Website akzeptieren Sie die folgenden Bedingungen.",
-  },
-};
 
 export async function generateMetadata({
   params,
@@ -27,11 +9,18 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l = ["sq", "en", "de"].includes(locale) ? locale : "sq";
-  const meta = META_BY_LOCALE[l];
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as LegalLocale;
+  const meta = TERMS_BY_LOCALE[l].meta;
+  const { canonical, languages } = buildAlternates("terms", l);
+  const titleSuffix = " | DARA";
   return {
-    title: meta.title,
+    title: meta.title + titleSuffix,
     description: meta.description,
+    alternates: { canonical, languages },
+    openGraph: {
+      title: meta.title + titleSuffix,
+      description: meta.description,
+    },
   };
 }
 
@@ -41,69 +30,40 @@ export default async function TermsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const l = ["sq", "en", "de"].includes(locale) ? locale : "sq";
-  const meta = META_BY_LOCALE[l];
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as LegalLocale;
+  const { meta, sections } = TERMS_BY_LOCALE[l];
+
   return (
     <>
-      <section className="py-14 md:py-20">
+      <section className="relative overflow-hidden border-b border-stone-200/80 bg-gradient-to-b from-stone-50 via-white to-stone-50/50 py-14 md:py-20">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.5]"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundSize: "44px 44px",
+          }}
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#c8a55c]/12 blur-3xl" />
+        </div>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl md:text-6xl font-semibold text-gray-900">
-          {meta.h1}
-        </h1>
-
-        <p className="mt-6 max-w-3xl text-gray-600">
-          {meta.intro}
-        </p>
+          <span className="inline-flex items-center rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d32]">
+            {l === "sq" ? "Kushte" : l === "de" ? "AGB" : "Terms"}
+          </span>
+          <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-950 md:text-5xl">
+            {meta.h1}
+          </h1>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-neutral-600">{meta.intro}</p>
+          <div className="mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#c8a55c] to-transparent" />
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">1. Përdorimi i website-it</h2>
-          <p className="mt-2 text-gray-600">
-            Website-i përdoret vetëm për qëllime informative dhe komunikimi
-            me DARA. Ndalohet përdorimi për qëllime të paligjshme.
-          </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">2. Shërbimet</h2>
-          <p className="mt-2 text-gray-600">
-            Të gjitha shërbimet ofrohen sipas marrëveshjes individuale me klientin.
-            Asnjë rezultat specifik nuk garantohet pa kontratë të shkruar.
-          </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">3. Pronësia intelektuale</h2>
-          <p className="mt-2 text-gray-600">
-            Të gjitha materialet, dizajni dhe përmbajtja në këtë website janë
-            pronë e DARA dhe nuk mund të kopjohen pa leje.
-          </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">4. Kufizimi i përgjegjësisë</h2>
-          <p className="mt-2">
-            DARA nuk mban përgjegjësi për dëme direkte ose indirekte që mund
-            të lindin nga përdorimi i website-it.
-          </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">5. Ndryshime</h2>
-          <p className="mt-2 text-gray-600">
-            Këto kushte mund të përditësohen në çdo kohë pa njoftim paraprak.
-          </p>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">6. Juridiksioni</h2>
-          <p className="mt-2 text-gray-600">
-            Këto kushte rregullohen sipas ligjeve të Bashkimit Europian.
-          </p>
-        </div>
+      <section className="relative py-12 md:py-16">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(200,165,92,0.06)_0%,transparent_50%)]" aria-hidden />
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <LegalDocumentBody sections={sections} />
         </div>
       </section>
 

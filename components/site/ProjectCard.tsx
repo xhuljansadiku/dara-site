@@ -15,7 +15,7 @@ type Props = {
 export default function ProjectCard({ project: p, locale, setLightbox }: Props) {
   const viewLabel = locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project";
   const cardClass =
-    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-0.5";
+    "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-[0_4px_24px_-16px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:shadow-[0_24px_48px_-24px_rgba(245,158,11,0.12)]";
 
   const isImageGallery = p.category === "social-media" || p.category === "brand";
   const galleryImages =
@@ -60,7 +60,7 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
       {/* Tag on image */}
-      <span className="absolute left-4 top-4 rounded-lg bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-900 shadow-sm border border-gray-200">
+      <span className="absolute left-4 top-4 rounded-full border border-black/[0.06] bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-neutral-900 shadow-sm backdrop-blur-sm">
         {p.tag}
       </span>
     </div>
@@ -69,10 +69,10 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
   const cardContent = (
     <>
       {imageSection}
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-semibold text-gray-900">{p.title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600 line-clamp-2">{p.desc}</p>
-        <div className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-900 group-hover:text-[#1e222a]">
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <h3 className="text-lg font-semibold tracking-tight text-neutral-950">{p.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-2">{p.desc}</p>
+        <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-neutral-950">
           <span>{viewLabel}</span>
           <span className="transition group-hover:translate-x-1">→</span>
         </div>

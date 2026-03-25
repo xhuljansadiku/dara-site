@@ -9,6 +9,7 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 const staticPaths = [
   "",
   "/about",
+  "/team",
   "/contact",
   "/contact/thank-you",
   "/careers",

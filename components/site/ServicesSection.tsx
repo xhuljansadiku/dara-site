@@ -81,49 +81,83 @@ export default function ServicesSection({
   const tabLabels = filterTabs.map((t) => t.label);
 
   return (
-    <section id="services" className="relative py-16 md:py-24">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-gray-100 to-transparent" />
+    <section id="services" className="relative overflow-hidden py-16 md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.45] [mask-image:linear-gradient(180deg,white,transparent)]"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+        aria-hidden
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
         <div>
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-gray-900">
+          <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+            <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
             {copy.sectionKicker}
           </span>
-          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
             {copy.sectionTitleBefore}
-            <span className="text-gray-900">{copy.sectionTitleHighlight}</span>
+            <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+              {copy.sectionTitleHighlight}
+            </span>
           </h2>
-          <p className="mt-3 max-w-xl text-sm text-gray-600">{copy.sectionIntro}</p>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600">{copy.sectionIntro}</p>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="mb-8 flex flex-wrap gap-2">
-        {tabLabels.map((label, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => setActiveTab(idx)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activeTab === idx
-                ? "bg-[#1e222a] text-white shadow-sm ring-2 ring-[#1e222a] ring-offset-2 ring-offset-white"
-                : "border border-gray-200 bg-gray-100 text-gray-600 hover:border-gray-300 hover:bg-gray-200 hover:text-gray-900"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+      {/* Tabs: segmented control */}
+      <div className="mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
+          role="tablist"
+        >
+          {tabLabels.map((label, idx) => (
+            <button
+              key={idx}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === idx}
+              onClick={() => setActiveTab(idx)}
+              className={`whitespace-nowrap rounded-[0.65rem] px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                activeTab === idx
+                  ? "bg-white text-neutral-950 shadow-sm ring-1 ring-black/[0.06]"
+                  : "text-neutral-600 hover:text-neutral-950"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Groups + cards */}
       <div className="space-y-12 md:space-y-16">
         {visibleGroups.map(({ indices, groupIndex, groupLabel }, boxIdx) => (
-          <div key={boxIdx} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-200 text-gray-900">
+          <div
+            key={boxIdx}
+            className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-6 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.12)] md:p-8"
+          >
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.35]"
+              style={{
+                backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)`,
+                backgroundSize: "32px 32px",
+              }}
+              aria-hidden
+            />
+            <div className="relative mb-7 flex items-center gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-950 text-white shadow-lg shadow-neutral-900/15 ring-1 ring-white/10">
                 {GROUP_ICONS[activeTab === 0 ? groupIndex : (activeTab - 1) % GROUP_ICONS.length]}
               </span>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-gray-900">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-500">
                 {groupLabel}
               </h3>
             </div>
@@ -142,31 +176,33 @@ export default function ServicesSection({
                   <LocaleLink
                     key={s.title}
                     href={`/services/${anchor}`}
-                    className="group relative flex min-h-[320px] flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-lg md:p-6"
+                    className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white/90 p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(245,158,11,0.15)] md:min-h-[320px] md:p-6"
                   >
-                    {/* Top gold line */}
-                    <div className="absolute left-6 right-6 top-0 h-0.5 rounded-full bg-gray-300" />
+                    <div
+                      className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-amber-400/15 via-transparent to-transparent blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
+                      aria-hidden
+                    />
 
                     <div className="relative flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
-                        <span className="font-mono text-xs font-medium text-gray-500">
+                        <span className="inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         {result && (
-                          <span className="rounded-md bg-gray-200 px-2 py-0.5 text-[10px] font-medium text-gray-900">
+                          <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-medium text-neutral-900 ring-1 ring-amber-200/60">
                             {result}
                           </span>
                         )}
                       </div>
 
-                      <h4 className="mt-4 text-lg font-semibold text-gray-900 md:text-xl">
+                      <h4 className="mt-5 text-lg font-semibold tracking-tight text-neutral-950 md:text-xl">
                         {s.title}
                       </h4>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600 line-clamp-3">
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-3">
                         {s.desc}
                       </p>
 
-                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-gray-200 pt-4">
+                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-neutral-200/80 pt-4">
                         {s.price ? (
                           <>
                             <div className="flex items-baseline gap-2">
@@ -176,7 +212,7 @@ export default function ServicesSection({
                               <span className="font-semibold text-gray-900">{s.price}</span>
                             </div>
                             <span
-                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-gray-200 text-[10px] text-gray-500"
+                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500 transition group-hover:border-amber-300/60"
                               onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
                               onMouseEnter={() => setTooltipCard(i)}
                               onMouseLeave={() => setTooltipCard(null)}
@@ -184,7 +220,7 @@ export default function ServicesSection({
                             >
                               ?
                               {tooltipCard === i && (
-                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-xs text-gray-900 shadow-xl">
+                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 shadow-xl">
                                   {priceTooltip}
                                 </span>
                               )}
@@ -194,7 +230,7 @@ export default function ServicesSection({
                           <>
                             <span className="text-xs text-gray-500">{copy.quoteRequest}</span>
                             <span
-                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-gray-200 text-[10px] text-gray-500"
+                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500"
                               title={priceTooltip}
                             >
                               ?
@@ -203,9 +239,9 @@ export default function ServicesSection({
                         )}
                       </div>
 
-                      <div className="mt-4 flex items-center gap-1.5 text-sm font-medium text-gray-900">
+                      <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-neutral-950">
                         {copy.more}
-                        <span className="text-xs opacity-70 group-hover:opacity-100">→</span>
+                        <span className="text-xs transition group-hover:translate-x-0.5">→</span>
                       </div>
                     </div>
                   </LocaleLink>
@@ -215,9 +251,10 @@ export default function ServicesSection({
 
             {/* Testimonial pas përmbajtjes (filter Marketing) */}
             {activeTab === 0 && (
-              <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-5 md:p-6">
-                <p className="text-sm italic text-gray-900/80">&ldquo;{testimonial.quote}&rdquo;</p>
-                <p className="mt-3 text-xs font-medium text-gray-900">
+              <div className="relative mt-8 overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-br from-neutral-50 to-white p-5 md:p-6">
+                <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-amber-400/10 blur-2xl" aria-hidden />
+                <p className="relative text-sm italic leading-relaxed text-neutral-800">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="relative mt-3 text-xs font-medium text-neutral-950">
                   {testimonial.name}, {testimonial.role}
                   {testimonial.company && ` · ${testimonial.company}`}
                 </p>
@@ -225,10 +262,10 @@ export default function ServicesSection({
             )}
 
             {/* CTA per group */}
-            <div className="mt-6">
+            <div className="relative mt-6">
               <LocaleLink
                 href="/contact"
-                className="inline-flex h-10 items-center justify-center rounded-full border-2 border-gray-300 bg-white px-5 text-sm font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-900 hover:text-white"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-neutral-950 px-7 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800"
               >
                 {copy.requestQuoteForGroup}
               </LocaleLink>
@@ -237,49 +274,74 @@ export default function ServicesSection({
         ))}
       </div>
 
-      {/* Packages: filter + paketa për çdo lloj shërbimi */}
-      <div className="mt-16 md:mt-20">
-        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
+      {/* Packages: dark panel, light cards */}
+      <div className="relative mt-20 md:mt-24">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-neutral-950 px-6 py-10 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:rounded-[2rem] md:px-10 md:py-14">
+          <div
+            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-amber-500/15 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-32 left-1/4 h-48 w-48 rounded-full bg-violet-500/10 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)`,
+              backgroundSize: "40px 40px",
+            }}
+            aria-hidden
+          />
+
+        <div className="relative mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
           <div>
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-gray-900">
+            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+              <span className="h-px w-8 bg-gradient-to-r from-amber-400/90 to-transparent" aria-hidden />
               {copy.packagesKicker}
             </span>
-            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
+            <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
               {copy.packagesTitleBefore}
-              <span className="text-gray-900">{copy.packagesTitleHighlight}</span>
+              <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
+                {copy.packagesTitleHighlight}
+              </span>
             </h2>
-            <p className="mt-3 max-w-xl text-sm text-gray-600">{copy.packagesIntro}</p>
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400">{copy.packagesIntro}</p>
           </div>
         </div>
-        <div className="mb-6 flex flex-wrap gap-2">
-          {packageTabLabels.map((label, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setActivePackageTab(idx)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                activePackageTab === idx
-                  ? "bg-[#1e222a] text-white shadow-sm ring-2 ring-[#1e222a] ring-offset-2 ring-offset-white"
-                  : "border border-gray-200 bg-gray-100 text-gray-600 hover:border-gray-300 hover:bg-gray-200 hover:text-gray-900"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="relative mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/10 backdrop-blur-md">
+            {packageTabLabels.map((label, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setActivePackageTab(idx)}
+                className={`whitespace-nowrap rounded-[0.65rem] px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  activePackageTab === idx
+                    ? "bg-white text-neutral-950 shadow-lg shadow-black/20"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="space-y-14">
+        <div className="relative space-y-14">
           {visiblePackageGroups.map((groupKey) => (
             <div key={groupKey}>
-              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900 md:text-xs">
+              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-200/70 md:text-xs">
                 {packageGroupLabels[groupKey]}
               </h4>
               <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {packagesByGroup[groupKey].map((pkg) => (
-                  <PackageCard key={`${groupKey}-${pkg.title}`} pkg={pkg} locale={locale} ctaLabel={copy.requestQuoteForGroup} />
+                  <PackageCard key={`${groupKey}-${pkg.title}`} pkg={pkg} locale={locale} ctaLabel={copy.requestQuoteForGroup} elevated />
                 ))}
               </div>
             </div>
           ))}
+        </div>
         </div>
       </div>
       </div>

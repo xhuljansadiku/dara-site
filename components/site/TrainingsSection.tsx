@@ -174,21 +174,37 @@ export default function TrainingsSection({ locale }: Props) {
 
   return (
     <section id="trainings" className="relative overflow-hidden py-20 md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_40%,#fafafa_100%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.4] [mask-image:linear-gradient(180deg,white,transparent)]"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+        aria-hidden
+      />
+
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <AnimateIn>
-            <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
+            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+              <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
               {copy.kicker}
+              <span className="hidden h-px w-8 bg-gradient-to-l from-amber-500/80 to-transparent sm:block" aria-hidden />
             </span>
           </AnimateIn>
           <AnimateIn delay={50}>
-            <h2 className="mt-6 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
+            <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-800/90 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
               {copy.title}
             </h2>
           </AnimateIn>
           <AnimateIn delay={100}>
-            <p className="mt-4 text-lg text-gray-600 md:text-xl">
+            <p className="mt-4 text-[17px] leading-relaxed text-neutral-600 md:text-lg">
               {copy.subtitle}
             </p>
           </AnimateIn>
@@ -196,68 +212,75 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Stats bar */}
         <AnimateIn delay={80}>
-          <div className="card mx-auto mt-12 flex max-w-xl flex-wrap justify-center gap-8 px-8 py-6 shadow-md md:mt-16">
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-gray-900 md:text-3xl">50+</span>
-              <span className="text-sm font-medium text-gray-600">{copy.studentsLabel}</span>
-            </div>
-            <div className="hidden h-8 w-px bg-gray-300 sm:block" />
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-gray-900 md:text-3xl">4</span>
-              <span className="text-sm font-medium text-gray-600">{copy.programsLabel}</span>
+          <div className="mx-auto mt-12 flex max-w-lg flex-col items-center md:mt-16">
+            <div className="inline-flex flex-wrap items-stretch justify-center gap-2 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm">
+              <div className="flex min-w-[140px] flex-col items-center rounded-xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-black/[0.05] sm:min-w-[160px]">
+                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">50+</span>
+                <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.studentsLabel}</span>
+              </div>
+              <div className="flex min-w-[140px] flex-col items-center rounded-xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-black/[0.05] sm:min-w-[160px]">
+                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">4</span>
+                <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.programsLabel}</span>
+              </div>
             </div>
           </div>
         </AnimateIn>
 
         {/* Training cards */}
-        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:gap-10">
+        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
           {TRAININGS.map((training, idx) => {
             const isDisabled = training.comingSoon;
             return (
               <AnimateIn key={training.slug} delay={idx * 80}>
                 <div
-                  className={`group relative flex min-h-0 flex-col overflow-hidden rounded-2xl border transition-all duration-300 ease-out ${
+                  className={`group relative flex min-h-0 flex-col overflow-hidden rounded-3xl border transition-all duration-300 ease-out ${
                     isDisabled
-                      ? "cursor-not-allowed border-gray-200 bg-gray-50 opacity-90 shadow-sm"
-                      : "card card-lift shadow-md hover:shadow-xl hover:-translate-y-0.5"
+                      ? "cursor-not-allowed border-neutral-200/90 bg-neutral-50/90 opacity-[0.92] ring-1 ring-black/[0.03]"
+                      : "border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(245,158,11,0.14)]"
                   }`}
                 >
-                  {/* Accent bar */}
+                  <div
+                    className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-amber-400/15 via-transparent to-transparent blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    aria-hidden
+                  />
                   {!isDisabled && (
-                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#1e222a] to-gray-600 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                    <div
+                      className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-amber-500/80 to-transparent opacity-70"
+                      aria-hidden
+                    />
                   )}
                   <div className="relative flex flex-1 flex-col p-8 md:p-10">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-lg bg-[#1e222a] px-3 py-1.5 text-sm font-semibold text-white">
+                      <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white shadow-lg shadow-neutral-900/15">
                         {training.price}
                       </span>
                       {isDisabled && (
-                        <span className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-500">
+                        <span className="rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-500">
                           {copy.comingSoon}
                         </span>
                       )}
-                      <span className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700">
+                      <span className="rounded-full border border-neutral-200/90 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-700">
                         {training.duration[locale]}
                       </span>
                     </div>
-                    <h3 className="mt-5 text-xl font-semibold text-gray-900 md:text-2xl">
+                    <h3 className="mt-6 text-xl font-semibold tracking-tight text-neutral-950 md:text-2xl">
                       {training.title[locale]}
                     </h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-gray-600">
+                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-neutral-600">
                       {training.shortDesc[locale]}
                     </p>
-                    <div className="mt-6 flex flex-wrap gap-6">
+                    <div className="mt-6 flex flex-wrap gap-6 border-t border-neutral-100 pt-6">
                       {training.stats.map((stat, statIdx) => (
                         <div key={`${training.slug}-stat-${statIdx}`} className="flex items-baseline gap-1.5">
-                          <span className="text-lg font-bold text-gray-900">{stat.value}</span>
-                          <span className="text-xs font-medium text-gray-500">{stat.label[locale]}</span>
+                          <span className="text-lg font-bold tabular-nums text-neutral-950">{stat.value}</span>
+                          <span className="text-xs font-medium text-neutral-500">{stat.label[locale]}</span>
                         </div>
                       ))}
                     </div>
                     <div className="mt-8">
                       {isDisabled ? (
                         <span
-                          className="inline-flex h-11 cursor-not-allowed items-center justify-center rounded-xl border border-gray-200 bg-gray-100 px-6 text-sm font-medium text-gray-400"
+                          className="inline-flex h-11 cursor-not-allowed items-center justify-center rounded-2xl border border-dashed border-neutral-200 bg-neutral-100/80 px-6 text-sm font-medium text-neutral-400"
                           aria-disabled
                         >
                           {copy.comingSoon}
@@ -265,7 +288,7 @@ export default function TrainingsSection({ locale }: Props) {
                       ) : (
                         <LocaleLink
                           href={`/trainings/${training.slug}`}
-                          className="inline-flex h-11 items-center justify-center rounded-xl bg-[#1e222a] px-6 text-sm font-medium text-white transition-all duration-300 ease-out hover:bg-gray-800"
+                          className="inline-flex h-11 items-center justify-center rounded-2xl bg-neutral-950 px-6 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800"
                         >
                           {copy.learnDetails} →
                         </LocaleLink>
@@ -280,19 +303,35 @@ export default function TrainingsSection({ locale }: Props) {
 
         {/* Reviews */}
         <AnimateIn delay={150}>
-          <div className="card mt-20 p-6 shadow-md md:mt-24 md:p-8">
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="relative mt-20 overflow-hidden rounded-[1.75rem] bg-neutral-950 p-6 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:mt-24 md:rounded-[2rem] md:p-10">
+            <div
+              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-500/12 blur-3xl"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-25"
+              style={{
+                backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)`,
+                backgroundSize: "36px 36px",
+              }}
+              aria-hidden
+            />
+
+            <div className="relative mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h3 className="font-display text-xl font-semibold text-gray-900 md:text-2xl">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-200/80">
+                  {REVIEWS_COPY[locale].subtitle}
+                </span>
+                <h3 className="mt-2 font-display text-xl font-semibold text-white md:text-2xl">
                   {REVIEWS_COPY[locale].title}
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">{REVIEWS_COPY[locale].subtitle}</p>
               </div>
               <a
                 href={GOOGLE_MAPS_PLACE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-200"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:border-white/25 hover:bg-white/15"
               >
                 {REVIEWS_COPY[locale].viewOnGoogle}
                 <span aria-hidden>→</span>
@@ -303,7 +342,7 @@ export default function TrainingsSection({ locale }: Props) {
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              <div className="relative min-h-[200px]">
+              <div className="relative min-h-[200px] md:min-h-[220px]">
                 {GOOGLE_REVIEWS.map((review, idx) => (
                   <div
                     key={idx}
@@ -313,35 +352,35 @@ export default function TrainingsSection({ locale }: Props) {
                       idx === activeIndex ? "relative z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
                     }`}
                   >
-                    <div className="mx-auto max-w-2xl rounded-xl border border-gray-200 bg-white p-6 shadow-md transition-all duration-300 ease-out md:p-8 hover:border-gray-300 hover:shadow-xl">
+                    <div className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 ring-1 ring-black/5 transition md:p-8">
                       <div className="flex items-center gap-2 text-amber-500">
-                        <span className="text-2xl">"</span>
+                        <span className="text-2xl leading-none text-amber-400/90">"</span>
                         <span className="flex flex-shrink-0" aria-label={`${review.rating} stars`}>
                           {"★".repeat(review.rating)}
                         </span>
                       </div>
                       <div className="mt-4 flex items-center gap-3">
-                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#1e222a] text-sm font-semibold text-white">
+                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white ring-2 ring-amber-500/30">
                           {review.firstName.charAt(0)}
                           {review.lastName?.charAt(0) ?? ""}
                         </div>
-                        <span className="font-semibold text-gray-900">
+                        <span className="font-semibold text-neutral-950">
                           {formatReviewerName(review.firstName, review.lastName)}
                         </span>
                       </div>
-                      <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">
+                      <p className="mt-4 text-sm leading-relaxed text-neutral-600 md:text-base">
                         {review.text[locale]}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 flex items-center justify-center gap-4">
+              <div className="mt-8 flex items-center justify-center gap-4">
                 <button
                   type="button"
                   onClick={prev}
                   aria-label={locale === "sq" ? "Review i mëparshëm" : locale === "de" ? "Vorherige Bewertung" : "Previous review"}
-                  className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+                  className="rounded-full border border-white/10 bg-white/5 p-2.5 text-white/80 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -356,7 +395,7 @@ export default function TrainingsSection({ locale }: Props) {
                       aria-label={`${locale === "sq" ? "Shiko review" : locale === "de" ? "Bewertung anzeigen" : "View review"} ${idx + 1}`}
                       aria-current={idx === activeIndex ? "true" : undefined}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? "w-8 bg-[#1e222a]" : "w-2 bg-gray-300 hover:bg-gray-400"
+                        idx === activeIndex ? "w-8 bg-amber-400" : "w-2 bg-white/25 hover:bg-white/40"
                       }`}
                     />
                   ))}
@@ -365,7 +404,7 @@ export default function TrainingsSection({ locale }: Props) {
                   type="button"
                   onClick={next}
                   aria-label={locale === "sq" ? "Review tjetër" : locale === "de" ? "Nächste Bewertung" : "Next review"}
-                  className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+                  className="rounded-full border border-white/10 bg-white/5 p-2.5 text-white/80 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -379,17 +418,21 @@ export default function TrainingsSection({ locale }: Props) {
         {/* CTA */}
         <AnimateIn delay={200}>
           <div className="mt-16 md:mt-20">
-            <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-8 shadow-md md:p-12">
+            <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-gradient-to-br from-white via-amber-50/30 to-white p-8 shadow-[0_20px_60px_-30px_rgba(245,158,11,0.2)] ring-1 ring-amber-500/10 md:p-12">
+              <div
+                className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl"
+                aria-hidden
+              />
               <div className="relative flex flex-col items-center text-center">
-                <h3 className="font-display text-xl font-semibold text-gray-900 md:text-2xl">
+                <h3 className="font-display text-xl font-semibold text-neutral-950 md:text-2xl">
                   {locale === "sq" ? "Gati të fillosh?" : locale === "de" ? "Bereit zu starten?" : "Ready to start?"}
                 </h3>
-                <p className="mt-2 text-sm text-gray-600">
+                <p className="mt-2 max-w-md text-sm text-neutral-600">
                   {copy.ctaSubtext}
                 </p>
                 <LocaleLink
                   href="/trainings/register"
-                  className="mt-6 inline-flex h-14 items-center justify-center rounded-full bg-[#1e222a] px-10 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:bg-gray-800 hover:shadow-xl"
+                  className="mt-7 inline-flex h-14 min-w-[200px] items-center justify-center rounded-full bg-neutral-950 px-10 text-base font-semibold text-white shadow-xl shadow-neutral-900/25 transition hover:bg-neutral-800 hover:shadow-2xl"
                 >
                   {copy.registerNow}
                 </LocaleLink>

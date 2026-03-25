@@ -140,7 +140,7 @@ export default function Navbar() {
   const aboutDropdownItems = useMemo(
     () => [
       { label: nav.about, href: "/about" },
-      // { label: nav.team, href: "/team" }, // TODO: shtohet më vonë
+      { label: nav.team, href: "/team" },
       { label: nav.careers, href: "/careers" },
       { label: nav.faq, href: "/faq" },
     ],
@@ -160,6 +160,7 @@ export default function Navbar() {
     );
   const isAboutActive =
     pathname === withLocale("/about") ||
+    pathname === withLocale("/team") ||
     pathname === withLocale("/careers") ||
     pathname === withLocale("/faq");
 
@@ -437,13 +438,13 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right side */}
+        {/* Right side: language (left of hamburger on mobile), CTA, menu */}
         <div className="flex items-center gap-2">
-          <div ref={langDropdownRef} className="relative hidden md:block">
+          <div ref={langDropdownRef} className="relative">
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="flex items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700"
+              className="hidden items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700 md:flex"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -461,6 +462,24 @@ export default function Navbar() {
               <svg className={`h-4 w-4 text-gray-400 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => setLangDropdownOpen((o) => !o)}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 md:hidden"
+              aria-expanded={langDropdownOpen}
+              aria-haspopup="true"
+              aria-label={nav.language}
+            >
+              {LOCALE_FLAGS[locale as (typeof LOCALES)[number]] && (
+                <Image
+                  src={LOCALE_FLAGS[locale as (typeof LOCALES)[number]].flagSrc}
+                  alt=""
+                  width={28}
+                  height={21}
+                  className="h-[18px] w-7 rounded-sm object-cover"
+                />
+              )}
             </button>
             {langDropdownOpen && (
               <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl">

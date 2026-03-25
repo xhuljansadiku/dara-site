@@ -1,12 +1,16 @@
 // app/[locale]/page.tsx - Localised home page for sq/en/de
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { use } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
 import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
 import TrainingsSection from "@/components/site/TrainingsSection";
 import HomeWorkSection from "@/components/site/HomeWorkSection";
+import HomeTeamSection from "@/components/site/HomeTeamSection";
 import HomeFaqSection from "@/components/site/HomeFaqSection";
+import ValuePillarIcon from "@/components/site/ValuePillarIcon";
+import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
@@ -14,11 +18,9 @@ import {
   PACKAGE_FILTER_TABS_BY_LOCALE,
   PACKAGE_GROUP_LABELS,
 } from "@/lib/packages-data";
-import { SERVICE_DETAILS_BY_LOCALE } from "@/lib/services-data";
+import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
 
 type Locale = "sq" | "en" | "de";
-
-const SHOW_TEAM = false; // TODO: shtohet më vonë
 
 const HERO_BY_LOCALE: Record<
   Locale,
@@ -54,6 +56,87 @@ const HERO_BY_LOCALE: Record<
     scrollHint: "Mehr entdecken",
     socialProof: "100+ Unternehmen vertrauen uns",
   },
+};
+
+/** Scrolling marquee under hero ("DARA" in logo gold) */
+const MARQUEE_BY_LOCALE: Record<Locale, { brand: string; rest: string }> = {
+  sq: { brand: "DARA", rest: " Marketing Agency · partneri juaj i besuar · " },
+  en: { brand: "DARA", rest: " Marketing Agency · your trusted partner · " },
+  de: { brand: "DARA", rest: " Marketing Agency · Ihr vertrauensvoller Partner · " },
+};
+
+const VALUE_PILLARS_HEADER: Record<
+  Locale,
+  { kicker: string; heading: string; tagline?: { brand: string; rest: string } }
+> = {
+  sq: {
+    kicker: "Vlerat",
+    heading: "Katër gjëra që na dallojnë",
+  },
+  en: {
+    kicker: "Values",
+    heading: "Four things that define us",
+  },
+  de: {
+    kicker: "Werte",
+    heading: "Vier Dinge, die uns ausmachen",
+  },
+};
+
+type ValuePillar = { title: string; desc: ReactNode };
+
+const VALUE_PILLARS_BY_LOCALE: Record<Locale, ValuePillar[]> = {
+  sq: [
+    { title: "KREATIVITETI", desc: "Ide të guximshme. Ekzekutim i saktë." },
+    { title: "UNIK", desc: "Dallohu ose përziju me të tjerët." },
+    {
+      title: "INOVACION",
+      desc: (
+        <>
+          E njëjta pamje.
+          <br />
+          Mendim i ri.
+        </>
+      ),
+    },
+    {
+      title: "REZULTATE",
+      desc: (
+        <>
+          <span className="font-semibold text-[#c8a55c]">DARA</span>
+          {" rritje e matshme, jo hamendje."}
+        </>
+      ),
+    },
+  ],
+  en: [
+    { title: "CREATIVITY", desc: "Bold ideas. Clean execution." },
+    { title: "UNIQUE", desc: "Stand out, or blend in." },
+    { title: "INNOVATION", desc: "Same view. Fresh thinking." },
+    {
+      title: "RESULTS",
+      desc: (
+        <>
+          <span className="font-semibold text-[#c8a55c]">DARA</span>
+          {": growth you can measure."}
+        </>
+      ),
+    },
+  ],
+  de: [
+    { title: "KREATIVITÄT", desc: "Mutige Ideen. Klare Umsetzung." },
+    { title: "EINZIGARTIGKEIT", desc: "Auffallen, oder untergehen." },
+    { title: "INNOVATION", desc: "Gleicher Blick. Neues Denken." },
+    {
+      title: "ERGEBNISSE",
+      desc: (
+        <>
+          <span className="font-semibold text-[#c8a55c]">DARA</span>
+          {": Wachstum, das man sieht."}
+        </>
+      ),
+    },
+  ],
 };
 
 const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraphs: string[]; readMore: string }> = {
@@ -107,7 +190,7 @@ const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: string }[]> 
   ],
 };
 
-// Shërbimet dhe çmimet nga services-data — burim i vetëm për faqen e shërbimeve dhe kryefaqen
+// Shërbimet dhe çmimet nga services-data (burim i vetëm për faqen e shërbimeve dhe kryefaqen)
 const SERVICES_BY_LOCALE = SERVICE_DETAILS_BY_LOCALE;
 // 4 service groups: strategy → content & campaigns → brand → training & build
 const SERVICE_GROUP_INDICES = [
@@ -382,6 +465,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
   const career = CAREER_BY_LOCALE[locale];
+  const pillarsHeader = VALUE_PILLARS_HEADER[locale];
+  const pillars = VALUE_PILLARS_BY_LOCALE[locale];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
   const jsonLdByLocale: Record<Locale, string> = {
@@ -472,158 +557,165 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       {/* Marquee banner - Trifid style */}
       <section className="relative py-6 overflow-hidden border-y border-gray-200">
         <div className="animate-marquee flex w-max gap-16">
-          {[...Array(8)].map((_, i) => (
-            <span key={i} className="shrink-0 font-display text-2xl font-bold uppercase tracking-wider text-gray-900 md:text-4xl lg:text-5xl">
-              {locale === "sq" ? "Përmbajtja është mbret · " : locale === "de" ? "Content ist König · " : "Content is King · "}
-            </span>
-          ))}
+          {[...Array(8)].map((_, i) => {
+            const m = MARQUEE_BY_LOCALE[locale];
+            return (
+              <span key={i} className="shrink-0 font-display text-2xl font-bold uppercase tracking-wider text-gray-900 md:text-4xl lg:text-5xl">
+                <span className="text-[#c8a55c]">{m.brand}</span>
+                <span>{m.rest}</span>
+              </span>
+            );
+          })}
         </div>
       </section>
 
-      {/* Value pillars - Trifid style (4 cards) */}
-      <section className="py-20 md:py-28">
+      {/* Value pillars (brand-aligned, DARA gold on results card) */}
+      <section className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8a55c]/30 to-transparent"
+          aria-hidden
+        />
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {(
-              locale === "sq"
-                ? [
-                    { title: "KREATIVITETI", desc: "Kreativiteti është të krijosh, të provosh gjëra të reja, të zhvillohesh, të marrësh rreziqe dhe të thyesh rregullat për të sjellë ide të reja." },
-                    { title: "UNIK", desc: "Që të jesh i pazëvendësueshëm, duhet gjithmonë të jesh ndryshe." },
-                    { title: "INOVACION", desc: "Inovacioni është të shohësh atë që të gjithë e kanë parë, por të mendosh atë që askush tjetër nuk e ka menduar." },
-                    { title: "REZULTATE", desc: "DARA është një partner që fokusohet në rezultate reale biznesi dhe në rritjen e qëndrueshme të klientëve. 🚀" },
-                  ]
-                : locale === "de"
-                ? [
-                    { title: "KREATIVITÄT", desc: "Kreativität bedeutet erfinden, experimentieren, wachsen, Risiken eingehen und Regeln brechen." },
-                    { title: "EINZIGARTIGKEIT", desc: "Um unersetzlich zu sein, muss man immer anders sein." },
-                    { title: "INNOVATION", desc: "Innovation ist zu sehen, was alle gesehen haben, und zu denken, was niemand gedacht hat." },
-                    { title: "ERGEBNISSE", desc: "DARA ist ein Partner, der sich auf messbare Geschäftsergebnisse und Wachstum konzentriert." },
-                  ]
-                : [
-                    { title: "CREATIVITY", desc: "Creativity is inventing, experimenting, growing, taking risks, breaking rules." },
-                    { title: "UNIQUE", desc: "In order to be irreplaceable, one must always be different." },
-                    { title: "INNOVATION", desc: "Innovation is seeing what everybody has seen and thinking what nobody has thought." },
-                    { title: "RESULTS", desc: "DARA is a partner focused on measurable business results and growth." },
-                  ]
-            ).map((pillar, idx) => {
-              const icons = [
-                <svg key="c" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>,
-                <svg key="u" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>,
-                <svg key="i" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
-                <svg key="r" className="h-10 w-10 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>,
-              ];
-              return (
-              <AnimateIn key={pillar.title} delay={idx * 80}>
-                <div className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#c8a55c]/10 text-[#c8a55c]">
-                    {icons[idx]}
-                  </div>
-                  <h3 className="mt-4 font-display text-xl font-bold uppercase tracking-wider text-gray-900 md:text-2xl">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-gray-600">
-                    {pillar.desc}
-                  </p>
-                </div>
-              </AnimateIn>
-            );})}
+          <div className="mb-12 text-center md:mb-16">
+            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#9a7b3a]">
+              {pillarsHeader.kicker}
+            </p>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+              {pillarsHeader.heading}
+            </h2>
+            {pillarsHeader.tagline && (
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-600 md:text-[17px]">
+                <span className="font-semibold text-[#c8a55c]">{pillarsHeader.tagline.brand}</span>
+                <span>{pillarsHeader.tagline.rest}</span>
+              </p>
+            )}
           </div>
-        </div>
-      </section>
-
-      {/* All services with numbers */}
-      <section className="border-y border-gray-200 py-8">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 md:gap-x-16">
-            {services.map((s, idx) => (
-              <LocaleLink
-                key={idx}
-                href={`/services/${SERVICE_ANCHORS[idx]}`}
-                className="group flex items-center gap-3 text-gray-600 transition hover:text-gray-900"
-              >
-                <span className="font-mono text-sm font-medium tabular-nums text-gray-500 group-hover:text-gray-900">
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-                <span className="whitespace-nowrap text-sm font-medium md:text-base">{s.title}</span>
-              </LocaleLink>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((pillar, idx) => (
+                <AnimateIn key={pillar.title} delay={idx * 80}>
+                  <div className="group flex h-full flex-col max-sm:items-center max-sm:text-center sm:items-stretch sm:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/35 hover:shadow-[0_28px_56px_-28px_rgba(200,165,92,0.22)] md:p-9">
+                    <ValuePillarIcon index={idx} />
+                    <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
+                      {pillar.title}
+                    </h3>
+                    <div className="mt-4 flex-1 text-base leading-snug text-gray-600 max-sm:text-center md:text-lg">{pillar.desc}</div>
+                  </div>
+                </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ABOUT US  scroll animations, stats visuals */}
-      <section id="about" className="relative py-16 sm:py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)]" />
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-gray-200 bg-gray-50 p-4 sm:p-6 md:p-10 lg:p-12">
-          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-            <AnimateIn delay={100}>
-              <div className="relative order-2 lg:order-1 flex justify-center items-center">
-                <div className="relative w-full max-w-[260px] sm:max-w-[300px] mx-auto">
-                  <div className="aspect-[9/16] overflow-hidden rounded-[1.5rem] border-4 border-gray-200 bg-black shadow-2xl shadow-gray-400/20">
-                    <video
-                      src="/video/about-dara.mp4"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="h-full w-full object-cover"
+      {/* All services: compact numbered links */}
+      <HomeServicesStrip
+        items={services.map((s, idx) => ({
+          slug: SERVICE_SLUGS[idx],
+          title: s.title,
+          num: idx + 1,
+        }))}
+      />
+
+      {/* ABOUT US */}
+      <section id="about" className="relative overflow-hidden py-16 sm:py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_45%,#fafafa_100%)]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.4] [mask-image:linear-gradient(180deg,white,transparent)]"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
+            backgroundSize: "48px 48px",
+          }}
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
+            <div
+              className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl"
+              aria-hidden
+            />
+            <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+              <AnimateIn delay={100}>
+                <div className="relative order-2 flex justify-center lg:order-1">
+                  <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
+                    <div
+                      className="pointer-events-none absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-amber-400/25 via-transparent to-transparent opacity-50 blur-xl"
+                      aria-hidden
                     />
+                    <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
+                      <video
+                        src="/video/about-dara.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </AnimateIn>
-            <div className="order-1 lg:order-2">
-              <AnimateIn>
-                <span className="inline-block rounded-full border border-gray-300 bg-gray-100 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-gray-900">
-                  {about.kicker}
-                </span>
               </AnimateIn>
-              <AnimateIn delay={50}>
-                <h2 className="mt-4 sm:mt-6 font-display text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl xl:text-5xl">
-                  {about.title}
-                </h2>
-              </AnimateIn>
-              <AnimateIn delay={100}>
-                <p className="mt-5 text-base leading-relaxed text-gray-900/70 md:text-lg">
-                  {about.paragraphs[0]}
-                </p>
-              </AnimateIn>
-              <AnimateIn delay={150}>
-                <p className="mt-4 text-base leading-relaxed text-gray-500 md:text-lg">
-                  {about.paragraphs[1]}
-                </p>
-              </AnimateIn>
-              {about.paragraphs[2] && (
-                <AnimateIn delay={200}>
-                  <p className="mt-4 text-base leading-relaxed text-gray-500 md:text-lg">
-                    {about.paragraphs[2]}
+              <div className="order-1 lg:order-2">
+                <AnimateIn>
+                  <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+                    <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+                    {about.kicker}
+                  </span>
+                </AnimateIn>
+                <AnimateIn delay={50}>
+                  <h2 className="mt-4 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/90 bg-clip-text font-display text-2xl font-semibold tracking-tight text-transparent sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
+                    {about.title}
+                  </h2>
+                </AnimateIn>
+                <AnimateIn delay={100}>
+                  <p className="mt-5 text-base leading-relaxed text-neutral-800 md:text-lg">
+                    {about.paragraphs[0]}
                   </p>
                 </AnimateIn>
-              )}
-              <AnimateIn delay={250}>
-                <div className="mt-8 sm:mt-10 flex flex-wrap gap-4 sm:gap-6 md:gap-8">
-                  {aboutStats.map((stat) => (
-                    <div key={stat.label} className="flex flex-col">
-                      <span className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">{stat.value}</span>
-                      <span className="mt-0.5 text-xs sm:text-sm text-gray-900/70">{stat.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </AnimateIn>
-              <AnimateIn delay={300}>
-                <div className="mt-10">
-                  <LocaleLink
-                    href="/about"
-                    className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-900 bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-                  >
-                    {about.readMore}
-                  </LocaleLink>
-                </div>
-              </AnimateIn>
+                <AnimateIn delay={150}>
+                  <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg">
+                    {about.paragraphs[1]}
+                  </p>
+                </AnimateIn>
+                {about.paragraphs[2] && (
+                  <AnimateIn delay={200}>
+                    <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg">
+                      {about.paragraphs[2]}
+                    </p>
+                  </AnimateIn>
+                )}
+                <AnimateIn delay={250}>
+                  <div className="mt-8 flex flex-wrap gap-2 sm:mt-10">
+                    {aboutStats.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="min-w-[140px] flex-1 rounded-2xl border border-black/[0.06] bg-neutral-50/80 px-4 py-3.5 text-center shadow-sm ring-1 ring-black/[0.03] sm:min-w-[160px] sm:px-5 sm:text-left"
+                      >
+                        <span className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
+                          {stat.value}
+                        </span>
+                        <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-500 sm:text-xs sm:normal-case sm:tracking-normal">
+                          {stat.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </AnimateIn>
+                <AnimateIn delay={300}>
+                  <div className="mt-10">
+                    <LocaleLink
+                      href="/about"
+                      className="inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+                    >
+                      {about.readMore}
+                    </LocaleLink>
+                  </div>
+                </AnimateIn>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
 
@@ -647,56 +739,79 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeWorkSection locale={locale} />
 
+      <HomeTeamSection locale={locale} />
+
       {/* KARRIERË / CAREERS */}
       <section id="careers" className="relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[white]/[0.03] to-transparent" />
-          <div className="absolute right-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/4 rounded-full bg-gray-200 blur-[120px]" />
-          <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[white]/[0.04] blur-[80px]" />
-        </div>
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.38] [mask-image:linear-gradient(180deg,white,transparent)]"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
+            backgroundSize: "48px 48px",
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-amber-400/12 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 left-0 h-56 w-56 rounded-full bg-neutral-300/25 blur-3xl"
+          aria-hidden
+        />
+
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
               <AnimateIn delay={0}>
-                <span className="inline-block text-[11px] font-medium uppercase tracking-[0.25em] text-gray-900">
+                <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+                  <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
                   {career.kicker}
                 </span>
               </AnimateIn>
               <AnimateIn delay={80}>
-                <h2 className="mt-5 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem]">
+                <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/85 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
                   {career.title}
-                  <span className="text-gray-900">.</span>
                 </h2>
               </AnimateIn>
               <AnimateIn delay={120}>
-                <p className="mt-5 max-w-md text-base leading-relaxed text-gray-900/65">
+                <p className="mt-5 max-w-md text-base leading-relaxed text-neutral-600 md:text-[17px]">
                   {career.subtitle}
                 </p>
               </AnimateIn>
               <AnimateIn delay={160}>
                 <LocaleLink
                   href="/careers"
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white shadow-lg transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
                 >
                   {career.cta}
                 </LocaleLink>
               </AnimateIn>
             </div>
             <div className="lg:col-span-7">
-              <div className="grid gap-4 sm:grid-cols-3 sm:items-stretch">
+              <div className="grid gap-4 sm:grid-cols-3 sm:items-stretch lg:gap-5">
                 {career.roles.map((role, idx) => (
                   <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
                     <LocaleLink
                       href="/careers"
-                      className="group flex h-full min-h-[140px] flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-lg"
+                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:shadow-[0_24px_48px_-24px_rgba(245,158,11,0.14)]"
                     >
-                      <span className="font-mono text-xs font-medium tabular-nums text-gray-900/90">
+                      <div
+                        className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-amber-400/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
+                        aria-hidden
+                      />
+                      <span className="relative inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <span className="mt-3 flex-1 text-lg font-semibold text-gray-900 group-hover:text-gray-900">
+                      <span className="relative mt-4 flex-1 text-lg font-semibold tracking-tight text-neutral-950">
                         {role}
                       </span>
-                      <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 transition group-hover:text-gray-900">
+                      <span className="relative mt-4 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition group-hover:text-neutral-950">
                         {locale === "sq" ? "Apliko →" : locale === "de" ? "Bewerben →" : "Apply →"}
                       </span>
                     </LocaleLink>
@@ -710,94 +825,32 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeFaqSection locale={locale} />
 
-      {/* OUR TEAM  bios on hover, social links structure */}
-      {SHOW_TEAM && (
-      <section id="team" className="py-12 md:py-20">
-        <div className="mb-12">
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-900/80">
-            {locale === "sq" ? "Ekipi ynë" : locale === "de" ? "Unser Team" : "Our Team"}
-          </p>
-          <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
-            {locale === "sq" ? (
-              <>Njerëzit pas <span className="text-gray-900">DARA</span></>
-            ) : locale === "de" ? (
-              <>Die Menschen hinter <span className="text-gray-900">DARA</span></>
-            ) : (
-              <>The people behind <span className="text-gray-900">DARA</span></>
-            )}
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-gray-900/70">
-            {locale === "sq"
-              ? "Profesionistë të marketingut dhe krijuesit që sjellin brandet në jetë."
-              : locale === "de"
-              ? "Marketingprofis und Kreative, die Marken zum Leben erwecken."
-              : "Marketing professionals and creatives who bring brands to life."}
-          </p>
-        </div>
-        <div className="grid min-h-0 grid-cols-1 items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            { name: "Ana K.", role: locale === "sq" ? "Themelues & Strategji" : locale === "de" ? "Gründerin & Strategie" : "Founder & Strategy", bio: locale === "sq" ? `${yearsExperienceFormatted} vjet në marketingu. Ekspertë në strategji dhe rritje të bizneseve.` : locale === "de" ? `${yearsExperienceFormatted} Jahre im Marketing. Experte für Strategie und Unternehmenswachstum.` : `${yearsExperienceFormatted} years in marketing. Expert in strategy and business growth.`, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
-            { name: "Marko D.", role: locale === "sq" ? "Kreativ & Design" : locale === "de" ? "Kreativ & Design" : "Creative & Design", bio: locale === "sq" ? "Krijues vizual me përvojë në branding dhe përmbajtje." : locale === "de" ? "Visueller Kreativer mit Erfahrung in Branding und Content." : "Visual creative with experience in branding and content.", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
-            { name: "Ela R.", role: locale === "sq" ? "Social Media & Përmbajtje" : locale === "de" ? "Social Media & Content" : "Social Media & Content", bio: locale === "sq" ? "Specialist në rrjetet sociale dhe strategji përmbajtjeje." : locale === "de" ? "Spezialistin für Social Media und Content-Strategie." : "Specialist in social media and content strategy.", img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=480&h=600&fit=crop", linkedin: "#", instagram: "#" },
-          ].map((member) => (
-            <div
-              key={member.name}
-              className="card card-lift group relative overflow-hidden"
-            >
-              <div className="relative aspect-[3/4] overflow-hidden">
-                <Image
-                  src={member.img}
-                  alt={member.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 opacity-0 transition-opacity group-hover:opacity-100">
-                  <p className="text-sm text-gray-900">{member.bio}</p>
-                  <div className="mt-4 flex gap-3">
-                    <a href={member.linkedin} className="rounded-full p-2 text-gray-900/70 transition hover:bg-white/10 hover:text-gray-900" aria-label="LinkedIn"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href={member.instagram} className="rounded-full p-2 text-gray-900/70 transition hover:bg-white/10 hover:text-gray-900" aria-label="Instagram"><svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-medium text-gray-900/95">{member.name}</h3>
-                <p className="mt-1 text-sm text-gray-900/90">{member.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-      )}
-
       {/* CTA Section - Professional */}
-      <section className="py-20 md:py-28" aria-labelledby="cta-heading">
+      <section className="relative py-20 md:py-28" aria-labelledby="cta-heading">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:linear-gradient(180deg,white,transparent)]"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)`,
+            backgroundSize: "48px 48px",
+          }}
+          aria-hidden
+        />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-          <div className="absolute inset-0 bg-gradient-to-b from-[white]/[0.03] via-transparent to-transparent" />
-          <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[white]/[0.04] blur-[100px]" />
+        <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-amber-50/30 via-transparent to-transparent" aria-hidden />
+          <div
+            className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-amber-400/12 blur-3xl"
+            aria-hidden
+          />
           <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
-            {/* Trusted By - minimal */}
-            <div className="mb-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-b border-gray-200 pb-10">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-gray-500">
-                {locale === "sq" ? "Na besojnë" : locale === "de" ? "Vertrauen uns" : "Trusted by"}
-              </span>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
-                {["Don Mare Hotel", "Zorada", "City Fitness", "Cara Dental", "Nova Real Estate"].map((name) => (
-                  <span key={name} className="text-sm font-medium text-gray-700">
-                    {name}
-                  </span>
-                ))}
-              </div>
-            </div>
-
             <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
               {/* Left - CTA */}
               <div>
-                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-gray-900 md:text-4xl lg:text-[2.75rem]">
+                <h2 id="cta-heading" className="bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/80 bg-clip-text font-display text-3xl font-bold leading-[1.15] text-transparent md:text-4xl lg:text-[2.75rem]">
                   {cta.title}
                 </h2>
-                <p className="mt-5 text-base leading-relaxed text-gray-600">
+                <p className="mt-5 text-base leading-relaxed text-neutral-600">
                   {cta.subtitle}
                 </p>
                 <div className="mt-8 space-y-4">
@@ -823,7 +876,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </div>
                 <LocaleLink
                   href="/contact"
-                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
                 >
                   {cta.button}
                 </LocaleLink>

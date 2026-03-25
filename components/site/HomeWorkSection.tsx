@@ -8,7 +8,6 @@ import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
 import type { ProjectCategory } from "@/lib/projects";
 
 const HOME_PROJECTS_LIMIT = 6;
-const THUMBNAIL_FALLBACK = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop";
 
 type Props = {
   locale: "sq" | "en" | "de";
@@ -28,70 +27,106 @@ export default function HomeWorkSection({ locale }: Props) {
   const displayProjects = filteredProjects.slice(0, HOME_PROJECTS_LIMIT);
   const hasMore = filteredProjects.length > HOME_PROJECTS_LIMIT;
 
+  const kicker =
+    locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects";
+  const viewAll =
+    locale === "sq"
+      ? "Shiko të gjitha projektet"
+      : locale === "de"
+        ? "Alle Projekte ansehen"
+        : "View all projects";
+  const intro =
+    locale === "sq"
+      ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
+      : locale === "de"
+        ? "Verschiedene Projekte von Strategie und Social Media bis Brand und Schulungen."
+        : "From strategy and social media to brand and training. A selection of what we deliver.";
+
   return (
-    <section id="work" className="py-12 md:py-20">
+    <section id="work" className="relative overflow-hidden py-14 md:py-24">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.38] [mask-image:linear-gradient(180deg,white,transparent)]"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+        aria-hidden
+      />
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
-            {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
-          </p>
-          <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
-            {locale === "sq" && (
-              <>
-                Puna jonë <span className="text-gray-900">e zgjedhur</span>
-              </>
-            )}
-            {locale === "en" && (
-              <>
-                Our <span className="text-gray-900">work</span>
-              </>
-            )}
-            {locale === "de" && (
-              <>
-                Unsere <span className="text-gray-900">Arbeiten</span>
-              </>
-            )}
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-gray-600">
-            {locale === "sq"
-              ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
-              : locale === "de"
-              ? "Verschiedene Projekte von Strategie und Social Media bis Brand und Schulungen."
-              : "From strategy and social media to brand and training. A selection of what we deliver."}
-          </p>
-        </div>
-        <LocaleLink
-          href="/work"
-          className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-gray-900 transition hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 focus-visible:rounded"
-        >
-          {locale === "sq"
-            ? "Shiko të gjitha projektet"
-            : locale === "de"
-            ? "Alle Projekte ansehen"
-            : "View all projects"}
-          <span aria-hidden>→</span>
-        </LocaleLink>
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        {filterTabs.map((tab) => (
-          <button
-            key={tab.key}
-            type="button"
-            onClick={() => setActiveFilter(tab.key)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activeFilter === tab.key
-                ? "bg-gray-900 text-white"
-                : "border border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900"
-            }`}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+              <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+              {kicker}
+            </span>
+            <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl lg:text-[2.65rem] lg:leading-[1.1]">
+              {locale === "sq" && (
+                <>
+                  Puna jonë{" "}
+                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                    e zgjedhur
+                  </span>
+                </>
+              )}
+              {locale === "en" && (
+                <>
+                  Our{" "}
+                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                    work
+                  </span>
+                </>
+              )}
+              {locale === "de" && (
+                <>
+                  Unsere{" "}
+                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                    Arbeiten
+                  </span>
+                </>
+              )}
+            </h2>
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600">{intro}</p>
+          </div>
+          <LocaleLink
+            href="/work"
+            className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-amber-300/50 hover:bg-amber-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            {viewAll}
+            <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>
+          </LocaleLink>
+        </div>
 
-      <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
+            role="tablist"
+          >
+            {filterTabs.map((tab) => (
+              <button
+                key={tab.key}
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === tab.key}
+                onClick={() => setActiveFilter(tab.key)}
+                className={`whitespace-nowrap rounded-[0.65rem] px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  activeFilter === tab.key
+                    ? "bg-white text-neutral-950 shadow-sm ring-1 ring-black/[0.06]"
+                    : "text-neutral-600 hover:text-neutral-950"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+      <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {displayProjects.map((p) => (
           <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
         ))}
@@ -116,10 +151,10 @@ export default function HomeWorkSection({ locale }: Props) {
         />
       )}
       {hasMore && (
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <LocaleLink
             href="/work"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-gray-200 px-6 text-sm font-medium text-gray-800 transition hover:border-gray-300 hover:bg-gray-50"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800"
           >
             {locale === "sq" ? "Shiko më shumë" : locale === "de" ? "Mehr anzeigen" : "View more"}
           </LocaleLink>
