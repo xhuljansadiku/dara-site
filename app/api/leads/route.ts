@@ -134,7 +134,14 @@ export async function POST(req: Request) {
       );
     }
 
+    console.log("LEADS_ROUTE_NOTIFY_START:", {
+      email,
+      phone: phone || null,
+      company: company || null,
+      budget: budget || null,
+    });
     const notify = await sendLeadNotification(lead);
+    console.log("LEADS_ROUTE_NOTIFY_RESULT:", notify);
     if (!notify.ok) {
       console.error("LEAD_EMAIL_ERROR:", notify.error);
       return NextResponse.json(
