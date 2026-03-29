@@ -19,6 +19,20 @@ function clean(s: unknown, max = 2000) {
 const DATA_DIR = path.join(process.cwd(), "data");
 const FILE_PATH = path.join(DATA_DIR, "leads.json");
 
+/**
+ * Most production/serverless hosts expose a read-only app filesystem.
+ * Persist to local JSON only when explicitly enabled or in local development.
+ */
+function shouldSkipDiskPersistence(): boolean {
+  if (process.env.LEADS_PERSIST_TO_DISK === "1") return false;
+  if (process.env.LEADS_EMAIL_ONLY === "1") return true;
+  if (process.env.VERCEL) return true;
+  if (process.env.NETLIFY) return true;
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME) return true;
+  if (process.env.NODE_ENV === "production") return true;
+  return false;
+}
+
 type Lead = {
   name: string;
   email: string;
@@ -76,17 +90,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "INVALID_MESSAGE" }, { status: 400 });
     }
 
-    await fs.mkdir(DATA_DIR, { recursive: true });
-
-    let list: Lead[] = [];
-    try {
-      const raw = await fs.readFile(FILE_PATH, "utf8");
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) list = parsed as Lead[];
-    } catch {
-      // no file yet
-    }
-
     const lead: Lead = {
       name,
       email,
@@ -96,8 +99,29 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    list.push(lead);
-    await fs.writeFile(FILE_PATH, JSON.stringify(list, null, 2), "utf8");
+    let persistedToDisk = false;
+    if (!shouldSkipDiskPersistence()) {
+      try {
+        await fs.mkdir(DATA_DIR, { recursive: true });
+
+        let list: Lead[] = [];
+        try {
+          const raw = await fs.readFile(FILE_PATH, "utf8");
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) list = parsed as Lead[];
+        } catch {
+          // no file yet
+        }
+
+        list.push(lead);
+        await fs.writeFile(FILE_PATH, JSON.stringify(list, null, 2), "utf8");
+        persistedToDisk = true;
+      } catch (err) {
+        console.error("LEADS_DISK_ERROR:", err);
+      }
+    } else {
+      console.info("LEADS: skipping local disk (Vercel/serverless); relying on email delivery.");
+    }
 
     // Send email notification (non-blocking; don't fail if email fails)
     sendLeadNotification(lead).catch((err) => console.error("LEAD_EMAIL_ERROR:", err));
@@ -106,7 +130,7 @@ export async function POST(req: Request) {
     const locale = ["sq", "en", "de"].includes(clean(obj.locale, 5)) ? clean(obj.locale, 5) : "en";
     sendAutoReplyToLead({ name, email }, locale).catch((err) => console.error("AUTO_REPLY_ERROR:", err));
 
-    return NextResponse.json({ ok: true, saved: true });
+    return NextResponse.json({ ok: true, saved: persistedToDisk || shouldSkipDiskPersistence() });
   } catch (e) {
     console.error("LEADS_ERROR:", e);
     return NextResponse.json({ ok: false, error: "SERVER_ERROR" }, { status: 500 });
