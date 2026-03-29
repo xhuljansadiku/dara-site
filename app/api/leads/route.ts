@@ -3,7 +3,7 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { sendLeadNotification, sendAutoReplyToLead } from "@/lib/email";
+import { isSmtpConfigured, sendLeadNotification, sendAutoReplyToLead } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 function isValidEmail(email: string) {
@@ -123,14 +123,28 @@ export async function POST(req: Request) {
       console.info("LEADS: skipping local disk (Vercel/serverless); relying on email delivery.");
     }
 
-    // Send email notification (non-blocking; don't fail if email fails)
-    sendLeadNotification(lead).catch((err) => console.error("LEAD_EMAIL_ERROR:", err));
+    if (!isSmtpConfigured()) {
+      console.error("LEADS_SMTP_NOT_CONFIGURED");
+      return NextResponse.json(
+        { ok: false, error: "SMTP_NOT_CONFIGURED", saved: persistedToDisk },
+        { status: 503 }
+      );
+    }
+
+    const notify = await sendLeadNotification(lead);
+    if (!notify.ok) {
+      console.error("LEAD_EMAIL_ERROR:", notify.error);
+      return NextResponse.json(
+        { ok: false, error: "EMAIL_FAILED", saved: persistedToDisk },
+        { status: 502 }
+      );
+    }
 
     // Auto-reply to client (non-blocking)
     const locale = ["sq", "en", "de"].includes(clean(obj.locale, 5)) ? clean(obj.locale, 5) : "en";
     sendAutoReplyToLead({ name, email }, locale).catch((err) => console.error("AUTO_REPLY_ERROR:", err));
 
-    return NextResponse.json({ ok: true, saved: persistedToDisk || shouldSkipDiskPersistence() });
+    return NextResponse.json({ ok: true, saved: persistedToDisk || shouldSkipDiskPersistence(), emailed: true });
   } catch (e) {
     console.error("LEADS_ERROR:", e);
     return NextResponse.json({ ok: false, error: "SERVER_ERROR" }, { status: 500 });
