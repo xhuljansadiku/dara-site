@@ -253,10 +253,10 @@ export default function TrainingsSection({ locale }: Props) {
                       aria-hidden
                     />
                   )}
-                  <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-3xl p-8 md:p-10">
+                  <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-3xl p-8 text-center sm:text-left md:p-10">
                     {/* Fixed vertical rhythm above highlights so check icons start on the same row across cards */}
                     <div className="shrink-0">
-                      <div className="flex min-h-[3.75rem] flex-wrap items-center gap-2">
+                      <div className="flex min-h-[3.75rem] flex-wrap items-center justify-center gap-2 sm:justify-start">
                         <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white shadow-lg shadow-neutral-900/15">
                           {training.price}
                         </span>
@@ -279,9 +279,12 @@ export default function TrainingsSection({ locale }: Props) {
                     <div className="mt-5 flex min-h-0 flex-1 flex-col">
                       <ul className="flex flex-col gap-2.5">
                         {training.highlights[locale].map((item) => (
-                          <li key={item} className="flex gap-3 text-sm leading-snug text-neutral-700">
+                          <li
+                            key={item}
+                            className="flex flex-col items-center gap-2 text-sm leading-snug text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left"
+                          >
                             <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center self-start rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"
+                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25 sm:self-start"
                               aria-hidden
                             >
                               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
@@ -348,8 +351,8 @@ export default function TrainingsSection({ locale }: Props) {
               aria-hidden
             />
 
-            <div className="relative mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
+            <div className="relative mb-8 flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+              <div className="w-full sm:w-auto">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/70">
                   {REVIEWS_COPY[locale].subtitle}
                 </span>
@@ -361,7 +364,7 @@ export default function TrainingsSection({ locale }: Props) {
                 href={GOOGLE_MAPS_PLACE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:border-white/25 hover:bg-white/15"
+                className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:border-white/25 hover:bg-white/15 sm:w-auto sm:max-w-none"
               >
                 {REVIEWS_COPY[locale].viewOnGoogle}
                 <span aria-hidden>→</span>
@@ -372,24 +375,24 @@ export default function TrainingsSection({ locale }: Props) {
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              <div className="relative min-h-[200px] md:min-h-[220px]">
+              <div className="relative h-[19rem] sm:h-[21rem] md:h-[23rem]">
                 {GOOGLE_REVIEWS.map((review, idx) => (
                   <div
                     key={idx}
                     role="tabpanel"
                     aria-hidden={idx !== activeIndex}
                     className={`absolute inset-0 transition-opacity duration-500 ${
-                      idx === activeIndex ? "relative z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
+                      idx === activeIndex ? "relative z-10 flex h-full opacity-100" : "pointer-events-none z-0 opacity-0"
                     }`}
                   >
-                    <div className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 ring-1 ring-black/5 transition md:p-8">
-                      <div className="flex items-center gap-2 text-[#B89D5E]">
+                    <div className="mx-auto flex h-full max-w-2xl flex-col rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 ring-1 ring-black/5 md:p-8">
+                      <div className="flex shrink-0 items-center gap-2 text-[#B89D5E]">
                         <span className="text-2xl leading-none text-[#B89D5E]/90">"</span>
                         <span className="flex flex-shrink-0" aria-label={`${review.rating} stars`}>
                           {"★".repeat(review.rating)}
                         </span>
                       </div>
-                      <div className="mt-4 flex items-center gap-3">
+                      <div className="mt-4 flex shrink-0 items-center gap-3">
                         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white ring-2 ring-[#B89D5E]/30">
                           {review.firstName.charAt(0)}
                           {review.lastName?.charAt(0) ?? ""}
@@ -398,7 +401,7 @@ export default function TrainingsSection({ locale }: Props) {
                           {formatReviewerName(review.firstName, review.lastName)}
                         </span>
                       </div>
-                      <p className="mt-4 text-sm leading-relaxed text-neutral-600 md:text-base">
+                      <p className="mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 text-sm leading-relaxed text-neutral-600 [scrollbar-color:rgba(0,0,0,0.2)_transparent] [scrollbar-width:thin] md:text-base">
                         {review.text[locale]}
                       </p>
                     </div>

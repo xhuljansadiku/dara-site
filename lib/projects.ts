@@ -18,23 +18,29 @@ export type Project = {
 };
 
 // ----------------------
-// Social Media: slug + images per project
+// Social Media: single gallery (images only in UI; no detail pages)
 // ----------------------
 
-const TEST_IMG = "/images/projects/social-media/test2.jpeg";
-
-const SM_PROJECT_1 = {
-  slug: "project-1",
-  images: [TEST_IMG],
-};
+/** All portfolio mockups in `public/images/projects/social-media/` (1.png … 23.png). */
+export const SOCIAL_MEDIA_GALLERY_IMAGES = Array.from(
+  { length: 23 },
+  (_, i) => `/images/projects/social-media/${i + 1}.png`
+);
 
 // ----------------------
 // 🇦🇱 ALBANIAN
 // ----------------------
 
 const projectsSq: Project[] = [
-  // --- Social Media (1 project) ---
-  { title: "Project 1", tag: "Social Media", desc: "Menaxhim dhe rritje e prezencës në rrjetet sociale.", category: "social-media", thumbnail: TEST_IMG, slug: SM_PROJECT_1.slug, images: SM_PROJECT_1.images },
+  // --- Social Media (gallery only; see SOCIAL_MEDIA_GALLERY_IMAGES) ---
+  {
+    title: "Social Media",
+    tag: "Social Media",
+    desc: "Menaxhim dhe rritje e prezencës në rrjetet sociale.",
+    category: "social-media",
+    thumbnail: SOCIAL_MEDIA_GALLERY_IMAGES[0],
+    images: SOCIAL_MEDIA_GALLERY_IMAGES,
+  },
 
   // --- Brand Identity (single page with all logos) ---
   { title: "Albalink International", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/ai.png" },
@@ -94,15 +100,8 @@ export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {
 
 export const BRAND_PROJECTS: Project[] = projectsSq.filter((p) => p.category === "brand");
 
-export const SOCIAL_MEDIA_SLUGS = projectsSq
-  .filter((p): p is Project & { slug: string } => p.category === "social-media" && !!p.slug)
-  .map((p) => p.slug);
-
-export function getSocialMediaProjectBySlug(slug: string, locale: Locale): Project | undefined {
-  const idx = projectsSq.findIndex((p) => p.category === "social-media" && p.slug === slug);
-  if (idx === -1) return undefined;
-  return PROJECTS_BY_LOCALE[locale][idx];
-}
+/** No per-project URLs; gallery lives on /work. */
+export const SOCIAL_MEDIA_SLUGS: string[] = [];
 
 export type FilterTab = { key: ProjectCategory | "all"; label: string };
 

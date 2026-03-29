@@ -146,7 +146,7 @@ export default function CareersPage() {
             <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-neutral-950 md:text-5xl lg:text-[3.5rem]">
               {copy.title}
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-neutral-600">
+            <p className="mx-auto mt-6 max-w-2xl whitespace-pre-line text-lg leading-relaxed text-neutral-600">
               {copy.subtitle}
             </p>
             <div className="mx-auto mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />

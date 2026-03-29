@@ -97,9 +97,9 @@ export default function ServicesSection({
         aria-hidden
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
-        <div>
-          <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+      <div className="mb-10 flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+        <div className="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+          <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:justify-start">
             <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
             {copy.sectionKicker}
           </span>
@@ -109,7 +109,7 @@ export default function ServicesSection({
               {copy.sectionTitleHighlight}
             </span>
           </h2>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 md:max-w-none">
+          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 md:mx-0 md:max-w-none">
             {copy.sectionIntro}
           </p>
         </div>
@@ -117,6 +117,7 @@ export default function ServicesSection({
 
       {/* Tabs: segmented control */}
       <div className="mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex min-w-full justify-center md:justify-start">
         <div
           className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
           role="tablist"
@@ -138,6 +139,7 @@ export default function ServicesSection({
             </button>
           ))}
         </div>
+        </div>
       </div>
 
       {/* Groups + cards */}
@@ -156,7 +158,7 @@ export default function ServicesSection({
               }}
               aria-hidden
             />
-            <div className="relative mb-7 flex items-center gap-4">
+            <div className="relative mb-7 flex flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-950 text-white shadow-lg shadow-neutral-900/15 ring-1 ring-white/10">
                 {GROUP_ICONS[activeTab === 0 ? groupIndex : (activeTab - 1) % GROUP_ICONS.length]}
               </span>
@@ -187,7 +189,7 @@ export default function ServicesSection({
                     />
 
                     <div className="relative flex h-full min-h-0 flex-1 flex-col">
-                      <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start justify-center gap-2 md:justify-between">
                         <span className="inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
                           {String(i + 1).padStart(2, "0")}
                         </span>
@@ -246,7 +248,7 @@ export default function ServicesSection({
                           )}
                         </div>
 
-                        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-neutral-950">
+                        <div className="mt-4 flex items-center justify-center gap-1.5 text-sm font-semibold text-neutral-950 md:justify-start">
                           {copy.more}
                           <span className="text-xs transition group-hover:translate-x-0.5">→</span>
                         </div>
@@ -274,10 +276,10 @@ export default function ServicesSection({
             )}
 
             {/* CTA per group */}
-            <div className="relative mt-6">
+            <div className="relative mt-6 flex justify-center md:justify-start">
               <LocaleLink
                 href="/contact"
-                className="animate-services-cta-glow inline-flex h-11 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 px-7 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-900"
+                className="animate-services-cta-glow inline-flex h-11 w-full max-w-md items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 px-7 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-900 sm:w-auto"
               >
                 {copy.requestQuoteForGroup}
               </LocaleLink>
@@ -307,9 +309,9 @@ export default function ServicesSection({
             aria-hidden
           />
 
-        <div className="relative mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
-          <div>
-            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+        <div className="relative mb-10 flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+          <div className="mx-auto max-w-2xl md:mx-0 md:max-w-none">
+            <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:justify-start">
               <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/90 to-transparent" aria-hidden />
               {copy.packagesKicker}
             </span>
@@ -319,12 +321,13 @@ export default function ServicesSection({
                 {copy.packagesTitleHighlight}
               </span>
             </h2>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400 md:max-w-none">
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400 md:mx-0 md:max-w-none">
               <TextWithBreaksAfterPeriods text={copy.packagesIntro} />
             </p>
           </div>
         </div>
         <div className="relative mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-full justify-center md:justify-start">
           <div className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/10 backdrop-blur-md">
             {packageTabLabels.map((label, idx) => (
               <button
@@ -341,11 +344,12 @@ export default function ServicesSection({
               </button>
             ))}
           </div>
+          </div>
         </div>
         <div key={activePackageTab} className="relative space-y-14 animate-packages-tab-enter">
           {visiblePackageGroups.map((groupKey) => (
             <div key={groupKey}>
-              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/65 md:text-xs">
+              <h4 className="mb-8 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/65 md:text-left md:text-xs">
                 {packageGroupLabels[groupKey]}
               </h4>
               <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">

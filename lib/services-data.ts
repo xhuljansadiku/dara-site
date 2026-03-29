@@ -58,7 +58,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 500€",
     },
     {
-      title: "Menaxhim reklamash (Meta & Google)",
+      title: "Menaxhim reklamash\n(Meta & Google)",
       desc: "Krijim dhe optimizim fushatash reklamash në Meta & Google për rritje shitjesh, lead‑esh dhe njohje brand-i.",
       price: "Nga 250€ / muaj (pa buxhetin e reklamës)",
     },
@@ -172,7 +172,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Ab 500€",
     },
     {
-      title: "Ads Management (Meta & Google)",
+      title: "Ads Management\n(Meta & Google)",
       desc: "Erstellung und Optimierung von Kampagnen auf Meta & Google, um Verkäufe, Leads und Markenbekanntheit zu steigern.",
       price: "Ab 250€ / Monat (exkl. Media‑Budget)",
     },

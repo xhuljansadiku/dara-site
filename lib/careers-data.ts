@@ -32,7 +32,8 @@ export const CAREER_COPY_BY_LOCALE: Record<
   sq: {
     kicker: "Karrierë",
     title: "Po zgjerojmë ekipin",
-    subtitle: "Po kërkojmë njerëz të talentuar për të bashkëpunuar me ne. Apliko për një nga pozicionet e hapura.",
+    subtitle:
+      "Po kërkojmë njerëz të talentuar për të bashkëpunuar me ne.\nApliko për një nga pozicionet e hapura.",
     formTitle: "Apliko tani",
     formSubtitle: "Plotëso formularin dhe do të kontaktojmë së shpejti.",
     nameLabel: "Emri*",
@@ -72,7 +73,8 @@ export const CAREER_COPY_BY_LOCALE: Record<
   de: {
     kicker: "Karriere",
     title: "Wir erweitern unser Team",
-    subtitle: "Wir suchen talentierte Menschen für unser Team. Bewerben Sie sich für eine unserer offenen Stellen.",
+    subtitle:
+      "Wir suchen talentierte Menschen für unser Team.\nBewerben Sie sich für eine unserer offenen Stellen.",
     formTitle: "Jetzt bewerben",
     formSubtitle: "Füllen Sie das Formular aus und wir melden uns bald.",
     nameLabel: "Name*",

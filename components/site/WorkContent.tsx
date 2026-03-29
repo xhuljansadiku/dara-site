@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import ImageLightbox from "@/components/site/ImageLightbox";
 import ProjectCard from "@/components/site/ProjectCard";
+import SocialMediaWorkGallery from "@/components/site/SocialMediaWorkGallery";
 import type { Project, ProjectCategory } from "@/lib/projects";
 import type { FilterTab } from "@/lib/projects";
 
@@ -35,8 +35,8 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
       {/* HEADER SECTION - Same as HomeWorkSection */}
       <section id="work" className="py-12 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="min-w-0 sm:flex-1">
+        <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+          <div className="min-w-0 w-full sm:flex-1">
             <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
               {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
             </p>
@@ -88,33 +88,17 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
         {/* Social Media = large photos | Others = cards */}
         {(() => {
           const smProjects = filteredProjects.filter((p) => p.category === "social-media");
+          const smImages = smProjects.flatMap((p) =>
+            p.images?.length ? p.images : p.thumbnail ? [p.thumbnail] : []
+          );
           const otherProjects = filteredProjects.filter((p) => p.category !== "social-media");
           return (
             <div className="mt-10 space-y-10">
-              {smProjects.length > 0 && (
-                <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-                  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    {smProjects.map((p) => {
-                      const imgs = p.images?.length ? p.images : p.thumbnail ? [p.thumbnail] : [];
-                      return (
-                        <button
-                          key={p.title}
-                          type="button"
-                          onClick={() => imgs.length && setLightbox({ images: imgs, index: 0 })}
-                          className="relative block aspect-[16/9] w-full min-h-[180px] overflow-hidden rounded-lg sm:rounded-xl sm:min-h-[220px] md:min-h-[260px]"
-                        >
-                          <Image
-                            src={p.thumbnail ?? p.images?.[0] ?? ""}
-                            alt={p.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1280px) 80vw, 1280px"
-                            className="object-cover"
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+              {smImages.length > 0 && (
+                <SocialMediaWorkGallery
+                  images={smImages}
+                  onOpenImage={(index) => setLightbox({ images: smImages, index })}
+                />
               )}
               {otherProjects.length > 0 && (
                 <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -151,16 +135,16 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
       {/* CTA */}
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-10">
+        <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
           <h2 className="text-2xl font-semibold md:text-3xl text-gray-900">
             {ctaLabels.title} <span className="text-gray-900">{ctaLabels.accent}</span>.
           </h2>
-          <p className="mt-2 max-w-2xl text-gray-600">{ctaLabels.desc}</p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <LocaleLink href="/contact" className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800 sm:w-auto">
+          <p className="mt-2 mx-auto max-w-2xl text-gray-600 md:mx-0">{ctaLabels.desc}</p>
+          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center md:justify-start">
+            <LocaleLink href="/contact" className="inline-flex h-11 w-full max-w-md items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800 sm:mx-auto sm:w-auto md:mx-0">
               {ctaLabels.contact}
             </LocaleLink>
-            <LocaleLink href="/" className="inline-flex h-11 w-full items-center justify-center rounded-xl border-2 border-gray-300 px-5 font-medium text-gray-900 hover:border-gray-900 hover:bg-gray-50 sm:w-auto">
+            <LocaleLink href="/" className="inline-flex h-11 w-full max-w-md items-center justify-center rounded-xl border-2 border-gray-300 px-5 font-medium text-gray-900 hover:border-gray-900 hover:bg-gray-50 sm:mx-auto sm:w-auto md:mx-0">
               {ctaLabels.backHome}
             </LocaleLink>
           </div>

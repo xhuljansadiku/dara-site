@@ -7,6 +7,8 @@ export type ServicePageContent = {
   benefits: string[];
   howWeWork: string[];
   priceNote?: string;
+  /** Optional service-specific FAQs (merge/replace handled on page). */
+  faq?: { q: string; a: string }[];
 };
 
 // Section labels by locale (shared across all services)
@@ -18,28 +20,44 @@ export const SECTION_LABELS_BY_LOCALE: Record<
     benefits: string;
     howWeWork: string;
     priceNote: string;
+    workGallery: string;
+    faq: string;
+    relatedServices: string;
+    midCta: string;
   }
 > = {
   sq: {
     whatIncluded: "Çfarë përfshin",
     whoIsItFor: "Për kë është",
-    benefits: "Përfitimet",
+    benefits: "Rezultate & vlerë",
     howWeWork: "Si punojmë",
-    priceNote: "Shënim për çmimin",
+    priceNote: "Çmime & ofertë",
+    workGallery: "Shembuj pune",
+    faq: "Pyetje të shpeshta",
+    relatedServices: "Shërbime të lidhura",
+    midCta: "Gati për ofertë?",
   },
   en: {
     whatIncluded: "What's included",
     whoIsItFor: "Who it's for",
-    benefits: "Benefits",
+    benefits: "Results & value",
     howWeWork: "How we work",
-    priceNote: "Price note",
+    priceNote: "Pricing & quote",
+    workGallery: "Work & visuals",
+    faq: "FAQ",
+    relatedServices: "Related services",
+    midCta: "Ready for a quote?",
   },
   de: {
     whatIncluded: "Was enthalten ist",
     whoIsItFor: "Für wen",
-    benefits: "Vorteile",
+    benefits: "Ergebnisse & Nutzen",
     howWeWork: "So arbeiten wir",
-    priceNote: "Hinweis zum Preis",
+    priceNote: "Preise & Angebot",
+    workGallery: "Arbeiten & Einblicke",
+    faq: "FAQ",
+    relatedServices: "Passende Leistungen",
+    midCta: "Bereit für ein Angebot?",
   },
 };
 

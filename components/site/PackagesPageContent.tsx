@@ -20,7 +20,8 @@ const HERO_BY_LOCALE: Record<
     kicker: "Paketa",
     title: "Paketa për ",
     titleAccent: "çdo nevojë",
-    subtitle: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website. Paketa që përshtaten me biznesin tuaj.",
+    subtitle:
+      "Zgjidhje të gatshme për marketing, brand, trajnime dhe website.\nPaketa që përshtaten me biznesin tuaj.",
     getQuote: "Merr ofertë",
     viewServices: "Shiko shërbimet",
   },
@@ -36,7 +37,8 @@ const HERO_BY_LOCALE: Record<
     kicker: "Pakete",
     title: "Pakete für ",
     titleAccent: "jeden Bedarf",
-    subtitle: "Fertige Lösungen für Marketing, Marke, Training und Website. Pakete, die zu Ihrem Unternehmen passen.",
+    subtitle:
+      "Fertige Lösungen für Marketing, Marke, Training und Website.\nPakete, die zu Ihrem Unternehmen passen.",
     getQuote: "Angebot anfragen",
     viewServices: "Leistungen ansehen",
   },
@@ -54,7 +56,7 @@ const CTA_BY_LOCALE: Record<
     backHome: "Kthehu në kryefaqe",
   },
   en: {
-    title: "Ready to grow? ",
+    title: "Ready to grow?",
     titleAccent: "Let's talk.",
     subtitle: "Tell us your goal and we'll return with a clear plan and the right package.",
     getQuote: "Get a quote",
@@ -112,7 +114,7 @@ export default function PackagesPageContent({ locale }: Props) {
         </AnimateIn>
 
         <AnimateIn delay={200}>
-          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">{hero.subtitle}</p>
+          <p className="mt-4 mx-auto max-w-2xl whitespace-pre-line text-lg text-gray-600">{hero.subtitle}</p>
         </AnimateIn>
 
         <AnimateIn delay={300}>
@@ -138,6 +140,7 @@ export default function PackagesPageContent({ locale }: Props) {
       <section className="py-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
+          <div className="flex min-w-full justify-center sm:justify-start">
           <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap sm:w-full sm:flex-wrap">
             {filterTabs.map((tab, idx) => (
               <button
@@ -153,6 +156,7 @@ export default function PackagesPageContent({ locale }: Props) {
                 {tab.label}
               </button>
             ))}
+          </div>
           </div>
         </div>
         </div>
@@ -188,13 +192,14 @@ export default function PackagesPageContent({ locale }: Props) {
       <section className="py-12 md:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <AnimateIn delay={0}>
-          <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-10">
-            <h2 className="text-2xl font-semibold text-gray-900 md:text-3xl lg:text-4xl">
+          <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
+            <h2 className="text-2xl font-semibold leading-snug text-gray-900 md:text-3xl lg:text-4xl">
               {cta.title}
+              <br />
               <span className="text-gray-900">{cta.titleAccent}</span>
             </h2>
-            <p className="mt-3 max-w-2xl text-base text-gray-600 md:text-lg">{cta.subtitle}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <p className="mx-auto mt-3 max-w-2xl text-base text-gray-600 md:mx-0 md:text-lg">{cta.subtitle}</p>
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
               <LocaleLink
                 href="/contact"
                 className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-gray-900 px-6 font-medium text-white transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 sm:w-auto"

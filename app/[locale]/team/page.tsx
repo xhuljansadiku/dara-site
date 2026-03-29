@@ -80,15 +80,42 @@ export default async function TeamPage({ params }: Props) {
   const members = getTeamMembersForLocale(locale);
 
   return (
-    <div className="py-12 md:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <p className="text-xs uppercase tracking-[0.2em] text-gray-900/80">{t.kicker}</p>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-          {t.h1a} <span className="text-gray-900">{t.h1b}</span>
-        </h1>
-        <p className="mt-3 max-w-xl text-sm text-gray-900/70 md:text-base">{t.intro}</p>
+    <>
+      {/* Hero — aligned with /careers */}
+      <section className="relative overflow-hidden border-b border-stone-200/80 bg-gradient-to-b from-stone-50 via-white to-stone-50/50 py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.5]"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundSize: "44px 44px",
+          }}
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full bg-[#B89D5E]/12 blur-3xl" />
+          <div className="absolute right-[-15%] top-1/3 h-72 w-72 rounded-full bg-[#B89D5E]/12 blur-3xl" />
+        </div>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-[#B89D5E]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#6b5a38]">
+              {t.kicker}
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-neutral-950 md:text-5xl lg:text-[3.5rem]">
+              <span className="block">{t.h1a}</span>
+              <span className="block text-neutral-950">{t.h1b}</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-neutral-600 whitespace-pre-line">
+              {t.intro}
+            </p>
+            <div className="mx-auto mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
+          </div>
+        </div>
+      </section>
 
-        <div className="mt-12 grid min-h-0 grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="py-12 md:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid min-h-0 grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((member) => (
             <div key={member.name} className="card card-lift group relative overflow-hidden">
               <div className="relative aspect-[3/4] overflow-hidden bg-stone-100">
@@ -112,18 +139,19 @@ export default async function TeamPage({ params }: Props) {
               </div>
             </div>
           ))}
-        </div>
+          </div>
 
-        <div className="mt-14 rounded-2xl border border-gray-200 bg-gray-50 p-8 text-center md:p-10">
-          <p className="text-lg font-semibold text-gray-900">{t.cta}</p>
-          <LocaleLink
-            href="/careers"
-            className="mt-4 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800"
-          >
-            {t.ctaContact}
-          </LocaleLink>
+          <div className="mt-14 rounded-2xl border border-gray-200 bg-gray-50 p-8 text-center md:p-10">
+            <p className="text-lg font-semibold text-gray-900">{t.cta}</p>
+            <LocaleLink
+              href="/careers"
+              className="mt-4 inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800"
+            >
+              {t.ctaContact}
+            </LocaleLink>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

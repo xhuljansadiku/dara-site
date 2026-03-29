@@ -31,13 +31,13 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
       className={`group relative flex min-h-[340px] flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:-translate-y-1 ${shell}`}
     >
       {/* Header strip */}
-      <div className="flex items-center border-b border-neutral-100 bg-neutral-50/90 px-5 py-3.5">
+      <div className="flex items-center justify-center border-b border-neutral-100 bg-neutral-50/90 px-5 py-3.5 md:justify-start">
         <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-600">
           {pkg.subtitle}
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 md:p-6">
+      <div className="flex flex-1 flex-col p-5 text-center md:p-6 md:text-left">
         {pkg.badge && (
           <div className="mb-3 flex justify-center">
             <span
@@ -57,7 +57,7 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
           </div>
         )}
         <h5 className="text-xl font-bold tracking-tight text-neutral-950">{pkg.title}</h5>
-        <div className="mt-3 flex items-baseline gap-2">
+        <div className="mt-3 flex items-baseline justify-center gap-2 md:justify-start">
           {pkg.priceOriginal && (
             <span className="text-sm text-neutral-400 line-through">{pkg.priceOriginal}</span>
           )}
@@ -66,7 +66,7 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
 
         <ul className="mt-6 flex-1 space-y-3">
           {pkg.points.map((point, idx) => (
-            <li key={point} className="flex items-start gap-3 text-sm text-neutral-600">
+            <li key={point} className="flex flex-col items-center gap-2 text-sm text-neutral-600 md:flex-row md:items-start md:gap-3 md:text-left">
               <span
                 className="animate-package-check-pop mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-white ring-1 ring-neutral-950/10"
                 style={{ animationDelay: `${80 + idx * 55}ms` }}

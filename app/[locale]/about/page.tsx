@@ -483,14 +483,14 @@ const CTA_BY_LOCALE: Record<Locale, { titleRest: string; titleHighlight: string;
   sq: {
     titleRest: "Le të punojmë bashkë dhe të krijojmë ",
     titleHighlight: "diçka të madhe.",
-    subtitle: "Ndani vizionin dhe objektivat. Do të kthehemi me një plan të qartë.",
+    subtitle: "Ndani vizionin dhe objektivat.\nDo të kthehemi me një plan të qartë.",
     contact: "Na kontakto",
     viewWork: "Shiko punën tonë",
   },
   en: {
     titleRest: "Let's work together and create ",
     titleHighlight: "something great.",
-    subtitle: "Share your vision and objectives. We'll get back with a clear plan.",
+    subtitle: "Share your vision and objectives.\nWe'll get back with a clear plan.",
     contact: "Contact us",
     viewWork: "View our work",
   },
@@ -835,7 +835,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 {cta.titleRest}
                 <span className="text-gray-900">{cta.titleHighlight}</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">{cta.subtitle}</p>
+              <p className="mx-auto mt-6 max-w-2xl whitespace-pre-line text-lg text-gray-600">{cta.subtitle}</p>
 
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <LocaleLink

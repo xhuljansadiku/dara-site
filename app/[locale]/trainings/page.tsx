@@ -55,12 +55,12 @@ export default function TrainingsPage({ params }: Props) {
               <>Do you want to <span className="text-gray-900">change</span> your life?</>
             )}
           </h1>
-          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
+          <p className="mt-4 mx-auto max-w-2xl whitespace-pre-line text-lg text-gray-600">
             {locale === "sq"
-              ? "Ndiq trajnimet tona dhe mëso nga ekspertët. 50+ studente kanë ndjekur programet tona."
+              ? "Ndiq trajnimet tona dhe mëso nga ekspertët.\n50+ studente kanë ndjekur programet tona."
               : locale === "de"
-              ? "Folge unseren Trainings und lerne von Experten. 50+ Teilnehmer haben unsere Programme besucht."
-              : "Follow our trainings and learn from experts. 50+ students have attended our programmes."}
+              ? "Folge unseren Trainings und lerne von Experten.\n50+ Teilnehmer haben unsere Programme besucht."
+              : "Follow our trainings and learn from experts.\n50+ students have attended our programmes."}
           </p>
         </div>
       </section>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import BrandSelect from "@/components/site/BrandSelect";
 import LocaleLink from "@/components/site/LocaleLink";
 import { TRAININGS, type Locale } from "@/lib/trainings-data";
 import { trackEvent } from "@/lib/analytics";
@@ -42,7 +43,7 @@ const COPY: Record<
     benefits: [
       "Përgjigje e shpejtë nga ekipi ynë",
       "Zgjidh programin që të përshtatet",
-      "Pa angazhim — diskutojmë së bashku",
+      "Pa angazhim, diskutojmë së bashku",
     ],
   },
   en: {
@@ -67,7 +68,7 @@ const COPY: Record<
   de: {
     title: "Für Trainings anmelden",
     subtitle:
-      "Senden Sie Ihre Daten — wir melden uns mit den nächsten Schritten, Terminen und Kosten.",
+      "Senden Sie Ihre Daten, wir melden uns mit den nächsten Schritten, Terminen und Kosten.",
     nameLabel: "Name*",
     emailLabel: "E-Mail*",
     trainingLabel: "Gewünschtes Training*",
@@ -80,7 +81,7 @@ const COPY: Record<
     benefits: [
       "Schnelle Rückmeldung vom Team",
       "Passendes Programm wählen",
-      "Unverbindlich — wir sprechen zuerst",
+      "Unverbindlich, wir sprechen zuerst",
     ],
   },
 };
@@ -205,19 +206,22 @@ export default function TrainingRegisterPage() {
           </LocaleLink>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+            <div className="text-center lg:col-span-5 lg:text-left">
+              <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
                 <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
                 {locale === "sq" ? "Trajnime" : locale === "de" ? "Training" : "Training"}
               </span>
               <h1 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.5rem] lg:leading-[1.15]">
                 {copy.title}
               </h1>
-              <p className="mt-4 max-w-md text-[17px] leading-relaxed text-neutral-600">{copy.subtitle}</p>
+              <p className="mt-4 mx-auto max-w-md text-[17px] leading-relaxed text-neutral-600 lg:mx-0">{copy.subtitle}</p>
 
               <ul className="mt-10 space-y-4">
                 {copy.benefits.map((line) => (
-                  <li key={line} className="flex gap-3 text-sm leading-snug text-neutral-700">
+                  <li
+                    key={line}
+                    className="flex flex-col items-center gap-3 text-sm leading-snug text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left lg:flex-row lg:items-start"
+                  >
                     <span
                       className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"
                       aria-hidden
@@ -288,28 +292,25 @@ export default function TrainingRegisterPage() {
                         autoComplete="email"
                       />
                     </label>
-                    <label className="grid gap-2">
-                      <span className="text-sm font-medium text-neutral-800">{copy.trainingLabel}</span>
-                      <select
+                    <div className="grid gap-2">
+                      <label htmlFor="training-register-select" className="text-sm font-medium text-neutral-800">
+                        {copy.trainingLabel}
+                      </label>
+                      <BrandSelect
+                        id="training-register-select"
                         value={formData.training}
-                        onChange={(e) => setFormData((p) => ({ ...p, training: e.target.value }))}
-                        className={`${inputClass} cursor-pointer appearance-none bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-11`}
-                        style={{
-                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23737373'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                        }}
-                        required
-                      >
-                        <option value="">{copy.selectTraining}</option>
-                        {TRAININGS.map((t) => (
-                          <option key={t.slug} value={t.slug}>
-                            {t.title[locale]}{" "}
-                            {t.comingSoon
-                              ? `(${locale === "sq" ? "Së shpejti" : locale === "de" ? "Demnächst" : "Coming soon"})`
-                              : ""}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                        onChange={(v) => setFormData((p) => ({ ...p, training: v }))}
+                        options={TRAININGS.map((t) => ({
+                          value: t.slug,
+                          label: `${t.title[locale]}${
+                            t.comingSoon
+                              ? ` (${locale === "sq" ? "Së shpejti" : locale === "de" ? "Demnächst" : "Coming soon"})`
+                              : ""
+                          }`,
+                        }))}
+                        placeholder={copy.selectTraining}
+                      />
+                    </div>
                     <label className="grid gap-2">
                       <span className="text-sm font-medium text-neutral-800">{copy.messageLabel}</span>
                       <textarea

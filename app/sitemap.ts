@@ -2,7 +2,6 @@ import { MetadataRoute } from "next";
 import { locales } from "@/i18n";
 import { SERVICE_SLUGS } from "@/lib/services-data";
 import { TRAINING_SLUGS } from "@/lib/trainings-data";
-import { SOCIAL_MEDIA_SLUGS } from "@/lib/projects";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
 
@@ -64,14 +63,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: "monthly" as const,
         priority: 0.7,
-      });
-    }
-    for (const slug of SOCIAL_MEDIA_SLUGS) {
-      entries.push({
-        url: `${BASE}/${locale}/work/social-media/${slug}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
       });
     }
   }

@@ -4,10 +4,12 @@ import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import ImageLightbox from "@/components/site/ImageLightbox";
 import ProjectCard from "@/components/site/ProjectCard";
-import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
+import SocialMediaWorkGallery from "@/components/site/SocialMediaWorkGallery";
+import { PROJECTS_BY_LOCALE, SOCIAL_MEDIA_GALLERY_IMAGES, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
 import type { ProjectCategory } from "@/lib/projects";
 
 const HOME_PROJECTS_LIMIT = 6;
+const HOME_SM_IMAGE_PREVIEW = 6;
 
 type Props = {
   locale: "sq" | "en" | "de";
@@ -24,8 +26,22 @@ export default function HomeWorkSection({ locale }: Props) {
       ? projects
       : projects.filter((p) => p.category === activeFilter);
 
-  const displayProjects = filteredProjects.slice(0, HOME_PROJECTS_LIMIT);
-  const hasMore = filteredProjects.length > HOME_PROJECTS_LIMIT;
+  const projectsForCards = projects.filter((p) => {
+    if (p.category === "social-media") return false;
+    if (activeFilter === "all") return true;
+    return p.category === activeFilter;
+  });
+  const displayCardProjects = projectsForCards.slice(
+    0,
+    activeFilter === "all" ? 4 : HOME_PROJECTS_LIMIT
+  );
+  const hasMore = projectsForCards.length > (activeFilter === "all" ? 4 : HOME_PROJECTS_LIMIT);
+
+  const showSmGallery = activeFilter === "all" || activeFilter === "social-media";
+  const smGalleryImages =
+    activeFilter === "social-media"
+      ? SOCIAL_MEDIA_GALLERY_IMAGES
+      : SOCIAL_MEDIA_GALLERY_IMAGES.slice(0, HOME_SM_IMAGE_PREVIEW);
 
   const kicker =
     locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects";
@@ -59,9 +75,9 @@ export default function HomeWorkSection({ locale }: Props) {
       />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="min-w-0 sm:flex-1">
-            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+        <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+          <div className="min-w-0 w-full sm:flex-1">
+            <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 sm:justify-start">
               <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               {kicker}
             </span>
@@ -91,11 +107,11 @@ export default function HomeWorkSection({ locale }: Props) {
                 </>
               )}
             </h2>
-            <p className="mt-4 max-w-none text-[15px] leading-relaxed text-neutral-600">{intro}</p>
+            <p className="mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed text-neutral-600 sm:mx-0 sm:max-w-none">{intro}</p>
           </div>
           <LocaleLink
             href="/work"
-            className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+            className="group inline-flex h-11 w-full max-w-xs shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto sm:max-w-none"
           >
             {viewAll}
             <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>
@@ -103,6 +119,7 @@ export default function HomeWorkSection({ locale }: Props) {
         </div>
 
         <div className="mt-8 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-full justify-center sm:justify-start">
           <div
             className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
             role="tablist"
@@ -124,13 +141,27 @@ export default function HomeWorkSection({ locale }: Props) {
               </button>
             ))}
           </div>
+          </div>
         </div>
 
-      <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-        {displayProjects.map((p) => (
-          <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
-        ))}
-      </div>
+      {showSmGallery && (
+        <div className="mt-10">
+          <SocialMediaWorkGallery
+            images={smGalleryImages}
+            onOpenImage={(index) =>
+              setLightbox({ images: SOCIAL_MEDIA_GALLERY_IMAGES, index })
+            }
+          />
+        </div>
+      )}
+
+      {displayCardProjects.length > 0 && (
+        <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {displayCardProjects.map((p) => (
+            <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
+          ))}
+        </div>
+      )}
 
       {lightbox && (
         <ImageLightbox

@@ -18,7 +18,8 @@ const HERO_BY_LOCALE: Record<
   sq: {
     kicker: "Marketing",
     title: "Marketing Digjital",
-    subtitle: "Nga rrjete sociale dhe përmbajtje deri te strategji, reklama dhe konsulencë. Rritje reale për biznesin tuaj.",
+    subtitle:
+      "Nga rrjete sociale dhe përmbajtje deri te strategji, reklama dhe konsulencë.\nRritje reale për biznesin tuaj.",
     getQuote: "Merr ofertë",
     allServices: "Të gjitha shërbimet",
   },
@@ -32,7 +33,8 @@ const HERO_BY_LOCALE: Record<
   de: {
     kicker: "Marketing",
     title: "Digitales Marketing",
-    subtitle: "Von Social Media und Content bis Strategie, Werbung und Beratung. Echtes Wachstum für Ihr Unternehmen.",
+    subtitle:
+      "Von Social Media und Content bis Strategie, Werbung und Beratung.\nEchtes Wachstum für Ihr Unternehmen.",
     getQuote: "Angebot anfragen",
     allServices: "Alle Leistungen",
   },
@@ -98,19 +100,19 @@ export default function MarketingServicesPage({ params }: Props) {
           <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
             {hero.title}
           </h1>
-          <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
+          <p className="mt-4 mx-auto max-w-2xl whitespace-pre-line text-lg text-gray-600">
             {hero.subtitle}
           </p>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-10 flex w-full flex-col items-stretch gap-4 sm:flex-row sm:justify-center">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
+              className="inline-flex h-12 w-full max-w-md items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:mx-auto sm:w-auto"
             >
               {hero.getQuote}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
+              className="inline-flex h-12 w-full max-w-md items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:mx-auto sm:w-auto"
             >
               {hero.allServices}
             </LocaleLink>
@@ -148,14 +150,14 @@ export default function MarketingServicesPage({ params }: Props) {
                       />
                     </div>
                     <div
-                      className={`flex flex-1 flex-col justify-center p-6 md:p-8 ${
+                      className={`flex flex-1 flex-col justify-center p-6 text-center md:p-8 md:text-left ${
                         isImageLeft ? "md:order-2" : "md:order-1"
                       }`}
                     >
                       <span className="font-mono text-xs tabular-nums text-gray-500">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <h2 className="mt-1 text-xl font-semibold text-gray-900 group-hover:text-[#B89D5E] transition-colors">
+                      <h2 className="mt-1 text-xl font-semibold text-gray-900 transition-colors group-hover:text-[#B89D5E]">
                         {service.title}
                       </h2>
                       <p className="mt-2 line-clamp-2 text-sm text-gray-600">
@@ -166,7 +168,7 @@ export default function MarketingServicesPage({ params }: Props) {
                           {service.price}
                         </p>
                       )}
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 group-hover:text-gray-900 transition-colors">
+                      <span className="mt-4 inline-flex items-center justify-center gap-1.5 text-sm font-medium text-gray-600 transition-colors group-hover:text-gray-900 md:justify-start">
                         {locale === "sq"
                           ? "Lexo më shumë"
                           : locale === "de"

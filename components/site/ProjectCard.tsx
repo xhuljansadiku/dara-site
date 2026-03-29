@@ -94,13 +94,6 @@ export default function ProjectCard({ project: p, locale, setLightbox }: Props) 
       </LocaleLink>
     );
   }
-  if (p.category === "social-media" && p.slug) {
-    return (
-      <LocaleLink href={`/work/social-media/${p.slug}`} className={cardClass}>
-        {cardContent}
-      </LocaleLink>
-    );
-  }
   return (
     <LocaleLink href="/work" className={cardClass}>
       {cardContent}

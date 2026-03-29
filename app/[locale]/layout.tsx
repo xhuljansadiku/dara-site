@@ -47,7 +47,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
       <Navbar />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen w-full overflow-x-hidden">{children}</main>
       <Footer locale={locale} />
       <CookieConsentBanner />
     </NextIntlClientProvider>

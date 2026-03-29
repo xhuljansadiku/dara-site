@@ -55,11 +55,21 @@ html {
 .animate-fade-in-up-delay-4 { animation-delay: 0.4s; }
 .animate-fade-in-up-delay-5 { animation-delay: 0.5s; }
 
-/* Contact form select: white accent */
-select option:checked,
-select option:hover {
+/* Form selects: brand gold accent (avoids default browser blue where supported) */
+select {
+  accent-color: var(--accent);
+}
+
+select option {
   background-color: #ffffff;
-  color: #000000;
+  color: #171717;
+}
+
+select option:checked,
+select option:hover,
+select option:focus {
+  background-color: rgba(184, 157, 94, 0.22);
+  color: #171717;
 }
 
 /* Scroll-triggered reveal (used with AnimateIn component) */
@@ -96,7 +106,7 @@ select option:hover {
   animation: marquee 25s linear infinite;
 }
 
-/* Services tab CTA — slow soft gold glow pulse */
+/* Services tab CTA: slow soft gold glow pulse */
 @keyframes services-cta-gold-glow {
   0%,
   100% {
@@ -122,7 +132,7 @@ select option:hover {
   }
 }
 
-/* Packages block: tab switch — fade + slide up */
+/* Packages block: tab switch, fade + slide up */
 @keyframes packages-tab-enter {
   from {
     opacity: 0;
@@ -144,7 +154,7 @@ select option:hover {
   }
 }
 
-/* Package card list — checkmark pop (stagger via animation-delay) */
+/* Package card list: checkmark pop (stagger via animation-delay) */
 @keyframes package-check-pop {
   0% {
     transform: scale(0.4);
@@ -170,3 +180,4 @@ select option:hover {
   }
 }
 
+/* Mobile-first: prefer centered copy and full-width CTAs via Tailwind on sections (max-sm:, md:, lg:). */

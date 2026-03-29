@@ -62,7 +62,9 @@ const CTA_BY_LOCALE: Record<
   sq: {
     line1: (
       <>
-        Gati të filloni? <span className="text-neutral-950">Na kontaktoni për një ofertë.</span>
+        Gati të filloni?
+        <br />
+        <span className="text-neutral-950">Na kontaktoni për një ofertë.</span>
       </>
     ),
     getQuote: "Merr ofertë",
@@ -82,7 +84,9 @@ const CTA_BY_LOCALE: Record<
   de: {
     line1: (
       <>
-        Bereit loszulegen? <span className="text-neutral-950">Kontaktieren Sie uns für ein Angebot.</span>
+        Bereit loszulegen?
+        <br />
+        <span className="text-neutral-950">Kontaktieren Sie uns für ein Angebot.</span>
       </>
     ),
     getQuote: "Angebot anfragen",
@@ -157,16 +161,16 @@ export default function WebsiteServicesPage({ params }: Props) {
           <p className="mt-4 mx-auto max-w-2xl text-lg leading-relaxed text-neutral-600">
             {hero.subtitle}
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
+          <div className="mt-10 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-12 items-center justify-center rounded-2xl bg-neutral-950 px-8 font-semibold text-white shadow-sm transition hover:bg-neutral-800 sm:w-auto"
+              className="inline-flex h-12 w-full max-w-md items-center justify-center rounded-2xl bg-neutral-950 px-8 font-semibold text-white shadow-sm transition hover:bg-neutral-800 sm:mx-auto sm:w-auto md:mx-0"
             >
               {hero.getQuote}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-12 items-center justify-center rounded-2xl border-2 border-stone-300 bg-white/80 px-8 font-medium text-neutral-900 backdrop-blur-sm transition hover:border-neutral-950 hover:bg-stone-50 sm:w-auto"
+              className="inline-flex h-12 w-full max-w-md items-center justify-center rounded-2xl border-2 border-stone-300 bg-white/80 px-8 font-medium text-neutral-900 backdrop-blur-sm transition hover:border-neutral-950 hover:bg-stone-50 sm:mx-auto sm:w-auto md:mx-0"
             >
               {hero.allServices}
             </LocaleLink>
@@ -179,14 +183,14 @@ export default function WebsiteServicesPage({ params }: Props) {
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(184,157,94,0.08)_0%,transparent_55%)]" aria-hidden />
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 max-w-2xl md:mb-14">
+          <div className="mx-auto mb-10 max-w-2xl text-center md:mx-0 md:mb-14 md:text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">
               {sectionIntro.kicker}
             </p>
             <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
               {sectionIntro.title}
             </h2>
-            <div className="mt-4 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
+            <div className="mx-auto mt-4 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent md:mx-0" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 md:gap-8">
@@ -224,7 +228,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                       </span>
                     </div>
                     <div
-                      className={`flex flex-1 flex-col justify-center p-6 md:p-8 ${
+                      className={`flex flex-1 flex-col justify-center p-6 text-center md:p-8 md:text-left ${
                         isImageLeft ? "md:order-2" : "md:order-1"
                       }`}
                     >
@@ -237,7 +241,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                       {service.price && (
                         <p className="mt-3 text-sm font-medium text-neutral-900">{service.price}</p>
                       )}
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#6b5a38] transition group-hover:gap-2">
+                      <span className="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-medium text-[#6b5a38] transition group-hover:gap-2 md:justify-start">
                         {locale === "sq"
                           ? "Lexo më shumë"
                           : locale === "de"
@@ -259,26 +263,26 @@ export default function WebsiteServicesPage({ params }: Props) {
       {/* CTA */}
       <section className="border-t border-stone-200/80 bg-gradient-to-b from-stone-50/60 to-white py-12 md:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-5 rounded-3xl border border-stone-200/90 bg-white p-6 shadow-sm ring-1 ring-black/[0.03] md:p-10">
-            <h2 className="text-center text-xl font-semibold text-neutral-800 md:text-2xl">
+          <div className="flex flex-col items-center gap-5 rounded-3xl border border-stone-200/90 bg-white p-6 text-center shadow-sm ring-1 ring-black/[0.03] md:p-10">
+            <h2 className="max-w-xl text-xl font-semibold leading-snug text-neutral-800 md:max-w-none md:text-2xl">
               {cta.line1}
             </h2>
-            <div className="flex flex-wrap justify-center gap-2.5">
+            <div className="flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2.5">
               <LocaleLink
                 href="/contact"
-                className="inline-flex h-11 items-center justify-center rounded-2xl bg-neutral-950 px-6 font-medium text-white transition hover:bg-neutral-800"
+                className="inline-flex h-11 w-full items-center justify-center rounded-2xl bg-neutral-950 px-6 font-medium text-white transition hover:bg-neutral-800 sm:w-auto"
               >
                 {cta.getQuote}
               </LocaleLink>
               <LocaleLink
                 href="/services"
-                className="inline-flex h-11 items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-6 font-medium text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50"
+                className="inline-flex h-11 w-full items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-6 font-medium text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50 sm:w-auto"
               >
                 {cta.allServices}
               </LocaleLink>
               <LocaleLink
                 href="/"
-                className="inline-flex h-11 items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-6 font-medium text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50"
+                className="inline-flex h-11 w-full items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-6 font-medium text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50 sm:w-auto"
               >
                 {cta.backHome}
               </LocaleLink>

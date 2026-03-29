@@ -4,7 +4,7 @@ type Props = {
   variant?: "default" | "rich";
 };
 
-/** Pas çdo rreshti në tekst, pas `;`, ose pas fjalisë (pas `.` / `:` kur ka hapësirë) — vetëm me variant `rich`. */
+/** Pas çdo rreshti në tekst, pas `;`, ose pas fjalisë (pas `.` / `:` kur ka hapësirë), vetëm me variant `rich`. */
 function splitRichLines(text: string): string[] {
   const out: string[] = [];
   for (const block of text.split(/\r?\n/)) {

@@ -51,11 +51,11 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
           className={
             isPage
               ? "mb-10"
-              : "mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+              : "mb-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left"
           }
         >
-          <div>
-            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+          <div className={isPage ? "" : "w-full sm:w-auto"}>
+            <span className={`inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 ${!isPage ? "justify-center sm:justify-start" : ""}`}>
               <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               FAQ
             </span>
@@ -68,12 +68,12 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
             >
               {title}
             </TitleTag>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600">{subtitle}</p>
+            <p className={`mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 ${!isPage ? "mx-auto sm:mx-0" : ""}`}>{subtitle}</p>
           </div>
           {!isPage && (
             <LocaleLink
               href="/faq"
-              className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+              className="group inline-flex h-11 w-full max-w-xs shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto sm:max-w-none"
             >
               {viewAll}
               <span aria-hidden className="transition group-hover:translate-x-0.5">
@@ -121,7 +121,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="border-t border-neutral-100 px-5 py-4 text-[15px] leading-relaxed text-neutral-600 md:px-6">
+                  <div className="border-t border-neutral-100 px-5 py-4 text-center text-[15px] leading-relaxed text-neutral-600 sm:text-left md:px-6">
                     {faq.a}
                   </div>
                 )}

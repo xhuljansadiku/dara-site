@@ -507,19 +507,19 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden
           fetchPriority="high"
         />
-        {/* Global light dim — keeps astronaut/clouds vivid */}
+        {/* Global light dim: keeps astronaut/clouds vivid */}
         <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden />
-        {/* Left column scrim — max contrast for copy without flattening full image */}
+        {/* Left column scrim: max contrast for copy without flattening full image */}
         <div
           className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-[min(100%,40rem)] bg-gradient-to-r from-black/55 via-black/25 to-transparent sm:w-[min(100%,46rem)]"
           aria-hidden
         />
-        {/* Bottom edge — light black scrim (opacity ~0.3) for trust line + scroll */}
+        {/* Bottom edge: light black scrim (opacity ~0.3) for trust line + scroll */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-44 bg-gradient-to-t from-[rgba(0,0,0,0.3)] via-[rgba(0,0,0,0.12)] to-transparent sm:h-52"
           aria-hidden
         />
-        <div className="relative z-10 mx-auto w-full max-w-5xl text-center md:text-left">
+        <div className="relative z-10 mx-auto w-full max-w-5xl text-center lg:text-left">
           <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
             {hero.kicker}
           </p>
@@ -527,10 +527,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             {hero.titleA}{" "}
             <span className="block text-[#B89D5E] [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">{hero.titleB}</span>
           </h1>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-10 max-w-2xl text-base leading-relaxed text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] md:mx-0 md:text-lg lg:text-xl">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-10 max-w-2xl text-base leading-relaxed text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] lg:mx-0 md:text-lg lg:text-xl">
             {hero.desc}
           </p>
-          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-14 flex w-full max-w-xl flex-col gap-3 md:mx-0 md:max-w-none md:flex-row md:flex-wrap md:items-center md:gap-4">
+          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-14 flex w-full max-w-xl flex-col gap-3 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
             <LocaleLink
               href="/contact"
               className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-white bg-white px-8 py-0 text-sm font-semibold text-black shadow-[0_8px_32px_-4px_rgba(0,0,0,0.45)] transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_12px_40px_-4px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
@@ -544,7 +544,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-10 max-w-xl text-sm font-medium leading-snug text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] md:mx-0">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-10 max-w-xl text-sm font-medium leading-snug text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] lg:mx-0">
             {hero.socialProof.beforeLink}
             <br className="md:hidden" aria-hidden />
             <span className="hidden md:inline"> </span>
@@ -610,12 +610,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
             {pillars.map((pillar, idx) => (
                 <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0 lg:min-w-0 lg:flex-1">
-                  <div className="group flex h-full min-h-0 flex-col max-sm:items-center max-sm:text-center sm:items-stretch sm:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:p-9">
+                  <div className="group flex h-full min-h-0 flex-col items-center text-center md:items-stretch md:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:p-9">
                     <ValuePillarIcon index={idx} />
                     <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
                       {pillar.title}
                     </h3>
-                    <div className="mt-4 flex-1 text-base leading-snug text-gray-600 max-sm:text-center md:text-lg">{pillar.desc}</div>
+                    <div className="mt-4 flex-1 text-base leading-snug text-gray-600 md:text-lg">{pillar.desc}</div>
                   </div>
                 </AnimateIn>
             ))}
@@ -674,9 +674,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   </div>
                 </div>
               </AnimateIn>
-              <div className="order-1 lg:order-2">
+              <div className="order-1 text-center lg:order-2 lg:text-left">
                 <AnimateIn>
-                  <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+                  <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
                     <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
                     {about.kicker}
                   </span>
@@ -705,16 +705,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   </AnimateIn>
                 )}
                 <AnimateIn delay={250}>
-                  <div className="mt-8 flex flex-wrap gap-2 sm:mt-10">
+                  <div className="mt-8 flex flex-wrap justify-center gap-2 sm:mt-10 lg:justify-start">
                     {aboutStats.map((stat) => (
                       <div
                         key={stat.label}
-                        className="min-w-[140px] flex-1 rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] sm:min-w-[160px] sm:px-5 sm:text-left"
+                        className="min-w-[140px] flex-1 rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] sm:min-w-[160px] sm:px-5 lg:text-left"
                       >
                         <span className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
                           {stat.value}
                         </span>
-                        <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-500 sm:text-xs sm:normal-case sm:tracking-normal">
+                        <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-500 sm:text-xs lg:normal-case lg:tracking-normal">
                           {stat.label}
                         </span>
                       </div>
@@ -722,10 +722,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   </div>
                 </AnimateIn>
                 <AnimateIn delay={300}>
-                  <div className="mt-10">
+                  <div className="mt-10 flex justify-center lg:justify-start">
                     <LocaleLink
                       href="/about"
-                      className="inline-flex h-12 items-center justify-center rounded-full border border-neutral-950 bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-all duration-300 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_10px_36px_-10px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+                      className="inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full border border-neutral-950 bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-all duration-300 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_10px_36px_-10px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto sm:max-w-none"
                     >
                       {about.readMore}
                     </LocaleLink>
@@ -785,9 +785,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
+            <div className="text-center lg:col-span-5 lg:text-left">
               <AnimateIn delay={0}>
-                <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
+                <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
                   <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
                   {career.kicker}
                 </span>
@@ -798,14 +798,14 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </h2>
               </AnimateIn>
               <AnimateIn delay={120}>
-                <p className="mt-5 max-w-md text-base leading-relaxed text-neutral-600 md:text-[17px]">
+                <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-neutral-600 md:text-[17px] lg:mx-0">
                   {career.subtitle}
                 </p>
               </AnimateIn>
               <AnimateIn delay={160}>
                 <LocaleLink
                   href="/careers"
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+                  className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:max-w-sm lg:inline-flex lg:w-auto lg:max-w-none"
                 >
                   {career.cta}
                 </LocaleLink>
@@ -817,19 +817,19 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
                     <LocaleLink
                       href="/careers"
-                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/40 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.14)]"
+                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 text-center shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/40 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.14)] sm:text-left"
                     >
                       <div
                         className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[#B89D5E]/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
                         aria-hidden
                       />
-                      <span className="relative inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
+                      <span className="relative inline-flex min-w-[2.25rem] items-center justify-center self-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white sm:self-start">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
                       <span className="relative mt-4 flex-1 text-lg font-semibold tracking-tight text-neutral-950">
                         {role}
                       </span>
-                      <span className="relative mt-4 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition group-hover:text-neutral-950">
+                      <span className="relative mt-4 inline-flex items-center justify-center gap-1 self-center text-sm font-semibold text-neutral-600 transition group-hover:text-neutral-950 sm:justify-start sm:self-start">
                         {locale === "sq" ? "Apliko →" : locale === "de" ? "Bewerben →" : "Apply →"}
                       </span>
                     </LocaleLink>
@@ -862,16 +862,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             aria-hidden
           />
           <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
-            <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+            <div className="grid gap-14 text-center lg:grid-cols-2 lg:gap-20 lg:text-left">
               {/* Left - CTA */}
               <div>
                 <h2 id="cta-heading" className="bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold leading-[1.15] text-transparent md:text-4xl lg:text-[2.75rem]">
                   {cta.title}
                 </h2>
-                <p className="mt-5 text-base leading-relaxed text-neutral-600">
+                <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-neutral-600 lg:mx-0">
                   {cta.subtitle}
                 </p>
-                <div className="mt-8 space-y-4">
+                <div className="mx-auto mt-8 w-full max-w-md space-y-4 text-left lg:mx-0 lg:max-w-none">
                   {cta.whyBullets.map((bullet, idx) => {
                     const displayBullet = idx === 2 && (bullet.includes("Ekip") || bullet.includes("team") || bullet.includes("Team"))
                       ? locale === "sq"
@@ -881,23 +881,25 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                         : `Experienced team ${yearsExperienceFormatted} years in marketing`
                       : bullet;
                     return (
-                      <div key={idx} className="flex items-center gap-3">
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-200">
+                      <div key={idx} className="flex items-start gap-3">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-200">
                           <svg className="h-2.5 w-2.5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </span>
-                        <span className="text-sm text-gray-700">{displayBullet}</span>
+                        <span className="min-w-0 text-sm leading-snug text-gray-700">{displayBullet}</span>
                       </div>
                     );
                   })}
                 </div>
+                <div className="mt-10 flex justify-center lg:justify-start">
                 <LocaleLink
                   href="/contact"
-                  className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+                  className="inline-flex h-12 w-full max-w-sm items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto"
                 >
                   {cta.button}
                 </LocaleLink>
+                </div>
               </div>
 
               {/* Right - Contact & Newsletter */}
@@ -906,37 +908,55 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
                     {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
                   </h3>
-                  <div className="mt-5 space-y-4 text-sm">
-                    <a href="mailto:daramarketing.eu@gmail.com" className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
+                  <div className="mx-auto mt-5 w-full max-w-md space-y-4 text-left text-sm lg:mx-0 lg:max-w-none">
+                    <a
+                      href="mailto:daramarketing.eu@gmail.com"
+                      className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900"
+                    >
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
                         <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </span>
-                      daramarketing.eu@gmail.com
+                      <span className="min-w-0 break-words pt-1.5 leading-snug">daramarketing.eu@gmail.com</span>
                     </a>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
                         <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                       </span>
-                      <a href="tel:+355688009988" className="text-gray-900/80 transition hover:text-gray-900">+355 68 800 9988</a>
-                      <a href="https://wa.me/355688009988" target="_blank" rel="noreferrer" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] transition hover:scale-105" aria-label="WhatsApp">
-                        <svg className="h-4 w-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      <a href="tel:+355688009988" className="text-gray-900/80 transition hover:text-gray-900">
+                        +355 68 800 9988
+                      </a>
+                      <a
+                        href="https://wa.me/355688009988"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25D366] transition hover:scale-105"
+                        aria-label="WhatsApp"
+                      >
+                        <svg className="h-4 w-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
                       </a>
                     </div>
-                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900">
+                    <a
+                      href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900"
+                    >
                       <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
                         <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                       </span>
-                      Rruga Donika Kastrioti, Tiranë - Albania
+                      <span className="min-w-0 pt-1.5 leading-snug">Rruga Donika Kastrioti, Tiranë - Albania</span>
                     </a>
                   </div>
-                  <div className="mt-6 flex gap-3">
+                  <div className="mt-6 flex justify-center gap-3 lg:justify-start">
                     <a href="https://www.instagram.com/daramarketing.al/?hl=en" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="Instagram">
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </a>
@@ -949,12 +969,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     </a>
                   </div>
                 </div>
-                <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 text-center lg:text-left">
                   <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
                     Newsletter
                   </h3>
                   <NewsletterForm locale={locale} />
-                  <p className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+                  <p className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500 lg:justify-start">
                     <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
