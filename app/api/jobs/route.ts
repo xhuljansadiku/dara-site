@@ -22,6 +22,20 @@ const FILE_PATH = path.join(DATA_DIR, "jobs.json");
 const MAX_CV_SIZE = 5 * 1024 * 1024; // 5 MB
 const PDF_MIME = "application/pdf";
 
+/**
+ * Most production hosts (Vercel, Netlify, many Node panels) have a read-only app directory.
+ * Opt into local JSON/CV files with JOBS_PERSIST_TO_DISK=1 (e.g. VPS with writable ./data).
+ */
+function shouldSkipDiskPersistence(): boolean {
+  if (process.env.JOBS_PERSIST_TO_DISK === "1") return false;
+  if (process.env.JOBS_EMAIL_ONLY === "1") return true;
+  if (process.env.VERCEL) return true;
+  if (process.env.NETLIFY) return true;
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME) return true;
+  if (process.env.NODE_ENV === "production") return true;
+  return false;
+}
+
 function getCvUpload(formData: FormData): { blob: Blob; filename: string } | null {
   const v = formData.get("cv");
   if (v == null || typeof v !== "object") return null;
@@ -102,24 +116,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
     }
 
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    await fs.mkdir(CV_DIR, { recursive: true });
-
     const timestamp = Date.now();
     const safeName = name.replace(/[^a-zA-ZëçÇË\s]/g, "").replace(/\s+/g, "-").slice(0, 30) || "applicant";
     const cvFilename = `CV_${safeName}_${timestamp}.pdf`;
-    const cvPath = path.join(CV_DIR, cvFilename);
-    const arrayBuffer = await cvBlob.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    await fs.writeFile(cvPath, buffer, "binary");
-
-    let list: JobApplication[] = [];
+    let buffer: Buffer;
     try {
-      const raw = await fs.readFile(FILE_PATH, "utf8");
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) list = parsed as JobApplication[];
-    } catch {
-      // no file yet
+      const arrayBuffer = await cvBlob.arrayBuffer();
+      buffer = Buffer.from(arrayBuffer);
+    } catch (e) {
+      console.error("JOBS_CV_BUFFER:", e);
+      return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
     }
 
     const job: JobApplication = {
@@ -132,8 +138,29 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    list.push(job);
-    await writeFileWithRetry(FILE_PATH, JSON.stringify(list, null, 2));
+    if (!shouldSkipDiskPersistence()) {
+      try {
+        await fs.mkdir(DATA_DIR, { recursive: true });
+        await fs.mkdir(CV_DIR, { recursive: true });
+        const cvPath = path.join(CV_DIR, cvFilename);
+        await writeFileWithRetry(cvPath, buffer);
+
+        let list: JobApplication[] = [];
+        try {
+          const raw = await fs.readFile(FILE_PATH, "utf8");
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) list = parsed as JobApplication[];
+        } catch {
+          // no file yet
+        }
+        list.push(job);
+        await writeFileWithRetry(FILE_PATH, JSON.stringify(list, null, 2));
+      } catch (e) {
+        console.error("JOBS_DISK_ERROR:", e);
+      }
+    } else {
+      console.info("JOBS: skipping local disk (Vercel/serverless); applications rely on email.");
+    }
 
     void import("@/lib/email")
       .then(({ sendJobNotification, sendAutoReplyToLead }) => {
