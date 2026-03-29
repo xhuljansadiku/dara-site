@@ -60,6 +60,16 @@ export const API_ERROR_MESSAGES: Record<
     en: "Something went wrong. Please try again.",
     de: "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
   },
+  SMTP_NOT_CONFIGURED: {
+    sq: "Emaili i serverit nuk është konfiguruar. Kontaktoni administratorin e faqes.",
+    en: "Server email is not configured. Please contact the site administrator.",
+    de: "E-Mail-Server ist nicht konfiguriert. Bitte kontaktieren Sie den Administrator.",
+  },
+  EMAIL_FAILED: {
+    sq: "Dërgimi i emailit dështoi. Të dhënat mund të jenë ruajtur — provo prap ose na shkruaj direkt.",
+    en: "We couldn't send the email. Your data may have been saved — try again or contact us directly.",
+    de: "E-Mail konnte nicht gesendet werden. Ihre Daten wurden ggf. gespeichert — erneut versuchen oder direkt kontaktieren.",
+  },
   RATE_LIMITED: {
     sq: "Shumë kërkesa. Provo prap pas disa minutash.",
     en: "Too many requests. Please try again in a few minutes.",

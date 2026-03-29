@@ -104,7 +104,7 @@ export default function CareersPage() {
       });
 
       const raw = await res.text();
-      let data: { ok?: boolean; error?: string; saved?: boolean; bot?: boolean } | null = null;
+      let data: { ok?: boolean; error?: string; saved?: boolean; emailed?: boolean; bot?: boolean } | null = null;
       try {
         data = raw ? JSON.parse(raw) : null;
       } catch {
@@ -121,7 +121,7 @@ export default function CareersPage() {
         setStatus("idle");
         return;
       }
-      if (!data?.saved) {
+      if (!data?.saved || !data?.emailed) {
         setStatus("error");
         setError(getApiErrorMessage(data?.error ?? "SERVER_ERROR", locale));
         return;

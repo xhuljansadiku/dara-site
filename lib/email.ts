@@ -1,6 +1,7 @@
 /**
- * Email sending via Nodemailer (Gmail SMTP).
- * Set SMTP_USER and SMTP_PASS in .env.local to enable.
+ * Email sending via Nodemailer (SMTP).
+ * Set SMTP_USER + SMTP_PASS. Defaults: Gmail (smtp.gmail.com:587).
+ * Resend: use their SMTP host/port and credentials from the Resend dashboard.
  */
 import nodemailer from "nodemailer";
 
@@ -18,6 +19,10 @@ const transporter = nodemailer.createTransport({
 
 const isConfigured = !!(process.env.SMTP_USER && process.env.SMTP_PASS);
 const FROM_EMAIL = process.env.SMTP_FROM_EMAIL ?? "DARA Website <daramarketing.eu@gmail.com>";
+
+export function isSmtpConfigured(): boolean {
+  return isConfigured;
+}
 
 export async function sendLeadNotification(lead: {
   name: string;
@@ -113,8 +118,8 @@ export async function sendJobNotification(job: {
   cvAttachment?: { filename: string; content: Buffer };
 }): Promise<{ ok: boolean; error?: string }> {
   if (!isConfigured) {
-    console.warn("SMTP not configured, job saved to file only, no email sent");
-    return { ok: true };
+    console.warn("SMTP not configured — job notification cannot be sent");
+    return { ok: false, error: "SMTP_NOT_CONFIGURED" };
   }
 
   const html = `
@@ -144,7 +149,7 @@ export async function sendJobNotification(job: {
     return { ok: true };
   } catch (err) {
     console.error("SMTP_ERROR:", err);
-    return { ok: false, error: String(err) };
+    return { ok: false, error: "EMAIL_FAILED" };
   }
 }
 

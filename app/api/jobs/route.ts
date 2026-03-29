@@ -5,6 +5,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { writeFileWithRetry } from "@/lib/fs-retry";
+import { isSmtpConfigured, sendAutoReplyToLead, sendJobNotification } from "@/lib/email";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -54,6 +55,18 @@ type JobApplication = {
   cvFilename?: string;
   createdAt: string;
 };
+
+export async function GET() {
+  return NextResponse.json(
+    {
+      ok: false,
+      error: "METHOD_NOT_ALLOWED",
+      message:
+        "Use POST (multipart) from the careers form. Opening this URL in a browser does not submit an application.",
+    },
+    { status: 405, headers: { Allow: "POST" } }
+  );
+}
 
 export async function POST(req: Request) {
   try {
@@ -138,6 +151,7 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
     };
 
+    let persistedToDisk = false;
     if (!shouldSkipDiskPersistence()) {
       try {
         await fs.mkdir(DATA_DIR, { recursive: true });
@@ -155,6 +169,7 @@ export async function POST(req: Request) {
         }
         list.push(job);
         await writeFileWithRetry(FILE_PATH, JSON.stringify(list, null, 2));
+        persistedToDisk = true;
       } catch (e) {
         console.error("JOBS_DISK_ERROR:", e);
       }
@@ -162,20 +177,32 @@ export async function POST(req: Request) {
       console.info("JOBS: skipping local disk (Vercel/serverless); applications rely on email.");
     }
 
-    void import("@/lib/email")
-      .then(({ sendJobNotification, sendAutoReplyToLead }) => {
-        sendJobNotification({
-          ...job,
-          cvAttachment: { filename: cvFilename, content: buffer },
-        }).catch((err) => console.error("JOB_EMAIL_ERROR:", err));
+    if (!isSmtpConfigured()) {
+      return NextResponse.json(
+        { ok: false, error: "SMTP_NOT_CONFIGURED", saved: persistedToDisk },
+        { status: 503 }
+      );
+    }
 
-        sendAutoReplyToLead({ name, email }, locale).catch((err) =>
-          console.error("AUTO_REPLY_ERROR:", err)
-        );
-      })
-      .catch((err) => console.error("EMAIL_IMPORT_ERROR:", err));
+    const notify = await sendJobNotification({
+      ...job,
+      cvAttachment: { filename: cvFilename, content: buffer },
+    });
 
-    return NextResponse.json({ ok: true, saved: true });
+    if (!notify.ok) {
+      const code = notify.error === "SMTP_NOT_CONFIGURED" ? "SMTP_NOT_CONFIGURED" : "EMAIL_FAILED";
+      return NextResponse.json(
+        { ok: false, error: code, saved: persistedToDisk },
+        { status: code === "SMTP_NOT_CONFIGURED" ? 503 : 502 }
+      );
+    }
+
+    const auto = await sendAutoReplyToLead({ name, email }, locale);
+    if (!auto.ok) {
+      console.error("AUTO_REPLY_ERROR:", auto.error);
+    }
+
+    return NextResponse.json({ ok: true, saved: true, emailed: true });
   } catch (e) {
     const err = e instanceof Error ? e : new Error(String(e));
     console.error("JOBS_ERROR:", err.message, err.stack);
