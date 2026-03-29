@@ -3,6 +3,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 export default withNextIntl({
+  experimental: {
+    // Avoid truncated multipart bodies when proxy buffers uploads (large PDFs + careers form).
+    proxyClientMaxBodySize: "15mb",
+  },
   images: {
     remotePatterns: [
       {

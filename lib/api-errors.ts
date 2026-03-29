@@ -50,6 +50,11 @@ export const API_ERROR_MESSAGES: Record<
     en: "Invalid request body.",
     de: "Ungültiger Anfragetext.",
   },
+  INVALID_MULTIPART: {
+    sq: "Kërkesa nuk u lexua plotësisht. Rifresko faqen dhe provo prap.",
+    en: "The upload could not be read. Refresh the page and try again.",
+    de: "Die Anfrage konnte nicht vollständig gelesen werden. Seite neu laden und erneut versuchen.",
+  },
   SERVER_ERROR: {
     sq: "Diçka shkoi keq. Provo prap.",
     en: "Something went wrong. Please try again.",

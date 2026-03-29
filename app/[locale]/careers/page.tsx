@@ -103,10 +103,27 @@ export default function CareersPage() {
         body: fd,
       });
 
+      const raw = await res.text();
+      let data: { ok?: boolean; error?: string; saved?: boolean; bot?: boolean } | null = null;
+      try {
+        data = raw ? JSON.parse(raw) : null;
+      } catch {
+        data = null;
+      }
+
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
         setStatus("error");
         setError(getApiErrorMessage(data?.error, locale));
+        return;
+      }
+
+      if (data?.bot) {
+        setStatus("idle");
+        return;
+      }
+      if (!data?.saved) {
+        setStatus("error");
+        setError(getApiErrorMessage(data?.error ?? "SERVER_ERROR", locale));
         return;
       }
 

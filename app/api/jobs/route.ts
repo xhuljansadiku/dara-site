@@ -3,8 +3,8 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { sendJobNotification, sendAutoReplyToLead } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { writeFileWithRetry } from "@/lib/fs-retry";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -21,6 +21,15 @@ const CV_DIR = path.join(DATA_DIR, "cvs");
 const FILE_PATH = path.join(DATA_DIR, "jobs.json");
 const MAX_CV_SIZE = 5 * 1024 * 1024; // 5 MB
 const PDF_MIME = "application/pdf";
+
+function getCvUpload(formData: FormData): { blob: Blob; filename: string } | null {
+  const v = formData.get("cv");
+  if (v == null || typeof v !== "object") return null;
+  if (!(v instanceof Blob)) return null;
+  if (v.size === 0) return null;
+  const filename = v instanceof File && v.name ? v.name : "document.pdf";
+  return { blob: v, filename };
+}
 
 type JobApplication = {
   name: string;
@@ -47,7 +56,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "INVALID_CONTENT_TYPE" }, { status: 415 });
     }
 
-    const formData = await req.formData();
+    let formData: FormData;
+    try {
+      formData = await req.formData();
+    } catch (e) {
+      console.error("JOBS_FORMDATA_PARSE:", e);
+      return NextResponse.json({ ok: false, error: "INVALID_MULTIPART" }, { status: 400 });
+    }
 
     const hp = clean(formData.get("hp"), 200);
     if (hp) return NextResponse.json({ ok: true, bot: true });
@@ -74,14 +89,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "INVALID_MESSAGE" }, { status: 400 });
     }
 
-    const cvFile = formData.get("cv") as File | null;
-    if (!cvFile || !(cvFile instanceof File) || cvFile.size === 0) {
+    const cvUpload = getCvUpload(formData);
+    if (!cvUpload) {
       return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
     }
-    if (cvFile.type !== PDF_MIME && !cvFile.name.toLowerCase().endsWith(".pdf")) {
+    const { blob: cvBlob, filename: cvOriginalName } = cvUpload;
+    const nameLower = cvOriginalName.toLowerCase();
+    if (cvBlob.type !== PDF_MIME && !nameLower.endsWith(".pdf")) {
       return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
     }
-    if (cvFile.size > MAX_CV_SIZE) {
+    if (cvBlob.size > MAX_CV_SIZE) {
       return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
     }
 
@@ -92,7 +109,7 @@ export async function POST(req: Request) {
     const safeName = name.replace(/[^a-zA-ZëçÇË\s]/g, "").replace(/\s+/g, "-").slice(0, 30) || "applicant";
     const cvFilename = `CV_${safeName}_${timestamp}.pdf`;
     const cvPath = path.join(CV_DIR, cvFilename);
-    const arrayBuffer = await cvFile.arrayBuffer();
+    const arrayBuffer = await cvBlob.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     await fs.writeFile(cvPath, buffer, "binary");
 
@@ -116,20 +133,25 @@ export async function POST(req: Request) {
     };
 
     list.push(job);
-    await fs.writeFile(FILE_PATH, JSON.stringify(list, null, 2), "utf8");
+    await writeFileWithRetry(FILE_PATH, JSON.stringify(list, null, 2));
 
-    sendJobNotification({
-      ...job,
-      cvAttachment: { filename: cvFilename, content: buffer },
-    }).catch((err) => console.error("JOB_EMAIL_ERROR:", err));
+    void import("@/lib/email")
+      .then(({ sendJobNotification, sendAutoReplyToLead }) => {
+        sendJobNotification({
+          ...job,
+          cvAttachment: { filename: cvFilename, content: buffer },
+        }).catch((err) => console.error("JOB_EMAIL_ERROR:", err));
 
-    sendAutoReplyToLead({ name, email }, locale).catch((err) =>
-      console.error("AUTO_REPLY_ERROR:", err)
-    );
+        sendAutoReplyToLead({ name, email }, locale).catch((err) =>
+          console.error("AUTO_REPLY_ERROR:", err)
+        );
+      })
+      .catch((err) => console.error("EMAIL_IMPORT_ERROR:", err));
 
     return NextResponse.json({ ok: true, saved: true });
   } catch (e) {
-    console.error("JOBS_ERROR:", e);
+    const err = e instanceof Error ? e : new Error(String(e));
+    console.error("JOBS_ERROR:", err.message, err.stack);
     return NextResponse.json({ ok: false, error: "SERVER_ERROR" }, { status: 500 });
   }
 }
