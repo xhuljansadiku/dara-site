@@ -1,4 +1,5 @@
 import Image from "next/image";
+import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
 import LocaleLink from "@/components/site/LocaleLink";
 import { getServiceBySlug, SERVICE_SLUGS } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
@@ -94,14 +95,16 @@ function ContentSection({
 }) {
   if (!items.length) return null;
   return (
-    <div className="rounded-3xl border border-stone-200/90 bg-white p-5 shadow-sm ring-1 ring-black/[0.03] md:p-6">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6d32]">
-        {title}
-      </h3>
-      <ul className="mt-3 space-y-2">
+    <div className="flex h-full flex-col rounded-3xl bg-white p-6 shadow-[0_2px_20px_rgba(15,23,42,0.06)] transition-shadow duration-300 md:p-7 hover:shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)]">
+      <div className="border-b border-neutral-100 pb-4">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a6d32] md:text-xs">
+          {title}
+        </h3>
+      </div>
+      <ul className="mt-5 flex-1 space-y-3">
         {items.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-neutral-700">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+          <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-neutral-600">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" aria-hidden />
             {item}
           </li>
         ))}
@@ -113,17 +116,19 @@ function ContentSection({
 function HowWeWorkSection({ title, steps }: { title: string; steps: string[] }) {
   if (!steps.length) return null;
   return (
-    <div className="rounded-3xl border border-stone-200/90 bg-white p-5 shadow-sm ring-1 ring-black/[0.03] md:p-6">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6d32]">
-        {title}
-      </h3>
-      <ol className="mt-3 space-y-3">
+    <div className="flex h-full flex-col rounded-3xl bg-white p-6 shadow-[0_2px_20px_rgba(15,23,42,0.06)] transition-shadow duration-300 md:p-7 hover:shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)]">
+      <div className="border-b border-neutral-100 pb-4">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a6d32] md:text-xs">
+          {title}
+        </h3>
+      </div>
+      <ol className="mt-5 flex-1 space-y-4">
         {steps.map((step, i) => (
-          <li key={i} className="flex gap-3 text-sm leading-relaxed text-neutral-700">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#c8a55c]/15 text-xs font-semibold text-[#8a6d32] ring-1 ring-[#c8a55c]/25">
+          <li key={i} className="flex gap-4 text-sm leading-relaxed text-neutral-600">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#c8a55c]/35 bg-[#c8a55c]/10 text-xs font-semibold tabular-nums text-[#8a6d32]">
               {i + 1}
             </span>
-            <span className="pt-0.5">{step}</span>
+            <span className="min-w-0 pt-1">{step}</span>
           </li>
         ))}
       </ol>
@@ -225,22 +230,23 @@ export default function ServiceSlugPage({ params }: Props) {
       </section>
 
       {content && (
-        <section className="relative py-10 md:py-14">
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(200,165,92,0.07)_0%,transparent_50%)]" aria-hidden />
+        <section className="relative bg-neutral-100/90 py-10 md:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 md:grid-cols-2 md:gap-8">
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
             <ContentSection title={labels.whatIncluded} items={content.whatIncluded} />
             <ContentSection title={labels.whoIsItFor} items={content.whoIsItFor} />
             <ContentSection title={labels.benefits} items={content.benefits} />
-            <div className="md:col-span-2">
-              <HowWeWorkSection title={labels.howWeWork} steps={content.howWeWork} />
-            </div>
+            <HowWeWorkSection title={labels.howWeWork} steps={content.howWeWork} />
             {content.priceNote && (
-              <div className="md:col-span-2 rounded-3xl border border-[#c8a55c]/25 bg-gradient-to-br from-[#c8a55c]/10 via-stone-50/80 to-white px-5 py-4 ring-1 ring-[#c8a55c]/15 md:px-6 md:py-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8a6d32]">
-                  {labels.priceNote}
+              <div className="rounded-3xl bg-white p-6 shadow-[0_2px_20px_rgba(15,23,42,0.06)] transition-shadow duration-300 md:col-span-2 md:p-7 hover:shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)]">
+                <div className="border-b border-neutral-100 pb-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a6d32] md:text-xs">
+                    {labels.priceNote}
+                  </p>
+                </div>
+                <p className="mt-5 text-sm leading-relaxed text-neutral-600">
+                  <TextWithBreaksAfterPeriods text={content.priceNote} variant="rich" />
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-700">{content.priceNote}</p>
               </div>
             )}
           </div>

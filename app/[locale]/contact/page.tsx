@@ -237,7 +237,7 @@ export default function ContactPage() {
       {/* HERO */}
       <section className="relative overflow-hidden py-14 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#B89D5E]/10 blur-3xl" />
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
@@ -760,8 +760,8 @@ export default function ContactPage() {
                 </div>
                 <InfoRow
                   k={locale === "sq" ? "Adresa" : locale === "de" ? "Adresse" : "Address"}
-                  v="Rruga Donika Kastrioti, Bllok, Tirane, Albania"
-                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
+                  v="Rruga Donika Kastrioti, Tiranë - Albania"
+                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania"
                 />
                 <InfoRow
                   k={locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
@@ -832,9 +832,9 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="mt-6 rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-6">
+            <div className="mt-6 rounded-3xl border border-[#B89D5E]/20 bg-[#B89D5E]/8 p-6">
               <p className="text-sm font-medium text-gray-700">
-                <span className="text-yellow-400">
+                <span className="text-[#B89D5E]">
                   {locale === "sq" ? "Tip:" : locale === "de" ? "Tipp:" : "Tip:"}
                 </span>{" "}
                 {locale === "sq"

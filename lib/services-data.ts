@@ -74,7 +74,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Krijim website & web design",
-      desc: "Website profesionale për biznese në Shqipëri: krijim faqe interneti, web design Tirana, dizajn faqe interneti. Landing pages, website me disa faqe, forma kontakt, SEO. Ideal për kompani, klinika, restorante, ndërtim.",
+      desc: "Website dhe landing page për biznese në Shqipëri: Dizajn modern, shpejtësi dhe përvojë përdoruesi që ndërtojnë besim. Nga faqe njëfaqëshe deri te site shumëfaqëshe, forma kontaktësh dhe bazë SEO e qartë. Për kompani, profesionistë të lirë, klinika, restorante dhe projekte në ndërtim.",
       price: "Nga 500€",
     },
     {
@@ -131,7 +131,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & landing pages",
-      desc: "Single-page (landing) or multi-page website , professional presence, contact forms, SEO.",
+      desc: "Websites and landing pages for businesses in Albania: Modern design, speed and UX that build trust. From single landing pages to multi-page sites, contact forms and a clear SEO foundation. Ideal for companies, independent professionals, clinics, hospitality and construction.",
       price: "From €500",
     },
     {
@@ -188,7 +188,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & Landingpages",
-      desc: "Einzelseiten (Landing) oder mehrseitige Website , professioneller Auftritt, Kontaktformulare, SEO.",
+      desc: "Websites und Landingpages für Unternehmen in Albanien: Modernes Design, Performance und UX, die Vertrauen schaffen. Von One-Page-Landingpages bis zu mehrseitigen Sites, Kontaktformularen und klarer SEO-Basis. Für KMU, freie Berufe, Praxen, Gastronomie und Bauprojekte.",
       price: "Ab 500€",
     },
     {

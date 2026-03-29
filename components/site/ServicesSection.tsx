@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
+import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
 import PackageCard from "@/components/site/PackageCard";
 import type { Pkg, PackageGroup } from "@/lib/packages-data";
 
@@ -99,16 +100,18 @@ export default function ServicesSection({
       <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
         <div>
           <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-            <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+            <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
             {copy.sectionKicker}
           </span>
           <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
             {copy.sectionTitleBefore}
-            <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#B89D5E] to-[#6b5a38] bg-clip-text text-transparent">
               {copy.sectionTitleHighlight}
             </span>
           </h2>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600">{copy.sectionIntro}</p>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 md:max-w-none">
+            {copy.sectionIntro}
+          </p>
         </div>
       </div>
 
@@ -165,7 +168,7 @@ export default function ServicesSection({
               className={
                 indices.length === 1
                   ? "grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-1 md:max-w-md"
-                  : "grid min-h-0 grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                  : "grid min-h-0 auto-rows-[minmax(0,1fr)] grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
               }
             >
               {indices.map((i) => {
@@ -176,20 +179,20 @@ export default function ServicesSection({
                   <LocaleLink
                     key={s.title}
                     href={`/services/${anchor}`}
-                    className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white/90 p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(245,158,11,0.15)] md:min-h-[320px] md:p-6"
+                    className="group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white/90 p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_24px_48px_-20px_rgba(184,157,94,0.18)] md:min-h-[300px] md:p-6"
                   >
                     <div
-                      className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-amber-400/15 via-transparent to-transparent blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
+                      className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-[#B89D5E]/15 via-transparent to-transparent blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
                       aria-hidden
                     />
 
-                    <div className="relative flex flex-1 flex-col">
+                    <div className="relative flex h-full min-h-0 flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
                         <span className="inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         {result && (
-                          <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-medium text-neutral-900 ring-1 ring-amber-200/60">
+                          <span className="rounded-full bg-[#B89D5E]/10 px-2.5 py-0.5 text-[10px] font-medium text-neutral-900 ring-1 ring-[#B89D5E]/25">
                             {result}
                           </span>
                         )}
@@ -198,50 +201,55 @@ export default function ServicesSection({
                       <h4 className="mt-5 text-lg font-semibold tracking-tight text-neutral-950 md:text-xl">
                         {s.title}
                       </h4>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-3">
+                      <p className="mt-3 min-h-0 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-3">
                         {s.desc}
                       </p>
 
-                      <div className="mt-5 flex items-center justify-between gap-2 border-t border-neutral-200/80 pt-4">
-                        {s.price ? (
-                          <>
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-[10px] uppercase tracking-wider text-gray-500">
-                                {copy.from}
-                              </span>
-                              <span className="font-semibold text-gray-900">{s.price}</span>
-                            </div>
-                            <span
-                              className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500 transition group-hover:border-amber-300/60"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                              onMouseEnter={() => setTooltipCard(i)}
-                              onMouseLeave={() => setTooltipCard(null)}
-                              title={priceTooltip}
-                            >
-                              ?
-                              {tooltipCard === i && (
-                                <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 shadow-xl">
-                                  {priceTooltip}
+                      <div className="mt-auto flex flex-col border-t border-neutral-200/80 pt-4">
+                        <div className="flex items-center justify-between gap-2">
+                          {s.price ? (
+                            <>
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-[10px] uppercase tracking-wider text-gray-500">
+                                  {copy.from}
                                 </span>
-                              )}
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-xs text-gray-500">{copy.quoteRequest}</span>
-                            <span
-                              className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500"
-                              title={priceTooltip}
-                            >
-                              ?
-                            </span>
-                          </>
-                        )}
-                      </div>
+                                <span className="font-semibold text-gray-900">{s.price}</span>
+                              </div>
+                              <span
+                                className="relative flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500 transition group-hover:border-[#B89D5E]/60"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                }}
+                                onMouseEnter={() => setTooltipCard(i)}
+                                onMouseLeave={() => setTooltipCard(null)}
+                                title={priceTooltip}
+                              >
+                                ?
+                                {tooltipCard === i && (
+                                  <span className="absolute bottom-full left-1/2 z-10 mb-2 w-48 -translate-x-1/2 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-900 shadow-xl">
+                                    {priceTooltip}
+                                  </span>
+                                )}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-xs text-gray-500">{copy.quoteRequest}</span>
+                              <span
+                                className="flex h-5 w-5 shrink-0 cursor-help items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[10px] text-neutral-500"
+                                title={priceTooltip}
+                              >
+                                ?
+                              </span>
+                            </>
+                          )}
+                        </div>
 
-                      <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-neutral-950">
-                        {copy.more}
-                        <span className="text-xs transition group-hover:translate-x-0.5">→</span>
+                        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-neutral-950">
+                          {copy.more}
+                          <span className="text-xs transition group-hover:translate-x-0.5">→</span>
+                        </div>
                       </div>
                     </div>
                   </LocaleLink>
@@ -252,8 +260,12 @@ export default function ServicesSection({
             {/* Testimonial pas përmbajtjes (filter Marketing) */}
             {activeTab === 0 && (
               <div className="relative mt-8 overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-br from-neutral-50 to-white p-5 md:p-6">
-                <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-amber-400/10 blur-2xl" aria-hidden />
-                <p className="relative text-sm italic leading-relaxed text-neutral-800">&ldquo;{testimonial.quote}&rdquo;</p>
+                <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-[#B89D5E]/10 blur-2xl" aria-hidden />
+                <p className="relative text-sm italic leading-relaxed text-neutral-800">
+                  &ldquo;
+                  <TextWithBreaksAfterPeriods text={testimonial.quote} />
+                  &rdquo;
+                </p>
                 <p className="relative mt-3 text-xs font-medium text-neutral-950">
                   {testimonial.name}, {testimonial.role}
                   {testimonial.company && ` · ${testimonial.company}`}
@@ -265,7 +277,7 @@ export default function ServicesSection({
             <div className="relative mt-6">
               <LocaleLink
                 href="/contact"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-neutral-950 px-7 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800"
+                className="animate-services-cta-glow inline-flex h-11 items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 px-7 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-900"
               >
                 {copy.requestQuoteForGroup}
               </LocaleLink>
@@ -278,7 +290,7 @@ export default function ServicesSection({
       <div className="relative mt-20 md:mt-24">
         <div className="relative overflow-hidden rounded-[1.75rem] bg-neutral-950 px-6 py-10 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:rounded-[2rem] md:px-10 md:py-14">
           <div
-            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-amber-500/15 blur-3xl"
+            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#B89D5E]/15 blur-3xl"
             aria-hidden
           />
           <div
@@ -298,16 +310,18 @@ export default function ServicesSection({
         <div className="relative mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
           <div>
             <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              <span className="h-px w-8 bg-gradient-to-r from-amber-400/90 to-transparent" aria-hidden />
+              <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/90 to-transparent" aria-hidden />
               {copy.packagesKicker}
             </span>
             <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
               {copy.packagesTitleBefore}
-              <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#c4af78] to-[#B89D5E] bg-clip-text text-transparent">
                 {copy.packagesTitleHighlight}
               </span>
             </h2>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400">{copy.packagesIntro}</p>
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-400 md:max-w-none">
+              <TextWithBreaksAfterPeriods text={copy.packagesIntro} />
+            </p>
           </div>
         </div>
         <div className="relative mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -328,10 +342,10 @@ export default function ServicesSection({
             ))}
           </div>
         </div>
-        <div className="relative space-y-14">
+        <div key={activePackageTab} className="relative space-y-14 animate-packages-tab-enter">
           {visiblePackageGroups.map((groupKey) => (
             <div key={groupKey}>
-              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-200/70 md:text-xs">
+              <h4 className="mb-8 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/65 md:text-xs">
                 {packageGroupLabels[groupKey]}
               </h4>
               <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">

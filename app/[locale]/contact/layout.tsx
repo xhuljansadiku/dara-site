@@ -67,7 +67,7 @@ async function ContactStructuredData({
       email: "daramarketing.eu@gmail.com",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Rruga Donika Kastrioti, Bllok",
+        streetAddress: "Rruga Donika Kastrioti",
         addressLocality: "Tirana",
         addressCountry: "AL",
       },

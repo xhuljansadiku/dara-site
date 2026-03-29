@@ -60,16 +60,16 @@ export default function HomeWorkSection({ locale }: Props) {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+          <div className="min-w-0 sm:flex-1">
             <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+              <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               {kicker}
             </span>
             <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl lg:text-[2.65rem] lg:leading-[1.1]">
               {locale === "sq" && (
                 <>
                   Puna jonë{" "}
-                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#B89D5E] to-[#6b5a38] bg-clip-text text-transparent">
                     e zgjedhur
                   </span>
                 </>
@@ -77,7 +77,7 @@ export default function HomeWorkSection({ locale }: Props) {
               {locale === "en" && (
                 <>
                   Our{" "}
-                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#B89D5E] to-[#6b5a38] bg-clip-text text-transparent">
                     work
                   </span>
                 </>
@@ -85,17 +85,17 @@ export default function HomeWorkSection({ locale }: Props) {
               {locale === "de" && (
                 <>
                   Unsere{" "}
-                  <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#B89D5E] to-[#6b5a38] bg-clip-text text-transparent">
                     Arbeiten
                   </span>
                 </>
               )}
             </h2>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600">{intro}</p>
+            <p className="mt-4 max-w-none text-[15px] leading-relaxed text-neutral-600">{intro}</p>
           </div>
           <LocaleLink
             href="/work"
-            className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-amber-300/50 hover:bg-amber-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+            className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
           >
             {viewAll}
             <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>

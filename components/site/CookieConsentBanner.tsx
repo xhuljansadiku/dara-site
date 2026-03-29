@@ -80,21 +80,21 @@ export default function CookieConsentBanner() {
           entered ? "translate-y-0 opacity-100 sm:scale-100" : "translate-y-6 opacity-0 sm:translate-y-4 sm:scale-[0.98]"
         }`}
       >
-        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#c8a55c]/15 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-amber-100/40 blur-2xl" />
+        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#B89D5E]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-[#B89D5E]/12 blur-2xl" />
 
         <div className="relative px-5 pb-5 pt-6 sm:px-7 sm:pb-6 sm:pt-7">
           <div className="flex items-start gap-3">
             <span
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#c8a55c]/15 ring-1 ring-[#c8a55c]/25"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#B89D5E]/15 ring-1 ring-[#B89D5E]/25"
               aria-hidden
             >
-              <svg className="h-6 w-6 text-[#8a6d32]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <svg className="h-6 w-6 text-[#6b5a38]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M21.598 11.064a2.012 2.012 0 00-1.186-1.186 8.018 8.018 0 00-6.176-7.351 8.025 8.025 0 00-8.25 8.25 8.018 8.018 0 007.351 6.176 2.012 2.012 0 001.186-1.186 2.45 2.45 0 01.146-.45 2.451 2.451 0 012.523-1.588 2.45 2.45 0 011.588 2.523 2.45 2.45 0 01-.45.146 2.012 2.012 0 00-1.186 1.186 8.018 8.018 0 007.351 6.176 8.025 8.025 0 008.25-8.25 8.018 8.018 0 00-7.351-6.176zM8.25 10.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0zm4.5 3a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0zm3-4.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0zm3 4.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z" />
               </svg>
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8a6d32]">DARA</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">DARA</p>
               <h2 id="cookie-consent-title" className="mt-1 font-display text-xl font-bold tracking-tight text-neutral-950">
                 {copy.title}
               </h2>
@@ -108,7 +108,7 @@ export default function CookieConsentBanner() {
           <ul className="mt-3 space-y-1.5 text-sm text-neutral-600">
             {copy.bullets.map((line) => (
               <li key={line} className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8a55c]" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#B89D5E]" />
                 <span>{line}</span>
               </li>
             ))}
@@ -134,7 +134,7 @@ export default function CookieConsentBanner() {
           <p className="mt-4 text-center text-xs text-neutral-500 sm:text-left">
             <LocaleLink
               href="/privacy"
-              className="font-medium text-[#8a6d32] underline decoration-[#c8a55c]/50 underline-offset-2 transition hover:decoration-[#c8a55c]"
+              className="font-medium text-[#6b5a38] underline decoration-[#B89D5E]/50 underline-offset-2 transition hover:decoration-[#B89D5E]"
             >
               {copy.privacyLabel}
             </LocaleLink>

@@ -15,7 +15,7 @@ type Props = {
 export default function ProjectCard({ project: p, locale, setLightbox }: Props) {
   const viewLabel = locale === "sq" ? "Shiko projektin" : locale === "de" ? "Projekt ansehen" : "View project";
   const cardClass =
-    "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-[0_4px_24px_-16px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:shadow-[0_24px_48px_-24px_rgba(245,158,11,0.12)]";
+    "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white shadow-[0_4px_24px_-16px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/40 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.12)]";
 
   const isImageGallery = p.category === "social-media" || p.category === "brand";
   const galleryImages =

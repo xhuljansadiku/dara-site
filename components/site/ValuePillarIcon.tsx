@@ -7,9 +7,9 @@ export default function ValuePillarIcon({ index }: { index: number }) {
   const gradientDef = (
     <defs>
       <linearGradient id={gid} x1="15%" y1="0%" x2="85%" y2="100%">
-        <stop offset="0%" stopColor="#f2e4c4" />
-        <stop offset="42%" stopColor="#c8a55c" />
-        <stop offset="100%" stopColor="#7a5f28" />
+        <stop offset="0%" stopColor="#c9b07a" />
+        <stop offset="50%" stopColor="#B89D5E" />
+        <stop offset="100%" stopColor="#8a7344" />
       </linearGradient>
     </defs>
   );
@@ -84,13 +84,13 @@ export default function ValuePillarIcon({ index }: { index: number }) {
     <div className="relative flex h-[4.25rem] w-[4.25rem] shrink-0 items-center justify-center">
       {/* Ambient glow (intensifies on card hover) */}
       <div
-        className="pointer-events-none absolute -inset-1 rounded-[1.35rem] bg-gradient-to-br from-[#c8a55c]/25 via-[#c8a55c]/10 to-transparent opacity-60 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:blur-lg"
+        className="pointer-events-none absolute -inset-1 rounded-[1.35rem] bg-gradient-to-br from-[#B89D5E]/25 via-[#B89D5E]/10 to-transparent opacity-60 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:blur-lg"
         aria-hidden
       />
       <div
-        className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/60 bg-gradient-to-br from-white via-[#faf8f5] to-[#f0ebe3] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_24px_-8px_rgba(200,165,92,0.35)] ring-1 ring-[#c8a55c]/25 transition-all duration-500 group-hover:scale-[1.06] group-hover:ring-[#c8a55c]/50 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),0_12px_32px_-6px_rgba(200,165,92,0.45)]"
+        className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/60 bg-gradient-to-br from-white via-[#faf8f5] to-[#f0ebe3] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_24px_-8px_rgba(184,157,94,0.35)] ring-1 ring-[#B89D5E]/25 transition-all duration-500 group-hover:scale-[1.06] group-hover:ring-[#B89D5E]/50 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,1),0_12px_32px_-6px_rgba(184,157,94,0.45)]"
       >
-        <span className="transition duration-500 group-hover:[filter:drop-shadow(0_4px_12px_rgba(200,165,92,0.55))]">
+        <span className="transition duration-500 group-hover:[filter:drop-shadow(0_4px_12px_rgba(184,157,94,0.55))]">
           {icons[index] ?? icons[0]}
         </span>
       </div>

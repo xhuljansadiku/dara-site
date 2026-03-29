@@ -1,6 +1,6 @@
 export type Locale = "sq" | "en" | "de";
 
-export type TrainingSlug = "smm" | "smm-1-1" | "web-developer" | "bazat-e-tik";
+export type TrainingSlug = "smm" | "smm-1-1" | "web-developer";
 
 export type Training = {
   slug: TrainingSlug;
@@ -39,9 +39,27 @@ export const TRAININGS: Training[] = [
       { value: "1", label: { sq: "muaj", en: "month", de: "Monat" } },
     ],
     highlights: {
-      sq: ["12 tema të plota", "Ushtrime praktike", "Materiale për studim", "Ndjekje pas trajnimit"],
-      en: ["12 complete topics", "Practical exercises", "Study materials", "Post-training follow-up"],
-      de: ["12 vollständige Themen", "Praktische Übungen", "Lernmaterialien", "Nachbetreuung"],
+      sq: [
+        "12 tema të plota",
+        "Ushtrime praktike",
+        "Materiale për studim",
+        "Ndjekje pas trajnimit",
+        "Certifikatë në përfundim",
+      ],
+      en: [
+        "12 complete topics",
+        "Practical exercises",
+        "Study materials",
+        "Post-training follow-up",
+        "Certificate upon completion",
+      ],
+      de: [
+        "12 vollständige Themen",
+        "Praktische Übungen",
+        "Lernmaterialien",
+        "Nachbetreuung",
+        "Zertifikat nach Abschluss",
+      ],
     },
     fullDescription: {
       sq: [
@@ -85,9 +103,30 @@ export const TRAININGS: Training[] = [
       { value: "1", label: { sq: "muaj", en: "month", de: "Monat" } },
     ],
     highlights: {
-      sq: ["Mësime të personalizuara", "Praktike intensive", "Orar fleksibël", "Fokus në biznesin tënd"],
-      en: ["Customised lessons", "Intensive practice", "Flexible schedule", "Focus on your business"],
-      de: ["Individuelle Lektionen", "Intensive Praxis", "Flexibler Zeitplan", "Fokus auf Ihr Unternehmen"],
+      sq: [
+        "Mësime të personalizuara",
+        "Praktike intensive",
+        "Orar fleksibël",
+        "Fokus në biznesin tënd",
+        "Mentorim i dedikuar 100%",
+        "Certifikatë në përfundim",
+      ],
+      en: [
+        "Customised lessons",
+        "Intensive practice",
+        "Flexible schedule",
+        "Focus on your business",
+        "100% dedicated mentoring",
+        "Certificate upon completion",
+      ],
+      de: [
+        "Individuelle Lektionen",
+        "Intensive Praxis",
+        "Flexibler Zeitplan",
+        "Fokus auf Ihr Unternehmen",
+        "100 % individuelles Mentoring",
+        "Zertifikat nach Abschluss",
+      ],
     },
     fullDescription: {
       sq: [
@@ -151,53 +190,6 @@ export const TRAININGS: Training[] = [
         "Der Web-Entwickler-Kurs bereitet Sie auf die Arbeit als professioneller Webentwickler vor. Er deckt die gefragtesten Technologien ab: HTML5, CSS3, JavaScript, React und Next.js.",
         "Jedes Modul endet mit einem praktischen Projekt, das Sie zu Ihrem Portfolio hinzufügen können. Lernen Sie von Grund auf bis zum fortgeschrittenen Niveau.",
         "Nach Abschluss haben Sie die Fähigkeiten, Websites, Landing Pages und moderne Anwendungen zu erstellen. Ideal für eine Karriere in der Tech-Branche oder für eigene Projekte.",
-      ],
-    },
-  },
-  {
-    slug: "bazat-e-tik",
-    comingSoon: true,
-    title: {
-      sq: "Bazat e TIK-ut",
-      en: "ICT Basics",
-      de: "ICT-Grundlagen",
-    },
-    shortDesc: {
-      sq: "Mëso bazat e teknologjisë së informacionit dhe komunikimit. Kompjuteri, interneti dhe aplikacionet.",
-      en: "Learn the basics of information and communication technology. Computer, internet and applications.",
-      de: "Lernen Sie die Grundlagen der Informations- und Kommunikationstechnologie. Computer, Internet und Anwendungen.",
-    },
-    price: "Së shpejti",
-    duration: {
-      sq: "Së shpejti",
-      en: "Coming soon",
-      de: "Demnächst",
-    },
-    stats: [
-      { value: "·", label: { sq: "module", en: "modules", de: "Module" } },
-      { value: "·", label: { sq: "orë", en: "hours", de: "Stunden" } },
-      { value: "·", label: { sq: "nivel", en: "level", de: "Niveau" } },
-    ],
-    highlights: {
-      sq: ["Kompjuteri dhe sistemi operativ", "Internet dhe siguria", "Aplikacione zyrtare", "Përdorim praktik"],
-      en: ["Computer and operating system", "Internet and security", "Office applications", "Practical use"],
-      de: ["Computer und Betriebssystem", "Internet und Sicherheit", "Office-Anwendungen", "Praktische Nutzung"],
-    },
-    fullDescription: {
-      sq: [
-        "Trajnimi Bazat e TIK-ut u drejtohet fillestarëve që duan të mësojnë përdorimin e kompjuterit dhe teknologjisë së informacionit.",
-        "Mbulon tematikat themelore: sistemi operativ, interneti, siguria në linjë dhe aplikacionet e zakonshme zyrtare.",
-        "Programi do të nisë së shpejti. Regjistrohu për të marrë njoftim kur të hapet.",
-      ],
-      en: [
-        "The ICT Basics training is aimed at beginners who want to learn how to use computers and information technology.",
-        "It covers fundamental topics: operating system, internet, online security and common office applications.",
-        "The programme will start soon. Register to be notified when it opens.",
-      ],
-      de: [
-        "Das ICT-Grundlagen-Training richtet sich an Anfänger, die den Umgang mit Computern und Informationstechnologie lernen möchten.",
-        "Es deckt grundlegende Themen ab: Betriebssystem, Internet, Onlinesicherheit und gängige Office-Anwendungen.",
-        "Das Programm startet demnächst. Melden Sie sich an, um benachrichtigt zu werden, wenn es beginnt.",
       ],
     },
   },

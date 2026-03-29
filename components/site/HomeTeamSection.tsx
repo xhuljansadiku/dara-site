@@ -48,7 +48,7 @@ export default function HomeTeamSection({ locale }: Props) {
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl"
+        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-3xl"
         aria-hidden
       />
       <div
@@ -59,22 +59,22 @@ export default function HomeTeamSection({ locale }: Props) {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-            <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+            <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
             {kicker}
-            <span className="hidden h-px w-8 bg-gradient-to-l from-amber-500/80 to-transparent sm:block" aria-hidden />
+            <span className="hidden h-px w-8 bg-gradient-to-l from-[#B89D5E]/80 to-transparent sm:block" aria-hidden />
           </span>
-          <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/85 bg-clip-text font-display text-4xl font-bold leading-[1.1] tracking-tight text-transparent md:text-5xl">
+          <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-4xl font-bold leading-[1.1] tracking-tight text-transparent md:text-5xl">
             {title}
           </h2>
           <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-[17px]">{intro}</p>
           <div className="mt-8 flex justify-center">
             <LocaleLink
               href="/team"
-              className="group inline-flex h-11 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-6 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-amber-300/50 hover:bg-amber-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+              className="group inline-flex h-11 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-6 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
             >
               {cta}
               <span
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-950 transition group-hover:border-amber-300/50 group-hover:bg-white"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-950 transition group-hover:border-[#B89D5E]/50 group-hover:bg-white"
                 aria-hidden
               >
                 <svg className="h-4 w-4 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +94,7 @@ export default function HomeTeamSection({ locale }: Props) {
               <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
                 <div
                   className={`relative h-[5.5rem] w-[5.5rem] overflow-hidden rounded-full bg-white p-1 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.2)] ring-2 ${
-                    member.initials ? "ring-amber-500/50" : "ring-white"
+                    member.initials ? "ring-[#B89D5E]/50" : "ring-white"
                   }`}
                 >
                   <div className="relative h-full w-full overflow-hidden rounded-full">
@@ -118,9 +118,9 @@ export default function HomeTeamSection({ locale }: Props) {
                 </span>
               </div>
 
-              <article className="relative rounded-3xl border border-black/[0.06] bg-white/95 px-5 pb-7 pt-14 text-center shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] backdrop-blur-[2px] transition duration-300 hover:-translate-y-1 hover:border-amber-300/35 hover:shadow-[0_24px_48px_-24px_rgba(245,158,11,0.12)]">
+              <article className="relative rounded-3xl border border-black/[0.06] bg-white/95 px-5 pb-7 pt-14 text-center shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] backdrop-blur-[2px] transition duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/35 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.12)]">
                 <div
-                  className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"
+                  className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#B89D5E]/40 to-transparent"
                   aria-hidden
                 />
                 <h3 className="font-display text-xl font-bold tracking-tight text-neutral-950">{member.name}</h3>
@@ -129,7 +129,7 @@ export default function HomeTeamSection({ locale }: Props) {
                 <div className="mt-5 flex justify-center gap-2">
                   <a
                     href={member.linkedin}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 transition hover:border-amber-300/50 hover:bg-amber-50/80 hover:text-neutral-950"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/80 hover:text-neutral-950"
                     aria-label="LinkedIn"
                   >
                     <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@ export default function HomeTeamSection({ locale }: Props) {
                   </a>
                   <a
                     href={member.instagram}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 transition hover:border-amber-300/50 hover:bg-amber-50/80 hover:text-neutral-950"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600 transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/80 hover:text-neutral-950"
                     aria-label="Instagram"
                   >
                     <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">

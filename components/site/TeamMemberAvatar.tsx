@@ -3,8 +3,8 @@ import Image from "next/image";
 /** Logo / brand gold (same family as site accents) */
 const GOLD = {
   from: "#e8d5b0",
-  via: "#c8a55c",
-  to: "#9a7b3a",
+  via: "#B89D5E",
+  to: "#8a7344",
 } as const;
 
 type Props = {

@@ -15,7 +15,7 @@ export default function NotFound() {
       <p className="mt-2 text-gray-900/70">{copy.desc}</p>
       <Link
         href={`/${locale}`}
-        className="mt-6 rounded-full bg-[#c8a55c] px-6 py-3 font-medium text-black transition hover:bg-[#e2c37a]"
+        className="mt-6 rounded-full bg-[#B89D5E] px-6 py-3 font-medium text-black transition hover:bg-[#e2c37a]"
       >
         {copy.goHome}
       </Link>

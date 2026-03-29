@@ -285,7 +285,7 @@ export default function Navbar() {
                     }}
                     className={[
                       "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isAboutActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                      isAboutActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
                     ].join(" ")}
                     aria-expanded={aboutOpen}
                     aria-haspopup="true"
@@ -296,7 +296,7 @@ export default function Navbar() {
                       <span className="ml-0.5 text-[10px] opacity-70">▾</span>
                     </span>
                     {isAboutActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
                     )}
                   </button>
                   {aboutOpen && (
@@ -336,7 +336,7 @@ export default function Navbar() {
                     href={withLocale("/services/website")}
                     className={[
                       "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isWebsiteActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                      isWebsiteActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
                     ].join(" ")}
                     aria-expanded={websiteOpen}
                     aria-haspopup="true"
@@ -347,7 +347,7 @@ export default function Navbar() {
                       <span className="ml-0.5 text-[10px] opacity-70">▾</span>
                     </span>
                     {isWebsiteActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
                     )}
                   </Link>
                   {websiteOpen && (
@@ -387,7 +387,7 @@ export default function Navbar() {
                     href={withLocale("/services/marketing")}
                     className={[
                       "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isMarketingActive ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                      isMarketingActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
                     ].join(" ")}
                     aria-expanded={marketingOpen}
                     aria-haspopup="true"
@@ -398,7 +398,7 @@ export default function Navbar() {
                       <span className="ml-0.5 text-[10px] opacity-70">▾</span>
                     </span>
                     {isMarketingActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
                     )}
                   </Link>
                   {marketingOpen && (
@@ -425,13 +425,13 @@ export default function Navbar() {
                 href={withLocale(it.href)}
                 className={[
                   "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                  active ? "text-[#c8a55c]" : "text-gray-300 hover:text-white",
+                  active ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
                 ].join(" ")}
               >
                 <span className="text-[10px] font-medium text-gray-500">{num}</span>
                 <span className="relative z-10 whitespace-nowrap">{it.label}</span>
                 {active && (
-                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#c8a55c]" />
+                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
                 )}
               </Link>
             );
@@ -507,7 +507,7 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b08d45] md:inline-flex md:whitespace-nowrap"
+            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] md:inline-flex md:whitespace-nowrap"
           >
             {nav.getQuote}
           </Link>
@@ -725,7 +725,7 @@ export default function Navbar() {
             <Link
               href={withLocale("/contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#c8a55c] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b08d45] whitespace-nowrap"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] whitespace-nowrap"
             >
               {nav.getQuote}
             </Link>

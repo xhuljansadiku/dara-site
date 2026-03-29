@@ -12,6 +12,7 @@ import HomeFaqSection from "@/components/site/HomeFaqSection";
 import ValuePillarIcon from "@/components/site/ValuePillarIcon";
 import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
+import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
   PACKAGES_BY_GROUP_AND_LOCALE,
@@ -24,37 +25,59 @@ type Locale = "sq" | "en" | "de";
 
 const HERO_BY_LOCALE: Record<
   Locale,
-  { kicker: string; titleA: string; titleB: string; desc: string; ctaPrimary: string; ctaSecondary: string; scrollHint: string; socialProof: string }
+  {
+    kicker: string;
+    titleA: string;
+    titleB: string;
+    desc: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    scrollHint: string;
+    /** Trust line: first sentence, linked word(s) → /work, then rest of second sentence */
+    socialProof: { beforeLink: string; linkText: string; afterLink: string };
+  }
 > = {
   sq: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Guxo të jesh",
     titleB: "ndryshe",
-    desc: "Ndihmojmë bizneset të kthejnë ndjekësit në shitje përmes strategjisë, përmbajtjes dhe marketingut me performancë.",
-    ctaPrimary: "Nis projektin",
-    ctaSecondary: "Shërbimet",
+    desc: "Nga krijimi i website-ve dhe e-commerce, deri te menaxhimi i reklamave (Meta & Google). Ne hartojmë strategji marketingut digjital që kthejnë trafikun në shitje reale dhe rritje të matshme.",
+    ctaPrimary: "Nisni Bashkëpunimin",
+    ctaSecondary: "Zbuloni Shërbimet",
     scrollHint: "Zbulo më shumë",
-    socialProof: "100+ biznese të kënaqura",
+    socialProof: {
+      beforeLink: "100+ projekte të realizuara me sukses.",
+      linkText: "Zbuloni",
+      afterLink: " rrugëtimin tonë kreativ.",
+    },
   },
   en: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Dare to be",
     titleB: "different",
-    desc: "We bring brand stories to life through bold strategies and results‑oriented marketing.",
-    ctaPrimary: "Start a project",
-    ctaSecondary: "Services",
+    desc: "From websites and e-commerce to ad management (Meta & Google). We craft digital marketing strategies that turn traffic into real sales and measurable growth.",
+    ctaPrimary: "Start collaborating",
+    ctaSecondary: "Discover services",
     scrollHint: "Scroll to explore",
-    socialProof: "Trusted by 100+ businesses",
+    socialProof: {
+      beforeLink: "100+ projects delivered successfully.",
+      linkText: "Discover",
+      afterLink: " our creative journey.",
+    },
   },
   de: {
     kicker: "DARA MARKETING AGENCY",
     titleA: "Wage es,",
     titleB: "anders zu sein",
-    desc: "Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne.",
-    ctaPrimary: "Projekt starten",
-    ctaSecondary: "Leistungen",
+    desc: "Von Websites und E-Commerce bis zur Werbebetrreuung (Meta & Google). Wir entwickeln digitale Marketingstrategien, die Traffic in echte Verkäufe und messbares Wachstum verwandeln.",
+    ctaPrimary: "Zusammenarbeit starten",
+    ctaSecondary: "Leistungen entdecken",
     scrollHint: "Mehr entdecken",
-    socialProof: "100+ Unternehmen vertrauen uns",
+    socialProof: {
+      beforeLink: "Über 100 erfolgreich umgesetzte Projekte.",
+      linkText: "Entdecken Sie",
+      afterLink: " unseren kreativen Weg.",
+    },
   },
 };
 
@@ -87,62 +110,33 @@ type ValuePillar = { title: string; desc: ReactNode };
 
 const VALUE_PILLARS_BY_LOCALE: Record<Locale, ValuePillar[]> = {
   sq: [
-    { title: "KREATIVITETI", desc: "Ide të guximshme. Ekzekutim i saktë." },
-    { title: "UNIK", desc: "Dallohu ose përziju me të tjerët." },
-    {
-      title: "INOVACION",
-      desc: (
-        <>
-          E njëjta pamje.
-          <br />
-          Mendim i ri.
-        </>
-      ),
-    },
-    {
-      title: "REZULTATE",
-      desc: (
-        <>
-          <span className="font-semibold text-[#c8a55c]">DARA</span>
-          {" rritje e matshme, jo hamendje."}
-        </>
-      ),
-    },
+    { title: "KREATIVITETI", desc: "Ide guximtare që kthehen në ekzekutim të saktë." },
+    { title: "UNIK", desc: "Krijuar për t'u dalluar në një treg të mbingarkuar." },
+    { title: "INOVACION", desc: "Përdorim mjetet më të fundit për avantazhin tuaj." },
+    { title: "REZULTATE", desc: "Rritje e matshme me shifra, jo me supozime." },
   ],
   en: [
-    { title: "CREATIVITY", desc: "Bold ideas. Clean execution." },
-    { title: "UNIQUE", desc: "Stand out, or blend in." },
-    { title: "INNOVATION", desc: "Same view. Fresh thinking." },
-    {
-      title: "RESULTS",
-      desc: (
-        <>
-          <span className="font-semibold text-[#c8a55c]">DARA</span>
-          {": growth you can measure."}
-        </>
-      ),
-    },
+    { title: "CREATIVITY", desc: "Bold ideas that become precise execution." },
+    { title: "UNIQUE", desc: "Built to stand out in a crowded market." },
+    { title: "INNOVATION", desc: "We use the latest tools for your advantage." },
+    { title: "RESULTS", desc: "Measurable growth with numbers, not assumptions." },
   ],
   de: [
-    { title: "KREATIVITÄT", desc: "Mutige Ideen. Klare Umsetzung." },
-    { title: "EINZIGARTIGKEIT", desc: "Auffallen, oder untergehen." },
-    { title: "INNOVATION", desc: "Gleicher Blick. Neues Denken." },
-    {
-      title: "ERGEBNISSE",
-      desc: (
-        <>
-          <span className="font-semibold text-[#c8a55c]">DARA</span>
-          {": Wachstum, das man sieht."}
-        </>
-      ),
-    },
+    { title: "KREATIVITÄT", desc: "Mutige Ideen, die in präzise Umsetzung münden." },
+    { title: "EINZIGARTIGKEIT", desc: "Entwickelt, um sich in einem überfüllten Markt abzuheben." },
+    { title: "INNOVATION", desc: "Wir nutzen die neuesten Tools für Ihren Vorteil." },
+    { title: "ERGEBNISSE", desc: "Messbares Wachstum mit Zahlen, nicht mit Vermutungen." },
   ],
 };
 
-const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraphs: string[]; readMore: string }> = {
+const ABOUT_BY_LOCALE: Record<
+  Locale,
+  { kicker: string; titlePrefix: string; titleAccent: string; paragraphs: string[]; readMore: string }
+> = {
   sq: {
     kicker: "Rreth nesh",
-    title: "Ne jemi DARA.",
+    titlePrefix: "Ne jemi ",
+    titleAccent: "DARA.",
     paragraphs: [
       "DARA Marketing Agency është agjencia juaj e marketingut, themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
@@ -152,7 +146,8 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
   },
   en: {
     kicker: "About us",
-    title: "We are DARA.",
+    titlePrefix: "We are ",
+    titleAccent: "DARA.",
     paragraphs: [
       "DARA Marketing Agency is your marketing partner, established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
       "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
@@ -162,7 +157,8 @@ const ABOUT_BY_LOCALE: Record<Locale, { kicker: string; title: string; paragraph
   },
   de: {
     kicker: "Über uns",
-    title: "Wir sind DARA.",
+    titlePrefix: "Wir sind ",
+    titleAccent: "DARA.",
     paragraphs: [
       "DARA Marketing Agency ist Ihre Marketing-Partnerin, gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
       "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
@@ -485,7 +481,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     description: jsonLdByLocale[locale],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Rruga Donika Kastrioti, Bllok",
+      streetAddress: "Rruga Donika Kastrioti",
       addressLocality: "Tirana",
       addressRegion: "Tirana",
       addressCountry: "AL",
@@ -502,8 +498,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* HERO - Trifid style: full viewport, bold typography */}
-      <section className="relative min-h-screen min-h-[100dvh] flex flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 md:py-32 overflow-hidden">
+      {/* HERO - Trifid style: full viewport, bold typography + readability scrim */}
+      <section className="relative flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-20 sm:px-6 sm:py-24 md:py-32">
         <img
           src="/hero-bg-dara.png"
           alt=""
@@ -511,40 +507,60 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden
           fetchPriority="high"
         />
-        <div className="absolute inset-0 -z-10 bg-black/40" aria-hidden />
-        <div className="mx-auto w-full max-w-5xl">
-          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-white/80 md:text-xs">
+        {/* Global light dim — keeps astronaut/clouds vivid */}
+        <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden />
+        {/* Left column scrim — max contrast for copy without flattening full image */}
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-[min(100%,40rem)] bg-gradient-to-r from-black/55 via-black/25 to-transparent sm:w-[min(100%,46rem)]"
+          aria-hidden
+        />
+        {/* Bottom edge — light black scrim (opacity ~0.3) for trust line + scroll */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-44 bg-gradient-to-t from-[rgba(0,0,0,0.3)] via-[rgba(0,0,0,0.12)] to-transparent sm:h-52"
+          aria-hidden
+        />
+        <div className="relative z-10 mx-auto w-full max-w-5xl text-center md:text-left">
+          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
             {hero.kicker}
           </p>
-          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             {hero.titleA}{" "}
-            <span className="block">{hero.titleB}</span>
+            <span className="block text-[#B89D5E] [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">{hero.titleB}</span>
           </h1>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mt-10 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-10 max-w-2xl text-base leading-relaxed text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] md:mx-0 md:text-lg lg:text-xl">
             {hero.desc}
           </p>
-          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mt-14 flex flex-wrap items-center gap-4">
+          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-14 flex w-full max-w-xl flex-col gap-3 md:mx-0 md:max-w-none md:flex-row md:flex-wrap md:items-center md:gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white bg-white px-10 font-semibold text-black transition hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-white bg-white px-8 py-0 text-sm font-semibold text-black shadow-[0_8px_32px_-4px_rgba(0,0,0,0.45)] transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_12px_40px_-4px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
             >
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-14 items-center justify-center rounded-full border-2 border-white/60 px-10 font-medium text-white transition hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-[#B89D5E] bg-black/40 px-8 py-0 text-sm font-[600] text-[#B89D5E] [text-shadow:0_1px_3px_rgba(0,0,0,0.55),0_0_12px_rgba(0,0,0,0.35)] shadow-[0_0_0_1px_rgba(0,0,0,0.45),0_8px_36px_rgba(0,0,0,0.5),0_4px_14px_rgba(0,0,0,0.35),0_2px_8px_rgba(184,157,94,0.35)] backdrop-blur-md transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:[text-shadow:0_1px_2px_rgba(0,0,0,0.2)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.25),0_10px_40px_rgba(0,0,0,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B89D5E] md:w-auto"
             >
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mt-10 text-sm text-white/70">
-            {hero.socialProof}
+          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-10 max-w-xl text-sm font-medium leading-snug text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] md:mx-0">
+            {hero.socialProof.beforeLink}
+            <br className="md:hidden" aria-hidden />
+            <span className="hidden md:inline"> </span>
+            <LocaleLink
+              href="/work"
+              className="font-medium text-[#d4af37] underline decoration-[#d4af37]/65 underline-offset-2 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition hover:text-[#e8c84a] hover:decoration-[#e8c84a]/80"
+            >
+              {hero.socialProof.linkText}
+            </LocaleLink>
+            {hero.socialProof.afterLink}
           </p>
         </div>
 
         <a
           href="#about"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/70 text-xs font-medium tracking-wider hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
+          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-xs font-medium tracking-wider text-white/85 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
           aria-label={hero.scrollHint}
         >
           {hero.scrollHint}
@@ -572,12 +588,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       {/* Value pillars (brand-aligned, DARA gold on results card) */}
       <section className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-20 md:py-28">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c8a55c]/30 to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#B89D5E]/30 to-transparent"
           aria-hidden
         />
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 text-center md:mb-16">
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#9a7b3a]">
+            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#8a7344]">
               {pillarsHeader.kicker}
             </p>
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
@@ -585,15 +601,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             </h2>
             {pillarsHeader.tagline && (
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-600 md:text-[17px]">
-                <span className="font-semibold text-[#c8a55c]">{pillarsHeader.tagline.brand}</span>
+                <span className="font-semibold text-[#B89D5E]">{pillarsHeader.tagline.brand}</span>
                 <span>{pillarsHeader.tagline.rest}</span>
               </p>
             )}
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* sm/md: 2 kolona; lg+: 4 në një rresht me flex (grid-cols-4 nuk respektohej në disa raste) */}
+          <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
             {pillars.map((pillar, idx) => (
-                <AnimateIn key={pillar.title} delay={idx * 80}>
-                  <div className="group flex h-full flex-col max-sm:items-center max-sm:text-center sm:items-stretch sm:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:border-[#c8a55c]/35 hover:shadow-[0_28px_56px_-28px_rgba(200,165,92,0.22)] md:p-9">
+                <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0 lg:min-w-0 lg:flex-1">
+                  <div className="group flex h-full min-h-0 flex-col max-sm:items-center max-sm:text-center sm:items-stretch sm:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:p-9">
                     <ValuePillarIcon index={idx} />
                     <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
                       {pillar.title}
@@ -633,7 +650,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
             <div
-              className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl"
+              className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-3xl"
               aria-hidden
             />
             <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
@@ -641,7 +658,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 <div className="relative order-2 flex justify-center lg:order-1">
                   <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
                     <div
-                      className="pointer-events-none absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-amber-400/25 via-transparent to-transparent opacity-50 blur-xl"
+                      className="pointer-events-none absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-[#B89D5E]/25 via-transparent to-transparent opacity-50 blur-xl"
                       aria-hidden
                     />
                     <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
@@ -660,29 +677,30 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               <div className="order-1 lg:order-2">
                 <AnimateIn>
                   <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-                    <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+                    <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
                     {about.kicker}
                   </span>
                 </AnimateIn>
                 <AnimateIn delay={50}>
-                  <h2 className="mt-4 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/90 bg-clip-text font-display text-2xl font-semibold tracking-tight text-transparent sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
-                    {about.title}
+                  <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-neutral-950 sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
+                    <span>{about.titlePrefix}</span>
+                    <span className="text-[#B89D5E]">{about.titleAccent}</span>
                   </h2>
                 </AnimateIn>
                 <AnimateIn delay={100}>
-                  <p className="mt-5 text-base leading-relaxed text-neutral-800 md:text-lg">
-                    {about.paragraphs[0]}
+                  <p className="mt-5 text-base leading-[1.7] text-neutral-800 md:text-lg">
+                    <TextWithBreaksAfterPeriods text={about.paragraphs[0]} />
                   </p>
                 </AnimateIn>
                 <AnimateIn delay={150}>
-                  <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg">
-                    {about.paragraphs[1]}
+                  <p className="mt-4 text-base leading-[1.7] text-neutral-600 md:text-lg">
+                    <TextWithBreaksAfterPeriods text={about.paragraphs[1]} />
                   </p>
                 </AnimateIn>
                 {about.paragraphs[2] && (
                   <AnimateIn delay={200}>
-                    <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-lg">
-                      {about.paragraphs[2]}
+                    <p className="mt-4 text-base leading-[1.7] text-neutral-600 md:text-lg">
+                      <TextWithBreaksAfterPeriods text={about.paragraphs[2]} />
                     </p>
                   </AnimateIn>
                 )}
@@ -691,7 +709,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                     {aboutStats.map((stat) => (
                       <div
                         key={stat.label}
-                        className="min-w-[140px] flex-1 rounded-2xl border border-black/[0.06] bg-neutral-50/80 px-4 py-3.5 text-center shadow-sm ring-1 ring-black/[0.03] sm:min-w-[160px] sm:px-5 sm:text-left"
+                        className="min-w-[140px] flex-1 rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] sm:min-w-[160px] sm:px-5 sm:text-left"
                       >
                         <span className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
                           {stat.value}
@@ -707,7 +725,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <div className="mt-10">
                     <LocaleLink
                       href="/about"
-                      className="inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+                      className="inline-flex h-12 items-center justify-center rounded-full border border-neutral-950 bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-all duration-300 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_10px_36px_-10px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
                     >
                       {about.readMore}
                     </LocaleLink>
@@ -757,7 +775,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-amber-400/12 blur-3xl"
+          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#B89D5E]/12 blur-3xl"
           aria-hidden
         />
         <div
@@ -770,12 +788,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             <div className="lg:col-span-5">
               <AnimateIn delay={0}>
                 <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-                  <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+                  <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
                   {career.kicker}
                 </span>
               </AnimateIn>
               <AnimateIn delay={80}>
-                <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/85 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+                <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
                   {career.title}
                 </h2>
               </AnimateIn>
@@ -799,10 +817,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
                     <LocaleLink
                       href="/careers"
-                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:shadow-[0_24px_48px_-24px_rgba(245,158,11,0.14)]"
+                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/40 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.14)]"
                     >
                       <div
-                        className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-amber-400/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
+                        className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[#B89D5E]/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
                         aria-hidden
                       />
                       <span className="relative inline-flex min-w-[2.25rem] items-center justify-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white">
@@ -838,16 +856,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-amber-50/30 via-transparent to-transparent" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#B89D5E]/8 via-transparent to-transparent" aria-hidden />
           <div
-            className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-amber-400/12 blur-3xl"
+            className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-[#B89D5E]/12 blur-3xl"
             aria-hidden
           />
           <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
             <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
               {/* Left - CTA */}
               <div>
-                <h2 id="cta-heading" className="bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/80 bg-clip-text font-display text-3xl font-bold leading-[1.15] text-transparent md:text-4xl lg:text-[2.75rem]">
+                <h2 id="cta-heading" className="bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold leading-[1.15] text-transparent md:text-4xl lg:text-[2.75rem]">
                   {cta.title}
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-neutral-600">
@@ -908,14 +926,14 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                         <svg className="h-4 w-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                       </a>
                     </div>
-                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900">
+                    <a href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania" target="_blank" rel="noreferrer" className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900">
                       <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
                         <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                       </span>
-                      Rruga Donika Kastrioti, Bllok, Tiranë
+                      Rruga Donika Kastrioti, Tiranë - Albania
                     </a>
                   </div>
                   <div className="mt-6 flex gap-3">

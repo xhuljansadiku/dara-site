@@ -72,7 +72,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Kalendar mujor dhe aprovim me ju",
         "Publikim dhe raportim të rregullt me përmirësime",
       ],
-      priceNote: "Çmimi varet nga numri i platformave, frekuenca e postimeve dhe nevoja për krijim kreativ. Oferta të personalizuar sipas buxhetit.",
+      priceNote:
+        "Çmimi varet nga numri i platformave, frekuenca e postimeve dhe nevoja për krijim kreativ.\nOferta të personalizuar sipas buxhetit.",
     },
     en: {
       whatIncluded: [
@@ -98,7 +99,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monthly calendar and approval with you",
         "Regular publishing and reporting with ongoing improvements",
       ],
-      priceNote: "Price depends on number of platforms, posting frequency and creative production needs. Tailored quotes based on your budget.",
+      priceNote:
+        "Price depends on number of platforms, posting frequency and creative production needs.\nTailored quotes based on your budget.",
     },
     de: {
       whatIncluded: [
@@ -124,7 +126,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monatlicher Kalender und Freigabe mit Ihnen",
         "Regelmäßige Veröffentlichung und Reporting mit Anpassungen",
       ],
-      priceNote: "Der Preis hängt von Kanälen, Posting-Frequenz und Kreativumfang ab. Individuelle Angebote nach Budget.",
+      priceNote:
+        "Der Preis hängt von Kanälen, Posting-Frequenz und Kreativumfang ab.\nIndividuelle Angebote nach Budget.",
     },
   },
   content: {
@@ -229,7 +232,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Draft strategjie dhe prezantim",
         "Përfundim dhe dorëzim i dokumentit + sesion pyetje-përgjigje",
       ],
-      priceNote: "Çmimi për strategji të plotë. Oferta të shkurtra (quick audit) sipas kërkesës.",
+      priceNote: "Çmimi për strategji të plotë.\nOferta të shkurtra (quick audit) sipas kërkesës.",
     },
     en: {
       whatIncluded: [
@@ -255,7 +258,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Strategy draft and presentation",
         "Final document and handover plus Q&A session",
       ],
-      priceNote: "Price for full strategy. Short audits (quick audit) available on request.",
+      priceNote: "Price for full strategy.\nShort audits (quick audit) available on request.",
     },
     de: {
       whatIncluded: [
@@ -281,7 +284,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Strategie-Entwurf und Präsentation",
         "Finales Dokument, Übergabe und Q&A",
       ],
-      priceNote: "Preis für vollständige Strategie. Kurze Audits auf Anfrage.",
+      priceNote: "Preis für vollständige Strategie.\nKurze Audits auf Anfrage.",
     },
   },
   branding: {
@@ -386,7 +389,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Lansim dhe monitorim ditor",
         "Raportim mujor dhe përshtatje strategjie",
       ],
-      priceNote: "Çmimi i shërbimit nuk përfshin buxhetin e reklamës (Meta/Google). Buxheti vendoset nga ju dhe menaxhohet nga ne.",
+      priceNote:
+        "Çmimi i shërbimit nuk përfshin buxhetin e reklamës (Meta/Google).\nBuxheti vendoset nga ju dhe menaxhohet nga ne.",
     },
     en: {
       whatIncluded: [
@@ -412,7 +416,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Launch and daily monitoring",
         "Monthly reporting and strategy adjustments",
       ],
-      priceNote: "Service fee does not include ad spend (Meta/Google). You set the budget; we manage it.",
+      priceNote:
+        "Service fee does not include ad spend (Meta/Google).\nYou set the budget; we manage it.",
     },
     de: {
       whatIncluded: [
@@ -438,7 +443,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Launch und tägliches Monitoring",
         "Monatliches Reporting und Anpassungen",
       ],
-      priceNote: "Die Leistungsgebühr enthält nicht das Media-Budget (Meta/Google). Sie legen das Budget fest, wir verwalten es.",
+      priceNote:
+        "Die Leistungsgebühr enthält nicht das Media-Budget (Meta/Google).\nSie legen das Budget fest, wir verwalten es.",
     },
   },
   consulting: {
@@ -598,81 +604,84 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
   "website-landing": {
     sq: {
       whatIncluded: [
-        "Krijim faqe interneti: landing page një-faqe ose website me disa faqe",
-        "Web design modern, i përshtatshëm për mobile dhe SEO",
-        "Dizajn faqe interneti profesionale për kompani, klinika, restorante, ndërtim",
-        "Forma kontakt, butona CTA dhe integrim me rrjetet sociale",
-        "Hosting dhe mbështetje teknike sipas marrëveshjes",
+        "Landing page ose website shumëfaqëshe, me strukturë të qartë për qëllime dhe konvertim",
+        "Dizajn modern, responsive dhe performancë e mirë në mobile dhe desktop",
+        "Bazë SEO teknike, forma kontaktësh dhe thirrje në veprim (CTA) të definuara",
+        "Përputhje me identitetin vizual të brand-it dhe integrim me kanalet tuaja digitale",
+        "Hosting, mbështetje teknike dhe (opsionale) mirëmbajtje pas lansimit",
       ],
       whoIsItFor: [
-        "Biznese në Shqipëri që nuk kanë ende website ose kanë nevojë për një të ri",
-        "Kompani që duan website profesionale për prezencë online",
-        "Restorante, klinika, ndërtim – secila industri me nevojë të vet",
+        "Kompani dhe profesionistë në Shqipëri që duan një prezencë online të besueshme dhe të përditësuar",
+        "Biznese që lançojnë fushata dhe duan një landing page të fokusuar për lead-e",
+        "Shërbime B2B, mirëqenie, gastronomi dhe ndërtim që duan një faqe të qartë prezantuese",
       ],
       benefits: [
-        "Website profesionale që konverton vizitorët në klientë",
-        "Ndërtim website i shpejtë dhe i përballueshëm – nga landing te faqe me shumë seksione",
-        "Agjenci që kupton si web design ashtu edhe marketing digjital",
+        "Një website që komunikon vlerën e ofertës dhe e udhëheq vizitorin drejt kontaktit",
+        "Shpejtësi në dorëzim dhe çmime të strukturuara sipas kompleksitetit të projektit",
+        "Ekip që bashkon web design, UX dhe marketing digjital në një proces të vetëm",
       ],
       howWeWork: [
-        "Bisedë për qëllimet, audiencën dhe përmbajtjen e dëshiruar",
-        "Propozime strukturë dhe dizajn (wireframe / mockup)",
-        "Zhvillim dhe testim – website i gatshëm për lansim",
-        "Lansim dhe (opsional) mirembajtje website",
+        "Takim fillestar për objektiva, audiencë dhe përmbajtje",
+        "Propozim strukture dhe dizajni (wireframe / mockup) për aprovim",
+        "Zhvillim, test dhe përmirësime përpara lansimit publik",
+        "Lansim, matje bazë dhe (opsionale) paketë mirëmbajtjeje",
       ],
-      priceNote: "Landing page nga 500€; website biznesi nga 1.000€; website premium për kompani nga 2.000€. Oferta e personalizuar pas diskutimit.",
+      priceNote:
+        "Landing page nga 500€;\nWebsite biznesi nga 1.000€;\nWebsite premium për kompani nga 2.000€.\nOfertë e personalizuar pas një takimi konsultativ.",
     },
     en: {
       whatIncluded: [
-        "Single landing page for campaigns or offers",
-        "Informational or showcase website (company, services, contact)",
-        "Mobile-friendly design and basic SEO",
-        "Contact forms, CTAs and social integration",
-        "Hosting and support as agreed",
+        "Landing page or multi-page site with a clear structure for goals and conversion",
+        "Modern responsive design with strong performance on mobile and desktop",
+        "Technical SEO foundation, contact forms and defined calls to action (CTAs)",
+        "Alignment with your visual identity and integration with your digital channels",
+        "Hosting, technical support and (optional) maintenance after launch",
       ],
       whoIsItFor: [
-        "Businesses that don't have a website yet or need a new one",
-        "Brands that want a landing page for ads or leads",
-        "Professionals who need a simple, professional online presence",
+        "Companies and professionals who need a credible, up-to-date online presence",
+        "Businesses running campaigns that need a focused landing page for leads",
+        "B2B, services, healthcare, hospitality and construction sectors that need a clear showcase site",
       ],
       benefits: [
-        "Professional online presence that converts",
-        "Fast and affordable , from landing to multi-page website",
-        "A partner who understands marketing, not just code",
+        "A site that communicates your offer clearly and guides visitors toward contact",
+        "Predictable delivery and pricing tiers matched to project complexity",
+        "A team that combines web design, UX and digital marketing in one process",
       ],
       howWeWork: [
-        "Discussion of goals, audience and content",
-        "Structure and design proposals (wireframe/mockup)",
-        "Development and testing",
-        "Launch and (optional) support",
+        "Kickoff on objectives, audience and content",
+        "Structure and design proposal (wireframe/mockup) for approval",
+        "Build, QA and refinements before public launch",
+        "Launch, baseline tracking and (optional) maintenance package",
       ],
-      priceNote: "Landing Page from €500; Business Website from €1,000; Premium Website from €2,000. Quote after discussing your needs.",
+      priceNote:
+        "Landing page from €500;\nBusiness website from €1,000;\nPremium corporate site from €2,000.\nCustom quote after a consultation.",
     },
     de: {
       whatIncluded: [
-        "Einzelseite (Landing) für Kampagnen oder Aktionen",
-        "Informative oder Präsentations-Website (Unternehmen, Leistungen, Kontakt)",
-        "Mobile-optimiertes Design und Basis-SEO",
-        "Kontaktformulare, CTAs und Social-Integration",
-        "Hosting und Support nach Vereinbarung",
+        "Landingpage oder mehrseitige Website mit klarer Struktur für Ziele und Conversion",
+        "Modernes, responsives Design mit guter Performance auf Mobile und Desktop",
+        "Technische SEO-Basis, Kontaktformulare und definierte Calls-to-Action (CTAs)",
+        "Abstimmung mit Ihrer visuellen Identität und Anbindung an Ihre digitalen Kanäle",
+        "Hosting, technischer Support und (optional) Wartung nach dem Launch",
       ],
       whoIsItFor: [
-        "Unternehmen ohne Website oder mit Bedarf an einer neuen",
-        "Marken, die eine Landingpage für Ads oder Leads brauchen",
-        "Profis, die einen einfachen, professionellen Internetauftritt wollen",
+        "Unternehmen und Selbstständige, die einen glaubwürdigen, aktuellen Auftritt brauchen",
+        "Marken mit Kampagnen, die eine fokussierte Landingpage für Leads benötigen",
+        "B2B, Dienstleistung, Gesundheit, Gastgewerbe und Bau mit Bedarf an einer klaren Showcase-Site",
       ],
       benefits: [
-        "Professioneller Internetauftritt, der konvertiert",
-        "Schnell und bezahlbar , von Landing bis Mehrseiter",
-        "Ein Partner, der auch Marketing versteht , nicht nur Code",
+        "Eine Site, die Ihr Angebot klar macht und Besucher zum Kontakt führt",
+        "Planbare Umsetzung und Preisstufen passend zur Komplexität",
+        "Ein Team, das Webdesign, UX und digitales Marketing in einem Prozess verbindet",
       ],
       howWeWork: [
-        "Gespräch zu Zielen, Zielgruppe und Inhalten",
-        "Struktur- und Design-Vorschläge (Wireframe/Mockup)",
-        "Entwicklung und Test",
-        "Launch und optional Support",
+        "Kick-off zu Zielen, Zielgruppe und Inhalten",
+        "Struktur- und Designvorschlag (Wireframe/Mockup) zur Freigabe",
+        "Entwicklung, QA und Feinschliff vor dem Go-live",
+        "Launch, Basis-Tracking und (optional) Wartungspaket",
       ],
-      priceNote: "Landing Page ab 500€; Business Website ab 1.000€; Premium Website ab 2.000€. Angebot nach Bedarfsgespräch.",
+      priceNote:
+        "Landingpage ab 500€;\nBusiness-Website ab 1.000€;\nPremium-Website ab 2.000€.\nIndividuelles Angebot nach einem Beratungsgespräch.",
     },
   },
   ecommerce: {
@@ -700,7 +709,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim webshop, testim dhe integrim pagesash",
         "Lansim dhe mbështetje – mirembajtje website sipas nevojës",
       ],
-      priceNote: "Krijim webshop bazë nga 1.000€; standard nga 2.000€; premium nga 4.000€. Oferta e personalizuar pas diskutimit.",
+      priceNote:
+        "Krijim webshop bazë nga 1.000€;\nstandard nga 2.000€;\npremium nga 4.000€.\nOferta e personalizuar pas diskutimit.",
     },
     en: {
       whatIncluded: [
@@ -726,7 +736,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Development, testing and payment integration",
         "Launch and ongoing support",
       ],
-      priceNote: "Basic Shop from €1,000; Standard Shop from €2,000; Premium Shop from €4,000. Quote after discussion.",
+      priceNote:
+        "Basic Shop from €1,000;\nStandard Shop from €2,000;\nPremium Shop from €4,000.\nQuote after discussion.",
     },
     de: {
       whatIncluded: [
@@ -752,7 +763,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung, Test und Zahlungsintegration",
         "Launch und laufender Support",
       ],
-      priceNote: "Basic Shop ab 1.000€; Standard Shop ab 2.000€; Premium Shop ab 4.000€. Angebot nach Gespräch.",
+      priceNote:
+        "Basic Shop ab 1.000€;\nStandard Shop ab 2.000€;\nPremium Shop ab 4.000€.\nAngebot nach Gespräch.",
     },
   },
   saas: {
@@ -780,7 +792,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Zhvillim në faza, testim dhe përsëritje",
         "Lansim dhe mbështetje / evolucion i vazhdueshëm",
       ],
-      priceNote: "MVP nga 4,000€; Growth nga 8,000€; Enterprise ofertë e personalizuar. Oferta pas workshop fillestar.",
+      priceNote:
+        "MVP nga 4,000€;\nGrowth nga 8,000€;\nEnterprise ofertë e personalizuar.\nOferta pas workshop fillestar.",
     },
     en: {
       whatIncluded: [
@@ -806,7 +819,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Phased development, testing and iteration",
         "Launch and ongoing support / evolution",
       ],
-      priceNote: "MVP from €4,000; Growth from €8,000; Enterprise custom quote. Quote after initial workshop.",
+      priceNote:
+        "MVP from €4,000;\nGrowth from €8,000;\nEnterprise custom quote.\nQuote after initial workshop.",
     },
     de: {
       whatIncluded: [
@@ -832,7 +846,8 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Entwicklung in Phasen, Test und Iteration",
         "Launch und laufender Support / Weiterentwicklung",
       ],
-      priceNote: "MVP ab 4.000€; Growth ab 8.000€; Enterprise individuelles Angebot. Angebot nach erstem Workshop.",
+      priceNote:
+        "MVP ab 4.000€;\nGrowth ab 8.000€;\nEnterprise individuelles Angebot.\nAngebot nach erstem Workshop.",
     },
   },
   maintenance: {
@@ -860,7 +875,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Raportim mujor dhe rekomandime për optimizime",
         "Support i vazhdueshëm për çdo problem ose nevojë",
       ],
-      priceNote: "Mirembajtje website nga 100€/muaj. Optimizime dhe projekte më të mëdha sipas nevojës.",
+      priceNote: "Mirembajtje website nga 100€/muaj.\nOptimizime dhe projekte më të mëdha sipas nevojës.",
     },
     en: {
       whatIncluded: [
@@ -886,7 +901,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monthly reporting and optimization recommendations",
         "Ongoing support for any issue or need",
       ],
-      priceNote: "From €120/month for basic maintenance. Optimizations and larger projects as needed.",
+      priceNote: "From €120/month for basic maintenance.\nOptimizations and larger projects as needed.",
     },
     de: {
       whatIncluded: [
@@ -912,7 +927,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Monatliche Berichte und Optimierungsempfehlungen",
         "Laufender Support bei jedem Problem oder Bedarf",
       ],
-      priceNote: "Ab 120€/Monat für Basis-Wartung. Optimierungen und größere Projekte nach Bedarf.",
+      priceNote: "Ab 120€/Monat für Basis-Wartung.\nOptimierungen und größere Projekte nach Bedarf.",
     },
   },
 };

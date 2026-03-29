@@ -20,9 +20,9 @@ export default function HomeServicesStrip({ items }: Props) {
             <LocaleLink
               key={item.slug}
               href={`/services/${item.slug}`}
-              className="group inline-flex max-w-full items-baseline gap-1.5 rounded-md px-1 py-0.5 text-gray-600 transition-colors hover:bg-[#c8a55c]/10 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]/50 md:px-2 md:py-1"
+              className="group inline-flex max-w-full items-baseline gap-1.5 rounded-md px-1 py-0.5 text-gray-600 transition-colors hover:bg-[#B89D5E]/10 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B89D5E]/50 md:px-2 md:py-1"
             >
-              <span className="font-mono text-[10px] font-semibold tabular-nums text-[#b89550] group-hover:text-[#8a6d32] sm:text-[11px]">
+              <span className="font-mono text-[10px] font-semibold tabular-nums text-[#b89550] group-hover:text-[#6b5a38] sm:text-[11px]">
                 {String(item.num).padStart(2, "0")}
               </span>
               <span className="text-[13px] font-medium leading-snug text-gray-800 group-hover:text-gray-950 sm:text-sm">

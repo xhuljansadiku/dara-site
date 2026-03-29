@@ -40,7 +40,7 @@ export default function TrainingsPage({ params }: Props) {
   return (
     <>
       <section className="relative overflow-hidden py-12 md:py-16">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.1)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(184,157,94,0.1)_0%,transparent_60%)]" />
         <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">

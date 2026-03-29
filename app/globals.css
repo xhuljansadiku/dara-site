@@ -2,8 +2,10 @@
 
 /* Light theme - white background, dark text */
 @theme {
-  --color-dara-gold: #171717;
-  --color-dara-gold-dark: #262626;
+  /* Logo gold – not orange */
+  --color-dara-gold: #b89d5e;
+  --color-dara-gold-dark: #6b5a38;
+  --color-dara-gold-muted: #8a7344;
   --color-dara-bg: #ffffff;
   /* Typography */
   --font-display: "Oswald", sans-serif;
@@ -13,8 +15,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --accent: #171717;
-  --accent-hover: #262626;
+  --accent: #b89d5e;
+  --accent-hover: #9a8a52;
 }
 
 html {
@@ -51,6 +53,7 @@ html {
 .animate-fade-in-up-delay-2 { animation-delay: 0.2s; }
 .animate-fade-in-up-delay-3 { animation-delay: 0.3s; }
 .animate-fade-in-up-delay-4 { animation-delay: 0.4s; }
+.animate-fade-in-up-delay-5 { animation-delay: 0.5s; }
 
 /* Contact form select: white accent */
 select option:checked,
@@ -91,5 +94,79 @@ select option:hover {
 }
 .animate-marquee {
   animation: marquee 25s linear infinite;
+}
+
+/* Services tab CTA — slow soft gold glow pulse */
+@keyframes services-cta-gold-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 28px -14px rgba(0, 0, 0, 0.45),
+      0 0 20px -6px rgba(184, 157, 94, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 12px 32px -12px rgba(0, 0, 0, 0.5),
+      0 0 36px 0 rgba(184, 157, 94, 0.45);
+  }
+}
+.animate-services-cta-glow {
+  animation: services-cta-gold-glow 3.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-services-cta-glow {
+    animation: none;
+    box-shadow:
+      0 10px 28px -14px rgba(0, 0, 0, 0.45),
+      0 0 24px -4px rgba(184, 157, 94, 0.3);
+  }
+}
+
+/* Packages block: tab switch — fade + slide up */
+@keyframes packages-tab-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-packages-tab-enter {
+  animation: packages-tab-enter 0.48s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-packages-tab-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Package card list — checkmark pop (stagger via animation-delay) */
+@keyframes package-check-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.14);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-package-check-pop {
+  animation: package-check-pop 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-package-check-pop {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 

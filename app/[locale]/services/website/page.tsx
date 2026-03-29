@@ -142,13 +142,13 @@ export default function WebsiteServicesPage({ params }: Props) {
           aria-hidden
         />
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/12 blur-3xl" />
-          <div className="absolute right-[-20%] top-1/3 h-72 w-72 rounded-full bg-amber-100/40 blur-3xl" />
+          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#B89D5E]/12 blur-3xl" />
+          <div className="absolute right-[-20%] top-1/3 h-72 w-72 rounded-full bg-[#B89D5E]/12 blur-3xl" />
           <div className="absolute bottom-0 left-[-10%] h-56 w-56 rounded-full bg-stone-200/50 blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <span className="inline-flex items-center rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#8a6d32]">
+          <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-[#B89D5E]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#6b5a38]">
             {hero.kicker}
           </span>
           <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-neutral-950 md:text-5xl lg:text-6xl">
@@ -176,17 +176,17 @@ export default function WebsiteServicesPage({ params }: Props) {
 
       {/* SERVICES GRID */}
       <section className="relative py-14 md:py-20">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(200,165,92,0.08)_0%,transparent_55%)]" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(184,157,94,0.08)_0%,transparent_55%)]" aria-hidden />
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 max-w-2xl md:mb-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d32]">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">
               {sectionIntro.kicker}
             </p>
             <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-neutral-950 md:text-3xl">
               {sectionIntro.title}
             </h2>
-            <div className="mt-4 h-px w-16 rounded-full bg-gradient-to-r from-[#c8a55c] to-transparent" />
+            <div className="mt-4 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 md:gap-8">
@@ -200,7 +200,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                 <AnimateIn key={slug} delay={idx * 80}>
                   <LocaleLink
                     href={`/services/${slug}`}
-                    className="group flex flex-col overflow-hidden rounded-3xl border border-stone-200/90 bg-white shadow-sm ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c8a55c]/35 hover:shadow-xl hover:ring-[#c8a55c]/15 md:flex-row"
+                    className="group flex flex-col overflow-hidden rounded-3xl border border-stone-200/90 bg-white shadow-sm ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#B89D5E]/35 hover:shadow-xl hover:ring-[#B89D5E]/15 md:flex-row"
                   >
                     <div
                       className={`relative h-48 w-full shrink-0 overflow-hidden md:h-auto md:min-h-[220px] md:w-72 ${
@@ -216,7 +216,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/25 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-neutral-950/10" />
                       <span
-                        className={`absolute left-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/95 text-xs font-semibold tabular-nums text-[#8a6d32] shadow-sm ring-1 ring-stone-200/80 ${
+                        className={`absolute left-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/95 text-xs font-semibold tabular-nums text-[#6b5a38] shadow-sm ring-1 ring-stone-200/80 ${
                           isImageLeft ? "md:left-4" : "md:right-4 md:left-auto"
                         }`}
                       >
@@ -228,7 +228,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                         isImageLeft ? "md:order-2" : "md:order-1"
                       }`}
                     >
-                      <h3 className="text-xl font-semibold tracking-tight text-neutral-950 transition-colors group-hover:text-[#c8a55c]">
+                      <h3 className="text-xl font-semibold tracking-tight text-neutral-950 transition-colors group-hover:text-[#B89D5E]">
                         {service.title}
                       </h3>
                       <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-600">
@@ -237,7 +237,7 @@ export default function WebsiteServicesPage({ params }: Props) {
                       {service.price && (
                         <p className="mt-3 text-sm font-medium text-neutral-900">{service.price}</p>
                       )}
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#8a6d32] transition group-hover:gap-2">
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#6b5a38] transition group-hover:gap-2">
                         {locale === "sq"
                           ? "Lexo më shumë"
                           : locale === "de"

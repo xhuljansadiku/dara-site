@@ -39,17 +39,17 @@ export default function RootPage() {
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/75 via-black/55 to-black/80" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(200,165,92,0.15),transparent)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(184,157,94,0.15),transparent)]"
         aria-hidden
       />
-      <div className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-72 w-72 rounded-full bg-[#c8a55c]/10 blur-[100px]" aria-hidden />
+      <div className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-[100px]" aria-hidden />
       <div className="pointer-events-none absolute -right-32 bottom-1/4 -z-10 h-64 w-64 rounded-full bg-white/5 blur-[90px]" aria-hidden />
 
       {/* Content card */}
       <div className="relative w-full max-w-lg animate-fade-in-up">
         <div className="rounded-[2rem] border border-white/[0.12] bg-white/[0.07] p-8 shadow-[0_25px_80px_-12px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.06] backdrop-blur-2xl sm:p-10 md:p-12">
           <div className="text-center">
-            <p className="font-display text-[10px] font-semibold uppercase tracking-[0.45em] text-[#c8a55c]/90 sm:text-xs">
+            <p className="font-display text-[10px] font-semibold uppercase tracking-[0.45em] text-[#B89D5E]/90 sm:text-xs">
               Marketing Agency
             </p>
             <h1 className="font-display mt-3 bg-gradient-to-b from-white via-white to-white/75 bg-clip-text text-5xl font-bold tracking-[-0.02em] text-transparent sm:text-6xl md:text-7xl">
@@ -75,9 +75,9 @@ export default function RootPage() {
               <Link
                 key={locale}
                 href={`/${locale}`}
-                className="group relative flex min-h-[52px] flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl border border-white/[0.14] bg-white/[0.06] px-6 py-3.5 text-[15px] font-semibold text-white/95 shadow-inner shadow-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c8a55c]/45 hover:bg-white/[0.12] hover:shadow-[0_12px_40px_-8px_rgba(200,165,92,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8a55c]"
+                className="group relative flex min-h-[52px] flex-1 items-center justify-center gap-2 overflow-hidden rounded-2xl border border-white/[0.14] bg-white/[0.06] px-6 py-3.5 text-[15px] font-semibold text-white/95 shadow-inner shadow-white/[0.04] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#B89D5E]/45 hover:bg-white/[0.12] hover:shadow-[0_12px_40px_-8px_rgba(184,157,94,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B89D5E]"
               >
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#c8a55c]/80 transition group-hover:text-[#c8a55c]">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B89D5E]/80 transition group-hover:text-[#B89D5E]">
                   {locale}
                 </span>
                 <span className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
@@ -101,7 +101,7 @@ export default function RootPage() {
 
         {/* Team teaser (lidhje me faqen Ekipi) */}
         <div className="mt-10 w-full max-w-lg rounded-2xl border border-white/[0.1] bg-white/[0.05] p-6 backdrop-blur-md sm:p-7">
-          <p className="text-center font-display text-[10px] font-semibold uppercase tracking-[0.35em] text-[#c8a55c]/90">
+          <p className="text-center font-display text-[10px] font-semibold uppercase tracking-[0.35em] text-[#B89D5E]/90">
             Team
           </p>
           <h2 className="mt-3 text-center font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
@@ -113,10 +113,10 @@ export default function RootPage() {
           <div className="mt-5 flex justify-center">
             <Link
               href={`/${defaultLocale}/team`}
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.18] bg-white/[0.08] px-6 py-3 text-sm font-semibold text-white transition hover:border-[#c8a55c]/50 hover:bg-white/[0.12]"
+              className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.18] bg-white/[0.08] px-6 py-3 text-sm font-semibold text-white transition hover:border-[#B89D5E]/50 hover:bg-white/[0.12]"
             >
               Shiko ekipin
-              <svg className="h-4 w-4 text-[#c8a55c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <svg className="h-4 w-4 text-[#B89D5E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>

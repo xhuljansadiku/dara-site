@@ -105,6 +105,24 @@ const FOOTER_BY_LOCALE: Record<
   },
 };
 
+/** Pas çdo pike ose dypikëje kalon në rresht të ri; fjalia e parë: bold + gold brand. */
+function FooterDescription({ text }: { text: string }) {
+  const parts = text.split(/(?<=[.:])\s+/).filter((p) => p.trim().length > 0);
+  if (parts.length <= 1) {
+    return <>{text}</>;
+  }
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i} className={i === 0 ? "font-semibold text-[#B89D5E]" : ""}>
+          {part.trim()}
+          {i < parts.length - 1 ? <br /> : null}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export default function Footer({ locale }: { locale: string }) {
   const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const t = FOOTER_BY_LOCALE[currentLocale] ?? FOOTER_BY_LOCALE.en;
@@ -131,7 +149,9 @@ export default function Footer({ locale }: { locale: string }) {
             />
             <p className="mt-3 text-base font-medium text-gray-400">{t.tagline}</p>
             <div className="mt-2 h-px w-12 bg-gray-600" aria-hidden />
-            <p className="mt-4 text-base leading-relaxed text-gray-400 max-w-sm">{t.desc}</p>
+            <p className="mt-4 max-w-sm text-base leading-relaxed text-gray-400">
+              <FooterDescription text={t.desc} />
+            </p>
             
             {/* Social Media */}
             <div className="mt-8 pt-6 border-t border-gray-800">
@@ -350,12 +370,12 @@ export default function Footer({ locale }: { locale: string }) {
             <ul className="mb-8 space-y-3 text-base text-gray-400">
               <li>
                 <a
-                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Bllok,+Tirane,+Albania"
+                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania"
                   target="_blank"
                   rel="noreferrer"
                   className="transition-colors duration-200 hover:text-white"
                 >
-                  Rruga Donika Kastrioti, Bllok, Tiranë, Albania
+                  Rruga Donika Kastrioti, Tiranë - Albania
                 </a>
               </li>
             </ul>

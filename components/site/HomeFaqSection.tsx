@@ -42,7 +42,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-amber-400/10 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#B89D5E]/10 blur-3xl"
         aria-hidden
       />
 
@@ -56,11 +56,11 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
         >
           <div>
             <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+              <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               FAQ
             </span>
             <TitleTag
-              className={`mt-4 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-900/85 bg-clip-text font-display font-semibold tracking-tight text-transparent md:text-4xl lg:leading-[1.1] ${
+              className={`mt-4 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display font-semibold tracking-tight text-transparent md:text-4xl lg:leading-[1.1] ${
                 isPage
                   ? "text-4xl lg:text-[2.75rem]"
                   : "text-3xl lg:text-[2.65rem]"
@@ -73,7 +73,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
           {!isPage && (
             <LocaleLink
               href="/faq"
-              className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-amber-300/50 hover:bg-amber-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
+              className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm ring-1 ring-black/[0.04] transition hover:border-[#B89D5E]/50 hover:bg-[#B89D5E]/10/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950"
             >
               {viewAll}
               <span aria-hidden className="transition group-hover:translate-x-0.5">
@@ -91,7 +91,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                 key={i}
                 className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? "border-amber-300/50 bg-white shadow-[0_12px_40px_-24px_rgba(245,158,11,0.15)] ring-1 ring-amber-500/15"
+                    ? "border-[#B89D5E]/50 bg-white shadow-[0_12px_40px_-24px_rgba(184,157,94,0.15)] ring-1 ring-[#B89D5E]/15"
                     : "border-black/[0.06] bg-white/90 shadow-[0_4px_24px_-16px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.03] hover:border-neutral-300/80"
                 }`}
               >
@@ -105,7 +105,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                   <span
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition ${
                       isOpen
-                        ? "border-amber-300/60 bg-amber-50 text-neutral-950"
+                        ? "border-[#B89D5E]/60 bg-[#B89D5E]/10 text-neutral-950"
                         : "border-neutral-200 bg-neutral-50 text-neutral-600"
                     }`}
                   >

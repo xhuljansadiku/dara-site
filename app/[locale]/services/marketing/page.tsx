@@ -90,7 +90,7 @@ export default function MarketingServicesPage({ params }: Props) {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(200,165,92,0.12)_0%,transparent_60%)]" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(184,157,94,0.12)_0%,transparent_60%)]" aria-hidden />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {hero.kicker}
@@ -155,7 +155,7 @@ export default function MarketingServicesPage({ params }: Props) {
                       <span className="font-mono text-xs tabular-nums text-gray-500">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <h2 className="mt-1 text-xl font-semibold text-gray-900 group-hover:text-[#c8a55c] transition-colors">
+                      <h2 className="mt-1 text-xl font-semibold text-gray-900 group-hover:text-[#B89D5E] transition-colors">
                         {service.title}
                       </h2>
                       <p className="mt-2 line-clamp-2 text-sm text-gray-600">

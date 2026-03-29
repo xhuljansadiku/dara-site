@@ -36,7 +36,7 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
       <section id="work" className="py-12 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+          <div className="min-w-0 sm:flex-1">
             <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
               {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
             </p>
@@ -57,7 +57,7 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
                 </>
               )}
             </h2>
-            <p className="mt-3 max-w-xl text-sm text-gray-600">
+            <p className="mt-3 max-w-none text-sm text-gray-600">
               {locale === "sq"
                 ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
                 : locale === "de"

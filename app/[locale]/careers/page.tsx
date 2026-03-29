@@ -119,7 +119,7 @@ export default function CareersPage() {
   };
 
   const inputClass =
-    "h-12 w-full rounded-2xl border-2 border-stone-200 bg-white px-4 text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-[#c8a55c] focus:ring-2 focus:ring-[#c8a55c]/25";
+    "h-12 w-full rounded-2xl border-2 border-stone-200 bg-white px-4 text-neutral-900 placeholder:text-neutral-400 outline-none transition focus:border-[#B89D5E] focus:ring-2 focus:ring-[#B89D5E]/25";
 
   return (
     <>
@@ -135,12 +135,12 @@ export default function CareersPage() {
           aria-hidden
         />
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full bg-[#c8a55c]/12 blur-3xl" />
-          <div className="absolute right-[-15%] top-1/3 h-72 w-72 rounded-full bg-amber-100/40 blur-3xl" />
+          <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full bg-[#B89D5E]/12 blur-3xl" />
+          <div className="absolute right-[-15%] top-1/3 h-72 w-72 rounded-full bg-[#B89D5E]/12 blur-3xl" />
         </div>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#8a6d32]">
+            <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-[#B89D5E]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#6b5a38]">
               {copy.kicker}
             </span>
             <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-neutral-950 md:text-5xl lg:text-[3.5rem]">
@@ -149,29 +149,29 @@ export default function CareersPage() {
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-neutral-600">
               {copy.subtitle}
             </p>
-            <div className="mx-auto mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#c8a55c] to-transparent" />
+            <div className="mx-auto mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
           </div>
         </div>
       </section>
 
       {/* Main content */}
       <section className="relative py-16 md:py-24">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(200,165,92,0.08)_0%,transparent_55%)]" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(184,157,94,0.08)_0%,transparent_55%)]" aria-hidden />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           {/* Sidebar - Open positions */}
           <aside className="lg:col-span-4">
             <div className="sticky top-28 rounded-3xl border border-stone-200/90 bg-white p-6 shadow-sm ring-1 ring-black/[0.03] md:p-8">
-              <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8a6d32]">
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#6b5a38]">
                 {locale === "sq" ? "Pozicionet e hapura" : locale === "de" ? "Offene Stellen" : "Open positions"}
               </h3>
               <ul className="mt-8 space-y-3">
                 {roles.map((role, idx) => (
                   <li
                     key={role}
-                    className="flex items-center gap-4 rounded-2xl border border-stone-200/90 bg-stone-50/80 px-5 py-4 transition hover:border-[#c8a55c]/35 hover:bg-[#c8a55c]/5"
+                    className="flex items-center gap-4 rounded-2xl border border-stone-200/90 bg-stone-50/80 px-5 py-4 transition hover:border-[#B89D5E]/35 hover:bg-[#B89D5E]/5"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#c8a55c]/15 font-mono text-xs font-semibold tabular-nums text-[#8a6d32] ring-1 ring-[#c8a55c]/20">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#B89D5E]/15 font-mono text-xs font-semibold tabular-nums text-[#6b5a38] ring-1 ring-[#B89D5E]/20">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
                     <span className="font-medium text-neutral-900">{role}</span>
@@ -196,7 +196,7 @@ export default function CareersPage() {
                 aria-hidden
               />
               <div className="mb-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6d32]">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6b5a38]">
                   {locale === "sq" ? "Aplikim" : locale === "de" ? "Bewerbung" : "Application"}
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-950">
@@ -249,8 +249,8 @@ export default function CareersPage() {
                         key={role}
                         className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3.5 transition ${
                           formData.role === role
-                            ? "border-[#c8a55c]/50 bg-[#c8a55c]/10 ring-1 ring-[#c8a55c]/25"
-                            : "border-stone-200 bg-stone-50/80 hover:border-[#c8a55c]/35 hover:bg-[#c8a55c]/5"
+                            ? "border-[#B89D5E]/50 bg-[#B89D5E]/10 ring-1 ring-[#B89D5E]/25"
+                            : "border-stone-200 bg-stone-50/80 hover:border-[#B89D5E]/35 hover:bg-[#B89D5E]/5"
                         }`}
                       >
                         <input
@@ -262,7 +262,7 @@ export default function CareersPage() {
                           className="sr-only"
                           required
                         />
-                        <span className="font-mono text-xs tabular-nums text-[#c8a55c]">
+                        <span className="font-mono text-xs tabular-nums text-[#B89D5E]">
                           {String(roles.indexOf(role) + 1).padStart(2, "0")}
                         </span>
                         <span className="font-medium text-neutral-900">{role}</span>
@@ -278,8 +278,8 @@ export default function CareersPage() {
                     onClick={() => cvInputRef.current?.click()}
                     className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 transition ${
                       cvFile
-                        ? "border-[#c8a55c]/45 bg-[#c8a55c]/10"
-                        : "border-stone-200 bg-stone-50/80 hover:border-[#c8a55c]/40 hover:bg-[#c8a55c]/5"
+                        ? "border-[#B89D5E]/45 bg-[#B89D5E]/10"
+                        : "border-stone-200 bg-stone-50/80 hover:border-[#B89D5E]/40 hover:bg-[#B89D5E]/5"
                     }`}
                   >
                     <input
@@ -291,7 +291,7 @@ export default function CareersPage() {
                     />
                     {cvFile ? (
                       <>
-                        <svg className="h-12 w-12 text-[#8a6d32]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-12 w-12 text-[#6b5a38]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <p className="mt-3 font-medium text-neutral-900">{cvFile.name}</p>
@@ -304,7 +304,7 @@ export default function CareersPage() {
                       </>
                     ) : (
                       <>
-                        <svg className="h-12 w-12 text-[#c8a55c]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-12 w-12 text-[#B89D5E]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
                         <p className="mt-3 text-sm font-medium text-neutral-800">

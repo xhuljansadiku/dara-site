@@ -14,7 +14,7 @@ function Paragraph({ text }: { text: string }) {
           {i < parts.length - 1 && (
             <a
               href={`mailto:${LEGAL_CONTACT_EMAIL}`}
-              className="font-medium text-neutral-950 underline decoration-[#c8a55c]/60 underline-offset-2 transition hover:decoration-[#c8a55c]"
+              className="font-medium text-neutral-950 underline decoration-[#B89D5E]/60 underline-offset-2 transition hover:decoration-[#B89D5E]"
             >
               {LEGAL_CONTACT_EMAIL}
             </a>

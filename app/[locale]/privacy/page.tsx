@@ -46,22 +46,22 @@ export default async function PrivacyPage({
           aria-hidden
         />
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#c8a55c]/12 blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#B89D5E]/12 blur-3xl" />
         </div>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <span className="inline-flex items-center rounded-full border border-[#c8a55c]/30 bg-[#c8a55c]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d32]">
+          <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-[#B89D5E]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">
             {l === "sq" ? "Privatësi" : l === "de" ? "Datenschutz" : "Privacy"}
           </span>
           <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-950 md:text-5xl">
             {meta.h1}
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-relaxed text-neutral-600">{meta.intro}</p>
-          <div className="mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#c8a55c] to-transparent" />
+          <div className="mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
         </div>
       </section>
 
       <section className="relative py-12 md:py-16">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(200,165,92,0.06)_0%,transparent_50%)]" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(184,157,94,0.06)_0%,transparent_50%)]" aria-hidden />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <LegalDocumentBody sections={sections} />
         </div>

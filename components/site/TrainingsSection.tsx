@@ -120,7 +120,7 @@ const SECTION_COPY: Record<
     subtitle: "Ndiq trajnimet tona dhe zhvillo aftësi për karrierën tënde",
     learnDetails: "Mëso detajet",
     comingSoon: "Së shpejti",
-    registerNow: "Rregjistrohu tani",
+    registerNow: "Regjistrohu tani",
     statsIntro: "Rezultate të vërtetuara",
     studentsLabel: "studente",
     programsLabel: "programe",
@@ -193,13 +193,13 @@ export default function TrainingsSection({ locale }: Props) {
         <div className="mx-auto max-w-3xl text-center">
           <AnimateIn>
             <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              <span className="h-px w-8 bg-gradient-to-r from-amber-500/80 to-transparent" aria-hidden />
+              <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               {copy.kicker}
-              <span className="hidden h-px w-8 bg-gradient-to-l from-amber-500/80 to-transparent sm:block" aria-hidden />
+              <span className="hidden h-px w-8 bg-gradient-to-l from-[#B89D5E]/80 to-transparent sm:block" aria-hidden />
             </span>
           </AnimateIn>
           <AnimateIn delay={50}>
-            <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-amber-800/90 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+            <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
               {copy.title}
             </h2>
           </AnimateIn>
@@ -219,78 +219,108 @@ export default function TrainingsSection({ locale }: Props) {
                 <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.studentsLabel}</span>
               </div>
               <div className="flex min-w-[140px] flex-col items-center rounded-xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-black/[0.05] sm:min-w-[160px]">
-                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">4</span>
+                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">3</span>
                 <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.programsLabel}</span>
               </div>
             </div>
           </div>
         </AnimateIn>
 
-        {/* Training cards */}
-        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:gap-8">
+        {/* Training cards: equal height (grid stretch) + header block min-heights so list icons align across cards */}
+        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-1 lg:gap-6 xl:gap-8">
           {TRAININGS.map((training, idx) => {
             const isDisabled = training.comingSoon;
             return (
-              <AnimateIn key={training.slug} delay={idx * 80}>
+              <AnimateIn
+                key={training.slug}
+                delay={idx * 80}
+                className="flex h-full min-h-0 w-full min-w-0 flex-col self-stretch"
+              >
                 <div
-                  className={`group relative flex min-h-0 flex-col overflow-hidden rounded-3xl border transition-all duration-300 ease-out ${
+                  className={`group relative flex h-full min-h-0 w-full min-w-0 flex-col rounded-3xl border transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform ${
                     isDisabled
-                      ? "cursor-not-allowed border-neutral-200/90 bg-neutral-50/90 opacity-[0.92] ring-1 ring-black/[0.03]"
-                      : "border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] hover:-translate-y-1 hover:shadow-[0_24px_48px_-20px_rgba(245,158,11,0.14)]"
+                      ? "cursor-not-allowed overflow-hidden border-neutral-200/90 bg-neutral-50/90 opacity-[0.92] ring-1 ring-black/[0.03]"
+                      : "overflow-visible border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] hover:-translate-y-1.5 hover:shadow-[0_32px_64px_-28px_rgba(184,157,94,0.2),0_24px_48px_-28px_rgba(0,0,0,0.14)] motion-reduce:hover:translate-y-0"
                   }`}
                 >
                   <div
-                    className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-amber-400/15 via-transparent to-transparent blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-[#B89D5E]/15 via-transparent to-transparent blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     aria-hidden
                   />
                   {!isDisabled && (
                     <div
-                      className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-amber-500/80 to-transparent opacity-70"
+                      className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-0.5 rounded-t-3xl bg-gradient-to-r from-transparent via-[#B89D5E]/80 to-transparent opacity-70"
                       aria-hidden
                     />
                   )}
-                  <div className="relative flex flex-1 flex-col p-8 md:p-10">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white shadow-lg shadow-neutral-900/15">
-                        {training.price}
-                      </span>
-                      {isDisabled && (
-                        <span className="rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-500">
-                          {copy.comingSoon}
+                  <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-3xl p-8 md:p-10">
+                    {/* Fixed vertical rhythm above highlights so check icons start on the same row across cards */}
+                    <div className="shrink-0">
+                      <div className="flex min-h-[3.75rem] flex-wrap items-center gap-2">
+                        <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white shadow-lg shadow-neutral-900/15">
+                          {training.price}
                         </span>
-                      )}
-                      <span className="rounded-full border border-neutral-200/90 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-700">
-                        {training.duration[locale]}
-                      </span>
+                        {isDisabled && (
+                          <span className="rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-500">
+                            {copy.comingSoon}
+                          </span>
+                        )}
+                        <span className="rounded-full border border-neutral-200/90 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-700">
+                          {training.duration[locale]}
+                        </span>
+                      </div>
+                      <h3 className="mt-6 min-h-[5.25rem] text-xl font-semibold leading-snug tracking-tight text-neutral-950 line-clamp-3 md:min-h-[6rem] md:text-2xl">
+                        {training.title[locale]}
+                      </h3>
+                      <p className="mt-3 min-h-[4.75rem] text-[15px] leading-relaxed text-neutral-600 line-clamp-3">
+                        {training.shortDesc[locale]}
+                      </p>
                     </div>
-                    <h3 className="mt-6 text-xl font-semibold tracking-tight text-neutral-950 md:text-2xl">
-                      {training.title[locale]}
-                    </h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-neutral-600">
-                      {training.shortDesc[locale]}
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-6 border-t border-neutral-100 pt-6">
-                      {training.stats.map((stat, statIdx) => (
-                        <div key={`${training.slug}-stat-${statIdx}`} className="flex items-baseline gap-1.5">
-                          <span className="text-lg font-bold tabular-nums text-neutral-950">{stat.value}</span>
-                          <span className="text-xs font-medium text-neutral-500">{stat.label[locale]}</span>
-                        </div>
-                      ))}
+                    <div className="mt-5 flex min-h-0 flex-1 flex-col">
+                      <ul className="flex flex-col gap-2.5">
+                        {training.highlights[locale].map((item) => (
+                          <li key={item} className="flex gap-3 text-sm leading-snug text-neutral-700">
+                            <span
+                              className="flex h-5 w-5 shrink-0 items-center justify-center self-start rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"
+                              aria-hidden
+                            >
+                              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                            <span className="min-w-0 flex-1 pt-px">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-auto shrink-0 border-t border-neutral-100 pt-6">
+                      <div className="flex flex-wrap gap-6">
+                        {training.stats.map((stat, statIdx) => (
+                          <div key={`${training.slug}-stat-${statIdx}`} className="flex items-baseline gap-1.5">
+                            <span className="text-lg font-bold tabular-nums text-neutral-950">{stat.value}</span>
+                            <span className="text-xs font-medium text-neutral-500">{stat.label[locale]}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-8 shrink-0">
                       {isDisabled ? (
                         <span
-                          className="inline-flex h-11 cursor-not-allowed items-center justify-center rounded-2xl border border-dashed border-neutral-200 bg-neutral-100/80 px-6 text-sm font-medium text-neutral-400"
+                          className="inline-flex h-12 min-h-[48px] w-full cursor-not-allowed items-center justify-center rounded-2xl border border-dashed border-neutral-200 bg-neutral-100/80 px-8 py-3 text-sm font-medium text-neutral-400"
                           aria-disabled
                         >
                           {copy.comingSoon}
                         </span>
                       ) : (
                         <LocaleLink
-                          href={`/trainings/${training.slug}`}
-                          className="inline-flex h-11 items-center justify-center rounded-2xl bg-neutral-950 px-6 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800"
+                          href="/trainings/register"
+                          className="inline-flex h-12 min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-2xl bg-neutral-950 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-[background-color,box-shadow] duration-300 ease-out hover:bg-neutral-800 hover:shadow-lg hover:shadow-neutral-900/30"
                         >
-                          {copy.learnDetails} →
+                          {copy.registerNow}
                         </LocaleLink>
                       )}
                     </div>
@@ -305,7 +335,7 @@ export default function TrainingsSection({ locale }: Props) {
         <AnimateIn delay={150}>
           <div className="relative mt-20 overflow-hidden rounded-[1.75rem] bg-neutral-950 p-6 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:mt-24 md:rounded-[2rem] md:p-10">
             <div
-              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-500/12 blur-3xl"
+              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#B89D5E]/12 blur-3xl"
               aria-hidden
             />
             <div
@@ -320,7 +350,7 @@ export default function TrainingsSection({ locale }: Props) {
 
             <div className="relative mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-200/80">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/70">
                   {REVIEWS_COPY[locale].subtitle}
                 </span>
                 <h3 className="mt-2 font-display text-xl font-semibold text-white md:text-2xl">
@@ -353,14 +383,14 @@ export default function TrainingsSection({ locale }: Props) {
                     }`}
                   >
                     <div className="mx-auto max-w-2xl rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 ring-1 ring-black/5 transition md:p-8">
-                      <div className="flex items-center gap-2 text-amber-500">
-                        <span className="text-2xl leading-none text-amber-400/90">"</span>
+                      <div className="flex items-center gap-2 text-[#B89D5E]">
+                        <span className="text-2xl leading-none text-[#B89D5E]/90">"</span>
                         <span className="flex flex-shrink-0" aria-label={`${review.rating} stars`}>
                           {"★".repeat(review.rating)}
                         </span>
                       </div>
                       <div className="mt-4 flex items-center gap-3">
-                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white ring-2 ring-amber-500/30">
+                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white ring-2 ring-[#B89D5E]/30">
                           {review.firstName.charAt(0)}
                           {review.lastName?.charAt(0) ?? ""}
                         </div>
@@ -395,7 +425,7 @@ export default function TrainingsSection({ locale }: Props) {
                       aria-label={`${locale === "sq" ? "Shiko review" : locale === "de" ? "Bewertung anzeigen" : "View review"} ${idx + 1}`}
                       aria-current={idx === activeIndex ? "true" : undefined}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? "w-8 bg-amber-400" : "w-2 bg-white/25 hover:bg-white/40"
+                        idx === activeIndex ? "w-8 bg-[#B89D5E]" : "w-2 bg-white/25 hover:bg-white/40"
                       }`}
                     />
                   ))}
@@ -418,9 +448,9 @@ export default function TrainingsSection({ locale }: Props) {
         {/* CTA */}
         <AnimateIn delay={200}>
           <div className="mt-16 md:mt-20">
-            <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-gradient-to-br from-white via-amber-50/30 to-white p-8 shadow-[0_20px_60px_-30px_rgba(245,158,11,0.2)] ring-1 ring-amber-500/10 md:p-12">
+            <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-gradient-to-br from-white via-[#B89D5E]/8 to-white p-8 shadow-[0_20px_60px_-30px_rgba(184,157,94,0.2)] ring-1 ring-[#B89D5E]/10 md:p-12">
               <div
-                className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-amber-400/20 blur-3xl"
+                className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-[#B89D5E]/20 blur-3xl"
                 aria-hidden
               />
               <div className="relative flex flex-col items-center text-center">
