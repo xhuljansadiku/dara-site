@@ -27,6 +27,7 @@ export function isSmtpConfigured(): boolean {
 export async function sendLeadNotification(lead: {
   name: string;
   email: string;
+  phone?: string;
   company?: string;
   budget?: string;
   message: string;
@@ -40,6 +41,7 @@ export async function sendLeadNotification(lead: {
     <h2>Lead i ri nga faqja</h2>
     <p><strong>Emri:</strong> ${escapeHtml(lead.name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
+    ${lead.phone ? `<p><strong>Telefoni:</strong> ${escapeHtml(lead.phone)}</p>` : ""}
     ${lead.company ? `<p><strong>Biznesi:</strong> ${escapeHtml(lead.company)}</p>` : ""}
     ${lead.budget ? `<p><strong>Buxheti:</strong> ${escapeHtml(lead.budget)}</p>` : ""}
     <p><strong>Mesazhi:</strong></p>
@@ -48,11 +50,23 @@ export async function sendLeadNotification(lead: {
   `;
 
   try {
+    console.info("LEAD_EMAIL_ATTEMPT:", {
+      to: TO_EMAIL,
+      from: FROM_EMAIL,
+      subject: `[DARA] Lead i ri: ${lead.name}`,
+      hasPhone: Boolean(lead.phone),
+      hasCompany: Boolean(lead.company),
+      hasBudget: Boolean(lead.budget),
+    });
     await transporter.sendMail({
       from: FROM_EMAIL,
       to: TO_EMAIL,
       subject: `[DARA] Lead i ri: ${lead.name}`,
       html,
+    });
+    console.info("LEAD_EMAIL_SENT:", {
+      to: TO_EMAIL,
+      subject: `[DARA] Lead i ri: ${lead.name}`,
     });
     return { ok: true };
   } catch (err) {

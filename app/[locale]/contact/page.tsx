@@ -27,6 +27,7 @@ export default function ContactPage() {
   // Form data
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
     company: "",
     service: "",
@@ -48,6 +49,12 @@ export default function ContactPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  const selectedServiceSlugs = formData.service
+    .split(",")
+    .map((slug) => slug.trim())
+    .filter(Boolean);
+  const primaryService = selectedServiceSlugs[0] ?? "";
 
   const handleInputChange = (name: string, value: string) => {
     // For name field, only allow letters and spaces (no numbers or special characters)
@@ -72,10 +79,41 @@ export default function ContactPage() {
     }
   };
 
+  const toggleServiceSelection = (slug: string) => {
+    setFormData((prev) => {
+      const current = prev.service
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      const next = current.includes(slug) ? current.filter((item) => item !== slug) : [...current, slug];
+      let newBudget = prev.budget;
+
+      if (newBudget) {
+        const budgetIdx = BUDGET_OPTIONS[locale].indexOf(newBudget);
+        const maxMin = next.reduce((max, item) => {
+          const min = SERVICE_MIN_PRICE_EUR[item as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
+          return Math.max(max, min);
+        }, 0);
+        if (budgetIdx >= 0 && BUDGET_TIERS_EUR[budgetIdx] < maxMin) {
+          newBudget = "";
+        }
+      }
+
+      return {
+        ...prev,
+        service: next.join(","),
+        budget: newBudget,
+      };
+    });
+  };
+
   const getFilteredBudgetOptions = () => {
     const opts = BUDGET_OPTIONS[locale];
-    if (!formData.service) return opts;
-    const serviceMin = SERVICE_MIN_PRICE_EUR[formData.service as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
+    if (!selectedServiceSlugs.length) return opts;
+    const serviceMin = selectedServiceSlugs.reduce((max, slug) => {
+      const min = SERVICE_MIN_PRICE_EUR[slug as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
+      return Math.max(max, min);
+    }, 0);
     return opts.filter((_, i) => i === 0 || BUDGET_TIERS_EUR[i] >= serviceMin);
   };
 
@@ -98,9 +136,13 @@ export default function ContactPage() {
         setError(locale === "sq" ? "Plotëso një email të vlefshëm." : locale === "de" ? "Bitte geben Sie eine gültige E-Mail-Adresse ein." : "Please enter a valid email address.");
         return;
       }
+      if (!formData.phone.trim()) {
+        setError(locale === "sq" ? "Plotëso numrin e telefonit." : locale === "de" ? "Bitte geben Sie eine Telefonnummer ein." : "Please enter a phone number.");
+        return;
+      }
     }
     if (currentStep === 2) {
-      if (!formData.service) {
+      if (!selectedServiceSlugs.length) {
         setError(locale === "sq" ? "Zgjidh një shërbim." : locale === "de" ? "Bitte wählen Sie einen Service." : "Please select a service.");
         return;
       }
@@ -109,7 +151,7 @@ export default function ContactPage() {
     setIsNavigating(true);
     // Only increment by 1 step at a time
     if (currentStep < 5) {
-      const nextStep = (currentStep + 1) as Step;
+      const nextStep = (currentStep === 2 && shouldSkipDetailsStep ? 4 : currentStep + 1) as Step;
       setCurrentStep(nextStep);
       // Reset navigation flag after a short delay
       setTimeout(() => setIsNavigating(false), 300);
@@ -120,7 +162,10 @@ export default function ContactPage() {
 
   const handleBack = () => {
     if (currentStep > 1) {
-      setCurrentStep((prev) => (prev - 1) as Step);
+      setCurrentStep((prev) => {
+        if (prev === 4 && shouldSkipDetailsStep) return 2;
+        return (prev - 1) as Step;
+      });
       setError(null);
     }
   };
@@ -142,31 +187,35 @@ export default function ContactPage() {
     // Build message from form data
     let messageParts: string[] = [];
     
-    if (formData.service) {
-      const serviceIndex = SERVICE_SLUGS.indexOf(formData.service as any);
-      const serviceTitle = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex]?.title || formData.service;
+    if (selectedServiceSlugs.length) {
+      const serviceTitle = selectedServiceSlugs
+        .map((item) => {
+          const itemIndex = SERVICE_SLUGS.findIndex((serviceSlug) => serviceSlug === item);
+          return SERVICE_DETAILS_BY_LOCALE[locale]?.[itemIndex]?.title || item;
+        })
+        .join(", ");
       messageParts.push(`${locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}: ${serviceTitle}`);
     }
 
-    if (formData.service === "website-landing") {
+    if (primaryService === "website-landing") {
       if (formData.websiteType) messageParts.push(`${locale === "sq" ? "Lloji" : locale === "de" ? "Typ" : "Type"}: ${formData.websiteType}`);
       if (formData.websitePages) messageParts.push(`${locale === "sq" ? "Numri i faqeve" : locale === "de" ? "Anzahl Seiten" : "Number of pages"}: ${formData.websitePages}`);
       if (formData.websiteSEO) messageParts.push(`SEO: ${formData.websiteSEO}`);
       if (formData.websiteFeatures) messageParts.push(`${locale === "sq" ? "Funksione" : locale === "de" ? "Funktionen" : "Features"}: ${formData.websiteFeatures}`);
     }
 
-    if (formData.service === "ecommerce") {
+    if (primaryService === "ecommerce") {
       if (formData.ecommerceProducts) messageParts.push(`${locale === "sq" ? "Numri i produkteve" : locale === "de" ? "Anzahl Produkte" : "Number of products"}: ${formData.ecommerceProducts}`);
       if (formData.ecommercePayment) messageParts.push(`${locale === "sq" ? "Pagesa" : locale === "de" ? "Zahlung" : "Payment"}: ${formData.ecommercePayment}`);
       if (formData.ecommerceShipping) messageParts.push(`${locale === "sq" ? "Transport" : locale === "de" ? "Versand" : "Shipping"}: ${formData.ecommerceShipping}`);
     }
 
-    if (formData.service === "social-media") {
+    if (primaryService === "social-media") {
       if (formData.socialMediaPlatforms) messageParts.push(`${locale === "sq" ? "Platforma" : locale === "de" ? "Plattformen" : "Platforms"}: ${formData.socialMediaPlatforms}`);
       if (formData.socialMediaFrequency) messageParts.push(`${locale === "sq" ? "Frekuenca" : locale === "de" ? "Häufigkeit" : "Frequency"}: ${formData.socialMediaFrequency}`);
     }
 
-    if (formData.service && formData.service !== "website-landing" && formData.service !== "ecommerce" && formData.service !== "social-media") {
+    if (primaryService && primaryService !== "website-landing" && primaryService !== "ecommerce" && primaryService !== "social-media") {
       if (formData.otherServiceDetails) {
         messageParts.push(`${locale === "sq" ? "Detaje" : locale === "de" ? "Details" : "Details"}: ${formData.otherServiceDetails}`);
       }
@@ -182,6 +231,7 @@ export default function ContactPage() {
 
     const payload = {
       name: formData.name.trim(),
+      phone: formData.phone.trim(),
       email: formData.email.trim(),
       company: formData.company.trim(),
       budget: formData.budget.trim(),
@@ -232,26 +282,39 @@ export default function ContactPage() {
     }
   }
 
+  const serviceIndex = primaryService ? SERVICE_SLUGS.findIndex((slug) => slug === primaryService) : -1;
+  const selectedService = serviceIndex >= 0 ? SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex] : null;
+  const shouldSkipDetailsStep = selectedServiceSlugs.length > 1;
+  const stepTitles =
+    locale === "sq"
+      ? ["Profili", "Shërbimi", "Detajet", "Buxheti", "Konfirmimi"]
+      : locale === "de"
+      ? ["Profil", "Service", "Details", "Budget", "Bestätigung"]
+      : ["Profile", "Service", "Details", "Budget", "Review"];
+
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden py-14 md:py-20">
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#faf7f1_0%,#f5efe4_44%,#ffffff_100%)] py-16 md:py-24">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#B89D5E]/10 blur-3xl" />
-          <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+          <div className="absolute left-[10%] top-20 h-56 w-56 rounded-full bg-[#B89D5E]/16 blur-3xl" />
+          <div className="absolute right-[8%] top-10 h-64 w-64 rounded-full bg-[#0f172a]/8 blur-3xl" />
+          <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(90deg,rgba(184,157,94,0.12),transparent_35%,rgba(15,23,42,0.08))]" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-        <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center">
+        <div className="max-w-4xl text-center">
+        <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-white/75 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b5a38] backdrop-blur">
           {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
         </span>
-        <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+        <h1 className="mt-6 font-display text-4xl font-bold leading-[0.98] tracking-tight text-[#111827] md:text-6xl">
           {locale === "sq" ? (
             <>Le të flasim për <span className="text-gray-900">rritjen</span> tënde</>
           ) : locale === "de" ? (
             <>Lass uns über dein <span className="text-gray-900">Wachstum</span> sprechen</>
           ) : (
-            <>Let&apos;s talk about your <span className="text-gray-900">growth</span></>
+            <>Let&apos;s turn your request into a clear action plan.</>
           )}
         </h1>
         <p className="mt-4 mx-auto max-w-2xl text-lg text-gray-600">
@@ -261,20 +324,83 @@ export default function ContactPage() {
             ? "Senden Sie eine Nachricht und wir melden uns mit einem kurzen Plan: was wir tun, wie lange es dauert und welches Ergebnis wir anstreben."
             : "Send a message and we'll get back with a short plan: what we do, how long it takes and what result we aim for."}
         </p>
+        <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8b7355]">
+              {locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
+            </p>
+            <p className="mt-2 text-lg font-semibold text-[#111827]">
+              {locale === "sq" ? "Brenda 24 orëve" : locale === "de" ? "Innerhalb von 24 Std." : "Within 24h"}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8b7355]">
+              {locale === "sq" ? "Formati" : locale === "de" ? "Format" : "Format"}
+            </p>
+            <p className="mt-2 text-lg font-semibold text-[#111827]">
+              {locale === "sq" ? "5 hapa të shkurtër" : locale === "de" ? "5 kurze Schritte" : "5 short steps"}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8b7355]">
+              {locale === "sq" ? "Rezultati" : locale === "de" ? "Ergebnis" : "Outcome"}
+            </p>
+            <p className="mt-2 text-lg font-semibold text-[#111827]">
+              {locale === "sq" ? "Plan + ofertë" : locale === "de" ? "Plan + Angebot" : "Plan + quote"}
+            </p>
+          </div>
+        </div>
+        </div>
+        <div className="hidden">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d1b780]">
+            {locale === "sq" ? "Si punojmë" : locale === "de" ? "How we work" : "How we work"}
+          </p>
+          <div className="mt-5 space-y-4">
+            {[
+              locale === "sq"
+                ? "Ti zgjedh shërbimin dhe na jep kontekstin bazë."
+                : locale === "de"
+                ? "Sie wählen den Service und geben uns den Grundkontext."
+                : "You choose the service and give us the basic context.",
+              locale === "sq"
+                ? "Ne filtrojmë kërkesën dhe të kthehemi me drejtim konkret."
+                : locale === "de"
+                ? "Wir filtern die Anfrage und kommen mit klarer Richtung zurück."
+                : "We filter the request and come back with a concrete direction.",
+              locale === "sq"
+                ? "Nëse ka fit, vazhdojmë me call, ofertë ose audit."
+                : locale === "de"
+                ? "Wenn es passt, gehen wir weiter mit Call, Angebot oder Audit."
+                : "If it’s a fit, we move forward with a call, quote, or audit.",
+            ].map((item, index) => (
+              <div key={item} className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d1b780]/40 bg-[#d1b780]/10 text-sm font-semibold text-[#f2dfb8]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p className="text-sm leading-7 text-white/82">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        </div>
         </div>
       </section>
 
       {/* GRID */}
-      <section className="py-12 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-5">
+      <section className="relative pb-16 md:pb-24">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(184,157,94,0.12),transparent_42%)]" />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_360px]">
           {/* LEFT: Form */}
-          <div className="md:col-span-3">
-            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
-              <h2 className="text-xl font-semibold text-gray-900">
+          <div>
+            <div className="overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.35)]">
+              <div className="border-b border-stone-200/80 bg-[linear-gradient(135deg,#111827_0%,#1f2937_70%,#374151_100%)] px-6 py-6 text-white md:px-8">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-2xl">
+              <h2 className="text-xl font-semibold tracking-tight text-white md:text-3xl">
                 {locale === "sq" ? "Kërko ofertë" : locale === "de" ? "Angebot anfragen" : "Request quote"}
               </h2>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-2 text-sm leading-7 text-white/70">
                 {locale === "sq" 
                   ? "Plotëso detajet (1–2 min). (E-maili përdoret vetëm për kontakt.)"
                   : locale === "de"
@@ -282,25 +408,51 @@ export default function ContactPage() {
                   : "Fill in the details (1–2 min). (Email is used for contact only.)"}
               </p>
 
-              {/* Step Indicator */}
-              <div className="mt-6 flex items-center gap-2">
-                {[1, 2, 3, 4, 5].map((step) => (
-                  <div key={step} className="flex items-center gap-2">
-                    <div
-                      className={`h-2 flex-1 rounded-full transition ${
-                        currentStep >= step ? "bg-gray-900" : "bg-gray-200"
-                      }`}
-                    />
-                    {step < 5 && (
-                      <div className={`h-2 w-2 rounded-full transition ${
-                        currentStep > step ? "bg-gray-900" : "bg-gray-200"
-                      }`} />
-                    )}
-                  </div>
-                ))}
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">
+                    {locale === "sq" ? "Hapi aktiv" : locale === "de" ? "Aktiver Schritt" : "Current step"}
+                  </p>
+                  <p className="mt-1 text-lg font-semibold">{String(currentStep).padStart(2, "0")} / 05</p>
+                </div>
               </div>
 
-              <form onSubmit={onLeadSubmit} className="mt-6" onKeyDown={(e) => {
+              {/* Step Indicator */}
+              <div className="mt-6 grid gap-3 md:grid-cols-5">
+                {stepTitles.map((title, index) => {
+                  const stepNumber = index + 1;
+                  const isActive = currentStep === stepNumber;
+                  const isComplete = currentStep > stepNumber;
+                  const isDisabled = stepNumber === 3 && shouldSkipDetailsStep;
+                  return (
+                    <div
+                      key={title}
+                      className={`rounded-2xl border px-4 py-3 transition ${
+                        isDisabled
+                          ? "border-white/8 bg-white/[0.03] opacity-45"
+                          :
+                        isActive
+                          ? "border-[#d1b780]/50 bg-[#d1b780]/14"
+                          : isComplete
+                          ? "border-white/20 bg-white/8"
+                          : "border-white/10 bg-white/5"
+                      }`}
+                    >
+                      <p className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${isActive ? "text-[#f2dfb8]" : "text-white/50"}`}>
+                        {String(stepNumber).padStart(2, "0")}
+                      </p>
+                      <p className={`mt-2 text-sm font-medium ${isActive ? "text-white" : isComplete ? "text-white/90" : "text-white/65"}`}>
+                        {title}
+                        {isDisabled ? ` ${locale === "sq" ? "• skip" : locale === "de" ? "• skip" : "• skip"}` : ""}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              </div>
+
+              <form onSubmit={onLeadSubmit} className="px-6 py-6 md:px-8 md:py-8" onKeyDown={(e) => {
                 // Prevent form submission on Enter key unless we're on step 5
                 if (e.key === "Enter" && currentStep !== 5) {
                   e.preventDefault();
@@ -311,7 +463,7 @@ export default function ContactPage() {
                 {/* Step 1: Basic Info */}
                 {currentStep === 1 && (
                   <div className="grid gap-4">
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-3">
                       <ControlledField
                         label={locale === "sq" ? "Emri*" : locale === "de" ? "Name*" : "Name*"}
                         name="name"
@@ -322,6 +474,17 @@ export default function ContactPage() {
                         minLength={2}
                         maxLength={120}
                         pattern="[a-zA-ZëçÇË\s]+"
+                        locale={locale}
+                      />
+                      <ControlledField
+                        label={locale === "sq" ? "Nr. telefoni*" : locale === "de" ? "Telefon*" : "Phone*"}
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(v) => handleInputChange("phone", v)}
+                        placeholder="+355 68 800 9988"
+                        required={true}
+                        maxLength={50}
                         locale={locale}
                       />
                       <ControlledField
@@ -350,48 +513,47 @@ export default function ContactPage() {
 
                 {/* Step 2: Service Selection */}
                 {currentStep === 2 && (
-                  <div className="grid gap-4">
-                    <label className="grid gap-2">
-                      <span className="text-sm font-medium text-gray-700">
-                        {locale === "sq" ? "Zgjidh shërbimin*" : locale === "de" ? "Service wählen*" : "Select service*"}
-                      </span>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        {CONTACT_SERVICE_SLUGS.map((slug) => {
-                          const serviceIndex = SERVICE_SLUGS.indexOf(slug);
-                          const service = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex];
-                          if (!service) return null;
-                          return (
-                            <button
-                              key={slug}
-                              type="button"
-                              onClick={() => handleInputChange("service", slug)}
-                              className={`rounded-xl border p-4 text-left transition ${
-                                formData.service === slug
-                                  ? "border-gray-900 bg-gray-100"
-                                  : "border-gray-200 bg-gray-50 hover:border-gray-300"
-                              }`}
-                            >
-                              <div className="font-medium text-gray-900">{service.title}</div>
-                              {service.price && (
-                                <div className="mt-1 text-xs text-gray-600">{service.price}</div>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </label>
+                  <div className="grid gap-5">
+                    <div className="rounded-2xl border border-stone-200 bg-stone-50/70 p-4">
+                      <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8b7355]">
+                        {locale === "sq" ? "Hyrje" : locale === "de" ? "Einführung" : "Introduction"}
+                      </p>
+                      <p className="mt-2 text-sm leading-7 text-stone-600">
+                        {locale === "sq"
+                          ? "Na duhen vetëm të dhënat bazë që të dimë me kë po flasim dhe ku të të kthejmë përgjigje."
+                          : locale === "de"
+                          ? "Wir brauchen nur die Grunddaten, um zu wissen, mit wem wir sprechen und wohin wir antworten."
+                          : "We only need the essentials to know who we’re talking to and where to reply."}
+                      </p>
+                    </div>
+                    <MultiServiceSelectField
+                      label={locale === "sq" ? "Zgjidh shërbimin*" : locale === "de" ? "Service wählen*" : "Select service*"}
+                      values={selectedServiceSlugs}
+                      onToggle={toggleServiceSelection}
+                      required={true}
+                      locale={locale}
+                      options={CONTACT_SERVICE_SLUGS.map((slug) => {
+                        const serviceIndex = SERVICE_SLUGS.indexOf(slug);
+                        const service = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex];
+                        return {
+                          value: slug,
+                          label: service?.title ?? slug,
+                          description: service?.price,
+                        };
+                      })}
+                    />
                   </div>
                 )}
 
                 {/* Step 3: Conditional Fields */}
-                {currentStep === 3 && (
+                {currentStep === 3 && !shouldSkipDetailsStep && (
                   <div className="grid gap-4">
-                    {!formData.service && (
+                    {!selectedServiceSlugs.length && (
                       <p className="text-sm text-gray-600">
                         {locale === "sq" ? "Ju lutem zgjidhni një shërbim në hapin e mëparshëm." : locale === "de" ? "Bitte wählen Sie einen Service im vorherigen Schritt." : "Please select a service in the previous step."}
                       </p>
                     )}
-                    {formData.service === "website-landing" && (
+                    {primaryService === "website-landing" && (
                       <>
                         <ControlledSelectField
                           label={locale === "sq" ? "Lloji i website" : locale === "de" ? "Website-Typ" : "Website type"}
@@ -440,7 +602,7 @@ export default function ContactPage() {
                       </>
                     )}
 
-                    {formData.service === "ecommerce" && (
+                    {primaryService === "ecommerce" && (
                       <>
                         <ControlledSelectField
                           label={locale === "sq" ? "Numri i produkteve (përafërsisht)" : locale === "de" ? "Anzahl Produkte (ca.)" : "Number of products (approx.)"}
@@ -481,7 +643,7 @@ export default function ContactPage() {
                       </>
                     )}
 
-                    {formData.service === "social-media" && (
+                    {primaryService === "social-media" && (
                       <>
                         <ControlledField
                           label={locale === "sq" ? "Platforma (p.sh. Instagram, Facebook, LinkedIn)" : locale === "de" ? "Plattformen (z.B. Instagram, Facebook, LinkedIn)" : "Platforms (e.g. Instagram, Facebook, LinkedIn)"}
@@ -508,7 +670,7 @@ export default function ContactPage() {
                       </>
                     )}
 
-                    {formData.service && formData.service !== "website-landing" && formData.service !== "ecommerce" && formData.service !== "social-media" && (
+                    {primaryService && primaryService !== "website-landing" && primaryService !== "ecommerce" && primaryService !== "social-media" && (
                       <ControlledTextArea
                         label={locale === "sq" ? "Detaje shtesë për këtë shërbim" : locale === "de" ? "Zusätzliche Details zu diesem Service" : "Additional details for this service"}
                         name="otherServiceDetails"
@@ -565,13 +727,18 @@ export default function ContactPage() {
                             value={formData.company}
                           />
                         )}
-                        {formData.service && (
+                        {selectedServiceSlugs.length > 0 && (
                           <ReviewRow
                             label={locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}
-                            value={SERVICE_DETAILS_BY_LOCALE[locale]?.[SERVICE_SLUGS.indexOf(formData.service as any)]?.title || formData.service}
+                            value={selectedServiceSlugs
+                              .map((slug) => {
+                                const itemIndex = SERVICE_SLUGS.findIndex((serviceSlug) => serviceSlug === slug);
+                                return SERVICE_DETAILS_BY_LOCALE[locale]?.[itemIndex]?.title || slug;
+                              })
+                              .join(", ")}
                           />
                         )}
-                        {formData.service === "website-landing" && (
+                        {primaryService === "website-landing" && (
                           <>
                             {formData.websiteType && (
                               <ReviewRow
@@ -599,7 +766,7 @@ export default function ContactPage() {
                             )}
                           </>
                         )}
-                        {formData.service === "ecommerce" && (
+                        {primaryService === "ecommerce" && (
                           <>
                             {formData.ecommerceProducts && (
                               <ReviewRow
@@ -621,7 +788,7 @@ export default function ContactPage() {
                             )}
                           </>
                         )}
-                        {formData.service === "social-media" && (
+                        {primaryService === "social-media" && (
                           <>
                             {formData.socialMediaPlatforms && (
                               <ReviewRow
@@ -637,7 +804,7 @@ export default function ContactPage() {
                             )}
                           </>
                         )}
-                        {formData.service && formData.service !== "website-landing" && formData.service !== "ecommerce" && formData.service !== "social-media" && formData.otherServiceDetails && (
+                        {primaryService && primaryService !== "website-landing" && primaryService !== "ecommerce" && primaryService !== "social-media" && formData.otherServiceDetails && (
                           <ReviewRow
                             label={locale === "sq" ? "Detaje" : locale === "de" ? "Details" : "Details"}
                             value={formData.otherServiceDetails}
@@ -670,19 +837,19 @@ export default function ContactPage() {
                 )}
 
                 {status === "error" && (
-                  <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  <p className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-[0_16px_36px_-28px_rgba(220,38,38,0.65)]">
                     {error ?? (locale === "sq" ? "Diçka shkoi keq." : locale === "de" ? "Etwas ist schief gelaufen." : "Something went wrong.")}
                   </p>
                 )}
 
                 {/* Navigation Buttons */}
                 {currentStep <= 5 && (
-                  <div className="mt-6 flex items-center gap-3">
+                  <div className="mt-8 flex flex-col gap-3 border-t border-stone-200 pt-6 sm:flex-row sm:items-center">
                     {currentStep > 1 && (
                       <button
                         type="button"
                         onClick={handleBack}
-                        className="inline-flex h-11 items-center justify-center rounded-xl border-2 border-gray-300 px-5 font-medium text-gray-900 hover:border-gray-900 hover:bg-gray-50"
+                        className="inline-flex h-12 items-center justify-center rounded-2xl border border-stone-300 px-5 font-medium text-stone-800 transition hover:border-stone-900 hover:bg-stone-50"
                       >
                         {locale === "sq" ? "Kthehu" : locale === "de" ? "Zurück" : "Back"}
                       </button>
@@ -691,15 +858,25 @@ export default function ContactPage() {
                       <button
                         type="button"
                         onClick={(e) => handleNext(e)}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800"
+                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#111827] px-6 font-medium text-white transition hover:bg-[#1f2937] sm:ml-auto"
                       >
-                        {locale === "sq" ? "Vazhdo" : locale === "de" ? "Weiter" : "Next"}
+                        {currentStep === 2 && shouldSkipDetailsStep
+                          ? locale === "sq"
+                            ? "Vazhdo te buxheti"
+                            : locale === "de"
+                            ? "Weiter zum Budget"
+                            : "Continue to budget"
+                          : locale === "sq"
+                          ? "Vazhdo"
+                          : locale === "de"
+                          ? "Weiter"
+                          : "Next"}
                       </button>
                     ) : currentStep === 4 ? (
                       <button
                         type="button"
                         onClick={(e) => handleNext(e)}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800"
+                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#111827] px-6 font-medium text-white transition hover:bg-[#1f2937] sm:ml-auto"
                       >
                         {locale === "sq" ? "Kontrollo" : locale === "de" ? "Überprüfen" : "Review"}
                       </button>
@@ -707,7 +884,7 @@ export default function ContactPage() {
                       <button
                         type="submit"
                         disabled={status === "loading"}
-                        className="ml-auto inline-flex h-11 items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800 disabled:opacity-60"
+                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#b7924a] px-6 font-medium text-white transition hover:bg-[#a88543] disabled:opacity-60 sm:ml-auto"
                       >
                         {status === "loading"
                           ? locale === "sq" ? "Duke dërguar..." : locale === "de" ? "Wird gesendet..." : "Sending..."
@@ -718,7 +895,7 @@ export default function ContactPage() {
                 )}
 
                 {currentStep <= 5 && (
-                  <p className="mt-4 text-xs text-gray-500">
+                  <p className="mt-4 text-xs leading-6 text-stone-500">
                     {locale === "sq"
                       ? "Duke dërguar, pranon të të kontaktojmë për këtë kërkesë."
                       : locale === "de"
@@ -731,8 +908,8 @@ export default function ContactPage() {
           </div>
 
           {/* RIGHT: Info */}
-          <div className="md:col-span-2">
-            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
+          <div className="space-y-6">
+            <div className="rounded-[2rem] border border-stone-200/80 bg-white p-6 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.35)] md:p-8">
               <h3 className="text-lg font-semibold text-gray-900">
                 {locale === "sq" ? "Info e shpejtë" : locale === "de" ? "Schnellinfo" : "Quick info"}
               </h3>
@@ -743,14 +920,14 @@ export default function ContactPage() {
                   v="daramarketing.eu@gmail.com"
                   href="mailto:daramarketing.eu@gmail.com"
                 />
-                <div className="flex items-center gap-3">
-                  <InfoRow k={locale === "sq" ? "Telefoni" : locale === "de" ? "Telefon" : "Phone"} v="+355 68 800 9988" href="tel:+355688009988" className="flex-1" />
+                <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_56px] sm:items-center">
+                  <InfoRow k={locale === "sq" ? "Telefoni" : locale === "de" ? "Telefon" : "Phone"} v="+355 68 800 9988" href="tel:+355688009988" className="min-w-0" />
                   <a
                     href="https://wa.me/355688009988"
                     target="_blank"
                     rel="noreferrer"
                     title={locale === "sq" ? "Na shkruaj në WhatsApp" : locale === "de" ? "Auf WhatsApp schreiben" : "Chat on WhatsApp"}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#25D366] transition-all hover:scale-110 hover:shadow-[0_0_16px_rgba(37,211,102,0.5)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center justify-self-start rounded-xl bg-[#25D366] transition-all hover:scale-110 hover:shadow-[0_0_16px_rgba(37,211,102,0.5)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-white sm:justify-self-end"
                     aria-label="WhatsApp"
                   >
                     <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -759,21 +936,16 @@ export default function ContactPage() {
                   </a>
                 </div>
                 <InfoRow
-                  k={locale === "sq" ? "Adresa" : locale === "de" ? "Adresse" : "Address"}
-                  v="Rruga Donika Kastrioti, Tiranë - Albania"
-                  href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania"
-                />
-                <InfoRow
                   k={locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
                   v={locale === "sq" ? "Brenda 24 orëve" : locale === "de" ? "Innerhalb von 24 Std." : "Within 24h"}
                 />
               </div>
 
-              <div className="mt-5">
+              <div className="mt-5 text-center">
                 <p className="text-sm font-semibold text-gray-700">
                   {locale === "sq" ? "Social" : locale === "de" ? "Social" : "Social"}
                 </p>
-                <div className="mt-2 flex items-center gap-3">
+                <div className="mt-2 flex items-center justify-center gap-4">
                   <a
                     className="text-gray-600 hover:text-gray-900 transition"
                     href="https://instagram.com/daramarketing.eu"
@@ -832,7 +1004,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="mt-6 rounded-3xl border border-[#B89D5E]/20 bg-[#B89D5E]/8 p-6">
+            <div className="rounded-[2rem] border border-[#B89D5E]/25 bg-[linear-gradient(180deg,rgba(184,157,94,0.14),rgba(184,157,94,0.05))] p-6 shadow-[0_24px_80px_-45px_rgba(184,157,94,0.55)]">
               <p className="text-sm font-medium text-gray-700">
                 <span className="text-[#B89D5E]">
                   {locale === "sq" ? "Tip:" : locale === "de" ? "Tipp:" : "Tip:"}
@@ -843,6 +1015,44 @@ export default function ContactPage() {
                   ? "Wenn Sie einen Link zu Ihrer aktuellen Website oder IG/TikTok haben, schreiben Sie ihn in die Nachricht. Hilft uns beim Audit."
                   : "If you have a link to your current website or IG/TikTok, add it to the message. It helps us with the audit."}
               </p>
+            </div>
+
+            <div className="rounded-[2rem] border border-[#111827]/10 bg-[#111827] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.65)]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d1b780]">
+                {locale === "sq" ? "Snapshot" : locale === "de" ? "Snapshot" : "Snapshot"}
+              </p>
+              <div className="mt-4 space-y-4 text-sm text-white/78">
+                <div className="flex items-start justify-between gap-4">
+                  <span>{locale === "sq" ? "Shërbimi" : locale === "de" ? "Service" : "Service"}</span>
+                  <span className="text-right font-medium text-white">{selectedService?.title ?? (locale === "sq" ? "Jo i zgjedhur" : locale === "de" ? "Nicht gewählt" : "Not selected")}</span>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <span>{locale === "sq" ? "Buxheti" : locale === "de" ? "Budget" : "Budget"}</span>
+                  <span className="text-right font-medium text-white">{formData.budget || "—"}</span>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <span>{locale === "sq" ? "Statusi" : locale === "de" ? "Status" : "Status"}</span>
+                  <span className="text-right font-medium text-white">
+                    {status === "loading"
+                      ? locale === "sq"
+                        ? "Duke dërguar"
+                        : locale === "de"
+                        ? "Wird gesendet"
+                        : "Sending"
+                      : status === "error"
+                      ? locale === "sq"
+                        ? "Kërkon vëmendje"
+                        : locale === "de"
+                        ? "Benötigt Aufmerksamkeit"
+                        : "Needs attention"
+                      : locale === "sq"
+                      ? "Në progres"
+                      : locale === "de"
+                      ? "In Bearbeitung"
+                      : "In progress"}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -896,7 +1106,7 @@ function ControlledField({
         pattern={pattern}
         minLength={minLength}
         maxLength={maxLength}
-        className="h-11 rounded-xl border-2 border-gray-200 bg-white px-4 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900 invalid:border-red-500/50"
+        className="h-12 rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-stone-900 placeholder:text-stone-400 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10 invalid:border-red-400/60"
         title={pattern && name === "name" ? (locale === "sq" ? "Vetëm shkronja dhe hapësira" : locale === "de" ? "Nur Buchstaben und Leerzeichen" : "Only letters and spaces") : undefined}
       />
     </label>
@@ -938,7 +1148,7 @@ function ControlledTextArea({
         required={isRequired}
         minLength={minLength}
         maxLength={maxLength}
-        className="rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-500 outline-none focus:border-gray-900 invalid:border-red-500/50"
+        className="rounded-2xl border border-stone-200 bg-stone-50/50 px-4 py-3 text-stone-900 placeholder:text-stone-400 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10 invalid:border-red-400/60"
       />
     </label>
   );
@@ -974,7 +1184,7 @@ function ControlledSelectField({
           type="button"
           onClick={() => setOpen((o) => !o)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
-          className="flex h-11 w-full items-center justify-between rounded-xl border-2 border-gray-200 bg-white px-4 text-left text-gray-900 outline-none focus:border-gray-900"
+          className="flex h-12 w-full items-center justify-between rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-left text-stone-900 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
         >
           <span className={value ? "" : "text-gray-500"}>{value || placeholder}</span>
           <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1006,26 +1216,177 @@ function ControlledSelectField({
   );
 }
 
+function ServiceSelectField({
+  label,
+  name,
+  value,
+  onChange,
+  options,
+  required = false,
+  locale = "sq",
+}: {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: Array<{ value: string; label: string; description?: string }>;
+  required?: boolean;
+  locale?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const isRequired = required || label.includes("*");
+  const placeholder = isRequired ? (locale === "sq" ? "Zgjidh..." : locale === "de" ? "Wahlen..." : "Select...") : label;
+  const selectedOption = options.find((option) => option.value === value);
+
+  return (
+    <label className="grid gap-2">
+      <span className="text-sm font-medium text-gray-700">{label}</span>
+      <div className="relative">
+        <input type="hidden" name={name} value={value} required={isRequired} />
+        <button
+          type="button"
+          onClick={() => setOpen((openState) => !openState)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          className="flex min-h-14 w-full items-center justify-between rounded-2xl border border-stone-200 bg-stone-50/50 px-4 py-3 text-left text-stone-900 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
+        >
+          <div className="min-w-0">
+            <div className={selectedOption ? "font-medium text-gray-900" : "text-gray-500"}>
+              {selectedOption ? selectedOption.label : placeholder}
+            </div>
+            {selectedOption?.description ? (
+              <div className="mt-1 text-xs text-gray-500">{selectedOption.description}</div>
+            ) : null}
+          </div>
+          <svg className={`ml-3 h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        {open && (
+          <div className="absolute top-full left-0 right-0 z-50 mt-2 max-h-72 overflow-auto rounded-2xl border border-stone-200 bg-white py-1 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onChange(option.value);
+                  setOpen(false);
+                }}
+                className={`w-full px-4 py-3 text-left transition-colors ${
+                  value === option.value ? "bg-gray-900 text-white" : "text-gray-900 hover:bg-gray-100"
+                }`}
+              >
+                <div className="font-medium">{option.label}</div>
+                {option.description ? (
+                  <div className={`mt-1 text-xs ${value === option.value ? "text-white/80" : "text-gray-500"}`}>
+                    {option.description}
+                  </div>
+                ) : null}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </label>
+  );
+}
+
+function MultiServiceSelectField({
+  label,
+  values,
+  onToggle,
+  options,
+  required = false,
+  locale = "sq",
+}: {
+  label: string;
+  values: string[];
+  onToggle: (value: string) => void;
+  options: Array<{ value: string; label: string; description?: string }>;
+  required?: boolean;
+  locale?: string;
+}) {
+  const isRequired = required || label.includes("*");
+  const selectedLabels = options.filter((option) => values.includes(option.value)).map((option) => option.label);
+
+  return (
+    <label className="grid gap-2">
+      <span className="text-sm font-medium text-gray-700">{label}</span>
+      <div className="rounded-[1.6rem] border border-stone-200 bg-stone-50/60 p-3">
+        <input type="hidden" name="service" value={values.join(",")} required={isRequired} />
+        <div className="mb-3 flex flex-wrap gap-2">
+          {selectedLabels.length ? selectedLabels.map((item) => (
+            <span key={item} className="inline-flex items-center rounded-full bg-[#111827] px-3 py-1.5 text-xs font-medium text-white">
+              {item}
+            </span>
+          )) : (
+            <span className="inline-flex items-center rounded-full bg-white px-3 py-1.5 text-xs text-stone-500 ring-1 ring-stone-200">
+              {locale === "sq" ? "Zgjidh një ose më shumë shërbime" : locale === "de" ? "Wählen Sie einen oder mehrere Services" : "Choose one or more services"}
+            </span>
+          )}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {options.map((option) => {
+            const isSelected = values.includes(option.value);
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => onToggle(option.value)}
+                className={`rounded-2xl border p-4 text-left transition ${
+                  isSelected
+                    ? "border-[#B89D5E]/55 bg-[#111827] text-white shadow-[0_18px_36px_-24px_rgba(15,23,42,0.65)]"
+                    : "border-stone-200 bg-white text-stone-900 hover:border-[#B89D5E]/40 hover:bg-stone-50"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="font-medium">{option.label}</div>
+                    {option.description ? (
+                      <div className={`mt-1 text-xs ${isSelected ? "text-white/75" : "text-stone-500"}`}>
+                        {option.description}
+                      </div>
+                    ) : null}
+                  </div>
+                  <span className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold ${
+                    isSelected ? "border-[#d1b780]/40 bg-[#d1b780]/15 text-[#f3dfb5]" : "border-stone-300 text-stone-400"
+                  }`}>
+                    {isSelected ? "OK" : "+"}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <p className="mt-3 text-xs text-stone-500">
+          {locale === "sq" ? "Nëse zgjedh më shumë se një shërbim, detajet do t'i diskutojmë më pas." : locale === "de" ? "Wenn Sie mehr als einen Service wählen, besprechen wir die Details später." : "If you select more than one service, we’ll discuss the details later."}
+        </p>
+      </div>
+    </label>
+  );
+}
+
 function ReviewRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-gray-200 pb-2 last:border-0 last:pb-0">
-      <span className="text-gray-600">{label}:</span>
-      <span className="text-right font-medium text-gray-900">{value}</span>
+    <div className="flex items-start justify-between gap-4 border-b border-stone-200 pb-3 last:border-0 last:pb-0">
+      <span className="text-stone-500">{label}:</span>
+      <span className="text-right font-medium text-stone-900">{value}</span>
     </div>
   );
 }
 
 function InfoRow({ k, v, href, className = "" }: { k: string; v: string; href?: string; className?: string }) {
   return (
-    <div className={`flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 ${className}`}>
-      <span className="text-gray-600">{k}</span>
+    <div className={`flex items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-stone-50/70 px-4 py-3 ${className}`}>
+      <span className="shrink-0 whitespace-nowrap text-stone-500">{k}</span>
       {href ? (
-        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="text-right font-medium text-gray-900 hover:text-gray-700">
+        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="truncate whitespace-nowrap text-right font-medium text-stone-900 hover:text-stone-700">
           {v}
         </a>
       ) : (
-        <span className="font-medium text-gray-900">{v}</span>
+        <span className="truncate whitespace-nowrap font-medium text-stone-900">{v}</span>
       )}
     </div>
   );
 }
+

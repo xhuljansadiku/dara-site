@@ -36,6 +36,7 @@ function shouldSkipDiskPersistence(): boolean {
 type Lead = {
   name: string;
   email: string;
+  phone?: string;
   company?: string;
   budget?: string;
   message: string;
@@ -76,6 +77,7 @@ export async function POST(req: Request) {
 
     const name = clean(obj.name, 120);
     const email = clean(obj.email, 200).toLowerCase();
+    const phone = clean(obj.phone, 50);
     const company = clean(obj.company, 200);
     const budget = clean(obj.budget, 60);
     const message = clean(obj.message, 4000);
@@ -93,6 +95,7 @@ export async function POST(req: Request) {
     const lead: Lead = {
       name,
       email,
+      phone: phone || undefined,
       company: company || undefined,
       budget: budget || undefined,
       message,
