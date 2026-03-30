@@ -29,6 +29,7 @@ export default function TrainingThankYouPage() {
   const params = useParams();
   const locale = (params?.locale as Locale) || "sq";
   const copy = COPY[locale];
+  const messageLines = copy.message.split(". ").filter(Boolean);
 
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
@@ -42,7 +43,13 @@ export default function TrainingThankYouPage() {
           </svg>
         </div>
         <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{copy.title}</h1>
-        <p className="mt-4 text-lg text-gray-600">{copy.message}</p>
+        <p className="mt-4 text-lg text-gray-600">
+          {messageLines.map((line, index) => (
+            <span key={`${line}-${index}`} className="block">
+              {index < messageLines.length - 1 && !line.endsWith(".") ? `${line}.` : line}
+            </span>
+          ))}
+        </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <LocaleLink
             href="/trainings"

@@ -38,6 +38,7 @@ export default function ContactThankYouPage() {
   const params = useParams();
   const locale = (params?.locale as Locale) || "sq";
   const copy = COPY[locale];
+  const messageLines = copy.message.split(". ").filter(Boolean);
 
   return (
     <section className="relative overflow-hidden border-b border-stone-200/80 bg-gradient-to-b from-stone-50 via-white to-stone-50/50 py-20 md:py-28 lg:py-32">
@@ -78,7 +79,13 @@ export default function ContactThankYouPage() {
               <h1 className="mt-8 font-display text-4xl font-bold tracking-tight text-neutral-950 md:text-[2.75rem] md:leading-[1.1]">
                 {copy.title}
               </h1>
-              <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-neutral-600">{copy.message}</p>
+              <p className="mx-auto mt-5 max-w-md text-lg leading-relaxed text-neutral-600">
+                {messageLines.map((line, index) => (
+                  <span key={`${line}-${index}`} className="block">
+                    {index < messageLines.length - 1 && !line.endsWith(".") ? `${line}.` : line}
+                  </span>
+                ))}
+              </p>
 
               <div className="mx-auto mt-8 h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#B89D5E]/70 to-transparent" />
 

@@ -7,10 +7,11 @@ import NewsletterForm from "@/components/NewsletterForm";
 import { trackEvent } from "@/lib/analytics";
 import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
 import { BUDGET_OPTIONS, BUDGET_TIERS_EUR } from "@/lib/budget-prices";
-import { getApiErrorMessage, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
+import { GENERIC_ERROR_MESSAGES, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
 
 // Services shown in contact form (exclude training - has its own form at /trainings/register)
 const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mgopkbak";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -261,16 +262,42 @@ export default function ContactPage() {
     }
 
     try {
-      const res = await fetch("/api/leads", {
+      const serviceTitle = selectedServiceSlugs
+        .map((item) => {
+          const itemIndex = SERVICE_SLUGS.findIndex((serviceSlug) => serviceSlug === item);
+          return SERVICE_DETAILS_BY_LOCALE[locale]?.[itemIndex]?.title || item;
+        })
+        .join(", ");
+
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          company: payload.company,
+          service: serviceTitle,
+          budget: payload.budget,
+          message: payload.message,
+          locale: payload.locale,
+          source: "website-contact-form",
+          _subject: `[DARA Contact] ${payload.name}`,
+          _gotcha: hp,
+        }),
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
+        const formspreeError =
+          Array.isArray(data?.errors) && typeof data.errors[0]?.message === "string"
+            ? data.errors[0].message
+            : GENERIC_ERROR_MESSAGES[locale];
         setStatus("error");
-        setError(getApiErrorMessage(data?.error, locale));
+        setError(formspreeError);
         return;
       }
 
