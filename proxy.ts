@@ -2,7 +2,6 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale } from "./i18n";
 import { routing } from "./i18n/routing";
-import { SITE_URL } from "@/lib/seo-utils";
 
 const intlProxy = createMiddleware(routing);
 
@@ -14,10 +13,6 @@ export default function proxy(request: NextRequest) {
     const proto = request.nextUrl.protocol;
     const redirectUrl = `${proto}//${nonWwwHost}${request.nextUrl.pathname}${request.nextUrl.search}`;
     return NextResponse.redirect(redirectUrl, 301);
-  }
-
-  if (pathname === "/") {
-    return NextResponse.redirect(`${SITE_URL}/${defaultLocale}`, 301);
   }
 
   const locale = pathname.startsWith("/sq")
@@ -35,6 +30,14 @@ export default function proxy(request: NextRequest) {
   const modifiedRequest = new NextRequest(request.url, {
     headers: requestHeaders,
   });
+
+  if (pathname === "/") {
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
 
   return intlProxy(modifiedRequest);
 }
