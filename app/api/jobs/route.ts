@@ -56,6 +56,24 @@ type JobApplication = {
   createdAt: string;
 };
 
+function redirectWithError(req: Request, formData: FormData | null, errorCode: string, status = 303) {
+  const raw = clean(formData?.get("errorRedirectTo"), 300);
+  if (!raw || !raw.startsWith("/")) {
+    return NextResponse.json({ ok: false, error: errorCode }, { status });
+  }
+  const location = new URL(raw, req.url);
+  location.searchParams.set("error", errorCode);
+  return NextResponse.redirect(location, status);
+}
+
+function redirectWithSuccess(req: Request, formData: FormData | null) {
+  const raw = clean(formData?.get("redirectTo"), 300);
+  if (!raw || !raw.startsWith("/")) {
+    return NextResponse.json({ ok: true, saved: true, emailed: true });
+  }
+  return NextResponse.redirect(new URL(raw, req.url), 303);
+}
+
 export async function GET() {
   return NextResponse.json(
     {
@@ -69,13 +87,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  let parsedFormData: FormData | null = null;
   try {
     const rateLimit = checkRateLimit(req);
     if (!rateLimit.ok) {
-      return NextResponse.json(
-        { ok: false, error: "RATE_LIMITED" },
-        { status: 429, headers: rateLimit.retryAfter ? { "Retry-After": String(rateLimit.retryAfter) } : undefined }
-      );
+      return redirectWithError(req, null, "RATE_LIMITED", 303);
     }
 
     const contentType = req.headers.get("content-type") || "";
@@ -86,13 +102,14 @@ export async function POST(req: Request) {
     let formData: FormData;
     try {
       formData = await req.formData();
+      parsedFormData = formData;
     } catch (e) {
       console.error("JOBS_FORMDATA_PARSE:", e);
       return NextResponse.json({ ok: false, error: "INVALID_MULTIPART" }, { status: 400 });
     }
 
     const hp = clean(formData.get("hp"), 200);
-    if (hp) return NextResponse.json({ ok: true, bot: true });
+    if (hp) return redirectWithSuccess(req, formData);
 
     const name = clean(formData.get("name"), 120);
     const email = clean(formData.get("email"), 200).toLowerCase();
@@ -104,29 +121,29 @@ export async function POST(req: Request) {
       : "en";
 
     if (!name || name.length < 2) {
-      return NextResponse.json({ ok: false, error: "INVALID_NAME" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_NAME");
     }
     if (!isValidEmail(email)) {
-      return NextResponse.json({ ok: false, error: "INVALID_EMAIL" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_EMAIL");
     }
     if (!role || role.length < 2) {
-      return NextResponse.json({ ok: false, error: "INVALID_ROLE" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_ROLE");
     }
     if (!message || message.length < 10) {
-      return NextResponse.json({ ok: false, error: "INVALID_MESSAGE" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_MESSAGE");
     }
 
     const cvUpload = getCvUpload(formData);
     if (!cvUpload) {
-      return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_CV");
     }
     const { blob: cvBlob, filename: cvOriginalName } = cvUpload;
     const nameLower = cvOriginalName.toLowerCase();
     if (cvBlob.type !== PDF_MIME && !nameLower.endsWith(".pdf")) {
-      return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_CV");
     }
     if (cvBlob.size > MAX_CV_SIZE) {
-      return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_CV");
     }
 
     const timestamp = Date.now();
@@ -138,7 +155,7 @@ export async function POST(req: Request) {
       buffer = Buffer.from(arrayBuffer);
     } catch (e) {
       console.error("JOBS_CV_BUFFER:", e);
-      return NextResponse.json({ ok: false, error: "INVALID_CV" }, { status: 400 });
+      return redirectWithError(req, formData, "INVALID_CV");
     }
 
     const job: JobApplication = {
@@ -151,7 +168,6 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    let persistedToDisk = false;
     if (!shouldSkipDiskPersistence()) {
       try {
         await fs.mkdir(DATA_DIR, { recursive: true });
@@ -169,7 +185,6 @@ export async function POST(req: Request) {
         }
         list.push(job);
         await writeFileWithRetry(FILE_PATH, JSON.stringify(list, null, 2));
-        persistedToDisk = true;
       } catch (e) {
         console.error("JOBS_DISK_ERROR:", e);
       }
@@ -178,10 +193,7 @@ export async function POST(req: Request) {
     }
 
     if (!isSmtpConfigured()) {
-      return NextResponse.json(
-        { ok: false, error: "SMTP_NOT_CONFIGURED", saved: persistedToDisk },
-        { status: 503 }
-      );
+      return redirectWithError(req, formData, "SMTP_NOT_CONFIGURED");
     }
 
     const notify = await sendJobNotification({
@@ -190,11 +202,7 @@ export async function POST(req: Request) {
     });
 
     if (!notify.ok) {
-      const code = notify.error === "SMTP_NOT_CONFIGURED" ? "SMTP_NOT_CONFIGURED" : "EMAIL_FAILED";
-      return NextResponse.json(
-        { ok: false, error: code, saved: persistedToDisk },
-        { status: code === "SMTP_NOT_CONFIGURED" ? 503 : 502 }
-      );
+      return redirectWithError(req, formData, notify.error === "SMTP_NOT_CONFIGURED" ? "SMTP_NOT_CONFIGURED" : "EMAIL_FAILED");
     }
 
     const auto = await sendAutoReplyToLead({ name, email }, locale);
@@ -202,10 +210,10 @@ export async function POST(req: Request) {
       console.error("AUTO_REPLY_ERROR:", auto.error);
     }
 
-    return NextResponse.json({ ok: true, saved: true, emailed: true });
+    return redirectWithSuccess(req, formData);
   } catch (e) {
     const err = e instanceof Error ? e : new Error(String(e));
     console.error("JOBS_ERROR:", err.message, err.stack);
-    return NextResponse.json({ ok: false, error: "SERVER_ERROR" }, { status: 500 });
+    return redirectWithError(req, parsedFormData, "SERVER_ERROR");
   }
 }
