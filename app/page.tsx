@@ -28,9 +28,9 @@ function ArrowIcon({ className }: { className?: string }) {
 
 export default function RootPage() {
   return (
-    <main className="relative min-h-screen min-h-[100dvh] overflow-hidden bg-[#0a0c10] px-4 py-10 sm:px-6 sm:py-14 md:py-16">
-      {/* Full-bleed hero: public/hero-bg-dara.png */}
-      <div className="absolute inset-0 -z-10" aria-hidden>
+    <main className="relative isolate min-h-screen min-h-[100dvh] overflow-hidden px-4 py-10 sm:px-6 sm:py-14 md:py-16">
+      {/* Full-bleed: public/hero-bg-dara.png (z-0 layers — negative z was hidden behind main bg) */}
+      <div className="absolute inset-0 z-0 bg-[#0a0c10]" aria-hidden>
         <Image
           src="/hero-bg-dara.png"
           alt=""
@@ -41,25 +41,25 @@ export default function RootPage() {
         />
       </div>
 
-      {/* Cinematic overlays */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_120%_80%_at_50%_-20%,rgba(184,157,94,0.12),transparent_55%)]" aria-hidden />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/50 via-black/35 to-black/65" aria-hidden />
+      {/* Cinematic overlays (above image, below content) */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_120%_80%_at_50%_-20%,rgba(184,157,94,0.12),transparent_55%)]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/50 via-black/35 to-black/65" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-[min(100%,48rem)] bg-gradient-to-r from-black/70 via-black/35 to-transparent sm:w-[min(100%,52rem)]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[min(100%,48rem)] bg-gradient-to-r from-black/70 via-black/35 to-transparent sm:w-[min(100%,52rem)]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:h-56"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-48 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:h-56"
         aria-hidden
       />
 
       {/* Soft gold ambience */}
       <div
-        className="pointer-events-none absolute -left-24 top-1/4 -z-10 h-72 w-72 rounded-full bg-[#B89D5E]/15 blur-[100px] motion-safe:animate-pulse motion-safe:duration-[4s]"
+        className="pointer-events-none absolute -left-24 top-1/4 z-[1] h-72 w-72 rounded-full bg-[#B89D5E]/15 blur-[100px] motion-safe:animate-pulse motion-safe:duration-[4s]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-16 bottom-1/4 -z-10 h-64 w-64 rounded-full bg-[#B89D5E]/10 blur-[90px] motion-safe:animate-pulse motion-safe:duration-[5s] motion-safe:delay-1000"
+        className="pointer-events-none absolute -right-16 bottom-1/4 z-[1] h-64 w-64 rounded-full bg-[#B89D5E]/10 blur-[90px] motion-safe:animate-pulse motion-safe:duration-[5s] motion-safe:delay-1000"
         aria-hidden
       />
 
