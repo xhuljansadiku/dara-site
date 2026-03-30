@@ -37,7 +37,7 @@ export default function RootPage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center scale-105 motion-safe:transition-transform motion-safe:duration-[20s] motion-safe:ease-out"
+          className="object-cover object-[62%_center] max-sm:scale-100 sm:scale-105 sm:object-center motion-safe:transition-transform motion-safe:duration-[20s] motion-safe:ease-out"
         />
       </div>
 
@@ -105,9 +105,11 @@ export default function RootPage() {
               aria-hidden
             />
 
-            <p className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-6 max-w-lg text-pretty text-base leading-relaxed text-white/72 md:text-lg">
-              Zgjidh gjuhën tënde · Choose your language · Wählen Sie Ihre Sprache
-            </p>
+            <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-6 max-w-lg space-y-1.5 text-base leading-relaxed text-white/72 md:text-lg">
+              <p className="text-pretty">· Zgjidh gjuhën tënde</p>
+              <p className="text-pretty">· Choose your language</p>
+              <p className="text-pretty">· Wählen Sie Ihre Sprache</p>
+            </div>
           </div>
 
           <div className="mt-12 grid w-full max-w-4xl gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-5">
@@ -115,7 +117,7 @@ export default function RootPage() {
               <Link
                 key={option.href}
                 href={option.href}
-                className={`animate-fade-in-up group relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.07] p-6 text-left shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B89D5E]/75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c10] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[#B89D5E]/45 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_32px_70px_-30px_rgba(184,157,94,0.22)] ${
+                className={`animate-fade-in-up group relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.07] p-6 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] sm:text-left backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B89D5E]/75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c10] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[#B89D5E]/45 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_32px_70px_-30px_rgba(184,157,94,0.22)] ${
                   i === 0
                     ? "animate-fade-in-up-delay-4"
                     : i === 1
@@ -131,13 +133,13 @@ export default function RootPage() {
                       "linear-gradient(135deg, rgba(184,157,94,0.12) 0%, transparent 45%, rgba(255,255,255,0.04) 100%)",
                   }}
                 />
-                <div className="relative flex items-start justify-between gap-3">
+                <div className="relative flex items-center justify-center gap-3 sm:items-start sm:justify-between">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-black/25 font-display text-sm font-bold tracking-widest text-[#d4c49a] transition group-hover:border-[#B89D5E]/40 group-hover:text-white">
                     {option.code}
                   </span>
-                  <ArrowIcon className="mt-1 shrink-0 text-white/25 transition group-hover:translate-x-0.5 group-hover:text-[#B89D5E]" />
+                  <ArrowIcon className="mt-1 hidden shrink-0 text-white/25 transition group-hover:translate-x-0.5 group-hover:text-[#B89D5E] sm:block" />
                 </div>
-                <div className="relative mt-5">
+                <div className="relative mt-5 text-center sm:text-left">
                   <div className="font-display text-xl font-semibold tracking-tight text-white md:text-[1.35rem]">
                     {option.label}
                   </div>
