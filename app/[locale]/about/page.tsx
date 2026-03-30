@@ -2,6 +2,7 @@
 import { use } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import AnimateIn from "@/components/site/AnimateIn";
+import MarketingVideo from "@/components/site/MarketingVideo";
 import type { Metadata } from "next";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 
@@ -591,14 +592,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
             <div className="relative order-2 lg:order-1 flex justify-center items-center">
               <div className="relative w-full max-w-[280px] sm:max-w-[320px]">
                 <div className="aspect-[9/16] overflow-hidden rounded-[1.75rem] border-4 border-gray-900/10 bg-black shadow-2xl shadow-gray-900/10">
-                  <video
-                    src="/video/about-dara.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="h-full w-full object-cover"
-                  />
+                  <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                     <p className="text-sm font-medium text-white">DARA Marketing Agency</p>
                     <p className="text-xs text-white/90">{hero.stats[1]?.v}</p>

@@ -12,6 +12,7 @@ import HomeFaqSection from "@/components/site/HomeFaqSection";
 import ValuePillarIcon from "@/components/site/ValuePillarIcon";
 import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
+import MarketingVideo from "@/components/site/MarketingVideo";
 import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
@@ -662,14 +663,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                       aria-hidden
                     />
                     <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
-                      <video
-                        src="/video/about-dara.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="h-full w-full object-cover"
-                      />
+                      <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
                     </div>
                   </div>
                 </div>
