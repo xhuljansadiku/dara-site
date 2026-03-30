@@ -96,7 +96,7 @@ export default function ServicesSection({
         }}
         aria-hidden
       />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
       <div className="mb-12 flex flex-col gap-5 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
         <div className="mx-auto max-w-2xl md:mx-0 md:max-w-none">
           <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:justify-start">

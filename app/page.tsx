@@ -28,7 +28,7 @@ function ArrowIcon({ className }: { className?: string }) {
 
 export default function RootPage() {
   return (
-    <main className="relative isolate min-h-screen min-h-[100dvh] overflow-hidden px-4 py-10 sm:px-6 sm:py-14 md:py-16">
+    <main className="relative isolate min-h-screen min-h-[100dvh] overflow-hidden px-4 py-10 sm:px-6 sm:py-14 md:px-8 md:py-16 lg:px-10">
       {/* Full-bleed: public/hero-bg-dara.png (z-0 layers — negative z was hidden behind main bg) */}
       <div className="absolute inset-0 z-0 bg-[#0a0c10]" aria-hidden>
         <Image

@@ -500,7 +500,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO - Trifid style: full viewport, bold typography + readability scrim */}
-      <section className="relative flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 sm:py-24 md:py-32">
+      <section className="relative isolate flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 md:px-8 sm:py-24 md:py-32">
         <img
           src="/hero-bg-dara.png"
           alt=""
@@ -648,7 +648,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           }}
           aria-hidden
         />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
             <div
               className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-3xl"
@@ -777,7 +777,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden
         />
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="text-center lg:col-span-5 lg:text-left">
               <AnimateIn delay={0}>
@@ -848,7 +848,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           }}
           aria-hidden
         />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#B89D5E]/8 via-transparent to-transparent" aria-hidden />
           <div

@@ -244,7 +244,7 @@ export default function WebsiteServicesPage({ params }: Props) {
       </section>
 
       <section className="py-10 md:py-14">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-3xl border border-stone-200/90 bg-white p-6 shadow-sm">
               <h2 className="text-2xl font-semibold text-neutral-950">{seoContent.title}</h2>
@@ -287,7 +287,7 @@ export default function WebsiteServicesPage({ params }: Props) {
       <section className="relative py-14 md:py-20">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(184,157,94,0.08)_0%,transparent_55%)]" aria-hidden />
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="mx-auto mb-10 max-w-2xl text-center md:mx-0 md:mb-14 md:text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">
               {sectionIntro.kicker}
@@ -367,7 +367,7 @@ export default function WebsiteServicesPage({ params }: Props) {
 
       {/* CTA */}
       <section className="border-t border-stone-200/80 bg-gradient-to-b from-stone-50/60 to-white py-12 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="flex flex-col items-center gap-5 rounded-3xl border border-stone-200/90 bg-white p-6 text-center shadow-sm ring-1 ring-black/[0.03] md:p-10">
             <h2 className="max-w-xl text-xl font-semibold leading-snug text-neutral-800 md:max-w-none md:text-2xl">
               {cta.line1}

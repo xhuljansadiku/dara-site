@@ -179,7 +179,7 @@ export default function ServicesPageContent({ locale }: Props) {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8 text-center">
         <AnimateIn delay={0}>
           <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {hero.kicker}
@@ -220,7 +220,7 @@ export default function ServicesPageContent({ locale }: Props) {
 
       {/* FILTER TABS */}
       <section className="py-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
           <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap sm:w-full sm:flex-wrap">
             {filterTabs.map((tab, idx) => (
@@ -243,7 +243,7 @@ export default function ServicesPageContent({ locale }: Props) {
       </section>
 
       <section className="py-8 md:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
               <h2 className="text-2xl font-semibold text-gray-900">{seoSections.strategyTitle}</h2>
@@ -284,7 +284,7 @@ export default function ServicesPageContent({ locale }: Props) {
 
       {/* SERVICE GRID */}
       <section className="py-14 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredServices.map(({ slug, index, service }, idx) => {
             if (!service) return null;
@@ -343,7 +343,7 @@ export default function ServicesPageContent({ locale }: Props) {
 
       {/* CTA */}
       <section className="py-14 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <AnimateIn delay={0}>
           <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
             <h2 className="text-2xl font-semibold text-gray-900 md:text-3xl lg:text-4xl">

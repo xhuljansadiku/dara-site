@@ -340,7 +340,7 @@ export default function ContactPage() {
           <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(90deg,rgba(184,157,94,0.12),transparent_35%,rgba(15,23,42,0.08))]" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex justify-center">
         <div className="max-w-4xl text-center">
         <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-white/75 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6b5a38] backdrop-blur">
@@ -427,7 +427,7 @@ export default function ContactPage() {
       {/* GRID */}
       <section className="relative pb-16 md:pb-24">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(184,157,94,0.12),transparent_42%)]" />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_360px]">
           {/* LEFT: Form */}
           <div>

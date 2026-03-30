@@ -135,7 +135,7 @@ export default function Footer({ locale }: { locale: string }) {
     <footer className="relative overflow-hidden border-t border-gray-800 bg-black">
       {/* Top accent line */}
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent" aria-hidden />
-      <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20 lg:py-24">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-8 md:py-20 lg:px-8 lg:py-24">
         {/* Row 1: Brand | Services | Packages */}
         <div className="grid gap-12 text-center md:gap-12 md:text-left lg:grid-cols-3 lg:gap-x-0">
           {/* Column 1: Brand */}

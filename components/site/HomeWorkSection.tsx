@@ -74,7 +74,7 @@ export default function HomeWorkSection({ locale }: Props) {
         aria-hidden
       />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
           <div className="min-w-0 w-full sm:flex-1">
             <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 sm:justify-start">

@@ -62,7 +62,7 @@ export default async function PrivacyPage({
 
       <section className="relative py-12 md:py-16">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(184,157,94,0.06)_0%,transparent_50%)]" aria-hidden />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <LegalDocumentBody sections={sections} />
         </div>
       </section>

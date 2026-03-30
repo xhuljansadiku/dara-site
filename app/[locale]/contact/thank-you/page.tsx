@@ -56,7 +56,7 @@ export default function ContactThankYouPage() {
         <div className="absolute bottom-0 right-[-10%] h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="mx-auto max-w-lg">
           <div className="rounded-3xl border border-stone-200/90 bg-white p-10 shadow-xl shadow-stone-200/60 ring-1 ring-black/[0.04] md:p-12">
             <div className="text-center">

@@ -34,7 +34,7 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
     <>
       {/* HEADER SECTION - Same as HomeWorkSection */}
       <section id="work" className="py-12 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
           <div className="min-w-0 w-full sm:flex-1">
             <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
@@ -134,7 +134,7 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
 
       {/* CTA */}
       <section className="py-12 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
           <h2 className="text-2xl font-semibold md:text-3xl text-gray-900">
             {ctaLabels.title} <span className="text-gray-900">{ctaLabels.accent}</span>.

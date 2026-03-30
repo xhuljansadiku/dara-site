@@ -65,7 +65,7 @@ export default function TrainingSlugPage({ params }: Props) {
           <div className="pointer-events-none absolute inset-0 -z-10">
             <div className="absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[white]/10 blur-3xl" />
           </div>
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="flex flex-col items-center text-center">
             <span className="rounded-full border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
               {comingSoonCopy.title}
@@ -112,7 +112,7 @@ export default function TrainingSlugPage({ params }: Props) {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8 text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
             {locale === "sq" ? "Trajnim" : locale === "de" ? "Training" : "Training"}
           </p>
@@ -143,7 +143,7 @@ export default function TrainingSlugPage({ params }: Props) {
       </section>
 
       <section className="py-8 md:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 md:gap-12">
           <AnimateIn>
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
@@ -179,7 +179,7 @@ export default function TrainingSlugPage({ params }: Props) {
       </section>
 
       <section className="py-8 md:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <AnimateIn>
           <div className="flex flex-col items-center gap-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-10">
             <h2 className="text-center text-2xl font-semibold text-gray-900 md:text-3xl">

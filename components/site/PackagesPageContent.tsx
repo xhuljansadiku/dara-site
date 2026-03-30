@@ -99,7 +99,7 @@ export default function PackagesPageContent({ locale }: Props) {
           <div className="absolute right-[-40px] top-40 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8 text-center">
         <AnimateIn delay={0}>
           <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {hero.kicker}
@@ -138,7 +138,7 @@ export default function PackagesPageContent({ locale }: Props) {
 
       {/* FILTER TABS */}
       <section className="py-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
           <div className="flex min-w-full justify-center sm:justify-start">
           <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap sm:w-full sm:flex-wrap">
@@ -164,7 +164,7 @@ export default function PackagesPageContent({ locale }: Props) {
 
       {/* PACKAGES GRID */}
       <section className="py-14 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="space-y-14">
           {visibleGroups.map((groupKey, groupIdx) => {
             const groupPackages = packages[groupKey];
@@ -190,7 +190,7 @@ export default function PackagesPageContent({ locale }: Props) {
 
       {/* CTA */}
       <section className="py-14 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <AnimateIn delay={0}>
           <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
             <h2 className="text-2xl font-semibold leading-snug text-gray-900 md:text-3xl lg:text-4xl">

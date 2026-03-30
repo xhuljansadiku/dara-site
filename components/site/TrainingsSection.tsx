@@ -188,7 +188,7 @@ export default function TrainingsSection({ locale }: Props) {
         aria-hidden
       />
 
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <AnimateIn>

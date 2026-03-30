@@ -259,7 +259,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 rounded-full border border-gray-700 bg-gray-900/50 px-2 py-1 md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-gray-700 bg-gray-900/50 px-2 py-1 lg:flex">
           {items.map((it, idx) => {
             const num = String(idx + 1).padStart(2, "0");
             if (it.href === "/about" && it.hasDropdown) {
@@ -444,7 +444,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="hidden items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700 md:flex"
+              className="hidden items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700 lg:flex"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -466,7 +466,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 md:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 lg:hidden"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -507,14 +507,14 @@ export default function Navbar() {
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] md:inline-flex md:whitespace-nowrap"
+            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] lg:inline-flex lg:whitespace-nowrap"
           >
             {nav.getQuote}
           </Link>
 
           <button
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -525,7 +525,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black/95 backdrop-blur-2xl md:hidden">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black/95 backdrop-blur-2xl lg:hidden">
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {

@@ -158,7 +158,7 @@ export default function MarketingServicesPage({ params }: Props) {
       {/* HERO */}
       <section className="relative overflow-hidden py-16 md:py-24">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(184,157,94,0.12)_0%,transparent_60%)]" aria-hidden />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8 text-center">
           <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
             {hero.kicker}
           </span>
@@ -186,7 +186,7 @@ export default function MarketingServicesPage({ params }: Props) {
       </section>
 
       <section className="py-10 md:py-14">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
               <h2 className="text-2xl font-semibold text-gray-900">{seoContent.title}</h2>
@@ -227,7 +227,7 @@ export default function MarketingServicesPage({ params }: Props) {
 
       {/* 5 SERVICES */}
       <section className="py-12 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid gap-8 md:grid-cols-2">
             {MARKETING_SLUGS.map((slug, idx) => {
               const service = getServiceBySlug(locale, slug);

@@ -195,3 +195,14 @@ select option:focus {
     scroll-margin-top: 88px;
   }
 }
+
+/* Tablet / iPad (~768px–1023px): sticky nav clearance + stable width */
+@media (min-width: 768px) and (max-width: 1023px) {
+  section {
+    scroll-margin-top: 96px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}

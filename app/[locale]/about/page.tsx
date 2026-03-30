@@ -537,7 +537,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
     <>
       {/* HERO - Full-width modern hero */}
       <section className="relative overflow-hidden py-16 sm:py-20 md:py-28 lg:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid items-center gap-10 sm:gap-14 md:gap-16 lg:grid-cols-2 lg:gap-20">
             <div className="relative order-1 text-center lg:order-2 lg:text-left">
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
@@ -606,7 +606,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* PROCESS - Modern grid */}
       <section id="process" className="relative py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
@@ -649,7 +649,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* MISSION & VISION */}
       <section className="relative py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <div className="text-center lg:text-left">
               <AnimateIn delay={0}>
@@ -699,7 +699,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* WHAT MAKES US DIFFERENT */}
       <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
@@ -732,7 +732,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* TARGET AUDIENCE */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="text-center">
             <AnimateIn delay={0}>
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
@@ -822,7 +822,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
       {/* CTA */}
       <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-10 md:p-16 lg:p-20">
             <div className="relative text-center">
               <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">

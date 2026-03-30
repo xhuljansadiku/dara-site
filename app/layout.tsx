@@ -8,6 +8,12 @@ import { SITE_URL } from "@/lib/seo-utils";
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
