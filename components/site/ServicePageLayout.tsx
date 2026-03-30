@@ -38,6 +38,108 @@ const CTA_LABELS: Record<
   },
 };
 
+const LONGFORM_LABELS: Record<
+  Locale,
+  {
+    whatIsThis: string;
+    whyItMatters: string;
+    includedIntro: string;
+    audienceIntro: string;
+    processIntro: string;
+    faqIntro: string;
+    relatedIntro: string;
+  }
+> = {
+  sq: {
+    whatIsThis: "Çfarë është ky shërbim",
+    whyItMatters: "Pse ka rëndësi",
+    includedIntro: "Çdo projekt përshtatet sipas qëllimit, por zakonisht përfshin këto elemente thelbësore:",
+    audienceIntro: "Ky shërbim sjell vlerë sidomos për këto profile biznesi dhe raste përdorimi:",
+    processIntro: "Punojmë me hapa të qartë që nga analiza fillestare deri te dorëzimi dhe optimizimi:",
+    faqIntro: "Këto janë pyetjet që marrim më shpesh para se të nisim bashkëpunimin:",
+    relatedIntro: "Nëse po e vlerëson këtë shërbim, këto faqe janë zakonisht hapi tjetër më relevant:",
+  },
+  en: {
+    whatIsThis: "What is this service",
+    whyItMatters: "Why it matters",
+    includedIntro: "Each scope is tailored to the goal, but these are the core deliverables most projects include:",
+    audienceIntro: "This service tends to create the most value for these business profiles and use cases:",
+    processIntro: "We run the work through clear stages, from discovery to delivery and ongoing improvement:",
+    faqIntro: "These are the questions we answer most often before a project starts:",
+    relatedIntro: "If you are considering this service, these related pages are usually the next useful step:",
+  },
+  de: {
+    whatIsThis: "Was ist diese Leistung",
+    whyItMatters: "Warum sie wichtig ist",
+    includedIntro: "Jeder Umfang wird an das Ziel angepasst, aber diese Bausteine gehören in den meisten Projekten dazu:",
+    audienceIntro: "Diese Leistung schafft besonders viel Wert für folgende Unternehmen und Einsatzfälle:",
+    processIntro: "Wir arbeiten in klaren Phasen, von der Analyse bis zur Umsetzung und Optimierung:",
+    faqIntro: "Das sind die Fragen, die wir vor dem Projektstart am häufigsten beantworten:",
+    relatedIntro: "Wenn Sie diese Leistung prüfen, sind diese Seiten meist der sinnvollste nächste Schritt:",
+  },
+};
+
+function listPreview(items: string[], maxItems = 3) {
+  return items
+    .slice(0, maxItems)
+    .map((item) => item.replace(/\.$/, ""))
+    .join(", ");
+}
+
+function buildNarrativeCopy(locale: Locale, service: ServiceDetail, content: ServicePageContent, subline: string) {
+  const cleanTitle = service.title.replace(/\s*\n\s*/g, " ").trim();
+  const includedPreview = listPreview(content.whatIncluded);
+  const audiencePreview = listPreview(content.whoIsItFor, 2);
+  const benefitsPreview = listPreview(content.benefits, 2);
+  const processPreview = listPreview(content.howWeWork, 2);
+
+  if (locale === "sq") {
+    return {
+      whatIsThis: [
+        `${cleanTitle} është një shërbim i ndërtuar për biznese që duan prezencë më të fortë online, më shumë kërkesa dhe një strukturë më të qartë marketingu. ${service.desc} ${subline}`,
+        `Në praktikë, fokusi nuk është vetëm te dorëzimi teknik, por te ndikimi që faqja, fushata ose asetet krijojnë në shitje dhe perceptim brand-i. Zakonisht puna mbulon ${includedPreview}, që do të thotë se projekti ndërtohet për përdorues realë, jo vetëm për një prezantim estetik.`,
+      ],
+      whyItMatters: [
+        `Ky shërbim ka rëndësi sepse ndihmon biznesin të komunikojë ofertën më qartë, të filtrojë audiencën e duhur dhe të kthejë trafikun në veprim konkret. Për shumë kompani, problemi nuk është mungesa e interesit, por mungesa e një strukture të saktë që e çon vizitorin drejt kontaktit, kërkesës ose blerjes.`,
+        `Rezultati që synojmë zakonisht lidhet me ${benefitsPreview}. Është veçanërisht i vlefshëm për ${audiencePreview}, sepse këto profile kanë nevojë për një kombinim të mirë mes strategjisë, ekzekutimit dhe optimizimit të vazhdueshëm.`,
+      ],
+      supporting: [
+        `Procesi ynë nis me kuptimin e objektivit dhe vazhdon me ${processPreview}. Kjo qasje shmang punën e fragmentuar dhe siguron që çdo hap të lidhet me një objektiv konkret biznesi.`,
+      ],
+    };
+  }
+
+  if (locale === "de") {
+    return {
+      whatIsThis: [
+        `${cleanTitle} ist eine Leistung für Unternehmen, die online stärker auftreten, mehr qualifizierte Anfragen gewinnen und ihre digitale Kommunikation sauber strukturieren möchten. ${service.desc} ${subline}`,
+        `Der Fokus liegt nicht nur auf der technischen Umsetzung, sondern auf dem messbaren Geschäftswert. In den meisten Projekten gehören ${includedPreview} dazu. Damit entsteht keine reine Showcase-Seite, sondern eine Lösung, die auf Sichtbarkeit, Vertrauen und Conversion ausgerichtet ist.`,
+      ],
+      whyItMatters: [
+        `Diese Leistung ist wichtig, weil sie Angebot, Nutzerführung und Conversion sauber verbindet. Viele Unternehmen haben bereits Sichtbarkeit, verlieren aber Potenzial, weil Struktur, Botschaft oder nächste Schritte nicht klar genug sind.`,
+        `Unser Ziel ist meist ${benefitsPreview}. Besonders relevant ist das für ${audiencePreview}, weil diese Profile eine Verbindung aus Strategie, Umsetzung und kontinuierlicher Optimierung brauchen.`,
+      ],
+      supporting: [
+        `Unser Ablauf startet mit der Zielklärung und geht dann über in ${processPreview}. So bleibt das Projekt fokussiert und jeder Schritt trägt zu einem klaren Business-Ziel bei.`,
+      ],
+    };
+  }
+
+  return {
+    whatIsThis: [
+      `${cleanTitle} is a service designed for businesses that want a stronger digital presence, more qualified enquiries, and a clearer path from traffic to conversion. ${service.desc} ${subline}`,
+      `The goal is not just to ship assets or a page, but to create a commercial system that supports visibility, trust, and action. In most projects the scope includes ${includedPreview}, which means the work is structured around real buyer behaviour rather than surface-level presentation.`,
+    ],
+    whyItMatters: [
+      `This service matters because it connects positioning, user experience, and measurable performance. Many businesses already get traffic or attention, but they still lose leads because the offer is unclear, the messaging is weak, or the next step is not obvious enough.`,
+      `The outcome we usually target is ${benefitsPreview}. It is especially relevant for ${audiencePreview}, because those teams need a practical mix of strategy, execution, and ongoing optimisation instead of isolated deliverables.`,
+    ],
+    supporting: [
+      `Our process starts with the business goal and moves through ${processPreview}. That keeps the work aligned to performance instead of turning it into a disconnected design or marketing exercise.`,
+    ],
+  };
+}
+
 function SectionCard({
   id,
   title,
@@ -78,6 +180,8 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
   const related = getRelatedServiceSlugs(slug, 3);
   const servicesList = SERVICE_DETAILS_BY_LOCALE[locale];
   const faqItems = content.faq?.length ? content.faq : DEFAULT_SERVICE_FAQ[locale];
+  const longformLabels = LONGFORM_LABELS[locale];
+  const narrative = buildNarrativeCopy(locale, service, content, subline);
 
   return (
     <>
@@ -160,41 +264,70 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
       </header>
 
       <div className="mx-auto max-w-6xl space-y-16 px-4 py-18 sm:px-6 md:space-y-20 md:py-20 lg:px-8">
+        <SectionCard id="what-is-this" title={longformLabels.whatIsThis}>
+          <div className="rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
+            <div className="space-y-4 text-sm leading-relaxed text-neutral-700 md:text-[15px]">
+              {narrative.whatIsThis.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </SectionCard>
+
+        <SectionCard id="why-it-matters" title={longformLabels.whyItMatters}>
+          <div className="rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
+            <div className="space-y-4 text-sm leading-relaxed text-neutral-700 md:text-[15px]">
+              {narrative.whyItMatters.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              {narrative.supporting.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </SectionCard>
+
         <div className="grid gap-6 md:grid-cols-2 md:gap-8">
           <SectionCard id="included" title={labels.whatIncluded}>
-            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
-              {content.whatIncluded.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#B89D5E]" aria-hidden />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
+              <p className="mb-5 text-sm leading-relaxed text-neutral-600">{longformLabels.includedIntro}</p>
+              <ul className="space-y-3">
+                {content.whatIncluded.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#B89D5E]" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </SectionCard>
 
           <SectionCard id="audience" title={labels.whoIsItFor}>
-            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
-              {content.whoIsItFor.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
-                >
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E]" aria-hidden>
-                    <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
+              <p className="mb-5 text-sm leading-relaxed text-neutral-600">{longformLabels.audienceIntro}</p>
+              <ul className="space-y-3">
+                {content.whoIsItFor.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
+                  >
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E]" aria-hidden>
+                      <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </SectionCard>
         </div>
 
@@ -212,6 +345,7 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
         </SectionCard>
 
         <SectionCard id="process" title={labels.howWeWork}>
+          <p className="mb-5 text-sm leading-relaxed text-neutral-600">{longformLabels.processIntro}</p>
           <ol className="grid gap-4 md:grid-cols-2">
             {content.howWeWork.map((step, i) => (
               <li
@@ -277,6 +411,7 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
         )}
 
         <SectionCard id="faq" title={labels.faq}>
+          <p className="mb-5 text-sm leading-relaxed text-neutral-600">{longformLabels.faqIntro}</p>
           <div className="divide-y divide-neutral-200/90 rounded-3xl border border-neutral-200/90 bg-white shadow-sm ring-1 ring-black/[0.03]">
             {faqItems.map((item) => (
               <details key={item.q} className="group px-5 py-4 md:px-6 md:py-5">
@@ -298,6 +433,7 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
 
         {related.length > 0 && (
           <SectionCard id="related" title={labels.relatedServices}>
+            <p className="mb-5 text-sm leading-relaxed text-neutral-600">{longformLabels.relatedIntro}</p>
             <div className="grid gap-4 sm:grid-cols-3">
               {related.map((relSlug) => {
                 const idx = SERVICE_SLUGS.indexOf(relSlug);

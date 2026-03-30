@@ -6,6 +6,7 @@ import { getServiceBySlug } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
 import type { Metadata } from "next";
 import { use, type ReactNode } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -113,13 +114,76 @@ const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   },
 };
 
+const SEO_CONTENT_BY_LOCALE: Record<
+  Locale,
+  {
+    title: string;
+    paragraphs: string[];
+    faqTitle: string;
+    faqs: { q: string; a: string }[];
+    contact: string;
+    otherServices: string;
+  }
+> = {
+  sq: {
+    title: "Çfarë mbulon ky hub website",
+    paragraphs: [
+      "Kjo faqe shërben si hyrja kryesore për shërbimet e DARA që lidhen me krijim website, web design, landing pages, webshop, SaaS dhe mirëmbajtje website. Në vend që të mbajë përmbajtje të përgjithshme dhe të paqartë, ajo e ndan kërkimin sipas nevojës reale të biznesit dhe të çon te faqja përkatëse e dedikuar.",
+      "Ky dallim është i rëndësishëm sepse një kompani që kërkon një landing page për lead generation nuk ka të njëjtat prioritete me një biznes që kërkon krijim dyqan online ose optimizim të një website ekzistues. Prandaj kjo faqe është ndërtuar si hub me internal links të forta drejt shërbimeve individuale dhe drejt kontaktit.",
+    ],
+    faqTitle: "Pyetje të shpeshta për faqet website",
+    faqs: [
+      { q: "A është kjo faqe e njëjtë me krijim website?", a: "Jo. Kjo është faqe kategori. Secili shërbim si website, e-commerce ose maintenance ka faqen e vet me detaje dhe canonical të veçantë." },
+      { q: "A mund të nis me landing page dhe ta zgjeroj më vonë?", a: "Po. Ky është një rast i zakonshëm dhe ne e planifikojmë strukturën që të mund të zgjerohet." },
+      { q: "Po nëse kam një website ekzistues?", a: "Atëherë zakonisht faqeja Maintenance & Optimization ose një audit fillestar është pika e duhur e nisjes." },
+    ],
+    contact: "Kërko ofertë",
+    otherServices: "Shiko edhe Marketing",
+  },
+  en: {
+    title: "What this website hub covers",
+    paragraphs: [
+      "This page is the main entry point for DARA's website-related services, including website design, landing pages, e-commerce builds, SaaS products, and maintenance. Instead of treating all web needs as one generic offer, it breaks them into clearer paths and routes users to the page that matches the actual business requirement.",
+      "That distinction matters because a company that needs a lead-generation landing page is solving a different problem from a brand launching an online store or a business modernising an existing site. For that reason this page acts as a hub, with stronger internal links into dedicated service pages and into the contact flow.",
+    ],
+    faqTitle: "Website hub FAQ",
+    faqs: [
+      { q: "Is this the same as the website service page?", a: "No. This is a category page. Each service, such as website builds, e-commerce, or maintenance, has its own dedicated page and self-referencing canonical." },
+      { q: "Can we start with a landing page and expand later?", a: "Yes. That is a common route, and we structure the build so it can grow into a broader site." },
+      { q: "What if I already have a website?", a: "Then the maintenance and optimisation page, or a technical audit, is usually the best first step." },
+    ],
+    contact: "Request a quote",
+    otherServices: "Explore Marketing",
+  },
+  de: {
+    title: "Was dieser Website-Hub abdeckt",
+    paragraphs: [
+      "Diese Seite ist der zentrale Einstieg in die Website-Leistungen von DARA: Website-Erstellung, Landingpages, E-Commerce, SaaS und Wartung. Statt alle Anforderungen unter einem generischen Angebot zusammenzufassen, leitet sie den Nutzer in die Detailseite mit der passenden Suchintention weiter.",
+      "Das ist wichtig, weil ein Unternehmen mit Fokus auf Lead-Generierung andere Prioritäten hat als ein Shop-Projekt oder die Modernisierung einer bestehenden Website. Deshalb fungiert diese Seite als Hub mit klaren internen Links zu den einzelnen Leistungsseiten und zur Kontaktanfrage.",
+    ],
+    faqTitle: "FAQ zum Website-Hub",
+    faqs: [
+      { q: "Ist diese Seite identisch mit der Website-Leistungsseite?", a: "Nein. Dies ist eine Kategorieseite. Jede Leistung wie Website, E-Commerce oder Wartung hat ihre eigene Detailseite mit eigener Canonical-URL." },
+      { q: "Kann man mit einer Landingpage starten und später erweitern?", a: "Ja. Das ist ein häufiger Weg, und wir planen die Struktur so, dass sie später ausgebaut werden kann." },
+      { q: "Was, wenn bereits eine Website existiert?", a: "Dann ist meist die Seite Wartung & Optimierung oder ein technisches Audit der richtige Einstieg." },
+    ],
+    contact: "Angebot anfragen",
+    otherServices: "Marketing ansehen",
+  },
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = ["sq", "en", "de"].includes(localeParam)
     ? (localeParam as Locale)
     : "sq";
   const meta = META_BY_LOCALE[locale];
-  return { title: meta.title, description: meta.description };
+  return buildLocalizedMetadata({
+    locale,
+    path: "/services/website",
+    title: meta.title,
+    description: meta.description,
+  });
 }
 
 export default function WebsiteServicesPage({ params }: Props) {
@@ -131,6 +195,7 @@ export default function WebsiteServicesPage({ params }: Props) {
   const hero = HERO_BY_LOCALE[locale];
   const sectionIntro = SECTION_INTRO_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
+  const seoContent = SEO_CONTENT_BY_LOCALE[locale];
 
   return (
     <>
@@ -174,6 +239,46 @@ export default function WebsiteServicesPage({ params }: Props) {
             >
               {hero.allServices}
             </LocaleLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-10 md:py-14">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-3xl border border-stone-200/90 bg-white p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold text-neutral-950">{seoContent.title}</h2>
+              <div className="mt-4 space-y-4 text-sm leading-relaxed text-neutral-600 md:text-[15px]">
+                {seoContent.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-3xl border border-stone-200/90 bg-stone-50 p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold text-neutral-950">{seoContent.faqTitle}</h2>
+              <div className="mt-4 space-y-4">
+                {seoContent.faqs.map((faq) => (
+                  <div key={faq.q}>
+                    <h3 className="text-sm font-semibold text-neutral-950">{faq.q}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-neutral-600">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-col gap-3">
+                <LocaleLink
+                  href="/contact"
+                  className="inline-flex h-11 items-center justify-center rounded-2xl bg-neutral-950 px-6 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                >
+                  {seoContent.contact}
+                </LocaleLink>
+                <LocaleLink
+                  href="/services/marketing"
+                  className="inline-flex h-11 items-center justify-center rounded-2xl border border-stone-300 bg-white px-6 text-sm font-semibold text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50"
+                >
+                  {seoContent.otherServices}
+                </LocaleLink>
+              </div>
+            </div>
           </div>
         </div>
       </section>

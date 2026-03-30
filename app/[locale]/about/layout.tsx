@@ -1,4 +1,4 @@
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+import { SITE_URL } from "@/lib/seo-utils";
 
 export default async function AboutLayout({
   children,
@@ -13,13 +13,13 @@ export default async function AboutLayout({
     "@context": "https://schema.org",
     "@type": "AboutPage",
     name: locale === "sq" ? "Rreth nesh" : locale === "de" ? "Über uns" : "About us",
-    url: `${BASE}/${locale}/about`,
+    url: `${SITE_URL}/${locale}/about`,
     description: "DARA Marketing Agency. Established in 2020. Helping businesses grow through creative strategies and results-oriented marketing.",
     mainEntity: {
       "@type": "Organization",
-      "@id": `${BASE}/#organization`,
+      "@id": `${SITE_URL}/#organization`,
       name: "DARA Marketing Agency",
-      url: BASE,
+      url: SITE_URL,
       foundingDate: "2020",
       description: "We bring brand stories to life through bold strategies and results-oriented marketing.",
     },
@@ -29,8 +29,18 @@ export default async function AboutLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: locale === "sq" ? "Kryefaqe" : locale === "de" ? "Startseite" : "Home", item: `${BASE}/${locale}` },
-      { "@type": "ListItem", position: 2, name: locale === "sq" ? "Rreth nesh" : locale === "de" ? "Über uns" : "About us", item: `${BASE}/${locale}/about` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: locale === "sq" ? "Kryefaqe" : locale === "de" ? "Startseite" : "Home",
+        item: `${SITE_URL}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: locale === "sq" ? "Rreth nesh" : locale === "de" ? "Über uns" : "About us",
+        item: `${SITE_URL}/${locale}/about`,
+      },
     ],
   };
 

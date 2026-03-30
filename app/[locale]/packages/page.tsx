@@ -3,6 +3,7 @@ import PackagesPageContent from "@/components/site/PackagesPageContent";
 import { type Locale } from "@/lib/services-data";
 import type { Metadata } from "next";
 import { use } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
@@ -28,16 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = ["sq", "en", "de"].includes(localeParam) ? (localeParam as Locale) : "sq";
   const meta = META_BY_LOCALE[locale];
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
-  return {
+  return buildLocalizedMetadata({
+    locale,
+    path: "/packages",
     title: meta.title,
     description: meta.description,
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      url: `${base}/${locale}/packages`,
-    },
-  };
+  });
 }
 
 export default function PackagesPage({ params }: Props) {

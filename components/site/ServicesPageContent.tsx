@@ -94,6 +94,59 @@ const CTA_BY_LOCALE: Record<
   },
 };
 
+const SEO_SECTIONS_BY_LOCALE: Record<
+  Locale,
+  {
+    strategyTitle: string;
+    strategyBody: string[];
+    linkingTitle: string;
+    linkingBody: string;
+    exploreMarketing: string;
+    exploreWebsite: string;
+    exploreWork: string;
+  }
+> = {
+  sq: {
+    strategyTitle: "Si i strukturojmë shërbimet",
+    strategyBody: [
+      "Faqja e shërbimeve të DARA është ndërtuar për t'i ndarë qartë nevojat e biznesit në dy drejtime kryesore: marketing dhe website. Kjo e bën më të thjeshtë për Google dhe për vizitorin të kuptojnë nëse kompania ka nevojë për krijim website, web design, dyqan online, mirëmbajtje website, rrjete sociale, branding apo reklama Meta & Google.",
+      "Në vend që të fusim çdo gjë në një faqe të vetme, ne i lidhim shërbimet me faqe të dedikuara, me përmbajtje specifike për çdo rast përdorimi. Kjo na ndihmon të shmangim përmbajtjen e hollë, të përmirësojmë internal linking dhe të çojmë përdoruesin drejt faqes që i përgjigjet më mirë qëllimit të tij.",
+    ],
+    linkingTitle: "Nga kjo faqe ku duhet të vazhdosh",
+    linkingBody:
+      "Nëse po kërkon rritje përmes përmbajtjes, reklamave ose strategjisë, nis te grupi Marketing. Nëse ke nevojë për krijim website, landing page, webshop ose optimizim teknik, vazhdo te grupi Website. Për të parë projekte reale dhe shembuj pune, portfolio është hapi tjetër më i mirë.",
+    exploreMarketing: "Shiko faqen Marketing",
+    exploreWebsite: "Shiko faqen Website",
+    exploreWork: "Shiko portfolio",
+  },
+  en: {
+    strategyTitle: "How we structure our services",
+    strategyBody: [
+      "The DARA services page is organised around two practical growth tracks: marketing services and website services. That makes it easier for both search engines and potential clients to understand whether the need is social media management, content creation, branding, Meta and Google Ads, website design, e-commerce development, or ongoing maintenance.",
+      "Instead of collapsing everything into one generic page, we route users into dedicated service hubs and detailed pages with clearer intent. This improves internal linking, reduces thin overlap, and helps each service rank for a more specific set of keywords and business problems.",
+    ],
+    linkingTitle: "Where to go next from here",
+    linkingBody:
+      "If your main challenge is lead generation, visibility, creative production, or campaign strategy, the marketing hub is the right next step. If you need a website, landing page, webshop, SaaS product, or technical optimisation, go to the website hub. If you want proof of delivery, the work page is the strongest supporting route.",
+    exploreMarketing: "Explore Marketing",
+    exploreWebsite: "Explore Website",
+    exploreWork: "View work",
+  },
+  de: {
+    strategyTitle: "Wie wir unsere Leistungen strukturieren",
+    strategyBody: [
+      "Die Leistungsseite von DARA ist in zwei klare Wachstumsbereiche gegliedert: Marketing-Leistungen und Website-Leistungen. So verstehen Suchmaschinen und Interessenten schneller, ob der Bedarf eher bei Social Media, Content, Branding, Meta- und Google-Ads oder bei Website-Erstellung, E-Commerce und technischer Wartung liegt.",
+      "Statt alles auf einer generischen Seite zu bündeln, führen wir Nutzer auf spezialisierte Hub-Seiten und Detailseiten mit klarerer Suchintention. Das stärkt die interne Verlinkung, reduziert inhaltliche Überschneidungen und hilft jeder Seite, für präzisere Keywords und konkrete Business-Ziele sichtbar zu werden.",
+    ],
+    linkingTitle: "Sinnvolle nächste Schritte",
+    linkingBody:
+      "Wenn Ihre Herausforderung eher bei Leads, Sichtbarkeit, Kampagnen oder Content liegt, ist die Marketing-Seite der richtige nächste Schritt. Wenn Sie eine Website, Landingpage, einen Shop, ein SaaS-Produkt oder technische Optimierung brauchen, gehen Sie zur Website-Seite. Für echte Projektbeispiele ist die Referenzseite der beste Anschluss.",
+    exploreMarketing: "Marketing ansehen",
+    exploreWebsite: "Website ansehen",
+    exploreWork: "Referenzen ansehen",
+  },
+};
+
 type Props = {
   locale: Locale;
 };
@@ -102,6 +155,7 @@ export default function ServicesPageContent({ locale }: Props) {
   const [activeFilter, setActiveFilter] = useState<number>(0);
   const hero = HERO_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
+  const seoSections = SEO_SECTIONS_BY_LOCALE[locale];
   const services = SERVICE_DETAILS_BY_LOCALE[locale];
   const filterTabs = FILTER_TABS_BY_LOCALE[locale];
 
@@ -185,6 +239,46 @@ export default function ServicesPageContent({ locale }: Props) {
             ))}
           </div>
         </div>
+        </div>
+      </section>
+
+      <section className="py-8 md:py-10">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold text-gray-900">{seoSections.strategyTitle}</h2>
+              <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-600 md:text-[15px]">
+                {seoSections.strategyBody.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 shadow-sm">
+              <h2 className="text-2xl font-semibold text-gray-900">{seoSections.linkingTitle}</h2>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-[15px]">{seoSections.linkingBody}</p>
+              <div className="mt-6 flex flex-col gap-3">
+                <LocaleLink
+                  href="/services/marketing"
+                  className="inline-flex h-12 items-center justify-center rounded-2xl bg-gray-900 px-6 text-sm font-semibold text-white transition hover:bg-gray-800"
+                >
+                  {seoSections.exploreMarketing}
+                </LocaleLink>
+                <LocaleLink
+                  href="/services/website"
+                  className="inline-flex h-12 items-center justify-center rounded-2xl border border-gray-300 bg-white px-6 text-sm font-semibold text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
+                >
+                  {seoSections.exploreWebsite}
+                </LocaleLink>
+                <LocaleLink
+                  href="/work"
+                  className="inline-flex h-12 items-center justify-center rounded-2xl border border-gray-300 bg-white px-6 text-sm font-semibold text-gray-900 transition hover:border-gray-900 hover:bg-gray-50"
+                >
+                  {seoSections.exploreWork}
+                </LocaleLink>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

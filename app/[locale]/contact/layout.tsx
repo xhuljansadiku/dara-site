@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+import { buildLocalizedMetadata, SITE_URL, type SiteLocale } from "@/lib/seo-utils";
 
 export async function generateMetadata({
   params,
@@ -8,6 +7,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as SiteLocale;
   const titles: Record<string, string> = {
     sq: "Kontakt | DARA Marketing Agency",
     en: "Contact | DARA Marketing Agency",
@@ -18,17 +18,12 @@ export async function generateMetadata({
     en: "Contact DARA Marketing Agency for a quote, audit or growth plan. We help businesses grow with digital marketing strategies.",
     de: "Kontaktieren Sie DARA Marketing Agency für ein Angebot, Audit oder Wachstumsplan. Wir helfen Unternehmen mit digitalem Marketing zu wachsen.",
   };
-  const title = titles[locale] ?? titles.en;
-  const description = descriptions[locale] ?? descriptions.en;
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: `${BASE}/${locale}/contact`,
-    },
-  };
+  return buildLocalizedMetadata({
+    locale: currentLocale,
+    path: "/contact",
+    title: titles[currentLocale] ?? titles.en,
+    description: descriptions[currentLocale] ?? descriptions.en,
+  });
 }
 
 export default function ContactLayout({
@@ -55,14 +50,14 @@ async function ContactStructuredData({
 
   const contactSchema = {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
+      "@type": "ContactPage",
     name: locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact",
-    url: `${BASE}/${locale}/contact`,
+    url: `${SITE_URL}/${locale}/contact`,
     mainEntity: {
       "@type": "LocalBusiness",
-      "@id": `${BASE}/#organization`,
+      "@id": `${SITE_URL}/#organization`,
       name: "DARA Marketing Agency",
-      url: BASE,
+      url: SITE_URL,
       telephone: "+355688009988",
       email: "daramarketing.eu@gmail.com",
       address: {
@@ -78,8 +73,8 @@ async function ContactStructuredData({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: locale === "sq" ? "Kryefaqe" : locale === "de" ? "Startseite" : "Home", item: `${BASE}/${locale}` },
-      { "@type": "ListItem", position: 2, name: locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact", item: `${BASE}/${locale}/contact` },
+      { "@type": "ListItem", position: 1, name: locale === "sq" ? "Kryefaqe" : locale === "de" ? "Startseite" : "Home", item: `${SITE_URL}/${locale}` },
+      { "@type": "ListItem", position: 2, name: locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact", item: `${SITE_URL}/${locale}/contact` },
     ],
   };
 

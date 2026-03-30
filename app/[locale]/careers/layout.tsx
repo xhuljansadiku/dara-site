@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { type Locale } from "@/lib/services-data";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
@@ -22,7 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = ["sq", "en", "de"].includes(localeParam) ? (localeParam as Locale) : "sq";
   const meta = META_BY_LOCALE[locale];
-  return { title: meta.title, description: meta.description };
+  return buildLocalizedMetadata({
+    locale,
+    path: "/careers",
+    title: meta.title,
+    description: meta.description,
+  });
 }
 
 export default function CareersLayout({ children }: { children: React.ReactNode }) {

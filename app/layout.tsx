@@ -1,19 +1,17 @@
-// app/layout.tsx - Root layout (no locale)
 import "./globals.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Montserrat, Oswald } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
+import { SITE_URL } from "@/lib/seo-utils";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "DARA · Dare to be Different",
+    default: "DARA Â· Dare to be Different",
     template: "%s | DARA Marketing Agency",
   },
   description:
@@ -25,14 +23,14 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: SITE_URL,
     siteName: "DARA Marketing Agency",
-    title: "DARA · Dare to be Different",
+    title: "DARA Â· Dare to be Different",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "DARA Marketing Agency" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DARA · Dare to be Different",
+    title: "DARA Â· Dare to be Different",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: ["/opengraph-image"],
@@ -51,12 +49,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={lang} suppressHydrationWarning className={`${montserrat.variable} ${oswald.variable}`}>
       <body className={`min-h-screen bg-[#FFFFFF] text-gray-900 antialiased ${montserrat.className}`} suppressHydrationWarning>
-        <>
-          {children}
-          <Analytics />
-        </>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
 }
-﻿

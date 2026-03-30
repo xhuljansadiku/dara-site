@@ -8,6 +8,7 @@ import {
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { use } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -228,9 +229,12 @@ export function generateMetadata({ params }: Props): Promise<Metadata> {
       : "sq";
     const training = getTrainingBySlug(slug);
     if (!training) return { title: "Training" };
-    return {
+    return buildLocalizedMetadata({
+      locale,
+      path: `/trainings/${slug}`,
       title: training.title[locale],
       description: training.shortDesc[locale],
-    };
+      noIndex: Boolean(training.comingSoon),
+    });
   })();
 }

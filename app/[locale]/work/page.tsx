@@ -1,9 +1,7 @@
-// app/[locale]/work/page.tsx
 import type { Metadata } from "next";
 import WorkContent from "@/components/site/WorkContent";
 import { PROJECTS_BY_LOCALE, WORK_FILTER_TABS_BY_LOCALE } from "@/lib/projects";
-
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
+import { SITE_URL, buildLocalizedMetadata } from "@/lib/seo-utils";
 
 const META_BY_LOCALE: Record<"sq" | "en" | "de", { title: string; description: string }> = {
   sq: {
@@ -29,12 +27,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as "sq" | "en" | "de";
-  const meta = META_BY_LOCALE[l];
-  return {
+  const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as "sq" | "en" | "de";
+  const meta = META_BY_LOCALE[currentLocale];
+
+  return buildLocalizedMetadata({
+    locale: currentLocale,
+    path: "/work",
     title: meta.title,
     description: meta.description,
-  };
+  });
 }
 
 export default async function WorkPage({
@@ -51,8 +52,18 @@ export default async function WorkPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: currentLocale === "sq" ? "Kryefaqe" : currentLocale === "de" ? "Startseite" : "Home", item: `${BASE}/${currentLocale}` },
-      { "@type": "ListItem", position: 2, name: currentLocale === "sq" ? "Punët" : currentLocale === "de" ? "Arbeiten" : "Work", item: `${BASE}/${currentLocale}/work` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: currentLocale === "sq" ? "Kryefaqe" : currentLocale === "de" ? "Startseite" : "Home",
+        item: `${SITE_URL}/${currentLocale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: currentLocale === "sq" ? "Punët" : currentLocale === "de" ? "Arbeiten" : "Work",
+        item: `${SITE_URL}/${currentLocale}/work`,
+      },
     ],
   };
 

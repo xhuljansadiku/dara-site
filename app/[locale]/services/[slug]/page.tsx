@@ -4,7 +4,7 @@ import type { Locale } from "@/lib/services-data";
 import { DEFAULT_SERVICE_FAQ } from "@/lib/service-page-faq";
 import { SERVICE_HERO_SUBLINE } from "@/lib/service-page-extras";
 import { getServicePageContent } from "@/lib/services-page-content";
-import { buildAlternates } from "@/lib/seo-utils";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { use } from "react";
@@ -166,16 +166,14 @@ export function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const sub = SERVICE_HERO_SUBLINE[slug]?.[locale] ?? "";
     const description = [service.desc, sub].filter(Boolean).join(" ").slice(0, 160);
-
-    const { canonical, languages } = buildAlternates(`services/${slug}`, locale);
     const titlePlain = service.title.replace(/\s*\n\s*/g, " ").trim();
     const title = `${titlePlain} | DARA Marketing Agency`;
 
-    return {
+    return buildLocalizedMetadata({
+      locale,
+      path: `/services/${slug}`,
       title,
       description,
-      alternates: { canonical, languages },
-      openGraph: { title, description },
-    };
+    });
   })();
 }

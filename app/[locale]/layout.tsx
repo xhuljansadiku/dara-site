@@ -6,7 +6,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CookieConsentBanner from "@/components/site/CookieConsentBanner";
-import { buildAlternates } from "@/lib/seo-utils";
+import { buildAlternates, stripLocaleFromPathname, type SiteLocale } from "@/lib/seo-utils";
 
 export async function generateMetadata({
   params,
@@ -14,11 +14,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as SiteLocale;
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") ?? "";
-  const pathParts = pathname.split("/").filter(Boolean);
-  const pathRest = pathParts.slice(1).join("/");
-  const { canonical, languages } = buildAlternates(pathRest, locale);
+  const localizedPath = stripLocaleFromPathname(pathname);
+  const { canonical, languages } = buildAlternates(localizedPath, currentLocale);
 
   return {
     alternates: {
@@ -26,8 +26,9 @@ export async function generateMetadata({
       languages,
     },
     openGraph: {
-      locale: locale === "sq" ? "sq_AL" : locale === "de" ? "de_DE" : "en_GB",
-      alternateLocale: locale === "sq" ? ["en_GB", "de_DE"] : locale === "de" ? ["sq_AL", "en_GB"] : ["sq_AL", "de_DE"],
+      locale: currentLocale === "sq" ? "sq_AL" : currentLocale === "de" ? "de_DE" : "en_GB",
+      alternateLocale:
+        currentLocale === "sq" ? ["en_GB", "de_DE"] : currentLocale === "de" ? ["sq_AL", "en_GB"] : ["sq_AL", "de_DE"],
     },
   };
 }

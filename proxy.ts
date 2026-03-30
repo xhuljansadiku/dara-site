@@ -2,13 +2,13 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale } from "./i18n";
 import { routing } from "./i18n/routing";
+import { SITE_URL } from "@/lib/seo-utils";
 
-const intlMiddleware = createMiddleware(routing);
+const intlProxy = createMiddleware(routing);
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname, hostname } = request.nextUrl;
 
-  // 1. www -> non-www 301 redirect (canonical domain, skip localhost)
   if (hostname.startsWith("www.") && !hostname.includes("localhost")) {
     const nonWwwHost = hostname.replace(/^www\./, "");
     const proto = request.nextUrl.protocol;
@@ -16,17 +16,10 @@ export default function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 301);
   }
 
-  // 2. Root path "/" - pass through to app/page.tsx (neutral homepage, no redirect to /en)
   if (pathname === "/") {
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-next-locale", defaultLocale);
-    requestHeaders.set("x-pathname", pathname);
-    return NextResponse.next({
-      request: { headers: requestHeaders },
-    });
+    return NextResponse.redirect(`${SITE_URL}/${defaultLocale}`, 301);
   }
 
-  // 3. All other paths - use intl middleware with localeDetection: false
   const locale = pathname.startsWith("/sq")
     ? "sq"
     : pathname.startsWith("/de")
@@ -43,7 +36,7 @@ export default function middleware(request: NextRequest) {
     headers: requestHeaders,
   });
 
-  return intlMiddleware(modifiedRequest);
+  return intlProxy(modifiedRequest);
 }
 
 export const config = {
