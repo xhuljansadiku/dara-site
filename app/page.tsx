@@ -29,14 +29,17 @@ function ArrowIcon({ className }: { className?: string }) {
 export default function RootPage() {
   return (
     <main className="relative min-h-screen min-h-[100dvh] overflow-hidden bg-[#0a0c10] px-4 py-10 sm:px-6 sm:py-14 md:py-16">
-      {/* Background image */}
-      <img
-        src="/hero-bg-dara.png"
-        alt=""
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-center scale-105 motion-safe:transition-transform motion-safe:duration-[20s] motion-safe:ease-out"
-        aria-hidden
-        fetchPriority="high"
-      />
+      {/* Full-bleed hero: public/hero-bg-dara.png */}
+      <div className="absolute inset-0 -z-10" aria-hidden>
+        <Image
+          src="/hero-bg-dara.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center scale-105 motion-safe:transition-transform motion-safe:duration-[20s] motion-safe:ease-out"
+        />
+      </div>
 
       {/* Cinematic overlays */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_120%_80%_at_50%_-20%,rgba(184,157,94,0.12),transparent_55%)]" aria-hidden />
