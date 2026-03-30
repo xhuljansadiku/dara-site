@@ -112,12 +112,12 @@ export default function RootPage() {
             </div>
           </div>
 
-          <div className="mt-12 grid w-full max-w-4xl gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-5">
+          <div className="mt-12 grid w-full max-w-4xl grid-cols-3 gap-2 sm:mt-14 sm:gap-5">
             {LANGUAGE_OPTIONS.map((option, i) => (
               <Link
                 key={option.href}
                 href={option.href}
-                className={`animate-fade-in-up group relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.07] p-6 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] sm:text-left backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B89D5E]/75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c10] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[#B89D5E]/45 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_32px_70px_-30px_rgba(184,157,94,0.22)] ${
+                className={`animate-fade-in-up group relative min-w-0 overflow-hidden rounded-[1rem] border border-white/12 bg-white/[0.07] p-3 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.55)] backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B89D5E]/75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c10] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[#B89D5E]/45 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_32px_70px_-30px_rgba(184,157,94,0.22)] sm:rounded-[1.35rem] sm:p-6 sm:text-left ${
                   i === 0
                     ? "animate-fade-in-up-delay-4"
                     : i === 1
@@ -134,16 +134,16 @@ export default function RootPage() {
                   }}
                 />
                 <div className="relative flex items-center justify-center gap-3 sm:items-start sm:justify-between">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-black/25 font-display text-sm font-bold tracking-widest text-[#d4c49a] transition group-hover:border-[#B89D5E]/40 group-hover:text-white">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-black/25 font-display text-[10px] font-bold tracking-widest text-[#d4c49a] transition group-hover:border-[#B89D5E]/40 group-hover:text-white sm:h-11 sm:w-11 sm:rounded-2xl sm:text-sm">
                     {option.code}
                   </span>
                   <ArrowIcon className="mt-1 hidden shrink-0 text-white/25 transition group-hover:translate-x-0.5 group-hover:text-[#B89D5E] sm:block" />
                 </div>
-                <div className="relative mt-5 text-center sm:text-left">
-                  <div className="font-display text-xl font-semibold tracking-tight text-white md:text-[1.35rem]">
+                <div className="relative mt-2 text-center sm:mt-5 sm:text-left">
+                  <div className="font-display text-[0.8125rem] font-semibold leading-tight tracking-tight text-white sm:text-xl md:text-[1.35rem]">
                     {option.label}
                   </div>
-                  <div className="mt-2 text-sm leading-snug text-white/55">{option.note}</div>
+                  <div className="mt-1.5 text-[10px] leading-snug text-white/55 sm:mt-2 sm:text-sm">{option.note}</div>
                 </div>
               </Link>
             ))}
