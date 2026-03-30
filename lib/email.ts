@@ -5,7 +5,7 @@
  */
 import nodemailer from "nodemailer";
 
-const TO_EMAIL = "daramarketing.eu@gmail.com";
+const TO_EMAIL = process.env.NOTIFICATION_TO_EMAIL ?? process.env.SMTP_USER ?? "daramarketing.eu@gmail.com";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST ?? "smtp.gmail.com",
@@ -61,6 +61,7 @@ export async function sendLeadNotification(lead: {
     await transporter.sendMail({
       from: FROM_EMAIL,
       to: TO_EMAIL,
+      replyTo: lead.email,
       subject: `[DARA] Lead i ri: ${lead.name}`,
       html,
     });
@@ -184,6 +185,7 @@ export async function sendNewsletterNotification(email: string, isNew: boolean):
     await transporter.sendMail({
       from: FROM_EMAIL,
       to: TO_EMAIL,
+      replyTo: email,
       subject,
       html,
     });

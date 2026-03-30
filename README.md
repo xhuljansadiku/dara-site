@@ -35,15 +35,19 @@ Copy `.env.example` to `.env.local` and configure:
 
 | Variable | Purpose |
 |----------|---------|
-| `RESEND_API_KEY` | Email notifications for leads (Resend) |
-| `RESEND_FROM_EMAIL` | Sender address (verify domain in Resend) |
+| `SMTP_HOST` | SMTP server host (e.g. `smtp.gmail.com`) |
+| `SMTP_PORT` | SMTP server port (e.g. `587`) |
+| `SMTP_USER` | SMTP username / inbox address |
+| `SMTP_PASS` | SMTP password or app password |
+| `SMTP_FROM_EMAIL` | Sender shown in outgoing emails |
+| `NOTIFICATION_TO_EMAIL` | Inbox that receives lead/job/newsletter notifications |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA v3 site key |
 | `RECAPTCHA_SECRET_KEY` | reCAPTCHA v3 secret key |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Plausible Analytics domain |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID |
 | `NEXT_PUBLIC_SITE_URL` | Base URL for sitemap/OG (e.g. https://dara.al) |
 
-Without `RESEND_API_KEY`, leads are saved to `data/leads.json` only (no email). Without reCAPTCHA keys, captcha is skipped.
+Without `SMTP_USER` and `SMTP_PASS`, leads are saved to `data/leads.json` only (no email). Without reCAPTCHA keys, captcha is skipped.
 
 ## Deploy on Vercel
 
