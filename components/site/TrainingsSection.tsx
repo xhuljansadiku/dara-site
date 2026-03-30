@@ -173,7 +173,7 @@ export default function TrainingsSection({ locale }: Props) {
   }, [next, isPaused]);
 
   return (
-    <section id="trainings" className="relative overflow-hidden py-20 md:py-28">
+    <section id="trainings" className="relative overflow-hidden py-16 md:py-28">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_40%,#fafafa_100%)]"
         aria-hidden
@@ -227,7 +227,7 @@ export default function TrainingsSection({ locale }: Props) {
         </AnimateIn>
 
         {/* Training cards: equal height (grid stretch) + header block min-heights so list icons align across cards */}
-        <div className="mt-16 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-1 lg:gap-6 xl:gap-8">
+        <div className="mt-14 grid min-h-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-1 lg:gap-6 xl:gap-8">
           {TRAININGS.map((training, idx) => {
             const isDisabled = training.comingSoon;
             return (
@@ -277,14 +277,14 @@ export default function TrainingsSection({ locale }: Props) {
                       </p>
                     </div>
                     <div className="mt-5 flex min-h-0 flex-1 flex-col">
-                      <ul className="flex flex-col gap-2.5">
+                      <ul className="mx-auto flex max-w-[17rem] flex-col gap-2.5 text-left sm:mx-0 sm:max-w-none">
                         {training.highlights[locale].map((item) => (
                           <li
                             key={item}
-                            className="flex flex-col items-center gap-2 text-sm leading-snug text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left"
+                            className="flex items-start gap-3 text-sm leading-snug text-neutral-700"
                           >
                             <span
-                              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25 sm:self-start"
+                              className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"
                               aria-hidden
                             >
                               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden>

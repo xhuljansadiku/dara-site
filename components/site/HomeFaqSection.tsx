@@ -27,7 +27,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
   const viewAll = locale === "sq" ? "Shiko të gjitha" : locale === "de" ? "Alle anzeigen" : "View all";
 
   return (
-    <section {...(!isPage ? { id: "faq" } : {})} className="relative overflow-hidden py-14 md:py-24">
+    <section {...(!isPage ? { id: "faq" } : {})} className="relative overflow-hidden py-16 md:py-24">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
         aria-hidden
@@ -50,12 +50,12 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
         <div
           className={
             isPage
-              ? "mb-10"
+              ? "mb-10 text-center"
               : "mb-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left"
           }
         >
-          <div className={isPage ? "" : "w-full sm:w-auto"}>
-            <span className={`inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 ${!isPage ? "justify-center sm:justify-start" : ""}`}>
+          <div className={isPage ? "mx-auto max-w-2xl" : "w-full sm:w-auto"}>
+            <span className={`inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 ${isPage ? "justify-center" : "justify-center sm:justify-start"}`}>
               <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               FAQ
             </span>
@@ -68,7 +68,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
             >
               {title}
             </TitleTag>
-            <p className={`mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 ${!isPage ? "mx-auto sm:mx-0" : ""}`}>{subtitle}</p>
+            <p className={`mt-4 max-w-xl text-[15px] leading-relaxed text-neutral-600 ${isPage ? "mx-auto" : "mx-auto sm:mx-0"}`}>{subtitle}</p>
           </div>
           {!isPage && (
             <LocaleLink
@@ -121,7 +121,7 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="border-t border-neutral-100 px-5 py-4 text-center text-[15px] leading-relaxed text-neutral-600 sm:text-left md:px-6">
+                  <div className="border-t border-neutral-100 px-5 py-4 text-left text-[15px] leading-relaxed text-neutral-600 md:px-6">
                     {faq.a}
                   </div>
                 )}

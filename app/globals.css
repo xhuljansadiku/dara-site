@@ -181,3 +181,17 @@ select option:focus {
 }
 
 /* Mobile-first: prefer centered copy and full-width CTAs via Tailwind on sections (max-sm:, md:, lg:). */
+
+@media (max-width: 767px) {
+  html {
+    font-size: 15.5px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  section {
+    scroll-margin-top: 88px;
+  }
+}

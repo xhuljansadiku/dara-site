@@ -240,19 +240,19 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-800/80 bg-gray-900/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 py-2 md:h-20">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-3 px-3 py-2 sm:px-4 md:h-20">
         {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
-        <Link href={`/${locale}`} className="flex items-center gap-3" onClick={() => setOpen(false)}>
+        <Link href={`/${locale}`} className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setOpen(false)}>
           <div className="flex flex-col items-center gap-0.5">
             <Image
               src="/logo.png"
               alt="DARA"
               width={150}
               height={48}
-              className="h-9 w-auto object-contain sm:h-10 md:h-11"
+              className="h-8 w-auto object-contain sm:h-10 md:h-11"
               priority
             />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.16em] text-gray-400 sm:text-[10px]">
+            <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] text-gray-400 sm:text-[10px]">
               {nav.tagline}
             </span>
           </div>
@@ -466,7 +466,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setLangDropdownOpen((o) => !o)}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 md:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 md:hidden"
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
               aria-label={nav.language}
@@ -477,7 +477,7 @@ export default function Navbar() {
                   alt=""
                   width={28}
                   height={21}
-                  className="h-[18px] w-7 rounded-sm object-cover"
+                  className="h-5 w-7 rounded-sm object-cover"
                 />
               )}
             </button>
@@ -514,7 +514,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -525,7 +525,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black md:hidden">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black/95 backdrop-blur-2xl md:hidden">
           <div className="mx-auto max-w-7xl px-4 py-5">
             <div className="grid gap-2">
               {items.map((it) => {

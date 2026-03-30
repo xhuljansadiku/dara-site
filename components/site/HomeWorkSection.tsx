@@ -59,7 +59,7 @@ export default function HomeWorkSection({ locale }: Props) {
         : "From strategy and social media to brand and training. A selection of what we deliver.";
 
   return (
-    <section id="work" className="relative overflow-hidden py-14 md:py-24">
+    <section id="work" className="relative overflow-hidden py-16 md:py-24">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
         aria-hidden
@@ -118,10 +118,10 @@ export default function HomeWorkSection({ locale }: Props) {
           </LocaleLink>
         </div>
 
-        <div className="mt-8 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-full justify-center sm:justify-start">
+        <div className="mt-8 w-full overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-full justify-start sm:justify-start">
           <div
-            className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
+            className="inline-flex min-w-min flex-nowrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm sm:flex-wrap"
             role="tablist"
           >
             {filterTabs.map((tab) => (
@@ -156,7 +156,7 @@ export default function HomeWorkSection({ locale }: Props) {
       )}
 
       {displayCardProjects.length > 0 && (
-        <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-10 grid min-h-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {displayCardProjects.map((p) => (
             <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
           ))}

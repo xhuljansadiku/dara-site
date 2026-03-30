@@ -538,7 +538,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
       <section className="relative overflow-hidden py-16 sm:py-20 md:py-28 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 sm:gap-14 md:gap-16 lg:grid-cols-2 lg:gap-20">
-            <div className="relative order-1 lg:order-2">
+            <div className="relative order-1 text-center lg:order-2 lg:text-left">
               <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                 {hero.kicker}
               </span>
@@ -558,21 +558,21 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               </h1>
               <div className="mt-8 space-y-5 text-base leading-relaxed text-gray-600 md:text-lg">
                 {hero.paragraphs.map((p, idx) => (
-                  <p key={idx} className="max-w-xl">{p}</p>
+                  <p key={idx} className="mx-auto max-w-xl lg:mx-0">{p}</p>
                 ))}
               </div>
 
               {/* Stats - horizontal bar */}
-              <div className="mt-10 flex flex-wrap gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:gap-10 md:p-8">
+              <div className="mt-10 flex flex-wrap justify-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:gap-10 md:p-8 lg:justify-start">
                 {hero.stats.map((s) => (
-                  <div key={s.k} className="flex flex-col">
+                  <div key={s.k} className="flex flex-col text-center lg:text-left">
                     <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-500">{s.k}</span>
                     <span className="mt-1 text-lg font-bold text-gray-900 md:text-xl">{s.v}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
                 <LocaleLink
                   href="/contact"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
@@ -630,15 +630,15 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {process.steps.map((step, idx) => (
               <AnimateIn key={step.n} delay={idx * 80}>
-                <div className="card card-lift group relative flex h-full flex-col overflow-hidden p-6">
-                  <div className="mb-4 flex items-center gap-3">
+                <div className="card card-lift group relative flex h-full flex-col overflow-hidden p-6 text-center lg:text-left">
+                  <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900 text-sm font-bold text-white">
                       {step.n}
                     </span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600">{step.desc}</p>
-                  <ul className="mt-6 space-y-2">
+                  <ul className="mx-auto mt-6 max-w-[16rem] space-y-2 text-left lg:mx-0 lg:max-w-none">
                     {step.bullets.map((bullet) => (
                       <li key={bullet} className="flex items-center gap-2 text-xs text-gray-600">
                         <span className="h-1 w-1 shrink-0 rounded-full bg-gray-400" />
@@ -657,7 +657,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
       <section className="relative py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <div>
+            <div className="text-center lg:text-left">
               <AnimateIn delay={0}>
                 <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
                   {missionVision.sectionTitle}
@@ -672,9 +672,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
               <AnimateIn delay={150}>
-                <div className="card card-lift relative overflow-hidden p-8">
+                <div className="card card-lift relative overflow-hidden p-8 text-center lg:text-left">
                   <div className="relative">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900 mx-auto lg:mx-0">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
@@ -685,9 +685,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 </div>
               </AnimateIn>
               <AnimateIn delay={200}>
-                <div className="card card-lift relative overflow-hidden p-8">
+                <div className="card card-lift relative overflow-hidden p-8 text-center lg:text-left">
                   <div className="relative">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900 mx-auto lg:mx-0">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -723,8 +723,8 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {differentiators.items.map((d, idx) => (
               <AnimateIn key={d.title} delay={idx * 60}>
-                <div className="card card-lift group relative flex h-full flex-col p-6">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 text-white transition group-hover:bg-gray-800">
+                <div className="card card-lift group relative flex h-full flex-col p-6 text-center">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 text-white transition group-hover:bg-gray-800 mx-auto">
                     <span className="text-lg font-bold">{idx + 1}</span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">{d.title}</h3>
@@ -756,9 +756,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           <div className="mt-16 space-y-6">
             <div className="grid gap-6 sm:grid-cols-2">
               <AnimateIn delay={150}>
-                <div className="card h-full p-6">
+                <div className="card h-full p-6 text-center">
                   <h3 className="text-lg font-semibold text-gray-900">{target.idealTitle}</h3>
-                  <ul className="mt-4 space-y-3">
+                  <ul className="mx-auto mt-4 max-w-[17rem] space-y-3 text-left lg:mx-0 lg:max-w-none">
                     {target.idealItems.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm text-gray-600">
                         <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
@@ -769,9 +769,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 </div>
               </AnimateIn>
               <AnimateIn delay={200}>
-                <div className="card h-full p-6">
+                <div className="card h-full p-6 text-center">
                   <h3 className="text-lg font-semibold text-gray-900">{target.localTitle}</h3>
-                  <ul className="mt-4 space-y-3">
+                  <ul className="mx-auto mt-4 max-w-[17rem] space-y-3 text-left lg:mx-0 lg:max-w-none">
                     {target.localItems.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm text-gray-600">
                         <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
@@ -783,9 +783,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               </AnimateIn>
             </div>
             <AnimateIn delay={250}>
-              <div className="card p-6">
+              <div className="card p-6 text-center">
                 <h3 className="text-lg font-semibold text-gray-900">{target.industriesTitle}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap justify-center gap-2">
                   {target.industriesItems.map((item) => (
                     <span
                       key={item}
@@ -800,9 +800,9 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           </div>
 
           <AnimateIn delay={300}>
-            <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
-              <div className="grid gap-8 md:grid-cols-2">
-                <div className="flex items-start gap-4">
+              <div className="mt-8 rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-10">
+                <div className="grid gap-8 md:grid-cols-2">
+                <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-start md:text-left">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900">
                     <span className="text-lg font-bold text-white">B2B</span>
                   </div>
@@ -811,7 +811,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                     <p className="mt-2 text-gray-600">{target.b2bDesc}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
+                <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-start md:text-left">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-900">
                     <span className="text-lg font-bold text-white">B2C</span>
                   </div>

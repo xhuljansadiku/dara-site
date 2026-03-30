@@ -28,7 +28,7 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
 
   return (
     <div
-      className={`group relative flex min-h-[340px] flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:-translate-y-1 ${shell}`}
+      className={`group relative flex min-h-[356px] flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300 hover:-translate-y-1 ${shell}`}
     >
       {/* Header strip */}
       <div className="flex items-center justify-center border-b border-neutral-100 bg-neutral-50/90 px-5 py-3.5 md:justify-start">
@@ -37,7 +37,7 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 text-center md:p-6 md:text-left">
+      <div className="flex flex-1 flex-col p-6 text-center md:p-6 md:text-left">
         {pkg.badge && (
           <div className="mb-3 flex justify-center">
             <span
@@ -64,9 +64,9 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
           <span className="text-lg font-bold text-neutral-950">{pkg.price}</span>
         </div>
 
-        <ul className="mt-6 flex-1 space-y-3">
+        <ul className="mx-auto mt-6 flex-1 max-w-[17rem] space-y-3 text-left md:mx-0 md:max-w-none">
           {pkg.points.map((point, idx) => (
-            <li key={point} className="flex flex-col items-center gap-2 text-sm text-neutral-600 md:flex-row md:items-start md:gap-3 md:text-left">
+            <li key={point} className="flex items-start gap-3 text-sm text-neutral-600">
               <span
                 className="animate-package-check-pop mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-white ring-1 ring-neutral-950/10"
                 style={{ animationDelay: `${80 + idx * 55}ms` }}

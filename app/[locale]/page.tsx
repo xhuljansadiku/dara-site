@@ -499,7 +499,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO - Trifid style: full viewport, bold typography + readability scrim */}
-      <section className="relative flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-20 sm:px-6 sm:py-24 md:py-32">
+      <section className="relative flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 sm:py-24 md:py-32">
         <img
           src="/hero-bg-dara.png"
           alt=""
@@ -520,17 +520,17 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden
         />
         <div className="relative z-10 mx-auto w-full max-w-5xl text-center lg:text-left">
-          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.35em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
+          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
             {hero.kicker}
           </p>
-          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-5xl font-bold leading-[0.95] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-[3.35rem] font-bold leading-[0.92] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             {hero.titleA}{" "}
             <span className="block text-[#B89D5E] [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">{hero.titleB}</span>
           </h1>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-10 max-w-2xl text-base leading-relaxed text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] lg:mx-0 md:text-lg lg:text-xl">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-8 max-w-[38rem] text-[15px] leading-[1.75] text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] lg:mx-0 md:text-lg lg:text-xl">
             {hero.desc}
           </p>
-          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-14 flex w-full max-w-xl flex-col gap-3 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
+          <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-12 flex w-full max-w-xl flex-col gap-3 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
             <LocaleLink
               href="/contact"
               className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-white bg-white px-8 py-0 text-sm font-semibold text-black shadow-[0_8px_32px_-4px_rgba(0,0,0,0.45)] transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_12px_40px_-4px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
@@ -544,7 +544,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
-          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-10 max-w-xl text-sm font-medium leading-snug text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] lg:mx-0">
+          <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-9 max-w-xl text-sm font-medium leading-[1.65] text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] lg:mx-0">
             {hero.socialProof.beforeLink}
             <br className="md:hidden" aria-hidden />
             <span className="hidden md:inline"> </span>
@@ -560,7 +560,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
         <a
           href="#about"
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-xs font-medium tracking-wider text-white/85 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
+          className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-[11px] font-medium tracking-wider text-white/85 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
           aria-label={hero.scrollHint}
         >
           {hero.scrollHint}
@@ -571,7 +571,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* Marquee banner - Trifid style */}
-      <section className="relative py-6 overflow-hidden border-y border-gray-200">
+      <section className="relative overflow-hidden border-y border-gray-200 py-5 md:py-6">
         <div className="animate-marquee flex w-max gap-16">
           {[...Array(8)].map((_, i) => {
             const m = MARQUEE_BY_LOCALE[locale];
@@ -591,8 +591,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#B89D5E]/30 to-transparent"
           aria-hidden
         />
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 text-center md:mb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-10 text-center md:mb-16">
             <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#8a7344]">
               {pillarsHeader.kicker}
             </p>
@@ -607,10 +607,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             )}
           </div>
           {/* sm/md: 2 kolona; lg+: 4 në një rresht me flex (grid-cols-4 nuk respektohej në disa raste) */}
-          <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
             {pillars.map((pillar, idx) => (
                 <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0 lg:min-w-0 lg:flex-1">
-                  <div className="group flex h-full min-h-0 flex-col items-center text-center md:items-stretch md:text-left rounded-2xl border border-stone-200/90 bg-white/90 p-8 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:p-9">
+                  <div className="group flex h-full min-h-0 flex-col items-center rounded-2xl border border-stone-200/90 bg-white/90 p-7 text-center shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:items-stretch md:p-9 md:text-left">
                     <ValuePillarIcon index={idx} />
                     <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
                       {pillar.title}
@@ -760,7 +760,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       <HomeTeamSection locale={locale} />
 
       {/* KARRIERË / CAREERS */}
-      <section id="careers" className="relative overflow-hidden py-20 md:py-28">
+      <section id="careers" className="relative overflow-hidden py-16 md:py-28">
         <div
           className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
           aria-hidden
@@ -844,7 +844,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       <HomeFaqSection locale={locale} />
 
       {/* CTA Section - Professional */}
-      <section className="relative py-20 md:py-28" aria-labelledby="cta-heading">
+      <section className="relative py-16 md:py-28" aria-labelledby="cta-heading">
         <div
           className="pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:linear-gradient(180deg,white,transparent)]"
           style={{
@@ -861,7 +861,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-[#B89D5E]/12 blur-3xl"
             aria-hidden
           />
-          <div className="relative z-10 px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
+          <div className="relative z-10 px-5 py-10 md:px-12 md:py-16 lg:px-16 lg:py-20">
             <div className="grid gap-14 text-center lg:grid-cols-2 lg:gap-20 lg:text-left">
               {/* Left - CTA */}
               <div>

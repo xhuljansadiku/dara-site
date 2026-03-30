@@ -33,7 +33,7 @@ export default function HomeTeamSection({ locale }: Props) {
     locale === "sq" ? "Më shumë rreth ekipit" : locale === "de" ? "Mehr über das Team" : "More about the team";
 
   return (
-    <section id="team" className="relative overflow-hidden py-20 md:py-28">
+    <section id="team" className="relative overflow-hidden py-16 md:py-28">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
         aria-hidden
@@ -85,7 +85,7 @@ export default function HomeTeamSection({ locale }: Props) {
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-y-20">
+        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-y-20">
           {members.map((member, index) => (
             <div
               key={member.name}

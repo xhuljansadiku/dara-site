@@ -48,15 +48,15 @@ export default async function TermsPage({
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#B89D5E]/12 blur-3xl" />
         </div>
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 text-center sm:px-6 md:text-left lg:px-8">
           <span className="inline-flex items-center rounded-full border border-[#B89D5E]/30 bg-[#B89D5E]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#6b5a38]">
             {l === "sq" ? "Kushte" : l === "de" ? "AGB" : "Terms"}
           </span>
           <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-neutral-950 md:text-5xl">
             {meta.h1}
           </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-neutral-600">{meta.intro}</p>
-          <div className="mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent" />
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-neutral-600 md:mx-0">{meta.intro}</p>
+          <div className="mx-auto mt-8 h-px w-16 rounded-full bg-gradient-to-r from-[#B89D5E] to-transparent md:mx-0" />
         </div>
       </section>
 

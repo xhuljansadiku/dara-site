@@ -49,7 +49,7 @@ const FOOTER_BY_LOCALE: Record<
       contact: "Kontakt",
       faq: "FAQ",
     },
-    legal: { privacy: "Politika e privatësisë", terms: "Kushtet dhe kushtet" },
+    legal: { privacy: "Politika e privatësisë", terms: "Kushte dhe rregulla" },
   },
   en: {
     tagline: "Marketing Agency",
@@ -137,9 +137,9 @@ export default function Footer({ locale }: { locale: string }) {
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent" aria-hidden />
       <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20 lg:py-24">
         {/* Row 1: Brand | Services | Packages */}
-        <div className="grid gap-10 text-center md:gap-12 md:text-left lg:grid-cols-3 lg:gap-x-0">
+        <div className="grid gap-12 text-center md:gap-12 md:text-left lg:grid-cols-3 lg:gap-x-0">
           {/* Column 1: Brand */}
-          <div className="border-b border-gray-800 pb-10 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-800 lg:pr-12">
+          <div className="border-b border-gray-800 pb-12 md:border-b-0 md:pb-0 lg:border-r lg:border-gray-800 lg:pr-12">
             <Image
               src="/logo.png"
               alt="DARA Marketing Agency"
@@ -156,7 +156,7 @@ export default function Footer({ locale }: { locale: string }) {
             {/* Social Media */}
             <div className="mt-8 border-t border-gray-800 pt-6">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">{t.followUs}</p>
-              <div className="flex justify-center gap-2 md:justify-start">
+              <div className="flex justify-center gap-3 md:justify-start">
                 <a
                   href="https://instagram.com/daramarketing.eu"
                   target="_blank"
@@ -429,3 +429,4 @@ export default function Footer({ locale }: { locale: string }) {
     </footer>
   );
 }
+

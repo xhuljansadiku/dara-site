@@ -1,7 +1,7 @@
 // app/[locale]/contact/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import NewsletterForm from "@/components/NewsletterForm";
 import { trackEvent } from "@/lib/analytics";
@@ -19,6 +19,7 @@ export default function ContactPage() {
   const params = useParams();
   const router = useRouter();
   const locale = (params?.locale as Locale) || "sq";
+  const formPanelRef = useRef<HTMLDivElement | null>(null);
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -292,6 +293,16 @@ export default function ContactPage() {
       ? ["Profil", "Service", "Details", "Budget", "Bestätigung"]
       : ["Profile", "Service", "Details", "Budget", "Review"];
 
+  useEffect(() => {
+    if (!formPanelRef.current) return;
+
+    const top = formPanelRef.current.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({
+      top: Math.max(top, 0),
+      behavior: "smooth",
+    });
+  }, [currentStep]);
+
   return (
     <>
       {/* HERO */}
@@ -393,7 +404,7 @@ export default function ContactPage() {
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_360px]">
           {/* LEFT: Form */}
           <div>
-            <div className="overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.35)]">
+            <div ref={formPanelRef} className="overflow-hidden rounded-[2rem] border border-stone-200/80 bg-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.35)]">
               <div className="border-b border-stone-200/80 bg-[linear-gradient(135deg,#111827_0%,#1f2937_70%,#374151_100%)] px-6 py-6 text-white md:px-8">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-2xl">

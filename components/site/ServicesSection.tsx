@@ -82,7 +82,7 @@ export default function ServicesSection({
   const tabLabels = filterTabs.map((t) => t.label);
 
   return (
-    <section id="services" className="relative overflow-hidden py-16 md:py-28">
+    <section id="services" className="relative overflow-hidden py-18 md:py-28">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
         aria-hidden
@@ -97,7 +97,7 @@ export default function ServicesSection({
         aria-hidden
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div className="mb-10 flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+      <div className="mb-12 flex flex-col gap-5 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
         <div className="mx-auto max-w-2xl md:mx-0 md:max-w-none">
           <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:justify-start">
             <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
@@ -116,10 +116,10 @@ export default function ServicesSection({
       </div>
 
       {/* Tabs: segmented control */}
-      <div className="mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="flex min-w-full justify-center md:justify-start">
+      <div className="mb-10 w-full overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex min-w-full justify-start md:justify-start">
         <div
-          className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm"
+          className="inline-flex min-w-min flex-nowrap gap-0 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm md:flex-wrap"
           role="tablist"
         >
           {tabLabels.map((label, idx) => (
@@ -181,7 +181,7 @@ export default function ServicesSection({
                   <LocaleLink
                     key={s.title}
                     href={`/services/${anchor}`}
-                    className="group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white/90 p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_24px_48px_-20px_rgba(184,157,94,0.18)] md:min-h-[300px] md:p-6"
+                    className="group relative flex h-full min-h-[292px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white/90 p-6 text-center shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_24px_48px_-20px_rgba(184,157,94,0.18)] md:min-h-[300px] md:p-6 md:text-left"
                   >
                     <div
                       className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-[#B89D5E]/15 via-transparent to-transparent blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
@@ -208,7 +208,7 @@ export default function ServicesSection({
                       </p>
 
                       <div className="mt-auto flex flex-col border-t border-neutral-200/80 pt-4">
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center justify-between gap-2 text-left">
                           {s.price ? (
                             <>
                               <div className="flex items-baseline gap-2">
@@ -276,7 +276,7 @@ export default function ServicesSection({
             )}
 
             {/* CTA per group */}
-            <div className="relative mt-6 flex justify-center md:justify-start">
+            <div className="relative mt-7 flex justify-center md:justify-start">
               <LocaleLink
                 href="/contact"
                 className="animate-services-cta-glow inline-flex h-11 w-full max-w-md items-center justify-center rounded-full border border-neutral-800 bg-neutral-950 px-7 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-900 sm:w-auto"
@@ -290,7 +290,7 @@ export default function ServicesSection({
 
       {/* Packages: dark panel, light cards */}
       <div className="relative mt-20 md:mt-24">
-        <div className="relative overflow-hidden rounded-[1.75rem] bg-neutral-950 px-6 py-10 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:rounded-[2rem] md:px-10 md:py-14">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-neutral-950 px-5 py-10 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:rounded-[2rem] md:px-10 md:py-14">
           <div
             className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#B89D5E]/15 blur-3xl"
             aria-hidden
@@ -326,9 +326,9 @@ export default function ServicesSection({
             </p>
           </div>
         </div>
-        <div className="relative mb-10 w-full overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-full justify-center md:justify-start">
-          <div className="inline-flex min-w-min flex-wrap gap-0 rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/10 backdrop-blur-md">
+        <div className="relative mb-10 w-full overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-full justify-start md:justify-start">
+          <div className="inline-flex min-w-min flex-nowrap gap-0 rounded-2xl bg-white/10 p-1.5 ring-1 ring-white/10 backdrop-blur-md md:flex-wrap">
             {packageTabLabels.map((label, idx) => (
               <button
                 key={idx}

@@ -216,11 +216,11 @@ export default function TrainingRegisterPage() {
               </h1>
               <p className="mt-4 mx-auto max-w-md text-[17px] leading-relaxed text-neutral-600 lg:mx-0">{copy.subtitle}</p>
 
-              <ul className="mt-10 space-y-4">
+              <ul className="mx-auto mt-10 max-w-[18rem] space-y-4 text-left lg:mx-0 lg:max-w-none">
                 {copy.benefits.map((line) => (
                   <li
                     key={line}
-                    className="flex flex-col items-center gap-3 text-sm leading-snug text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left lg:flex-row lg:items-start"
+                    className="flex items-start gap-3 text-sm leading-snug text-neutral-700"
                   >
                     <span
                       className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"

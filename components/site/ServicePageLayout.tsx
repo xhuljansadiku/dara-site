@@ -95,7 +95,7 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(184,157,94,0.14)_0%,transparent_55%)]" aria-hidden />
         <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#B89D5E]/10 blur-3xl" aria-hidden />
 
-        <div className="mx-auto max-w-6xl px-4 pb-14 pt-10 sm:px-6 md:pb-20 md:pt-14 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 md:pb-20 md:pt-14 lg:px-8">
           <div className={`grid gap-10 lg:items-center ${heroImage ? "lg:grid-cols-2 lg:gap-14" : ""}`}>
             <div className={heroImage ? "text-center lg:text-left" : "mx-auto max-w-3xl text-center"}>
               <div className="flex justify-center lg:justify-start">
@@ -159,16 +159,16 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
         </div>
       </header>
 
-      <div className="mx-auto max-w-6xl space-y-16 px-4 py-16 sm:px-6 md:space-y-20 md:py-20 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-16 px-4 py-18 sm:px-6 md:space-y-20 md:py-20 lg:px-8">
         <div className="grid gap-6 md:grid-cols-2 md:gap-8">
           <SectionCard id="included" title={labels.whatIncluded}>
-            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-center shadow-sm ring-1 ring-black/[0.03] md:p-8 md:text-left">
+            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
               {content.whatIncluded.map((item) => (
                 <li
                   key={item}
-                  className="flex flex-col items-center gap-2 text-sm leading-relaxed text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
                 >
-                  <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#B89D5E] sm:mt-1.5" aria-hidden />
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#B89D5E]" aria-hidden />
                   {item}
                 </li>
               ))}
@@ -176,13 +176,13 @@ export default function ServicePageLayout({ locale, slug, service, content, imag
           </SectionCard>
 
           <SectionCard id="audience" title={labels.whoIsItFor}>
-            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-center shadow-sm ring-1 ring-black/[0.03] md:p-8 md:text-left">
+            <ul className="space-y-3 rounded-3xl border border-neutral-200/90 bg-white p-6 text-left shadow-sm ring-1 ring-black/[0.03] md:p-8">
               {content.whoIsItFor.map((item) => (
                 <li
                   key={item}
-                  className="flex flex-col items-center gap-2 text-sm leading-relaxed text-neutral-700 sm:flex-row sm:items-start sm:gap-3 sm:text-left"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-neutral-700"
                 >
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] sm:mt-1" aria-hidden>
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E]" aria-hidden>
                     <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"

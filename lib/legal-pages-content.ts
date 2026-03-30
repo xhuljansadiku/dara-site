@@ -13,7 +13,7 @@ export type LegalPageContent = {
   sections: LegalSection[];
 };
 
-export const LEGAL_CONTACT_EMAIL = "hello@dara.agency";
+export const LEGAL_CONTACT_EMAIL = "daramarketing.eu@gmail.com";
 
 const CONTACT_EMAIL = LEGAL_CONTACT_EMAIL;
 
