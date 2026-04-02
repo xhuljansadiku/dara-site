@@ -19,6 +19,9 @@ export type TeamMemberPublic = {
   photoGrayscale?: boolean;
   /** Slight zoom (>1) when source framing is wider / subject looks “far” */
   photoScale?: number;
+  /** Public profile links (shown on homepage team cards when both set) */
+  linkedin?: string;
+  instagram?: string;
 };
 
 /**
@@ -39,6 +42,8 @@ export function getTeamMembersForLocale(locale: TeamLocale): TeamMemberPublic[] 
             : `Founder of DARA. ${yearsExperienceFormatted} years in marketing, strategy, and team leadership.`,
       img: "/team/redvina-m.png",
       photoGrayscale: true,
+      linkedin: "https://www.linkedin.com/in/redvina-marini/",
+      instagram: "https://www.instagram.com/redvinamarini/?hl=en",
     },
     {
       name: "Reli M.",

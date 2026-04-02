@@ -158,7 +158,7 @@ export default function Footer({ locale }: { locale: string }) {
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">{t.followUs}</p>
               <div className="flex justify-center gap-3 md:justify-start">
                 <a
-                  href="https://instagram.com/daramarketing.eu"
+                  href="https://www.instagram.com/daramarketing.al/?hl=en"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
@@ -169,7 +169,7 @@ export default function Footer({ locale }: { locale: string }) {
                   </svg>
                 </a>
                 <a
-                  href="https://facebook.com/daramarketing.eu"
+                  href="https://www.facebook.com/profile.php?id=100082700976706"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Facebook"
@@ -180,7 +180,7 @@ export default function Footer({ locale }: { locale: string }) {
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com/company/daramarketing"
+                  href="https://www.linkedin.com/company/dara-marketing-agency-al/"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"

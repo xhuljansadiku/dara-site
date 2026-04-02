@@ -972,7 +972,7 @@ export default function ContactPage() {
                 <div className="mt-2 flex items-center justify-center gap-4">
                   <a
                     className="text-gray-600 hover:text-gray-900 transition"
-                    href="https://instagram.com/daramarketing.eu"
+                    href="https://www.instagram.com/daramarketing.al/?hl=en"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Instagram"
@@ -983,7 +983,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     className="text-gray-600 hover:text-gray-900 transition"
-                    href="https://facebook.com/daramarketing.eu"
+                    href="https://www.facebook.com/profile.php?id=100082700976706"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Facebook"
@@ -994,7 +994,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     className="text-gray-600 hover:text-gray-900 transition"
-                    href="https://linkedin.com/company/daramarketing"
+                    href="https://www.linkedin.com/company/dara-marketing-agency-al/"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="LinkedIn"
