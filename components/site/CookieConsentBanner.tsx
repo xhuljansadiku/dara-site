@@ -114,18 +114,20 @@ export default function CookieConsentBanner() {
             ))}
           </ul>
 
-          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-end">
+          <p className="mt-5 text-xs font-medium text-neutral-500">{copy.chooseHint}</p>
+
+          <div className="mt-2 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-end">
             <button
               type="button"
               onClick={() => handleChoice("essential")}
-              className="order-2 inline-flex h-11 items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-4 text-sm font-semibold text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50 sm:order-1"
+              className="order-2 inline-flex min-h-11 items-center justify-center rounded-2xl border-2 border-stone-300 bg-white px-4 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-neutral-950 hover:bg-stone-50 sm:order-1"
             >
-              {copy.essentialOnly}
+              {copy.rejectOptional}
             </button>
             <button
               type="button"
               onClick={() => handleChoice("all")}
-              className="order-1 inline-flex h-11 items-center justify-center rounded-2xl bg-neutral-950 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-neutral-800 sm:order-2"
+              className="order-1 inline-flex min-h-11 items-center justify-center rounded-2xl bg-neutral-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-neutral-800 sm:order-2"
             >
               {copy.acceptAll}
             </button>

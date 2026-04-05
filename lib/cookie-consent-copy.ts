@@ -4,8 +4,11 @@ export type CookieConsentCopy = {
   title: string;
   intro: string;
   bullets: string[];
+  /** Shpjegim i shkurtër: duhet një klikim për të vazhduar. */
+  chooseHint: string;
   acceptAll: string;
-  essentialOnly: string;
+  /** Refuzon cookie-t opsionale (analitika); mbeten vetëm ato të nevojshme. */
+  rejectOptional: string;
   privacyLabel: string;
 };
 
@@ -13,37 +16,40 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
   sq: {
     title: "Përdorim cookies",
     intro:
-      "Përdorim cookies dhe teknologji të ngjashme për funksionimin e faqes, sigurinë dhe (me pëlqimin tuaj) statistika të përgjithshme. Duke vazhduar pa zgjedhur, aplikohen vetëm cookies të nevojshme.",
+      "Duhet të zgjidhni eksplicitisht: ose pranoni të gjitha cookies (përfshirë statistika anonime), ose i refuzoni ato opsionale — në këtë rast përdoren vetëm cookies thelbësore për funksionimin e faqes dhe sigurinë.",
     bullets: [
       "Cookies thelbësore: sesion, siguri, preferenca gjuhë",
-      "Me pëlqim: matje anonime për përmirësimin e faqes",
+      "Opsionale (vetëm me pranim): matje anonime për përmirësimin e faqes",
     ],
+    chooseHint: "Për të vazhduar me faqen, zgjidhni një nga dy opsionet më poshtë.",
     acceptAll: "Pranoj të gjitha",
-    essentialOnly: "Vetëm të nevojshmet",
+    rejectOptional: "Refuzoj",
     privacyLabel: "Politika e privatësisë",
   },
   en: {
     title: "We use cookies",
     intro:
-      "We use cookies and similar technologies for the site to work, for security, and (with your consent) for basic analytics. If you continue without choosing, only essential cookies apply.",
+      "Please choose explicitly: accept all cookies (including anonymous analytics), or refuse optional cookies — in that case we only use essential cookies required for the site to work and for security.",
     bullets: [
       "Essential cookies: session, security, language preference",
-      "With consent: anonymous usage insights to improve the site",
+      "Optional (only if you accept): anonymous insights to improve the site",
     ],
+    chooseHint: "To continue using the site, choose one of the two options below.",
     acceptAll: "Accept all",
-    essentialOnly: "Essential only",
+    rejectOptional: "Refuse — essential only",
     privacyLabel: "Privacy policy",
   },
   de: {
     title: "Wir verwenden Cookies",
     intro:
-      "Wir setzen Cookies und ähnliche Technologien für den Betrieb der Website, die Sicherheit und – mit Ihrer Einwilligung – für einfache Statistiken. Ohne Auswahl gelten nur notwendige Cookies.",
+      "Bitte treffen Sie eine ausdrückliche Wahl: alle Cookies akzeptieren (einschließlich anonymer Statistik) oder optionale Cookies ablehnen — dann verwenden wir nur notwendige Cookies für Betrieb und Sicherheit der Website.",
     bullets: [
       "Notwendige Cookies: Sitzung, Sicherheit, Spracheinstellung",
-      "Mit Einwilligung: anonyme Nutzungsdaten zur Verbesserung der Website",
+      "Optional (nur bei Zustimmung): anonyme Nutzungsdaten zur Verbesserung",
     ],
+    chooseHint: "Um die Website weiter zu nutzen, wählen Sie eine der beiden Optionen.",
     acceptAll: "Alle akzeptieren",
-    essentialOnly: "Nur notwendige",
+    rejectOptional: "Ablehnen — nur notwendige",
     privacyLabel: "Datenschutzerklärung",
   },
 };
