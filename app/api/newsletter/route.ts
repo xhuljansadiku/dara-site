@@ -131,7 +131,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, saved: !exists, exists });
     }
 
-    if (sheetsOk && !exists) {
+    if (sheetsOk) {
       const sheet = await syncSheetsIfConfigured(email);
       if (!sheet.ok) {
         console.error("NEWSLETTER_SHEETS_ERROR:", sheet.error);
