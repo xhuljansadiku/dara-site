@@ -6,7 +6,24 @@ import { trackEvent } from "@/lib/analytics";
 
 type Locale = "sq" | "en" | "de";
 
-const COPY: Record<Locale, { placeholder: string; submit: string; submitting: string; success: string; alreadySubscribed: string; captchaError: string; networkError: string; invalidEmail: string; serverError: string; rateLimited: string }> = {
+const COPY: Record<
+  Locale,
+  {
+    placeholder: string;
+    submit: string;
+    submitting: string;
+    success: string;
+    alreadySubscribed: string;
+    captchaError: string;
+    networkError: string;
+    invalidEmail: string;
+    serverError: string;
+    rateLimited: string;
+    smtpNotConfigured: string;
+    emailFailed: string;
+    sheetsFailed: string;
+  }
+> = {
   sq: {
     placeholder: "Adresa email",
     submit: "Abonohu",
@@ -18,6 +35,9 @@ const COPY: Record<Locale, { placeholder: string; submit: string; submitting: st
     invalidEmail: "Plotëso një email të vlefshëm.",
     serverError: "Diçka shkoi keq. Provo prap.",
     rateLimited: "Shumë kërkesa. Provo prap pas disa minutash.",
+    smtpNotConfigured: "Abonimi nuk është aktivizuar në server. Na kontaktoni ose provoni më vonë.",
+    emailFailed: "Dërgimi dështoi. Provo prap pas pak.",
+    sheetsFailed: "Ruajtja në Google Sheets dështoi. Provo prap ose na kontakto.",
   },
   en: {
     placeholder: "Email address",
@@ -30,6 +50,9 @@ const COPY: Record<Locale, { placeholder: string; submit: string; submitting: st
     invalidEmail: "Please enter a valid email address.",
     serverError: "Something went wrong. Please try again.",
     rateLimited: "Too many requests. Please try again in a few minutes.",
+    smtpNotConfigured: "Newsletter is not configured on the server yet. Please contact us or try again later.",
+    emailFailed: "Delivery failed. Please try again shortly.",
+    sheetsFailed: "Could not save to Google Sheets. Try again or contact us.",
   },
   de: {
     placeholder: "E-Mail-Adresse",
@@ -42,6 +65,9 @@ const COPY: Record<Locale, { placeholder: string; submit: string; submitting: st
     invalidEmail: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
     serverError: "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
     rateLimited: "Zu viele Anfragen. Bitte in ein paar Minuten erneut versuchen.",
+    smtpNotConfigured: "Der Newsletter ist auf dem Server noch nicht eingerichtet. Bitte kontaktieren Sie uns oder versuchen Sie es später erneut.",
+    emailFailed: "Zustellung fehlgeschlagen. Bitte kurz darauf erneut versuchen.",
+    sheetsFailed: "Speichern in Google Sheets fehlgeschlagen. Bitte erneut versuchen.",
   },
 };
 
@@ -80,9 +106,15 @@ export default function NewsletterForm({ locale: localeProp }: { locale?: Locale
               ? copy.invalidEmail
               : errCode === "RATE_LIMITED"
                 ? copy.rateLimited
-                : errCode === "SERVER_ERROR" || errCode === "INVALID_JSON" || errCode === "INVALID_BODY" || errCode === "INVALID_CONTENT_TYPE"
-                  ? copy.serverError
-                  : copy.serverError;
+                : errCode === "SMTP_NOT_CONFIGURED"
+                  ? copy.smtpNotConfigured
+                  : errCode === "EMAIL_FAILED"
+                    ? copy.emailFailed
+                    : errCode === "SHEETS_FAILED"
+                      ? copy.sheetsFailed
+                      : errCode === "SERVER_ERROR" || errCode === "INVALID_JSON" || errCode === "INVALID_BODY" || errCode === "INVALID_CONTENT_TYPE"
+                      ? copy.serverError
+                      : copy.serverError;
         setMsg(`❌ ${err}`);
         setLoading(false);
         return;
