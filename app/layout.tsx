@@ -17,7 +17,7 @@ export const viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "DARA Â· Dare to be Different",
+    default: "DARA | Agjenci marketingu · Tiranë",
     template: "%s | DARA Marketing Agency",
   },
   description:
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: SITE_URL,
     siteName: "DARA Marketing Agency",
-    title: "DARA Â· Dare to be Different",
+    title: "DARA | Agjenci marketingu · Tiranë",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "DARA Marketing Agency" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DARA Â· Dare to be Different",
+    title: "DARA | Agjenci marketingu · Tiranë",
     description:
       "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content.",
     images: ["/opengraph-image"],
