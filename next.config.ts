@@ -7,6 +7,33 @@ export default withNextIntl({
     // Avoid truncated multipart bodies when proxy buffers uploads (large PDFs + careers form).
     proxyClientMaxBodySize: "15mb",
   },
+  async redirects() {
+    return [
+      // Legacy training slug kept in Google index.
+      {
+        source: "/:locale(sq|en|de)/trainings/bazat-e-tik",
+        destination: "/:locale/trainings/smm",
+        permanent: true,
+      },
+      // Legacy work detail URLs now map to the main work listing.
+      {
+        source: "/:locale(sq|en|de)/work/social-media/:slug",
+        destination: "/:locale/work",
+        permanent: true,
+      },
+      {
+        source: "/work/social-media/:slug",
+        destination: "/en/work",
+        permanent: true,
+      },
+      // Historical opengraph cache-busted path.
+      {
+        source: "/opengraph-image:hash",
+        destination: "/opengraph-image",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
