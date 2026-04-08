@@ -25,6 +25,9 @@ export default function ContactPage() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [captchaLeft, setCaptchaLeft] = useState<number>(() => Math.floor(Math.random() * 8) + 2);
+  const [captchaRight, setCaptchaRight] = useState<number>(() => Math.floor(Math.random() * 8) + 2);
+  const [captchaAnswer, setCaptchaAnswer] = useState("");
   
   // Form data
   const [formData, setFormData] = useState({
@@ -57,6 +60,12 @@ export default function ContactPage() {
     .map((slug) => slug.trim())
     .filter(Boolean);
   const primaryService = selectedServiceSlugs[0] ?? "";
+  const captchaExpected = captchaLeft + captchaRight;
+
+  const regenerateCaptcha = () => {
+    setCaptchaLeft(Math.floor(Math.random() * 8) + 2);
+    setCaptchaRight(Math.floor(Math.random() * 8) + 2);
+  };
 
   const handleInputChange = (name: string, value: string) => {
     // For name field, only allow letters and spaces (no numbers or special characters)
@@ -180,6 +189,20 @@ export default function ContactPage() {
     if (currentStep !== 5) {
       // If not on step 5, prevent submission and do nothing
       // Navigation should only happen via the Next/Review buttons
+      return;
+    }
+
+    if (Number(captchaAnswer.trim()) !== captchaExpected) {
+      setStatus("error");
+      setError(
+        locale === "sq"
+          ? "Verifikimi anti-robot nuk është i saktë. Ju lutem provoni përsëri."
+          : locale === "de"
+            ? "Die Anti-Bot-Prüfung ist nicht korrekt. Bitte versuchen Sie es erneut."
+            : "The anti-bot check is incorrect. Please try again."
+      );
+      setCaptchaAnswer("");
+      regenerateCaptcha();
       return;
     }
     
@@ -862,6 +885,33 @@ export default function ContactPage() {
                         )}
                       </div>
                     </div>
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <label className="grid gap-2">
+                        <span className="text-sm font-medium text-gray-800">
+                          {locale === "sq" ? "Shkruaj shumën" : locale === "de" ? "Summe eingeben" : "Enter the sum"}
+                        </span>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="inline-flex h-11 items-center rounded-xl border border-stone-300 bg-white px-4 text-base font-semibold text-stone-900">
+                            {captchaLeft} + {captchaRight} = ?
+                          </span>
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            required
+                            value={captchaAnswer}
+                            onChange={(e) => {
+                              const next = e.target.value.replace(/[^\d]/g, "");
+                              setCaptchaAnswer(next);
+                            }}
+                            placeholder={locale === "sq" ? "Shkruaj shumën" : locale === "de" ? "Summe eingeben" : "Enter the sum"}
+                            className="h-11 w-36 rounded-xl border border-stone-300 bg-white px-3 text-stone-900 outline-none transition focus:border-[#B89D5E] focus:ring-4 focus:ring-[#B89D5E]/10"
+                            aria-label={locale === "sq" ? "Përgjigjja e verifikimit anti-robot" : locale === "de" ? "Antwort der Anti-Bot-Verifizierung" : "Anti-bot verification answer"}
+                          />
+                        </div>
+                      </label>
+                    </div>
+
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                       <p className="text-sm text-gray-700">
                         {locale === "sq"
