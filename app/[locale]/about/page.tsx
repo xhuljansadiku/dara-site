@@ -5,6 +5,7 @@ import AnimateIn from "@/components/site/AnimateIn";
 import MarketingVideo from "@/components/site/MarketingVideo";
 import type { Metadata } from "next";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Locale = "sq" | "en" | "de";
 
@@ -32,18 +33,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as Locale;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const meta = META_BY_LOCALE[l];
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
-  return {
+  return buildLocalizedMetadata({
+    locale: l,
+    path: "/about",
     title: meta.title,
     description: meta.description,
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      url: `${base}/${locale}/about`,
-    },
-  };
+  });
 }
 
 const HERO_BY_LOCALE: Record<

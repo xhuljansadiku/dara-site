@@ -2,6 +2,7 @@
 import LocaleLink from "@/components/site/LocaleLink";
 import type { Metadata } from "next";
 import { use } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Locale = "sq" | "en" | "de";
 
@@ -29,12 +30,14 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l = (["sq", "en", "de"].includes(locale) ? locale : "sq") as Locale;
+  const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const meta = META_BY_LOCALE[l];
-  return {
+  return buildLocalizedMetadata({
+    locale: l,
+    path: "/process",
     title: meta.title,
     description: meta.description,
-  };
+  });
 }
 
 const HERO_BY_LOCALE: Record<

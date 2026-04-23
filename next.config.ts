@@ -15,6 +15,11 @@ export default withNextIntl({
         destination: "/:locale/trainings/smm",
         permanent: true,
       },
+      {
+        source: "/trainings/bazat-e-tik",
+        destination: "/en/trainings/smm",
+        permanent: true,
+      },
       // Legacy work detail URLs now map to the main work listing.
       {
         source: "/:locale(sq|en|de)/work/social-media/:slug",
@@ -22,7 +27,17 @@ export default withNextIntl({
         permanent: true,
       },
       {
+        source: "/:locale(sq|en|de)/work/social-media",
+        destination: "/:locale/work",
+        permanent: true,
+      },
+      {
         source: "/work/social-media/:slug",
+        destination: "/en/work",
+        permanent: true,
+      },
+      {
+        source: "/work/social-media",
         destination: "/en/work",
         permanent: true,
       },

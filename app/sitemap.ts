@@ -1,54 +1,29 @@
 import { MetadataRoute } from "next";
+import { locales } from "@/i18n";
+import { SERVICE_SLUGS } from "@/lib/services-data";
+import { TRAININGS } from "@/lib/trainings-data";
+import { INDEXABLE_STATIC_PATHS, X_DEFAULT_LOCALE, buildAbsoluteUrl, buildLocalePath } from "@/lib/seo-utils";
 
-const baseUrl = "https://dara.al";
-
-const locales = ["en", "sq", "de"] as const;
-
-const staticRoutes = [
-  "",
-  "/about",
-  "/team",
-  "/contact",
-  "/careers",
-  "/packages",
-  "/process",
-  "/privacy",
-  "/services",
-  "/services/marketing",
-  "/services/website",
-  "/terms",
-  "/trainings",
-  "/work",
-  "/work/brand",
-  "/faq",
-] as const;
-
-const serviceRoutes = [
-  "/services/social-media",
-  "/services/content",
-  "/services/strategy",
-  "/services/branding",
-  "/services/ads",
-  "/services/consulting",
-  "/services/training",
-  "/services/website-landing",
-  "/services/ecommerce",
-  "/services/saas",
-  "/services/maintenance",
-] as const;
-
-const trainingRoutes = [
-  "/trainings/smm",
-  "/trainings/smm-1-1",
-] as const;
-
-const routes = locales.flatMap((locale) =>
-  [...staticRoutes, ...serviceRoutes, ...trainingRoutes].map((route) => ({
-    url: `${baseUrl}/${locale}${route}`,
-    lastModified: new Date(),
-  }))
-);
+const indexableTrainingPaths = TRAININGS.filter((training) => !training.comingSoon).map((training) => `/trainings/${training.slug}`);
+const indexableServicePaths = SERVICE_SLUGS.map((slug) => `/services/${slug}`);
+const indexablePaths = [...INDEXABLE_STATIC_PATHS, ...indexableServicePaths, ...indexableTrainingPaths];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes;
+  return locales.flatMap((locale) =>
+    indexablePaths.map((path) => {
+      const languages = Object.fromEntries(
+        locales.map((candidateLocale) => [candidateLocale, buildAbsoluteUrl(buildLocalePath(candidateLocale, path))])
+      );
+
+      return {
+        url: buildAbsoluteUrl(buildLocalePath(locale, path)),
+        alternates: {
+          languages: {
+            ...languages,
+            "x-default": buildAbsoluteUrl(buildLocalePath(X_DEFAULT_LOCALE, path)),
+          },
+        },
+      };
+    })
+  );
 }

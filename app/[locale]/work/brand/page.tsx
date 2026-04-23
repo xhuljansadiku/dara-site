@@ -4,6 +4,7 @@ import { BRAND_PROJECTS } from "@/lib/projects";
 import type { Locale } from "@/lib/projects";
 import type { Metadata } from "next";
 import { use } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -89,14 +90,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = ["sq", "en", "de"].includes(localeParam)
     ? (localeParam as Locale)
-    : "sq";
-  return {
-    title: locale === "sq" ? "Brand Identity" : locale === "de" ? "Markenidentität" : "Brand Identity",
-    description:
-      locale === "sq"
-        ? "Të gjitha logot dhe identitetet vizuale të krijuara nga DARA."
-        : locale === "de"
+    : "en";
+
+  const title = locale === "sq" ? "Brand Identity" : locale === "de" ? "Markenidentität" : "Brand Identity";
+  const description =
+    locale === "sq"
+      ? "Të gjitha logot dhe identitetet vizuale të krijuara nga DARA."
+      : locale === "de"
         ? "Alle von DARA erstellten Logos und visuellen Identitäten."
-        : "All logos and visual identities created by DARA.",
-  };
+        : "All logos and visual identities created by DARA.";
+
+  return buildLocalizedMetadata({
+    locale,
+    path: "/work/brand",
+    title,
+    description:
+      description,
+  });
 }

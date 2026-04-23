@@ -3,6 +3,7 @@ import TrainingsSection from "@/components/site/TrainingsSection";
 import { type Locale } from "@/lib/services-data";
 import type { Metadata } from "next";
 import { use } from "react";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
@@ -26,9 +27,14 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
-  const locale: Locale = ["sq", "en", "de"].includes(localeParam) ? (localeParam as Locale) : "sq";
+  const locale: Locale = ["sq", "en", "de"].includes(localeParam) ? (localeParam as Locale) : "en";
   const meta = META_BY_LOCALE[locale];
-  return { title: meta.title, description: meta.description };
+  return buildLocalizedMetadata({
+    locale,
+    path: "/trainings",
+    title: meta.title,
+    description: meta.description,
+  });
 }
 
 export default function TrainingsPage({ params }: Props) {

@@ -4,6 +4,7 @@ import { defaultLocale } from "./i18n";
 import { routing } from "./i18n/routing";
 
 const intlProxy = createMiddleware(routing);
+const NON_LOCALIZED_ALLOWED_PATHS = new Set(["/opengraph-image"]);
 
 export default function proxy(request: NextRequest) {
   const { pathname, hostname } = request.nextUrl;
@@ -13,6 +14,17 @@ export default function proxy(request: NextRequest) {
     const proto = request.nextUrl.protocol;
     const redirectUrl = `${proto}//${nonWwwHost}${request.nextUrl.pathname}${request.nextUrl.search}`;
     return NextResponse.redirect(redirectUrl, 301);
+  }
+
+  if (pathname === "/") {
+    const redirectUrl = new URL(`/${defaultLocale}${request.nextUrl.search}`, request.url);
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  const hasLocalePrefix = /^\/(sq|en|de)(\/|$)/.test(pathname);
+  if (!hasLocalePrefix && !NON_LOCALIZED_ALLOWED_PATHS.has(pathname)) {
+    const redirectUrl = new URL(`/${defaultLocale}${pathname}${request.nextUrl.search}`, request.url);
+    return NextResponse.redirect(redirectUrl, 308);
   }
 
   const locale = pathname.startsWith("/sq")
@@ -30,14 +42,6 @@ export default function proxy(request: NextRequest) {
   const modifiedRequest = new NextRequest(request.url, {
     headers: requestHeaders,
   });
-
-  if (pathname === "/") {
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    });
-  }
 
   return intlProxy(modifiedRequest);
 }
