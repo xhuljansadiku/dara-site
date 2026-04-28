@@ -21,6 +21,7 @@ import {
   PACKAGE_GROUP_LABELS,
 } from "@/lib/packages-data";
 import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
+import { buildLocalizedMetadata } from "@/lib/seo-utils";
 
 type Locale = "sq" | "en" | "de";
 
@@ -425,21 +426,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const yearsExp = getYearsOfExperienceFormatted();
   // Replace years in description dynamically
   const description = meta.description.replace(/7\+/, yearsExp);
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
-  const path = `/${l}`;
-  const url = `${base}${path}`;
-  return {
+  return buildLocalizedMetadata({
+    locale: l,
+    path: "",
     title: meta.title,
     description,
-    openGraph: {
-      title: meta.title,
-      description,
-      url,
-      siteName: "DARA Marketing Agency",
-      type: "website",
-    },
-    twitter: { card: "summary_large_image", title: meta.title, description },
-  };
+  });
 }
 
 // Use shared utility function for years of experience

@@ -20,27 +20,6 @@ export default withNextIntl({
         destination: "/en/trainings/smm",
         permanent: true,
       },
-      // Legacy work detail URLs now map to the main work listing.
-      {
-        source: "/:locale(sq|en|de)/work/social-media/:slug",
-        destination: "/:locale/work",
-        permanent: true,
-      },
-      {
-        source: "/:locale(sq|en|de)/work/social-media",
-        destination: "/:locale/work",
-        permanent: true,
-      },
-      {
-        source: "/work/social-media/:slug",
-        destination: "/en/work",
-        permanent: true,
-      },
-      {
-        source: "/work/social-media",
-        destination: "/en/work",
-        permanent: true,
-      },
       // Historical opengraph cache-busted path.
       {
         source: "/opengraph-image:hash",

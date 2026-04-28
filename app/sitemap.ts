@@ -9,21 +9,39 @@ const indexableServicePaths = SERVICE_SLUGS.map((slug) => `/services/${slug}`);
 const indexablePaths = [...INDEXABLE_STATIC_PATHS, ...indexableServicePaths, ...indexableTrainingPaths];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return locales.flatMap((locale) =>
-    indexablePaths.map((path) => {
-      const languages = Object.fromEntries(
-        locales.map((candidateLocale) => [candidateLocale, buildAbsoluteUrl(buildLocalePath(candidateLocale, path))])
-      );
+  try {
+    const now = new Date();
+    return locales.flatMap((locale) =>
+      indexablePaths.map((path) => {
+        const languages = Object.fromEntries(
+          locales.map((candidateLocale) => [candidateLocale, buildAbsoluteUrl(buildLocalePath(candidateLocale, path))])
+        );
+        const isCorePage =
+          path === "" ||
+          path === "/services" ||
+          path === "/work" ||
+          path === "/trainings" ||
+          path === "/packages";
 
-      return {
-        url: buildAbsoluteUrl(buildLocalePath(locale, path)),
-        alternates: {
-          languages: {
-            ...languages,
-            "x-default": buildAbsoluteUrl(buildLocalePath(X_DEFAULT_LOCALE, path)),
+        return {
+          url: buildAbsoluteUrl(buildLocalePath(locale, path)),
+          lastModified: now,
+          changeFrequency: isCorePage ? "weekly" : "monthly",
+          alternates: {
+            languages: {
+              ...languages,
+              "x-default": buildAbsoluteUrl(buildLocalePath(X_DEFAULT_LOCALE, path)),
+            },
           },
-        },
-      };
-    })
-  );
+        };
+      })
+    );
+  } catch {
+    // Keep sitemap endpoint healthy even if upstream data has an unexpected shape.
+    return locales.map((locale) => ({
+      url: buildAbsoluteUrl(buildLocalePath(locale, "")),
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+    }));
+  }
 }

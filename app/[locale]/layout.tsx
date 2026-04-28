@@ -1,12 +1,11 @@
 // app/[locale]/layout.tsx - Locale-specific shell (no <html>/<body>)
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import CookieConsentBanner from "@/components/site/CookieConsentBanner";
-import { buildAlternates, stripLocaleFromPathname, type SiteLocale } from "@/lib/seo-utils";
+import { type SiteLocale } from "@/lib/seo-utils";
 
 export async function generateMetadata({
   params,
@@ -15,16 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const currentLocale = (["sq", "en", "de"].includes(locale) ? locale : "en") as SiteLocale;
-  const headersList = await headers();
-  const pathname = headersList.get("x-pathname") ?? "";
-  const localizedPath = stripLocaleFromPathname(pathname);
-  const { canonical, languages } = buildAlternates(localizedPath, currentLocale);
 
   return {
-    alternates: {
-      canonical,
-      languages,
-    },
     openGraph: {
       locale: currentLocale === "sq" ? "sq_AL" : currentLocale === "de" ? "de_DE" : "en_GB",
       alternateLocale:
