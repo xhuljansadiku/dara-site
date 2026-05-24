@@ -22,10 +22,10 @@ export type Project = {
 // ----------------------
 
 /** All portfolio mockups in `public/images/projects/social-media/` (1.png … 23.png). */
-export const SOCIAL_MEDIA_GALLERY_IMAGES = Array.from(
-  { length: 23 },
-  (_, i) => `/images/projects/social-media/${i + 1}.png`
-);
+export const SOCIAL_MEDIA_GALLERY_IMAGES = [
+  ...Array.from({ length: 22 }, (_, i) => `/images/projects/social-media/${i + 2}.png`),
+  `/images/projects/social-media/1.png`,
+];
 
 // ----------------------
 // 🇦🇱 ALBANIAN
@@ -51,11 +51,8 @@ const projectsSq: Project[] = [
   { title: "Marku Real Estate", tag: "Brand Identity", desc: "Logo dhe identitet vizual.", category: "brand", thumbnail: "/images/projects/brand/mre.png" },
 
   // --- Website (no internal page, link directly to URL) ---
-  { title: "ESM GROUP", tag: "Website", desc: "Website korporativ për kompani ndërtimi dhe montimi strukturash metalike.", category: "website", thumbnail: "/images/projects/website/esm-project.png", websiteUrl: "https://esm-group.eu/" },
-  { title: "Palushi Brothers", tag: "Website", desc: "Website për kompani ndërtimi dhe rinovimi në Londër, që prezanton shërbimet, projektet dhe kontaktin për klientët e banimit dhe komerciale.", category: "website", thumbnail: "/images/projects/website/pb.png", websiteUrl: "https://palushibrothers.co.uk" },
-  { title: "HAUSWERK Niederbayern", tag: "Website", desc: "Website për shërbime objektesh pastrim, mirëmbajtje dhe kujdes shtëpie/zyre në Niederbayern, me prezantim të shërbimeve dhe kontakt për oferta.", category: "website", thumbnail: "/images/projects/website/hn.png", websiteUrl: "https://hauswerk-niederbayern.de" },
-  { title: "Bardhi Wellness", tag: "Website", desc: "Platformë online trajnimi dhe nutricioni me plane të personalizuara, rezultate klientësh dhe paketë abonimi për shëndet dhe fitnes.", category: "website", thumbnail: "/images/projects/website/bw.png", websiteUrl: "https://www.bardhiwellness.com/" },
-  { title: "Besi's Imbiss", tag: "Website", desc: "Website për Imbiss lokal në Weiden in der Oberpfalz me menu ushqimesh, orare dhe kontakt për porosi ose vizitë në vend.", category: "website", thumbnail: "/images/projects/website/bi.png", websiteUrl: "https://besis-imbiss.de" },
+  { title: "Taxi Dhermi Official", tag: "Website", desc: "Website oficial për shërbimin e taksi dhe transportit në Dhërmj, me informacion për rrugët, rezervime dhe kontakt.", category: "website", thumbnail: "/images/projects/website/taxidhermi.png", websiteUrl: "https://www.taxidhermiofficial.com/" },
+  { title: "O2 Antiage", tag: "Website", desc: "Website për klinikë estetike dhe antiaging, me prezantim të trajtimeve, ekipit dhe rezervimeve online.", category: "website", thumbnail: "/images/projects/website/o2antiage.png", websiteUrl: "https://www.o2antiage.com/" },
 ];
 
 // ----------------------
@@ -70,11 +67,8 @@ const projectsEn: Project[] = [
   { ...projectsSq[4], desc: "Logo and visual identity." },
   { ...projectsSq[5], desc: "Logo and visual identity." },
   { ...projectsSq[6], desc: "Logo and visual identity." },
-  { ...projectsSq[7], desc: "Corporate website for construction and metal structure assembly company." },
-  { ...projectsSq[8], desc: "Website for construction and renovation company in London, presenting services, projects and contact for residential and commercial clients." },
-  { ...projectsSq[9], desc: "Website for property cleaning, maintenance and care services in Niederbayern, with service presentation and contact for quotes." },
-  { ...projectsSq[10], desc: "Online training and nutrition platform with personalised plans, client results and health and fitness subscription package." },
-  { ...projectsSq[11], desc: "Website for local Imbiss in Weiden in der Oberpfalz with food menu, opening hours and contact for orders or on-site visits." },
+  { ...projectsSq[7], desc: "Official website for taxi and transport service in Dhermi, with route information, bookings and contact." },
+  { ...projectsSq[8], desc: "Website for an aesthetic and anti-aging clinic, presenting treatments, team and online bookings." },
 ];
 
 const projectsDe: Project[] = [
@@ -85,11 +79,8 @@ const projectsDe: Project[] = [
   { ...projectsSq[4], desc: "Logo und visuelle Identität." },
   { ...projectsSq[5], desc: "Logo und visuelle Identität." },
   { ...projectsSq[6], desc: "Logo und visuelle Identität." },
-  { ...projectsSq[7], desc: "Unternehmenswebsite für Bau- und Metallbauunternehmen." },
-  { ...projectsSq[8], desc: "Website für Bau- und Renovierungsunternehmen in London mit Darstellung von Leistungen, Projekten und Kontakt für Wohn- und Gewerbekunden." },
-  { ...projectsSq[9], desc: "Website für Objektreinigung, Wartung und Pflege in Niederbayern mit Leistungspräsentation und Kontakt für Angebote." },
-  { ...projectsSq[10], desc: "Online-Trainings- und Ernährungsplattform mit personalisierten Plänen, Kundenergebnissen und Abo-Paket für Gesundheit und Fitness." },
-  { ...projectsSq[11], desc: "Website für lokalen Imbiss in Weiden in der Oberpfalz mit Speisekarte, Öffnungszeiten und Kontakt für Bestellungen oder Vor-Ort-Besuche." },
+  { ...projectsSq[7], desc: "Offizielle Website für den Taxi- und Transportservice in Dhermi mit Streckeninformationen, Buchungen und Kontakt." },
+  { ...projectsSq[8], desc: "Website für eine Ästhetik- und Anti-Aging-Klinik mit Darstellung von Behandlungen, Team und Online-Buchung." },
 ];
 
 export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {

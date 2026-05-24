@@ -1,2 +1,2 @@
 export const locales = ["sq", "en", "de"] as const;
-export const defaultLocale = "en";
+export const defaultLocale = "sq";

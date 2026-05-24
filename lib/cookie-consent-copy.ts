@@ -16,7 +16,7 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
   sq: {
     title: "Përdorim cookies",
     intro:
-      "Duhet të zgjidhni eksplicitisht: ose pranoni të gjitha cookies (përfshirë statistika anonime), ose i refuzoni ato opsionale — në këtë rast përdoren vetëm cookies thelbësore për funksionimin e faqes dhe sigurinë.",
+      "Duhet të zgjidhni eksplicitisht: ose pranoni të gjitha cookies (përfshirë statistika anonime), ose i refuzoni ato opsionale. Në këtë rast përdoren vetëm cookies thelbësore për funksionimin e faqes dhe sigurinë.",
     bullets: [
       "Cookies thelbësore: sesion, siguri, preferenca gjuhë",
       "Opsionale (vetëm me pranim): matje anonime për përmirësimin e faqes",
@@ -29,27 +29,27 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
   en: {
     title: "We use cookies",
     intro:
-      "Please choose explicitly: accept all cookies (including anonymous analytics), or refuse optional cookies — in that case we only use essential cookies required for the site to work and for security.",
+      "Please choose explicitly: accept all cookies (including anonymous analytics), or refuse optional cookies. In that case we only use essential cookies required for the site to work and for security.",
     bullets: [
       "Essential cookies: session, security, language preference",
       "Optional (only if you accept): anonymous insights to improve the site",
     ],
     chooseHint: "To continue using the site, choose one of the two options below.",
     acceptAll: "Accept all",
-    rejectOptional: "Refuse — essential only",
+    rejectOptional: "Refuse essential only",
     privacyLabel: "Privacy policy",
   },
   de: {
     title: "Wir verwenden Cookies",
     intro:
-      "Bitte treffen Sie eine ausdrückliche Wahl: alle Cookies akzeptieren (einschließlich anonymer Statistik) oder optionale Cookies ablehnen — dann verwenden wir nur notwendige Cookies für Betrieb und Sicherheit der Website.",
+      "Bitte treffen Sie eine ausdrückliche Wahl: alle Cookies akzeptieren (einschließlich anonymer Statistik) oder optionale Cookies ablehnen. Dann verwenden wir nur notwendige Cookies für Betrieb und Sicherheit der Website.",
     bullets: [
       "Notwendige Cookies: Sitzung, Sicherheit, Spracheinstellung",
       "Optional (nur bei Zustimmung): anonyme Nutzungsdaten zur Verbesserung",
     ],
     chooseHint: "Um die Website weiter zu nutzen, wählen Sie eine der beiden Optionen.",
     acceptAll: "Alle akzeptieren",
-    rejectOptional: "Ablehnen — nur notwendige",
+    rejectOptional: "Ablehnen, nur notwendige",
     privacyLabel: "Datenschutzerklärung",
   },
 };
