@@ -177,7 +177,9 @@ export default function PackagesPageContent({ locale }: Props) {
                   </h2>
                   <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {groupPackages.map((pkg) => (
-                      <PackageCard key={pkg.title} pkg={pkg} locale={locale} />
+                      <div key={pkg.title} className={groupPackages.length === 1 ? "col-span-full" : ""}>
+                        <PackageCard pkg={pkg} locale={locale} wide={groupPackages.length === 1} />
+                      </div>
                     ))}
                   </div>
                 </div>

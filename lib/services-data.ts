@@ -74,13 +74,13 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Krijim website & web design",
-      desc: "Website dhe landing page për biznese në Shqipëri: Dizajn modern, shpejtësi dhe përvojë përdoruesi që ndërtojnë besim. Nga faqe njëfaqëshe deri te site shumëfaqëshe, forma kontaktësh dhe bazë SEO e qartë. Për kompani, profesionistë të lirë, klinika, restorante dhe projekte në ndërtim.",
-      price: "Nga 500€",
+      desc: "Krijim website dhe landing page për biznese. Dizajn modern, SEO bazë dhe performancë e lartë. Nga one-page deri te site shumëfaqëshe me forma kontakti dhe CTA.",
+      price: "Nga 300€",
     },
     {
       title: "Krijim dyqan online (webshop / e-commerce)",
       desc: "Krijim webshop për biznese: dyqan online me produkte, inventar, pagesë me kartë dhe dorëzim. Zhvillim website e-commerce për kompani shqiptare. Shitje në internet me profesionalizëm.",
-      price: "Nga 1.000€",
+      price: "Nga 800€",
     },
     {
       title: "SaaS & aplikacione",
@@ -90,7 +90,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Mirembajtje website & optimizim",
       desc: "Mirembajtje website dhe dyqan online: përditësime, backups, siguri. Optimizim website të vjetra – shpejtësi, SEO, modernizim. Monitoring dhe support teknik për biznese në Shqipëri.",
-      price: "Nga 100€ / muaj",
+      price: "Nga 150€ / muaj",
     },
   ],
   en: [
@@ -131,13 +131,13 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & landing pages",
-      desc: "Websites and landing pages for businesses in Albania: Modern design, speed and UX that build trust. From single landing pages to multi-page sites, contact forms and a clear SEO foundation. Ideal for companies, independent professionals, clinics, hospitality and construction.",
-      price: "From €500",
+      desc: "Websites and landing pages for businesses. Modern design, SEO foundation and strong performance. From one-pagers to multi-page sites with contact forms and CTAs.",
+      price: "From €300",
     },
     {
       title: "E-commerce",
       desc: "Online store with products, inventory, payment and delivery , tailored solution for selling online.",
-      price: "From €1,000",
+      price: "From €800",
     },
     {
       title: "SaaS & applications",
@@ -147,7 +147,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Maintenance & Optimization",
       desc: "Website and e-commerce maintenance (updates, backups, security), optimization of old websites (speed, SEO, modernization), monitoring and support.",
-      price: "From €100/month",
+      price: "From €150/month",
     },
   ],
   de: [
@@ -188,13 +188,13 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Website & Landingpages",
-      desc: "Websites und Landingpages für Unternehmen in Albanien: Modernes Design, Performance und UX, die Vertrauen schaffen. Von One-Page-Landingpages bis zu mehrseitigen Sites, Kontaktformularen und klarer SEO-Basis. Für KMU, freie Berufe, Praxen, Gastronomie und Bauprojekte.",
-      price: "Ab 500€",
+      desc: "Websites und Landingpages für Unternehmen. Modernes Design, SEO-Basis und starke Performance. Von One-Pagern bis zu mehrseitigen Sites mit Formularen und CTAs.",
+      price: "Ab 300€",
     },
     {
       title: "E-Commerce",
       desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand , maßgeschneiderte Lösung für den Verkauf im Internet.",
-      price: "Ab 1.000€",
+      price: "Ab 800€",
     },
     {
       title: "SaaS & Anwendungen",
@@ -204,7 +204,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     {
       title: "Wartung & Optimierung",
       desc: "Website- und E-Commerce-Wartung (Updates, Backups, Sicherheit), Optimierung alter Websites (Geschwindigkeit, SEO, Modernisierung), Monitoring und Support.",
-      price: "Ab 100€ / Monat",
+      price: "Ab 150€ / Monat",
     },
   ],
 };

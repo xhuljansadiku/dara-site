@@ -79,64 +79,32 @@ const LONGFORM_LABELS: Record<
   },
 };
 
-function listPreview(items: string[], maxItems = 3) {
-  return items
-    .slice(0, maxItems)
-    .map((item) => item.replace(/\.$/, ""))
-    .join(", ");
+
+function splitSentences(text: string): string[] {
+  return text
+    .split(/(?<=\.)\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 function buildNarrativeCopy(locale: Locale, service: ServiceDetail, content: ServicePageContent, subline: string) {
   const cleanTitle = service.title.replace(/\s*\n\s*/g, " ").trim();
-  const includedPreview = listPreview(content.whatIncluded);
-  const audiencePreview = listPreview(content.whoIsItFor, 2);
-  const benefitsPreview = listPreview(content.benefits, 2);
-  const processPreview = listPreview(content.howWeWork, 2);
+  const descSentences = splitSentences(service.desc);
 
-  if (locale === "sq") {
-    return {
-      whatIsThis: [
-        `${cleanTitle} është një shërbim i ndërtuar për biznese që duan prezencë më të fortë online, më shumë kërkesa dhe një strukturë më të qartë marketingu. ${service.desc} ${subline}`,
-        `Në praktikë, fokusi nuk është vetëm te dorëzimi teknik, por te ndikimi që faqja, fushata ose asetet krijojnë në shitje dhe perceptim brand-i. Zakonisht puna mbulon ${includedPreview}, që do të thotë se projekti ndërtohet për përdorues realë, jo vetëm për një prezantim estetik.`,
-      ],
-      whyItMatters: [
-        `Ky shërbim ka rëndësi sepse ndihmon biznesin të komunikojë ofertën më qartë, të filtrojë audiencën e duhur dhe të kthejë trafikun në veprim konkret. Për shumë kompani, problemi nuk është mungesa e interesit, por mungesa e një strukture të saktë që e çon vizitorin drejt kontaktit, kërkesës ose blerjes.`,
-        `Rezultati që synojmë zakonisht lidhet me ${benefitsPreview}. Është veçanërisht i vlefshëm për ${audiencePreview}, sepse këto profile kanë nevojë për një kombinim të mirë mes strategjisë, ekzekutimit dhe optimizimit të vazhdueshëm.`,
-      ],
-      supporting: [
-        `Procesi ynë nis me kuptimin e objektivit dhe vazhdon me ${processPreview}. Kjo qasje shmang punën e fragmentuar dhe siguron që çdo hap të lidhet me një objektiv konkret biznesi.`,
-      ],
-    };
-  }
-
-  if (locale === "de") {
-    return {
-      whatIsThis: [
-        `${cleanTitle} ist eine Leistung für Unternehmen, die online stärker auftreten, mehr qualifizierte Anfragen gewinnen und ihre digitale Kommunikation sauber strukturieren möchten. ${service.desc} ${subline}`,
-        `Der Fokus liegt nicht nur auf der technischen Umsetzung, sondern auf dem messbaren Geschäftswert. In den meisten Projekten gehören ${includedPreview} dazu. Damit entsteht keine reine Showcase-Seite, sondern eine Lösung, die auf Sichtbarkeit, Vertrauen und Conversion ausgerichtet ist.`,
-      ],
-      whyItMatters: [
-        `Diese Leistung ist wichtig, weil sie Angebot, Nutzerführung und Conversion sauber verbindet. Viele Unternehmen haben bereits Sichtbarkeit, verlieren aber Potenzial, weil Struktur, Botschaft oder nächste Schritte nicht klar genug sind.`,
-        `Unser Ziel ist meist ${benefitsPreview}. Besonders relevant ist das für ${audiencePreview}, weil diese Profile eine Verbindung aus Strategie, Umsetzung und kontinuierlicher Optimierung brauchen.`,
-      ],
-      supporting: [
-        `Unser Ablauf startet mit der Zielklärung und geht dann über in ${processPreview}. So bleibt das Projekt fokussiert und jeder Schritt trägt zu einem klaren Business-Ziel bei.`,
-      ],
-    };
-  }
+  const whyItMatters: Record<Locale, string> = {
+    sq: "Shumë biznese humbasin klientë jo nga mungesa e trafikut, por nga mungesa e strukturës. Ne ndërtojmë zgjidhje që komunikojnë ofertën qartë dhe e çojnë vizitorin drejt veprimit.",
+    en: "Most businesses lose leads not from lack of traffic, but from lack of structure. We build solutions that communicate the offer clearly and guide visitors toward action.",
+    de: "Viele Unternehmen verlieren Anfragen nicht wegen fehlender Sichtbarkeit, sondern wegen unklarer Struktur. Wir bauen Lösungen, die das Angebot klar kommunizieren und Besucher zur Handlung führen.",
+  };
 
   return {
     whatIsThis: [
-      `${cleanTitle} is a service designed for businesses that want a stronger digital presence, more qualified enquiries, and a clearer path from traffic to conversion. ${service.desc} ${subline}`,
-      `The goal is not just to ship assets or a page, but to create a commercial system that supports visibility, trust, and action. In most projects the scope includes ${includedPreview}, which means the work is structured around real buyer behaviour rather than surface-level presentation.`,
+      `${cleanTitle}.`,
+      ...descSentences,
+      subline,
     ],
-    whyItMatters: [
-      `This service matters because it connects positioning, user experience, and measurable performance. Many businesses already get traffic or attention, but they still lose leads because the offer is unclear, the messaging is weak, or the next step is not obvious enough.`,
-      `The outcome we usually target is ${benefitsPreview}. It is especially relevant for ${audiencePreview}, because those teams need a practical mix of strategy, execution, and ongoing optimisation instead of isolated deliverables.`,
-    ],
-    supporting: [
-      `Our process starts with the business goal and moves through ${processPreview}. That keeps the work aligned to performance instead of turning it into a disconnected design or marketing exercise.`,
-    ],
+    whyItMatters: splitSentences(whyItMatters[locale]),
+    supporting: [],
   };
 }
 

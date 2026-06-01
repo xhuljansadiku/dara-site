@@ -53,6 +53,7 @@ const projectsSq: Project[] = [
   // --- Website (no internal page, link directly to URL) ---
   { title: "Taxi Dhermi Official", tag: "Website", desc: "Website oficial për shërbimin e taksi dhe transportit në Dhërmj, me informacion për rrugët, rezervime dhe kontakt.", category: "website", thumbnail: "/images/projects/website/taxidhermi.png", websiteUrl: "https://www.taxidhermiofficial.com/" },
   { title: "O2 Antiage", tag: "Website", desc: "Website për klinikë estetike dhe antiaging, me prezantim të trajtimeve, ekipit dhe rezervimeve online.", category: "website", thumbnail: "/images/projects/website/o2antiage.png", websiteUrl: "https://www.o2antiage.com/" },
+  { title: "Cutaj Construction", tag: "Website", desc: "Website profesional për kompani ndërtimi dhe rinovimi në Londër, me prezantim të projekteve, shërbimeve dhe kontaktit.", category: "website", thumbnail: "/images/projects/website/cutaj-construction.png", websiteUrl: "https://www.cutajconstruction.co.uk/" },
 ];
 
 // ----------------------
@@ -69,6 +70,7 @@ const projectsEn: Project[] = [
   { ...projectsSq[6], desc: "Logo and visual identity." },
   { ...projectsSq[7], desc: "Official website for taxi and transport service in Dhermi, with route information, bookings and contact." },
   { ...projectsSq[8], desc: "Website for an aesthetic and anti-aging clinic, presenting treatments, team and online bookings." },
+  { ...projectsSq[9], desc: "Professional website for a construction and renovation company in London, showcasing projects, services and contact." },
 ];
 
 const projectsDe: Project[] = [
@@ -81,6 +83,7 @@ const projectsDe: Project[] = [
   { ...projectsSq[6], desc: "Logo und visuelle Identität." },
   { ...projectsSq[7], desc: "Offizielle Website für den Taxi- und Transportservice in Dhermi mit Streckeninformationen, Buchungen und Kontakt." },
   { ...projectsSq[8], desc: "Website für eine Ästhetik- und Anti-Aging-Klinik mit Darstellung von Behandlungen, Team und Online-Buchung." },
+  { ...projectsSq[9], desc: "Professionelle Website für ein Bau- und Renovierungsunternehmen in London mit Präsentation von Projekten, Leistungen und Kontakt." },
 ];
 
 export const PROJECTS_BY_LOCALE: Record<Locale, Project[]> = {
