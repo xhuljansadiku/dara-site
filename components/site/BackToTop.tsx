@@ -9,9 +9,9 @@ const WHATSAPP_HOVER: Record<string, string> = {
 };
 
 const BUBBLE_MSG: Record<string, string> = {
-  sq: "Përshëndetje! 👋 Si mund t'ju ndihmojmë?",
-  en: "Hello! 👋 How can we help you?",
-  de: "Hallo! 👋 Wie können wir Ihnen helfen?",
+  sq: "Përshëndetje! 👋\nSi mund t'ju ndihmojmë?",
+  en: "Hello! 👋\nHow can we help you?",
+  de: "Hallo! 👋\nWie können wir Ihnen helfen?",
 };
 
 export default function BackToTop({ locale = "sq" }: { locale?: string }) {
@@ -69,7 +69,7 @@ export default function BackToTop({ locale = "sq" }: { locale?: string }) {
             >
               ✕
             </button>
-            <p className="text-xs leading-relaxed text-gray-800">{bubbleMsg}</p>
+            <p className="whitespace-pre-line text-xs leading-relaxed text-gray-800">{bubbleMsg}</p>
           </div>
         )}
 
