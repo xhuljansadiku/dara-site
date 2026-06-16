@@ -480,8 +480,33 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Step Indicator */}
-              <div className="mt-6 grid gap-3 md:grid-cols-5">
+              {/* Step Indicator — mobile */}
+              <div className="mt-4 md:hidden">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">{stepTitles[currentStep - 1]}</p>
+                  <p className="text-sm font-semibold text-[#f2dfb8]">{String(currentStep).padStart(2, "0")} / 05</p>
+                </div>
+                <div className="mt-3 flex gap-1.5">
+                  {stepTitles.map((_, i) => {
+                    const n = i + 1;
+                    const isDisabled = n === 3 && shouldSkipDetailsStep;
+                    return (
+                      <div
+                        key={i}
+                        className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+                          isDisabled ? "bg-white/10" :
+                          n < currentStep ? "bg-white/50" :
+                          n === currentStep ? "bg-[#d1b780]" :
+                          "bg-white/20"
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Step Indicator — desktop */}
+              <div className="mt-6 hidden gap-3 md:grid md:grid-cols-5">
                 {stepTitles.map((title, index) => {
                   const stepNumber = index + 1;
                   const isActive = currentStep === stepNumber;
@@ -493,8 +518,7 @@ export default function ContactPage() {
                       className={`rounded-2xl border px-4 py-3 transition ${
                         isDisabled
                           ? "border-white/8 bg-white/[0.03] opacity-45"
-                          :
-                        isActive
+                          : isActive
                           ? "border-[#d1b780]/50 bg-[#d1b780]/14"
                           : isComplete
                           ? "border-white/20 bg-white/8"
@@ -506,7 +530,7 @@ export default function ContactPage() {
                       </p>
                       <p className={`mt-2 text-sm font-medium ${isActive ? "text-white" : isComplete ? "text-white/90" : "text-white/65"}`}>
                         {title}
-                        {isDisabled ? ` ${locale === "sq" ? "• skip" : locale === "de" ? "• skip" : "• skip"}` : ""}
+                        {isDisabled ? " • skip" : ""}
                       </p>
                     </div>
                   );

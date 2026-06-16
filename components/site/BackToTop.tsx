@@ -58,7 +58,7 @@ export default function BackToTop({ locale = "sq" }: { locale?: string }) {
       )}
 
       {/* WhatsApp + bubble */}
-      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-2">
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2 md:bottom-8 md:right-8">
         {/* Speech bubble */}
         {showBubble && !bubbleDismissed && (
           <div className="animate-float-up relative max-w-[220px] rounded-2xl rounded-br-none bg-white px-4 py-3 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.18)] ring-1 ring-black/[0.06]">
