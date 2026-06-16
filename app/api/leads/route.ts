@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { isSmtpConfigured, sendLeadNotification, sendAutoReplyToLead } from "@/lib/email";
+import { appendLeadToSheets, isGoogleSheetsLeadsConfigured } from "@/lib/leads-sheets";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 function isValidEmail(email: string) {
@@ -126,35 +127,59 @@ export async function POST(req: Request) {
       console.info("LEADS: skipping local disk (Vercel/serverless); relying on email delivery.");
     }
 
-    if (!isSmtpConfigured()) {
-      console.error("LEADS_SMTP_NOT_CONFIGURED");
+    const sheetsConfigured = isGoogleSheetsLeadsConfigured();
+    const smtpConfigured = isSmtpConfigured();
+
+    if (!smtpConfigured && !sheetsConfigured && !persistedToDisk) {
+      console.error("LEADS_NO_DELIVERY_METHOD");
       return NextResponse.json(
-        { ok: false, error: "SMTP_NOT_CONFIGURED", saved: persistedToDisk },
+        { ok: false, error: "NO_DELIVERY_METHOD", saved: false },
         { status: 503 }
       );
     }
 
-    console.log("LEADS_ROUTE_NOTIFY_START:", {
-      email,
-      phone: phone || null,
-      company: company || null,
-      budget: budget || null,
-    });
-    const notify = await sendLeadNotification(lead);
-    console.log("LEADS_ROUTE_NOTIFY_RESULT:", notify);
-    if (!notify.ok) {
-      console.error("LEAD_EMAIL_ERROR:", notify.error);
-      return NextResponse.json(
-        { ok: false, error: "EMAIL_FAILED", saved: persistedToDisk },
-        { status: 502 }
-      );
+    // Save to Google Sheets (blocking — primary backup)
+    if (sheetsConfigured) {
+      const sheetsResult = await appendLeadToSheets(lead);
+      if (!sheetsResult.ok) {
+        console.error("LEADS_SHEETS_ERROR:", sheetsResult.error);
+      } else {
+        console.info("LEADS_SHEETS_OK");
+      }
+    }
+
+    // Send email notification
+    let emailed = false;
+    if (smtpConfigured) {
+      console.log("LEADS_ROUTE_NOTIFY_START:", {
+        email,
+        phone: phone || null,
+        company: company || null,
+        budget: budget || null,
+      });
+      const notify = await sendLeadNotification(lead);
+      console.log("LEADS_ROUTE_NOTIFY_RESULT:", notify);
+      if (!notify.ok) {
+        console.error("LEAD_EMAIL_ERROR:", notify.error);
+        // Don't fail if Sheets succeeded
+        if (!sheetsConfigured && !persistedToDisk) {
+          return NextResponse.json(
+            { ok: false, error: "EMAIL_FAILED", saved: persistedToDisk },
+            { status: 502 }
+          );
+        }
+      } else {
+        emailed = true;
+      }
     }
 
     // Auto-reply to client (non-blocking)
     const locale = ["sq", "en", "de"].includes(clean(obj.locale, 5)) ? clean(obj.locale, 5) : "en";
-    sendAutoReplyToLead({ name, email }, locale).catch((err) => console.error("AUTO_REPLY_ERROR:", err));
+    if (smtpConfigured) {
+      sendAutoReplyToLead({ name, email }, locale).catch((err) => console.error("AUTO_REPLY_ERROR:", err));
+    }
 
-    return NextResponse.json({ ok: true, saved: persistedToDisk || shouldSkipDiskPersistence(), emailed: true });
+    return NextResponse.json({ ok: true, saved: persistedToDisk || shouldSkipDiskPersistence(), emailed, sheets: sheetsConfigured });
   } catch (e) {
     console.error("LEADS_ERROR:", e);
     return NextResponse.json({ ok: false, error: "SERVER_ERROR" }, { status: 500 });
