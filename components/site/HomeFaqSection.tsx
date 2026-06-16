@@ -120,11 +120,14 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                     </svg>
                   </span>
                 </button>
-                {isOpen && (
+                <div
+                  className="overflow-hidden transition-all duration-300 ease-in-out"
+                  style={{ maxHeight: isOpen ? "400px" : "0px", opacity: isOpen ? 1 : 0 }}
+                >
                   <div className="border-t border-neutral-100 px-5 py-4 text-left text-[15px] leading-relaxed text-neutral-600 md:px-6">
                     {faq.a}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

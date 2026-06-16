@@ -88,6 +88,13 @@ export default function Navbar() {
   const nav = NAV_TRANSLATIONS[locale as (typeof LOCALES)[number]] ?? NAV_TRANSLATIONS[defaultLocale];
 
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [websiteOpen, setWebsiteOpen] = useState(false);
   const [marketingOpen, setMarketingOpen] = useState(false);
@@ -239,8 +246,8 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-800/80 bg-gray-900/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-3 px-3 py-2 sm:px-4 md:h-20">
+    <header className={`sticky top-0 z-50 border-b border-gray-800/80 backdrop-blur-xl transition-all duration-300 ${scrolled ? "bg-gray-950/90 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)]" : "bg-gray-900/70"}`}>
+      <div className={`mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 sm:px-4 transition-all duration-300 ${scrolled ? "h-14 py-1" : "h-18 py-2 md:h-20"}`}>
         {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
         <Link href={`/${locale}`} className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setOpen(false)}>
           <div className="flex flex-col items-center gap-0.5">
@@ -249,7 +256,7 @@ export default function Navbar() {
               alt="DARA"
               width={150}
               height={48}
-              className="h-8 w-auto object-contain sm:h-10 md:h-11"
+              className={`w-auto object-contain transition-all duration-300 ${scrolled ? "h-7" : "h-8 sm:h-10 md:h-11"}`}
               priority
             />
             <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] text-gray-400 sm:text-[10px]">

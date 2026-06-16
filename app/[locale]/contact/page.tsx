@@ -11,7 +11,7 @@ import { GENERIC_ERROR_MESSAGES, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors
 
 // Services shown in contact form (exclude training - has its own form at /trainings/register)
 const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mgopkbak";
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? "";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -25,8 +25,13 @@ export default function ContactPage() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [captchaLeft, setCaptchaLeft] = useState<number>(() => Math.floor(Math.random() * 8) + 2);
-  const [captchaRight, setCaptchaRight] = useState<number>(() => Math.floor(Math.random() * 8) + 2);
+  const formLoadedAt = useRef<number>(Date.now());
+  const [captchaLeft, setCaptchaLeft] = useState<number>(() => Math.floor(Math.random() * 9) + 2);
+  const [captchaRight, setCaptchaRight] = useState<number>(() => Math.floor(Math.random() * 9) + 2);
+  const [captchaOp, setCaptchaOp] = useState<"+" | "-" | "×">(() => {
+    const ops = ["+", "-", "×"] as const;
+    return ops[Math.floor(Math.random() * ops.length)];
+  });
   const [captchaAnswer, setCaptchaAnswer] = useState("");
   
   // Form data
@@ -60,11 +65,18 @@ export default function ContactPage() {
     .map((slug) => slug.trim())
     .filter(Boolean);
   const primaryService = selectedServiceSlugs[0] ?? "";
-  const captchaExpected = captchaLeft + captchaRight;
+  const captchaA = captchaOp === "-" ? Math.max(captchaLeft, captchaRight) : captchaLeft;
+  const captchaB = captchaOp === "-" ? Math.min(captchaLeft, captchaRight) : captchaRight;
+  const captchaExpected =
+    captchaOp === "+" ? captchaA + captchaB :
+    captchaOp === "-" ? captchaA - captchaB :
+    captchaA * captchaB;
 
   const regenerateCaptcha = () => {
-    setCaptchaLeft(Math.floor(Math.random() * 8) + 2);
-    setCaptchaRight(Math.floor(Math.random() * 8) + 2);
+    const ops = ["+", "-", "×"] as const;
+    setCaptchaLeft(Math.floor(Math.random() * 9) + 2);
+    setCaptchaRight(Math.floor(Math.random() * 9) + 2);
+    setCaptchaOp(ops[Math.floor(Math.random() * ops.length)]);
   };
 
   const handleInputChange = (name: string, value: string) => {
@@ -189,6 +201,12 @@ export default function ContactPage() {
     if (currentStep !== 5) {
       // If not on step 5, prevent submission and do nothing
       // Navigation should only happen via the Next/Review buttons
+      return;
+    }
+
+    if (Date.now() - formLoadedAt.current < 4000) {
+      setStatus("success");
+      router.push(`/${locale}/contact/thank-you`);
       return;
     }
 
@@ -892,7 +910,7 @@ export default function ContactPage() {
                         </span>
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="inline-flex h-11 items-center rounded-xl border border-stone-300 bg-white px-4 text-base font-semibold text-stone-900">
-                            {captchaLeft} + {captchaRight} = ?
+                            {captchaA} {captchaOp} {captchaB} = ?
                           </span>
                           <input
                             type="text"

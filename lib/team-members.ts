@@ -66,8 +66,7 @@ export function getTeamMembersForLocale(locale: TeamLocale): TeamMemberPublic[] 
           : locale === "de"
             ? "Entwickelt und betreut Websites und Apps, von UI bis zu Integrationen."
             : "Builds and maintains websites and apps, from UI to integrations.",
-      img: "/team/xhulian-s.png",
-      photoGrayscale: true,
+      initials: "XS",
     },
     {
       name: "Sabina T.",

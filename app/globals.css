@@ -206,3 +206,106 @@ select option:focus {
     overflow-x: hidden;
   }
 }
+
+/* Desktop (1024px+): sticky nav clearance */
+@media (min-width: 1024px) {
+  section {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* ─── Gold gradient text utility ─── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #e8d5b0 0%, #B89D5E 45%, #8a7344 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Card gold glow on hover ─── */
+.card-glow {
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.card-glow:hover {
+  border-color: rgba(184, 157, 94, 0.5) !important;
+  box-shadow:
+    0 0 0 1px rgba(184, 157, 94, 0.25),
+    0 20px 48px -16px rgba(184, 157, 94, 0.22),
+    0 8px 24px -8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+/* ─── Page fade-in transition ─── */
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-page-enter {
+  animation: page-fade-in 0.35s ease-out both;
+}
+
+/* ─── Stagger word animation ─── */
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.word-stagger {
+  display: inline-block;
+  opacity: 0;
+}
+.word-stagger.visible {
+  animation: word-in 0.5s ease-out forwards;
+}
+
+/* ─── Reading progress bar ─── */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #e8d5b0, #B89D5E, #8a7344);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ─── Custom cursor ─── */
+.custom-cursor {
+  pointer-events: none;
+  position: fixed;
+  z-index: 99999;
+  mix-blend-mode: difference;
+}
+
+/* ─── Typewriter cursor blink ─── */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: #B89D5E;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursor-blink 0.8s step-end infinite;
+}
+
+/* ─── Section dots ─── */
+.section-dot {
+  transition: all 0.25s ease;
+}
+.section-dot.active {
+  transform: scale(1.4);
+  background-color: #B89D5E !important;
+}
+
+/* ─── Floating CTA ─── */
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-float-up {
+  animation: float-up 0.4s ease-out both;
+}

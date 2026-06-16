@@ -30,7 +30,7 @@ type Props = {
   packagesByGroup: Record<PackageGroup, Pkg[]>;
   packageFilterTabs: PackageFilterTab[];
   packageGroupLabels: Record<PackageGroup, string>;
-  testimonial: { quote: string; name: string; role: string; company?: string };
+  testimonials: { quote: string; name: string; role: string; company?: string }[];
   copy: {
     sectionKicker: string;
     sectionTitleBefore: string;
@@ -62,7 +62,7 @@ export default function ServicesSection({
   packagesByGroup,
   packageFilterTabs,
   packageGroupLabels,
-  testimonial,
+  testimonials,
   copy,
 }: Props) {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -259,19 +259,21 @@ export default function ServicesSection({
               })}
             </div>
 
-            {/* Testimonial pas përmbajtjes (filter Marketing) */}
-            {activeTab === 0 && (
-              <div className="relative mt-8 overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-br from-neutral-50 to-white p-5 md:p-6">
+            {/* Testimoniale pas përmbajtjes (filter Marketing) */}
+            {activeTab === 0 && testimonials.length > 0 && (
+              <div className="relative mt-8 space-y-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-gradient-to-br from-neutral-50 to-white p-5 md:p-6">
                 <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-full bg-[#B89D5E]/10 blur-2xl" aria-hidden />
-                <p className="relative text-sm italic leading-relaxed text-neutral-800">
-                  &ldquo;
-                  <TextWithBreaksAfterPeriods text={testimonial.quote} />
-                  &rdquo;
-                </p>
-                <p className="relative mt-3 text-xs font-medium text-neutral-950">
-                  {testimonial.name}, {testimonial.role}
-                  {testimonial.company && ` · ${testimonial.company}`}
-                </p>
+                {testimonials.map((t, i) => (
+                  <div key={i} className={i > 0 ? "border-t border-neutral-100 pt-3" : ""}>
+                    <p className="relative text-sm italic leading-relaxed text-neutral-800">
+                      &ldquo;<TextWithBreaksAfterPeriods text={t.quote} />&rdquo;
+                    </p>
+                    <p className="relative mt-2 text-xs font-medium text-neutral-950">
+                      {t.name}, {t.role}
+                      {t.company && ` · ${t.company}`}
+                    </p>
+                  </div>
+                ))}
               </div>
             )}
 

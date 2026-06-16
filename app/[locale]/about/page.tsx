@@ -544,14 +544,12 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 {hero.title.includes(" ") ? (
                   <>
                     {hero.title.split(" ").slice(0, -1).join(" ")}{" "}
-                    <span className="text-gray-900">
+                    <span className="text-[#B89D5E]">
                       {hero.title.split(" ").slice(-1)[0]}
                     </span>
                   </>
                 ) : (
-                  <span className="text-gray-900">
-                    {hero.title}
-                  </span>
+                  hero.title
                 )}
               </h1>
               <div className="mt-8 space-y-5 text-base leading-relaxed text-gray-600 md:text-lg">

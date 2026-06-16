@@ -1,5 +1,4 @@
 // app/[locale]/page.tsx - Localised home page for sq/en/de
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { use } from "react";
 import NewsletterForm from "@/components/NewsletterForm";
@@ -14,6 +13,10 @@ import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
 import MarketingVideo from "@/components/site/MarketingVideo";
 import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
+import HeroParallaxBg from "@/components/site/HeroParallaxBg";
+import TypewriterHero from "@/components/site/TypewriterHero";
+import CountUp from "@/components/site/CountUp";
+import SectionDots from "@/components/site/SectionDots";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
   PACKAGES_BY_GROUP_AND_LOCALE,
@@ -71,7 +74,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "DARA MARKETING AGENCY",
     titleA: "Wage es,",
     titleB: "anders zu sein",
-    desc: "Von Websites und E-Commerce bis zur Werbebetrreuung (Meta & Google). Wir entwickeln digitale Marketingstrategien, die Traffic in echte Verkäufe und messbares Wachstum verwandeln.",
+    desc: "Von Websites und E-Commerce bis zur Werbebetreuung (Meta & Google). Wir entwickeln digitale Marketingstrategien, die Traffic in echte Verkäufe und messbares Wachstum verwandeln.",
     ctaPrimary: "Zusammenarbeit starten",
     ctaSecondary: "Leistungen entdecken",
     scrollHint: "Mehr entdecken",
@@ -243,25 +246,67 @@ const RESULT_BY_SERVICE_INDEX: Record<Locale, Record<number, string>> = {
   de: { 0: "+40 % durchschn. Engagement", 4: "Mehr Leads & Konversionen" },
 };
 
-const TESTIMONIAL_BY_LOCALE: Record<Locale, { quote: string; name: string; role: string; company?: string }> = {
-  sq: {
-    quote: "DARA na ndihmoi të strukturojmë rrjetet tona sociale dhe të rrisnim shitjet. Profesionale dhe të fokusuara te rezultatet.",
-    name: "Ana M.",
-    role: "Menaxhere",
-    company: "Don Mare Hotel",
-  },
-  en: {
-    quote: "DARA helped us structure our social presence and increase sales. Professional and focused on results.",
-    name: "Ana M.",
-    role: "Manager",
-    company: "Don Mare Hotel",
-  },
-  de: {
-    quote: "DARA hat uns geholfen, unseren Social-Media-Auftritt zu strukturieren und den Umsatz zu steigern. Professionell und ergebnisorientiert.",
-    name: "Ana M.",
-    role: "Managerin",
-    company: "Don Mare Hotel",
-  },
+const TESTIMONIAL_BY_LOCALE: Record<Locale, { quote: string; name: string; role: string; company?: string }[]> = {
+  sq: [
+    {
+      quote: "DARA na ndihmoi të strukturojmë rrjetet tona sociale dhe të rrisnim shitjet. Profesionale dhe të fokusuara te rezultatet.",
+      name: "Ana M.",
+      role: "Menaxhere",
+      company: "Don Mare Hotel",
+    },
+    {
+      quote: "Krijuan website-in tonë nga zero dhe e lansuam brenda 3 javësh. Shpejtësia dhe cilësia ishin mbi pritshmëritë.",
+      name: "Genci V.",
+      role: "Pronar",
+      company: "VizionTech",
+    },
+    {
+      quote: "Pas 2 muajsh bashkëpunim, shitjet tona online u rritën me 38%. Rekomandoj DARA-n pa hezitim.",
+      name: "Blerinda H.",
+      role: "Drejtoreshë",
+      company: "Estetika Blerinda",
+    },
+  ],
+  en: [
+    {
+      quote: "DARA helped us structure our social presence and increase sales. Professional and focused on results.",
+      name: "Ana M.",
+      role: "Manager",
+      company: "Don Mare Hotel",
+    },
+    {
+      quote: "They built our website from scratch and launched it within 3 weeks. Speed and quality exceeded our expectations.",
+      name: "Genci V.",
+      role: "Owner",
+      company: "VizionTech",
+    },
+    {
+      quote: "After 2 months of collaboration, our online sales grew by 38%. I recommend DARA without hesitation.",
+      name: "Blerinda H.",
+      role: "Director",
+      company: "Estetika Blerinda",
+    },
+  ],
+  de: [
+    {
+      quote: "DARA hat uns geholfen, unseren Social-Media-Auftritt zu strukturieren und den Umsatz zu steigern. Professionell und ergebnisorientiert.",
+      name: "Ana M.",
+      role: "Managerin",
+      company: "Don Mare Hotel",
+    },
+    {
+      quote: "Sie haben unsere Website von Grund auf erstellt und innerhalb von 3 Wochen gelauncht. Geschwindigkeit und Qualität übertrafen unsere Erwartungen.",
+      name: "Genci V.",
+      role: "Inhaber",
+      company: "VizionTech",
+    },
+    {
+      quote: "Nach 2 Monaten Zusammenarbeit stiegen unsere Online-Verkäufe um 38 %. Ich empfehle DARA ohne Zögern.",
+      name: "Blerinda H.",
+      role: "Direktorin",
+      company: "Estetika Blerinda",
+    },
+  ],
 };
 
 const SERVICES_SECTION_COPY: Record<
@@ -488,7 +533,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       "https://www.linkedin.com/company/dara-marketing-agency-al/",
     ],
     foundingDate: "2020-01-01",
-    numberOfEmployees: { "@type": "QuantitativeValue", value: 3 },
+    numberOfEmployees: { "@type": "QuantitativeValue", value: 6 },
     priceRange: "€€",
   };
 
@@ -496,14 +541,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO - Trifid style: full viewport, bold typography + readability scrim */}
-      <section className="relative isolate flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 md:px-8 sm:py-24 md:py-32">
-        <img
-          src="/hero-bg-dara.png"
-          alt=""
-          className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
-          aria-hidden
-          fetchPriority="high"
-        />
+      <section id="hero" className="relative isolate flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 md:px-8 sm:py-24 md:py-32">
+        <HeroParallaxBg />
         {/* Global light dim: keeps astronaut/clouds vivid */}
         <div className="absolute inset-0 -z-10 bg-black/30" aria-hidden />
         {/* Left column scrim: max contrast for copy without flattening full image */}
@@ -522,7 +561,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           </p>
           <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-[3.35rem] font-bold leading-[0.92] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
             {hero.titleA}{" "}
-            <span className="block text-[#B89D5E] [text-shadow:0_2px_28px_rgba(0,0,0,0.45)]">{hero.titleB}</span>
+            <TypewriterHero locale={locale} initialWord={hero.titleB} />
           </h1>
           <p className="animate-fade-in-up animate-fade-in-up-delay-2 mx-auto mt-8 max-w-[38rem] text-[15px] leading-[1.75] text-white/95 [text-shadow:0_1px_20px_rgba(0,0,0,0.55)] lg:mx-0 md:text-lg lg:text-xl">
             {hero.desc}
@@ -570,7 +609,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       {/* Marquee banner - Trifid style */}
       <section className="relative overflow-hidden border-y border-gray-200 py-5 md:py-6">
         <div className="animate-marquee flex w-max gap-16">
-          {[...Array(8)].map((_, i) => {
+          {[...Array(4)].map((_, i) => {
             const m = MARQUEE_BY_LOCALE[locale];
             return (
               <span key={i} className="shrink-0 font-display text-2xl font-bold uppercase tracking-wider text-gray-900 md:text-4xl lg:text-5xl">
@@ -583,7 +622,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* Value pillars (brand-aligned, DARA gold on results card) */}
-      <section className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-20 md:py-28">
+      <section id="values" className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-20 md:py-28">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#B89D5E]/30 to-transparent"
           aria-hidden
@@ -607,7 +646,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
             {pillars.map((pillar, idx) => (
                 <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0 lg:min-w-0 lg:flex-1">
-                  <div className="group flex h-full min-h-0 flex-col items-center rounded-2xl border border-stone-200/90 bg-white/90 p-7 text-center shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:-translate-y-[10px] hover:border-[#B89D5E]/35 hover:shadow-[0_28px_52px_-16px_rgba(0,0,0,0.14),0_16px_40px_-12px_rgba(184,157,94,0.28)] md:items-stretch md:p-9 md:text-left">
+                  <div className="card-glow group flex h-full min-h-0 flex-col items-center rounded-2xl border border-stone-200/90 bg-white/90 p-7 text-center shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] md:items-stretch md:p-9 md:text-left">
                     <ValuePillarIcon index={idx} />
                     <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
                       {pillar.title}
@@ -674,7 +713,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 <AnimateIn delay={50}>
                   <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-neutral-950 sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
                     <span>{about.titlePrefix}</span>
-                    <span className="text-[#B89D5E]">{about.titleAccent}</span>
+                    <span className="text-gradient-gold">{about.titleAccent}</span>
                   </h2>
                 </AnimateIn>
                 <AnimateIn delay={100}>
@@ -702,7 +741,14 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                         className="min-w-[140px] flex-1 rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] sm:min-w-[160px] sm:px-5 lg:text-left"
                       >
                         <span className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
-                          {stat.value}
+                          {/^\d+/.test(stat.value) ? (
+                            <CountUp
+                              end={parseInt(stat.value)}
+                              suffix={stat.value.replace(/^\d+/, "")}
+                            />
+                          ) : (
+                            stat.value
+                          )}
                         </span>
                         <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-500 sm:text-xs lg:normal-case lg:tracking-normal">
                           {stat.label}
@@ -739,7 +785,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         packagesByGroup={PACKAGES_BY_GROUP_AND_LOCALE[locale]}
         packageFilterTabs={PACKAGE_FILTER_TABS_BY_LOCALE[locale]}
         packageGroupLabels={PACKAGE_GROUP_LABELS[locale]}
-        testimonial={TESTIMONIAL_BY_LOCALE[locale]}
+        testimonials={TESTIMONIAL_BY_LOCALE[locale]}
         copy={SERVICES_SECTION_COPY[locale]}
       />
 
@@ -855,8 +901,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
             <div className="grid gap-14 text-center lg:grid-cols-2 lg:gap-20 lg:text-left">
               {/* Left - CTA */}
               <div>
-                <h2 id="cta-heading" className="bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold leading-[1.15] text-transparent md:text-4xl lg:text-[2.75rem]">
-                  {cta.title}
+                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-neutral-950 md:text-4xl lg:text-[2.75rem]">
+                  {cta.title.split(" ").slice(0, -3).join(" ")}{" "}
+                  <span className="text-gradient-gold">{cta.title.split(" ").slice(-3).join(" ")}</span>
                 </h2>
                 <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-neutral-600 lg:mx-0">
                   {cta.subtitle}
@@ -978,6 +1025,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       <div className="h-8" />
+      <SectionDots locale={locale} />
     </>
   );
 }

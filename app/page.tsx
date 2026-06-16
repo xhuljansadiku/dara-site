@@ -105,7 +105,7 @@ export default function RootPage() {
               aria-hidden
             />
 
-            <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-6 max-w-lg space-y-1.5 text-base leading-relaxed text-white/72 md:text-lg">
+            <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-6 max-w-lg space-y-1.5 text-base leading-relaxed text-white/70 md:text-lg">
               <p className="text-pretty">· Zgjidh gjuhën tënde</p>
               <p className="text-pretty">· Choose your language</p>
               <p className="text-pretty">· Wählen Sie Ihre Sprache</p>
