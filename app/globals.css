@@ -269,12 +269,16 @@ select option:focus {
   pointer-events: none;
 }
 
-/* ─── Custom cursor ─── */
+/* ─── Custom cursor (desktop/mouse only) ─── */
 .custom-cursor {
   pointer-events: none;
   position: fixed;
   z-index: 99999;
   mix-blend-mode: difference;
+}
+
+@media (pointer: coarse) {
+  .custom-cursor { display: none; }
 }
 
 /* ─── Typewriter cursor blink ─── */
