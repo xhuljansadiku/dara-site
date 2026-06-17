@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const WORDS_BY_LOCALE: Record<string, string[]> = {
-  sq: ["ndryshe", "i guximshëm", "kreativ", "unik", "i suksesshëm"],
+  sq: ["ndryshe", "kreativ", "unik", "i suksesshëm"],
   en: ["different", "bold", "creative", "unique", "successful"],
   de: ["anders zu sein", "mutig zu sein", "kreativ zu sein", "einzigartig", "erfolgreich"],
 };
