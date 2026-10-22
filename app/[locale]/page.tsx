@@ -11,7 +11,6 @@ import HomeFaqSection from "@/components/site/HomeFaqSection";
 import ValuePillarIcon from "@/components/site/ValuePillarIcon";
 import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
-import MarketingVideo from "@/components/site/MarketingVideo";
 import GoogleReviewsSection from "@/components/site/GoogleReviewsSection";
 import HeroParallaxBg from "@/components/site/HeroParallaxBg";
 import TypewriterHero from "@/components/site/TypewriterHero";
@@ -24,6 +23,7 @@ import {
 import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
 import { buildLocalizedMetadata } from "@/lib/seo-utils";
 import { CONTACT, PROJECTS_DELIVERED } from "@/lib/business-facts";
+import HomeAboutSection from "@/components/site/HomeAboutSection";
 import { getVerifiedTestimonials } from "@/lib/testimonials";
 
 type Locale = "sq" | "en" | "de";
@@ -125,63 +125,6 @@ const VALUE_PILLARS_BY_LOCALE: Record<Locale, ValuePillar[]> = {
     { title: "Klarer Prozess", desc: "Definierte Schritte, Ihre Freigabe in jeder Phase und Zeitpläne im Angebot." },
     { title: "Transparentes Reporting", desc: "Regelmäßige Berichte darüber, was umgesetzt wurde und wie es lief, damit Sie wissen, wohin das Budget fließt." },
     { title: "Messbare Ziele", desc: "KPIs werden zu Beginn festgelegt, damit Fortschritt an Ihren Zielen gemessen wird." },
-  ],
-};
-
-const ABOUT_BY_LOCALE: Record<
-  Locale,
-  { kicker: string; titlePrefix: string; titleAccent: string; paragraphs: string[]; readMore: string }
-> = {
-  sq: {
-    kicker: "Rreth nesh",
-    titlePrefix: "Ne jemi ",
-    titleAccent: "DARA.",
-    paragraphs: [
-      "DARA Marketing Agency është agjencia juaj e marketingut, themeluar më 2020. Ndihmojmë bizneset të rriten përmes strategjive krijuese dhe marketingut të orientuar nga rezultatet.",
-      "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
-      "Punojmë me biznese lokale dhe ndërkombëtare, duke kombinuar kreativitetin, analizën dhe një qasje praktike për të arritur rritje të matshme.",
-    ],
-    readMore: "Lexo më shumë",
-  },
-  en: {
-    kicker: "About us",
-    titlePrefix: "We are ",
-    titleAccent: "DARA.",
-    paragraphs: [
-      "DARA Marketing Agency is your marketing partner, established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
-      "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
-      "We work with local and international businesses, combining creativity, analysis and a hands-on approach to deliver measurable growth.",
-    ],
-    readMore: "Read more",
-  },
-  de: {
-    kicker: "Über uns",
-    titlePrefix: "Wir sind ",
-    titleAccent: "DARA.",
-    paragraphs: [
-      "DARA Marketing Agency ist Ihre Marketing-Partnerin, gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
-      "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
-      "Wir arbeiten mit lokalen und internationalen Unternehmen und verbinden Kreativität, Analyse und einen praxisnahen Ansatz für messbares Wachstum.",
-    ],
-    readMore: "Mehr erfahren",
-  },
-};
-
-const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: string }[]> = {
-  sq: [
-    { value: "", label: "vite eksperiencë" }, // Will be replaced dynamically
-    { value: PROJECTS_DELIVERED, label: "projekte të realizuara" },
-    { value: "AL, EU", label: "klientë në Shqipëri dhe Europë" },
-  ],
-  en: [
-    { value: "", label: "years experience" }, // Will be replaced dynamically
-    { value: PROJECTS_DELIVERED, label: "projects delivered" },
-    { value: "AL, EU", label: "clients in Albania and Europe" },
-  ],
-  de: [
-    { value: "", label: "Jahre Erfahrung" }, // Will be replaced dynamically
-    { value: PROJECTS_DELIVERED, label: "umgesetzte Projekte" },
-    { value: "AL, EU", label: "Kunden in Albanien und Europa" },
   ],
 };
 
@@ -397,13 +340,6 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
   const yearsExperienceFormatted = getYearsOfExperienceFormatted();
   const hero = HERO_BY_LOCALE[locale];
-  const about = ABOUT_BY_LOCALE[locale];
-  const aboutStatsRaw = ABOUT_STATS_BY_LOCALE[locale];
-  // Replace the first stat (experience) with dynamic value
-  const aboutStats = [
-    { value: yearsExperienceFormatted, label: aboutStatsRaw[0].label },
-    ...aboutStatsRaw.slice(1),
-  ];
   const services = SERVICES_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
   const career = CAREER_BY_LOCALE[locale];
@@ -558,68 +494,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       <HomeWorkSection locale={locale} />
       <GoogleReviewsSection locale={locale} />
 
-      {/* ABOUT US */}
-      <section id="about" aria-labelledby="about-heading" className="relative overflow-hidden py-16 sm:py-20 md:py-24">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_45%,#fafafa_100%)]"
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
-            <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-              <AnimateIn delay={100}>
-                <div className="relative order-2 flex justify-center lg:order-1">
-                  <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
-                    <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
-                      <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
-                    </div>
-                  </div>
-                </div>
-              </AnimateIn>
-              <div className="order-1 text-center lg:order-2 lg:text-left">
-                <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
-                  <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
-                  {about.kicker}
-                </span>
-                <h2 id="about-heading" className="mt-4 font-display text-2xl font-semibold tracking-tight text-neutral-950 sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
-                  <span>{about.titlePrefix}</span>
-                  <span className="text-gradient-gold">{about.titleAccent}</span>
-                </h2>
-                {about.paragraphs.map((paragraph, idx) => (
-                  <p
-                    key={idx}
-                    className={`${idx === 0 ? "mt-5 text-neutral-800" : "mt-4 text-neutral-600"} text-base leading-[1.7] md:text-lg`}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-                <dl className="mt-8 flex flex-wrap justify-center gap-2 sm:mt-10 lg:justify-start">
-                  {aboutStats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="flex min-w-[140px] flex-1 flex-col-reverse rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center sm:min-w-[160px] sm:px-5 lg:text-left"
-                    >
-                      <dt className="mt-1 block text-xs font-medium text-neutral-600">{stat.label}</dt>
-                      <dd className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
-                        {/* Plain value: a count-up shows "0+" to crawlers that render without scrolling. */}
-                        {stat.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="mt-10 flex justify-center lg:justify-start">
-                  <LocaleLink
-                    href="/about"
-                    className="inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full border border-neutral-950 bg-white px-8 text-sm font-semibold text-neutral-950 transition-all duration-300 hover:bg-neutral-950 hover:text-white sm:w-auto sm:max-w-none"
-                  >
-                    {about.readMore}
-                  </LocaleLink>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeAboutSection locale={locale} years={yearsExperienceFormatted} />
 
       {/* Training is a separate journey from agency services */}
       <TrainingsSection locale={locale} />
