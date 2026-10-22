@@ -47,17 +47,17 @@ export const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: strin
   sq: [
     { value: "", label: "vite eksperiencë" }, // Will be replaced dynamically
     { value: PROJECTS_DELIVERED, label: "projekte të realizuara" },
-    { value: "AL, EU", label: "klientë në Shqipëri dhe Europë" },
+    { value: "AL + 🌍", label: "klientë në Shqipëri dhe në gjithë botën" },
   ],
   en: [
     { value: "", label: "years experience" }, // Will be replaced dynamically
     { value: PROJECTS_DELIVERED, label: "projects delivered" },
-    { value: "AL, EU", label: "clients in Albania and Europe" },
+    { value: "AL + 🌍", label: "clients in Albania and around the world" },
   ],
   de: [
     { value: "", label: "Jahre Erfahrung" }, // Will be replaced dynamically
     { value: PROJECTS_DELIVERED, label: "umgesetzte Projekte" },
-    { value: "AL, EU", label: "Kunden in Albanien und Europa" },
+    { value: "AL + 🌍", label: "Kunden in Albanien und weltweit" },
   ],
 };
 
