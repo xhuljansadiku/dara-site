@@ -390,12 +390,38 @@ export default function ContactPage() {
     goNext();
   };
 
-  const toggleService = (slug: string) =>
+  const toggleService = (slug: string) => {
+    setError(null);
     setData((d) => {
-      const next = d.service.includes(slug) ? d.service.filter((s) => s !== slug) : [...d.service.filter((s) => s !== NOT_SURE || slug === NOT_SURE), slug];
-      const cleaned = slug === NOT_SURE ? [NOT_SURE] : next.filter((s) => s !== NOT_SURE);
-      return { ...d, service: cleaned };
+      const next = d.service.includes(slug)
+        ? d.service.filter((s) => s !== slug)
+        : slug === NOT_SURE
+          ? [NOT_SURE]
+          : [...d.service.filter((s) => s !== NOT_SURE), slug];
+      const nextMinPrice = next.reduce(
+        (max, s) => Math.max(max, SERVICE_MIN_PRICE_EUR[s as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0),
+        0
+      );
+      const availableBudgets = BUDGET_OPTIONS[locale].filter((_, i) => budgetTierFits(i, nextMinPrice));
+
+      return {
+        ...d,
+        service: next,
+        budget: availableBudgets.includes(d.budget) ? d.budget : "",
+        // These details only apply while one specific service is selected.
+        websiteType: "",
+        websitePages: "",
+        websiteSEO: "",
+        websiteFeatures: "",
+        ecommerceProducts: "",
+        ecommercePayment: "",
+        ecommerceShipping: "",
+        socialMediaPlatforms: "",
+        socialMediaFrequency: "",
+        otherServiceDetails: "",
+      };
     });
+  };
 
   const back = () => {
     setError(null);
@@ -484,6 +510,16 @@ export default function ContactPage() {
     }
   }
 
+  // Back sits on the left of every answer row (empty on the first question so Next stays right).
+  const backButton =
+    step > 0 ? (
+      <button type="button" onClick={back} className="h-12 shrink-0 rounded-full px-4 text-sm font-semibold text-white/60 transition hover:text-white">
+        ← {c.back}
+      </button>
+    ) : (
+      <span />
+    );
+
   const us = (text: string, k: string) => (
     <div key={k} className="animate-packages-tab-enter flex justify-start">
       <p className="max-w-[85%] whitespace-pre-line rounded-3xl rounded-bl-md bg-white/10 px-5 py-3 text-[15px] text-white">{text}</p>
@@ -539,29 +575,37 @@ export default function ContactPage() {
                         </button>
                       ))}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => (data.service.length ? goNext() : setError(c.errService))}
-                      className="h-12 rounded-xl bg-[#B89D5E] px-6 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]"
-                    >
-                      {c.next} →
-                    </button>
+                    <div className="flex items-center justify-between gap-3">
+                      {backButton}
+                      <button
+                        type="button"
+                        onClick={() => (data.service.length ? goNext() : setError(c.errService))}
+                        className="ml-auto h-12 rounded-full bg-[#B89D5E] px-7 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]"
+                      >
+                        {c.next} →
+                      </button>
+                    </div>
                   </div>
                 ) : current.kind === "choices" ? (
-                  <div role="group" aria-label={prompt(current.key)} className="flex flex-wrap gap-2">
-                    {current.choices.map((o) => (
-                      <button key={o} type="button" aria-pressed={data[current.key] === o} onClick={() => choose(current.key, o)} className={chip(data[current.key] === o)}>
-                        {o}
-                      </button>
-                    ))}
-                    {current.optional && (
-                      <button type="button" onClick={() => choose(current.key, "")} className="min-h-11 rounded-full px-4 text-sm text-white/55 hover:text-white">
-                        {c.skip}
-                      </button>
-                    )}
+                  <div className="space-y-3">
+                    <div role="group" aria-label={prompt(current.key)} className="flex flex-wrap gap-2">
+                      {current.choices.map((o) => (
+                        <button key={o} type="button" aria-pressed={data[current.key] === o} onClick={() => choose(current.key, o)} className={chip(data[current.key] === o)}>
+                          {o}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      {backButton}
+                      {current.optional && (
+                        <button type="button" onClick={() => choose(current.key, "")} className="ml-auto h-11 rounded-full border border-white/15 px-6 text-sm font-semibold text-white/75 hover:border-white/45">
+                          {c.skip}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+                  <div className="space-y-3">
                     {current.kind === "textarea" ? (
                       <textarea
                         ref={inputRef}
@@ -589,13 +633,14 @@ export default function ContactPage() {
                         className={`${box} h-12`}
                       />
                     )}
-                    <div className="flex gap-2">
+                    <div className="flex items-center justify-between gap-3">
+                      {backButton}
                       {current.optional && !draft.trim() ? (
-                        <button type="button" onClick={() => answerText()} className="h-12 shrink-0 rounded-xl border border-white/15 px-5 text-sm font-semibold text-white/75 hover:border-white/45">
+                        <button type="button" onClick={() => answerText()} className="ml-auto h-12 shrink-0 rounded-full border border-white/15 px-6 text-sm font-semibold text-white/75 hover:border-white/45">
                           {c.skip}
                         </button>
                       ) : (
-                        <button type="button" onClick={() => answerText()} className="h-12 shrink-0 rounded-xl bg-[#B89D5E] px-5 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]">
+                        <button type="button" onClick={() => answerText()} className="ml-auto h-12 shrink-0 rounded-full bg-[#B89D5E] px-7 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]">
                           {c.next} →
                         </button>
                       )}
@@ -629,19 +674,20 @@ export default function ContactPage() {
                   ))}
               </dl>
               {captcha && us(c.q.captcha.replace("{q}", `${captcha.a} ${captcha.op} ${captcha.b}`), "captcha")}
-              <div className="flex flex-col gap-2 pt-2 sm:flex-row">
+              <div className="grid gap-3 pt-2 sm:grid-cols-[10rem_1fr]">
                 <input
                   value={captchaAnswer}
                   onChange={(e) => setCaptchaAnswer(e.target.value.replace(/[^\d-]/g, ""))}
                   inputMode="numeric"
                   placeholder={c.ph.captcha}
                   aria-label={c.ph.captcha}
-                  className={`${box} h-12 sm:max-w-[10rem]`}
+                  className={`${box} h-12`}
                 />
-                <button type="submit" disabled={status === "loading"} className="h-12 flex-1 rounded-xl bg-[#B89D5E] px-6 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85] disabled:opacity-60">
+                <button type="submit" disabled={status === "loading"} className="h-12 rounded-full bg-[#B89D5E] px-6 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85] disabled:opacity-60">
                   {status === "loading" ? c.sending : `${c.send} →`}
                 </button>
               </div>
+              <div>{backButton}</div>
             </>
           )}
 
@@ -649,11 +695,6 @@ export default function ContactPage() {
             <p role="alert" className="rounded-xl bg-red-500/15 px-4 py-3 text-sm text-red-200">
               {error}
             </p>
-          )}
-          {step > 0 && (
-            <button type="button" onClick={back} className="text-sm text-white/45 hover:text-white">
-              ← {c.back}
-            </button>
           )}
           <div ref={bottomRef} />
         </form>

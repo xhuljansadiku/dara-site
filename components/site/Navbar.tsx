@@ -394,7 +394,12 @@ export default function Navbar() {
                 triggerRefs.current.lang = el;
               }}
               type="button"
-              onClick={() => toggleMenu("lang")}
+              onClick={() => {
+                // On phones the language list and the menu would overlap: opening one closes the other.
+                setMobileOpen(false);
+                setMobileSection(null);
+                toggleMenu("lang");
+              }}
               className="inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700"
               aria-expanded={openMenu === "lang"}
               aria-controls="nav-lang-panel"
