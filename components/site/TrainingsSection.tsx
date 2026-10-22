@@ -1,103 +1,8 @@
-"use client";
-
-import { useState, useEffect, useCallback } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import AnimateIn from "@/components/site/AnimateIn";
 import { TRAININGS } from "@/lib/trainings-data";
+import { TRAINING_PARTICIPANTS } from "@/lib/business-facts";
 import type { Locale } from "@/lib/services-data";
-
-const REVIEWS_AUTO_ADVANCE_MS = 5000;
-const GOOGLE_MAPS_PLACE_URL = "https://www.google.com/maps/place/DARA+MARKETING+AGENCY/@41.3226095,19.8161564,847m/data=!3m2!1e3!4b1!4m6!3m5!1s0x135031966872c267:0x3d7b8d966cb7b655!8m2!3d41.3226055!4d19.8187313!16s%2Fg%2F11tff8h77t?entry=ttu";
-
-function formatReviewerName(firstName: string, lastName?: string): string {
-  if (!lastName) return firstName;
-  const initial = lastName.charAt(0).toUpperCase();
-  const first = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-  return `${first} ${initial}.`;
-}
-
-const GOOGLE_REVIEWS: {
-  firstName: string;
-  lastName?: string;
-  rating: number;
-  text: Record<Locale, string>;
-}[] = [
-  {
-    firstName: "Sabina",
-    lastName: "Tahiri",
-    rating: 5,
-    text: {
-      sq: "Kam qenë pjesë e trajnimit për Social Media Manager nga Dara Marketing Agency, dhe përvoja ka qenë jashtëzakonisht e vlefshme. Gjatë trajnimit fitova aftësi reale që mund t'i aplikoj menjëherë në punë. Nga strategjia e përmbajtjes deri te menaxhimi i platformave dhe analiza e rezultateve. E rekomandoj Dara Marketing Agency për këdo që dëshiron të zhvillohet në fushën e marketingut digjital dhe të fitojë përvojë!",
-      en: "I was part of the Social Media Manager training from Dara Marketing Agency, and the experience was exceptionally valuable. During the training I gained real skills that I can apply immediately at work. From content strategy to platform management and results analysis. I recommend Dara Marketing Agency to anyone who wants to develop in digital marketing and gain experience!",
-      de: "Ich war Teil des Social Media Manager Trainings von Dara Marketing Agency, und die Erfahrung war außergewöhnlich wertvoll. Während des Trainings habe ich echte Fähigkeiten erworben, die ich sofort im Beruf anwenden kann. Von der Content-Strategie bis zum Plattformmanagement und der Ergebnisanalyse. Ich empfehle Dara Marketing Agency jedem, der sich im digitalen Marketing weiterentwickeln möchte!",
-    },
-  },
-  {
-    firstName: "Adelaida",
-    lastName: "Begaj",
-    rating: 5,
-    text: {
-      sq: "Trajnime SMM leksion + praktike ne klasë. Jam tepër e kënaqur me trajnimet nga Dara.",
-      en: "SMM trainings with lectures and practice in class. I am very satisfied with the trainings from Dara.",
-      de: "SMM-Trainings mit Vortrag und Praxis im Klassenzimmer. Ich bin sehr zufrieden mit den Trainings von Dara.",
-    },
-  },
-  {
-    firstName: "Flamur",
-    lastName: "Doku",
-    rating: 5,
-    text: {
-      sq: "Shumë e rekomanduar. Jo vetëm përmirësova aftësitë e mia në social media që më ndihmojnë të mbaj dhe rrit bizneset e mia, por edhe u argëtova gjatë procesit. Pavarësisht nëse dëshiron të punosh në Marketing, të marketosh biznesin tënd, të bëhesh influencer ose thjesht të krijosh memorje më të mira online. Dara është më e mira. Faleminderit!",
-      en: "Highly recommended. Not only did I enhance my social media skills that will help me better maintain and grow my businesses but I also had fun doing so. Whether you want to work in Marketing, market your own business, become an influencer or simply like to create better memories online. Dara is the best. Thank you!",
-      de: "Sehr empfehlenswert. Ich habe nicht nur meine Social-Media-Fähigkeiten verbessert, die mir helfen, meine Unternehmen zu pflegen und auszubauen, sondern hatte dabei auch viel Spaß. Ob Sie im Marketing arbeiten, Ihr eigenes Unternehmen vermarkten, Influencer werden oder einfach bessere Erinnerungen online schaffen möchten. Dara ist die Beste. Danke!",
-    },
-  },
-  {
-    firstName: "Vals",
-    rating: 5,
-    text: {
-      sq: "Kam qenë pjesë e masterklasës në social media marketing të ofruar nga kjo agjenci. Masterklasa ishte shumë informative dhe kisha mundësinë të analizoj shembuj praktikë dhe të implementoj dizajne në Canva nën mbikëqyrjen e profesionistëve me përvojë. E rekomandoj për fillestarët që duan të njihen me marketingun në social media dhe të fillojnë karrierën në këtë fushë.",
-      en: "I was part of the masterclass in social media marketing offered by this agency. The masterclass was very informative and I had the opportunity to analyse practical examples and implement designs in Canva with experienced professionals. I would recommend this for beginners who want to get familiar with Social media marketing and start their career in this field.",
-      de: "Ich war Teil des Masterkurses in Social-Media-Marketing dieser Agentur. Der Masterkurs war sehr informativ und ich hatte die Gelegenheit, praktische Beispiele zu analysieren und Designs in Canva unter der Anleitung erfahrener Profis umzusetzen. Ich empfehle dies Anfängern, die sich mit Social-Media-Marketing vertraut machen und ihre Karriere in diesem Bereich starten möchten.",
-    },
-  },
-  {
-    firstName: "Ilo",
-    lastName: "Sula",
-    rating: 5,
-    text: {
-      sq: "Kam pasur kënaqësinë të bashkëpunoj me Dara Marketing dhe mbeta shumë i impresionuar. Ekipi është shumë profesional, kreativ dhe gjithmonë i gatshëm për të gjetur zgjidhje unike për bizneset. Ajo që më pëlqeu më shumë ishte përkushtimi i tyre për të kuptuar nevojat specifike dhe për t'i kthyer ato në rezultate konkrete. Shërbim cilësor, komunikim i shkëlqyer dhe ide që bëjnë diferencën. Me plot bindje do ta rekomandoja për këdo që kërkon të rrisë praninë e biznesit në treg.",
-      en: "I had the pleasure of collaborating with Dara Marketing and was very impressed. The team is very professional, creative and always ready to find unique solutions for businesses. What I liked most was their dedication to understanding specific needs and turning them into concrete results. Quality service, excellent communication and ideas that make a difference. I would wholeheartedly recommend them to anyone looking to increase their business presence in the market.",
-      de: "Ich hatte das Vergnügen, mit Dara Marketing zusammenzuarbeiten und war sehr beeindruckt. Das Team ist sehr professionell, kreativ und immer bereit, einzigartige Lösungen für Unternehmen zu finden. Was mir am besten gefiel, war ihr Engagement, spezifische Bedürfnisse zu verstehen und sie in konkrete Ergebnisse umzuwandeln. Qualitätsservice, ausgezeichnete Kommunikation und Ideen, die den Unterschied machen. Ich empfehle sie jedem, der die Präsenz seines Unternehmens auf dem Markt erhöhen möchte.",
-    },
-  },
-  {
-    firstName: "Era",
-    lastName: "Leka",
-    rating: 5,
-    text: {
-      sq: "Ekipi i Dara Marketing është gjithmonë i gatshëm të ndihmojë, plot ide kreative dhe energji pozitive. Falë tyre kemi parë ndryshime të vërteta në marketingun tonë.",
-      en: "The Dara Marketing team is always ready to help, full of creative ideas and positive energy. Thanks to them we have seen real changes in our marketing.",
-      de: "Das Dara Marketing Team ist immer bereit zu helfen, voller kreativer Ideen und positiver Energie. Dank ihnen haben wir echte Veränderungen in unserem Marketing gesehen.",
-    },
-  },
-  {
-    firstName: "Aldo",
-    lastName: "Al",
-    rating: 5,
-    text: {
-      sq: "Stafi shumë profesional dhe e rekomandoj te çdo biznes që do t'i rritet audienca online!",
-      en: "Very professional staff and I recommend them to every business that wants to grow its online audience!",
-      de: "Sehr professionelles Team und ich empfehle sie jedem Unternehmen, das sein Online-Publikum vergrößern möchte!",
-    },
-  },
-];
-
-const REVIEWS_COPY: Record<Locale, { title: string; subtitle: string; viewOnGoogle: string }> = {
-  sq: { title: "Çfarë thonë klientët", subtitle: "Review nga Google", viewOnGoogle: "Shiko të gjitha në Google" },
-  en: { title: "What clients say", subtitle: "Reviews from Google", viewOnGoogle: "View all on Google" },
-  de: { title: "Was Kunden sagen", subtitle: "Bewertungen von Google", viewOnGoogle: "Alle bei Google ansehen" },
-};
 
 const SECTION_COPY: Record<
   Locale,
@@ -105,374 +10,186 @@ const SECTION_COPY: Record<
     kicker: string;
     title: string;
     subtitle: string;
-    learnDetails: string;
+    viewProgram: string;
     comingSoon: string;
     registerNow: string;
-    statsIntro: string;
+    registerInterest: string;
     studentsLabel: string;
     programsLabel: string;
-    ctaSubtext: string;
+    teamTraining: string;
   }
 > = {
   sq: {
     kicker: "Trajnime",
-    title: "A dëshiron ta ndryshosh jetën tënde?",
-    subtitle: "Ndiq trajnimet tona dhe zhvillo aftësi për karrierën tënde",
-    learnDetails: "Mëso detajet",
+    title: "Trajnime praktike për marketing dhe social media",
+    subtitle: "Programe për individë dhe ekipe që duan të menaxhojnë vetë marketingun digjital.",
+    viewProgram: "Shiko programin",
     comingSoon: "Së shpejti",
-    registerNow: "Regjistrohu tani",
-    statsIntro: "Rezultate të vërtetuara",
-    studentsLabel: "studente",
-    programsLabel: "programe",
-    ctaSubtext: "50+ studente kanë ndjekur trajnimet tona",
+    registerNow: "Regjistrohu",
+    registerInterest: "Shpreh interesin",
+    studentsLabel: "pjesëmarrës deri tani",
+    programsLabel: "programe aktive",
+    teamTraining: "Kërko trajnim për ekipin",
   },
   en: {
     kicker: "Training",
-    title: "Do you want to change your life?",
-    subtitle: "Follow our trainings and develop skills for your career",
-    learnDetails: "Learn details",
+    title: "Practical marketing and social media training",
+    subtitle: "Programmes for individuals and teams who want to run their own digital marketing.",
+    viewProgram: "View the programme",
     comingSoon: "Coming soon",
-    registerNow: "Register now",
-    statsIntro: "Proven results",
-    studentsLabel: "students",
-    programsLabel: "programmes",
-    ctaSubtext: "50+ students have attended our trainings",
+    registerNow: "Register",
+    registerInterest: "Register interest",
+    studentsLabel: "participants so far",
+    programsLabel: "active programmes",
+    teamTraining: "Request team training",
   },
   de: {
     kicker: "Training",
-    title: "Möchtest du dein Leben verändern?",
-    subtitle: "Folge unseren Trainings und entwickle Fähigkeiten für deine Karriere",
-    learnDetails: "Details erfahren",
+    title: "Praxisnahe Trainings für Marketing und Social Media",
+    subtitle: "Programme für Einzelpersonen und Teams, die ihr digitales Marketing selbst steuern möchten.",
+    viewProgram: "Programm ansehen",
     comingSoon: "Demnächst",
-    registerNow: "Jetzt anmelden",
-    statsIntro: "Bewährte Ergebnisse",
-    studentsLabel: "Teilnehmer",
-    programsLabel: "Programme",
-    ctaSubtext: "50+ Teilnehmer haben unsere Trainings besucht",
+    registerNow: "Anmelden",
+    registerInterest: "Interesse vormerken",
+    studentsLabel: "Teilnehmende bisher",
+    programsLabel: "aktive Programme",
+    teamTraining: "Team-Training anfragen",
   },
 };
 
+const ACTIVE_PROGRAMS = TRAININGS.filter((t) => !t.comingSoon).length;
+
 type Props = { locale: Locale };
 
+/** Training is a separate journey from agency services: register here, not via the quote form. */
 export default function TrainingsSection({ locale }: Props) {
   const copy = SECTION_COPY[locale];
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  const goTo = useCallback((idx: number) => {
-    setActiveIndex((idx + GOOGLE_REVIEWS.length) % GOOGLE_REVIEWS.length);
-  }, []);
-
-  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
-  const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
-
-  useEffect(() => {
-    if (isPaused) return;
-    const t = setInterval(next, REVIEWS_AUTO_ADVANCE_MS);
-    return () => clearInterval(t);
-  }, [next, isPaused]);
 
   return (
-    <section id="trainings" className="relative overflow-hidden py-16 md:py-28">
+    <section id="trainings" aria-labelledby="trainings-heading" className="relative overflow-hidden py-16 md:py-24">
       <div
         className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_40%,#fafafa_100%)]"
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.4] [mask-image:linear-gradient(180deg,white,transparent)]"
-        style={{
-          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
-        aria-hidden
-      />
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <AnimateIn>
+        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-end md:justify-between md:text-left">
+          <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
               <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
               {copy.kicker}
-              <span className="hidden h-px w-8 bg-gradient-to-l from-[#B89D5E]/80 to-transparent sm:block" aria-hidden />
             </span>
-          </AnimateIn>
-          <AnimateIn delay={50}>
-            <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+            <h2
+              id="trainings-heading"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl"
+            >
               {copy.title}
             </h2>
-          </AnimateIn>
-          <AnimateIn delay={100}>
-            <p className="mt-4 text-[17px] leading-relaxed text-neutral-600 md:text-lg">
-              {copy.subtitle}
-            </p>
-          </AnimateIn>
+            <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-[17px]">{copy.subtitle}</p>
+          </div>
+          <dl className="flex shrink-0 gap-2 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04]">
+            <div className="flex min-w-[130px] flex-col-reverse items-center rounded-xl bg-white px-5 py-3 text-center shadow-sm">
+              <dt className="mt-1 text-xs font-medium text-neutral-500">{copy.studentsLabel}</dt>
+              <dd className="text-2xl font-bold tabular-nums text-neutral-950">{TRAINING_PARTICIPANTS}</dd>
+            </div>
+            <div className="flex min-w-[130px] flex-col-reverse items-center rounded-xl bg-white px-5 py-3 text-center shadow-sm">
+              <dt className="mt-1 text-xs font-medium text-neutral-500">{copy.programsLabel}</dt>
+              <dd className="text-2xl font-bold tabular-nums text-neutral-950">{ACTIVE_PROGRAMS}</dd>
+            </div>
+          </dl>
         </div>
 
-        {/* Stats bar */}
-        <AnimateIn delay={80}>
-          <div className="mx-auto mt-12 flex max-w-lg flex-col items-center md:mt-16">
-            <div className="inline-flex flex-wrap items-stretch justify-center gap-2 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04] backdrop-blur-sm">
-              <div className="flex min-w-[140px] flex-col items-center rounded-xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-black/[0.05] sm:min-w-[160px]">
-                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">50+</span>
-                <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.studentsLabel}</span>
-              </div>
-              <div className="flex min-w-[140px] flex-col items-center rounded-xl bg-white px-6 py-4 text-center shadow-sm ring-1 ring-black/[0.05] sm:min-w-[160px]">
-                <span className="text-3xl font-bold tabular-nums text-neutral-950 md:text-4xl">3</span>
-                <span className="mt-1 text-xs font-medium uppercase tracking-wider text-neutral-500">{copy.programsLabel}</span>
-              </div>
-            </div>
-          </div>
-        </AnimateIn>
-
-        {/* Training cards: equal height (grid stretch) + header block min-heights so list icons align across cards */}
-        <div className="mt-14 grid min-h-0 grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-1 lg:gap-6 xl:gap-8">
+        <ul className="mt-12 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {TRAININGS.map((training, idx) => {
-            const isDisabled = training.comingSoon;
+            const isComingSoon = training.comingSoon;
             return (
-              <AnimateIn
-                key={training.slug}
-                delay={idx * 80}
-                className="flex h-full min-h-0 w-full min-w-0 flex-col self-stretch"
-              >
-                <div
-                  className={`group relative flex h-full min-h-0 w-full min-w-0 flex-col rounded-3xl border transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform ${
-                    isDisabled
-                      ? "cursor-not-allowed overflow-hidden border-neutral-200/90 bg-neutral-50/90 opacity-[0.92] ring-1 ring-black/[0.03]"
-                      : "overflow-visible border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] hover:-translate-y-1.5 hover:shadow-[0_32px_64px_-28px_rgba(184,157,94,0.2),0_24px_48px_-28px_rgba(0,0,0,0.14)] motion-reduce:hover:translate-y-0"
-                  }`}
-                >
-                  <div
-                    className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-[#B89D5E]/15 via-transparent to-transparent blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    aria-hidden
-                  />
-                  {!isDisabled && (
-                    <div
-                      className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-0.5 rounded-t-3xl bg-gradient-to-r from-transparent via-[#B89D5E]/80 to-transparent opacity-70"
-                      aria-hidden
-                    />
-                  )}
-                  <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-3xl p-8 text-center sm:text-left md:p-10">
-                    {/* Fixed vertical rhythm above highlights so check icons start on the same row across cards */}
-                    <div className="shrink-0">
-                      <div className="flex min-h-[3.75rem] flex-wrap items-center justify-center gap-2 sm:justify-start">
-                        <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white shadow-lg shadow-neutral-900/15">
-                          {training.price}
-                        </span>
-                        {isDisabled && (
-                          <span className="rounded-full border border-neutral-200 bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-500">
-                            {copy.comingSoon}
-                          </span>
-                        )}
-                        <span className="rounded-full border border-neutral-200/90 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-neutral-700">
-                          {training.duration[locale]}
-                        </span>
-                      </div>
-                      <h3 className="mt-6 min-h-[5.25rem] text-xl font-semibold leading-snug tracking-tight text-neutral-950 line-clamp-3 md:min-h-[6rem] md:text-2xl">
-                        {training.title[locale]}
-                      </h3>
-                      <p className="mt-3 min-h-[4.75rem] text-[15px] leading-relaxed text-neutral-600 line-clamp-3">
-                        {training.shortDesc[locale]}
-                      </p>
-                    </div>
-                    <div className="mt-5 flex min-h-0 flex-1 flex-col">
-                      <ul className="mx-auto flex max-w-[17rem] flex-col gap-2.5 text-left sm:mx-0 sm:max-w-none">
-                        {training.highlights[locale].map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-3 text-sm leading-snug text-neutral-700"
-                          >
-                            <span
-                              className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#B89D5E] ring-1 ring-[#B89D5E]/25"
-                              aria-hidden
-                            >
-                              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                            <span className="min-w-0 flex-1 pt-px">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="mt-auto shrink-0 border-t border-neutral-100 pt-6">
-                      <div className="flex flex-wrap gap-6">
-                        {training.stats.map((stat, statIdx) => (
-                          <div key={`${training.slug}-stat-${statIdx}`} className="flex items-baseline gap-1.5">
-                            <span className="text-lg font-bold tabular-nums text-neutral-950">{stat.value}</span>
-                            <span className="text-xs font-medium text-neutral-500">{stat.label[locale]}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mt-8 shrink-0">
-                      {isDisabled ? (
-                        <span
-                          className="inline-flex h-12 min-h-[48px] w-full cursor-not-allowed items-center justify-center rounded-2xl border border-dashed border-neutral-200 bg-neutral-100/80 px-8 py-3 text-sm font-medium text-neutral-400"
-                          aria-disabled
-                        >
+              <li key={training.slug} className="flex">
+                <AnimateIn delay={idx * 80} className="flex w-full">
+                  <article
+                    className={`flex w-full flex-col rounded-3xl border p-7 md:p-8 ${
+                      isComingSoon
+                        ? "border-dashed border-neutral-300 bg-neutral-50"
+                        : "border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04]"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      {isComingSoon ? (
+                        <span className="rounded-full bg-neutral-200 px-3 py-1.5 text-sm font-semibold text-neutral-700">
                           {copy.comingSoon}
                         </span>
                       ) : (
+                        <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white">
+                          {training.price}
+                        </span>
+                      )}
+                      <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
+                        {training.duration[locale]}
+                      </span>
+                    </div>
+                    <h3 className="mt-5 text-xl font-semibold leading-snug tracking-tight text-neutral-950 md:text-2xl">
+                      {training.title[locale]}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{training.shortDesc[locale]}</p>
+                    <ul className="mt-5 flex-1 space-y-2.5">
+                      {training.highlights[locale].map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-sm leading-snug text-neutral-700">
+                          <span
+                            className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#8a7344] ring-1 ring-[#B89D5E]/25"
+                            aria-hidden
+                          >
+                            <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                          <span className="min-w-0 flex-1">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-7 flex flex-col gap-2">
+                      {isComingSoon ? (
                         <LocaleLink
-                          href="/trainings/register"
-                          className="inline-flex h-12 min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-2xl bg-neutral-950 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-[background-color,box-shadow] duration-300 ease-out hover:bg-neutral-800 hover:shadow-lg hover:shadow-neutral-900/30"
+                          href={`/trainings/register?training=${training.slug}`}
+                          className="inline-flex h-12 w-full items-center justify-center rounded-2xl border border-neutral-300 bg-white px-6 text-sm font-semibold text-neutral-900 transition hover:border-neutral-950"
                         >
-                          {copy.registerNow}
+                          {copy.registerInterest}
                         </LocaleLink>
+                      ) : (
+                        <>
+                          <LocaleLink
+                            href={`/trainings/${training.slug}`}
+                            className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-neutral-950 px-6 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                          >
+                            {copy.viewProgram}
+                          </LocaleLink>
+                          <LocaleLink
+                            href={`/trainings/register?training=${training.slug}`}
+                            className="inline-flex h-11 w-full items-center justify-center rounded-2xl text-sm font-semibold text-neutral-800 underline-offset-4 transition hover:underline"
+                          >
+                            {copy.registerNow}
+                          </LocaleLink>
+                        </>
                       )}
                     </div>
-                  </div>
-                </div>
-              </AnimateIn>
+                  </article>
+                </AnimateIn>
+              </li>
             );
           })}
+        </ul>
+
+        <div className="mt-10 flex justify-center">
+          <LocaleLink
+            href="/services/training"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm transition hover:border-[#B89D5E]/50"
+          >
+            {copy.teamTraining}
+            <span aria-hidden>→</span>
+          </LocaleLink>
         </div>
-
-        {/* Reviews */}
-        <AnimateIn delay={150}>
-          <div className="relative mt-20 overflow-hidden rounded-[1.75rem] bg-neutral-950 p-6 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:mt-24 md:rounded-[2rem] md:p-10">
-            <div
-              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#B89D5E]/12 blur-3xl"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute inset-0 opacity-25"
-              style={{
-                backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-                backgroundSize: "36px 36px",
-              }}
-              aria-hidden
-            />
-
-            <div className="relative mb-8 flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
-              <div className="w-full sm:w-auto">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#B89D5E]/70">
-                  {REVIEWS_COPY[locale].subtitle}
-                </span>
-                <h3 className="mt-2 font-display text-xl font-semibold text-white md:text-2xl">
-                  {REVIEWS_COPY[locale].title}
-                </h3>
-              </div>
-              <a
-                href={GOOGLE_MAPS_PLACE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:border-white/25 hover:bg-white/15 sm:w-auto sm:max-w-none"
-              >
-                {REVIEWS_COPY[locale].viewOnGoogle}
-                <span aria-hidden>→</span>
-              </a>
-            </div>
-            <div
-              className="relative overflow-hidden"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-            >
-              <div className="relative h-[19rem] sm:h-[21rem] md:h-[23rem]">
-                {GOOGLE_REVIEWS.map((review, idx) => (
-                  <div
-                    key={idx}
-                    role="tabpanel"
-                    aria-hidden={idx !== activeIndex}
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      idx === activeIndex ? "relative z-10 flex h-full opacity-100" : "pointer-events-none z-0 opacity-0"
-                    }`}
-                  >
-                    <div className="mx-auto flex h-full max-w-2xl flex-col rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 ring-1 ring-black/5 md:p-8">
-                      <div className="flex shrink-0 items-center gap-2 text-[#B89D5E]">
-                        <span className="text-2xl leading-none text-[#B89D5E]/90">"</span>
-                        <span className="flex flex-shrink-0" aria-label={`${review.rating} stars`}>
-                          {"★".repeat(review.rating)}
-                        </span>
-                      </div>
-                      <div className="mt-4 flex shrink-0 items-center gap-3">
-                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white ring-2 ring-[#B89D5E]/30">
-                          {review.firstName.charAt(0)}
-                          {review.lastName?.charAt(0) ?? ""}
-                        </div>
-                        <span className="font-semibold text-neutral-950">
-                          {formatReviewerName(review.firstName, review.lastName)}
-                        </span>
-                      </div>
-                      <p className="mt-4 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 text-sm leading-relaxed text-neutral-600 [scrollbar-color:rgba(0,0,0,0.2)_transparent] [scrollbar-width:thin] md:text-base">
-                        {review.text[locale]}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 flex items-center justify-center gap-4">
-                <button
-                  type="button"
-                  onClick={prev}
-                  aria-label={locale === "sq" ? "Review i mëparshëm" : locale === "de" ? "Vorherige Bewertung" : "Previous review"}
-                  className="rounded-full border border-white/10 bg-white/5 p-2.5 text-white/80 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
-                >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                <div className="flex gap-2">
-                  {GOOGLE_REVIEWS.map((_, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setActiveIndex(idx)}
-                      aria-label={`${locale === "sq" ? "Shiko review" : locale === "de" ? "Bewertung anzeigen" : "View review"} ${idx + 1}`}
-                      aria-current={idx === activeIndex ? "true" : undefined}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        idx === activeIndex ? "w-8 bg-[#B89D5E]" : "w-2 bg-white/25 hover:bg-white/40"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={next}
-                  aria-label={locale === "sq" ? "Review tjetër" : locale === "de" ? "Nächste Bewertung" : "Next review"}
-                  className="rounded-full border border-white/10 bg-white/5 p-2.5 text-white/80 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
-                >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </AnimateIn>
-
-        {/* CTA */}
-        <AnimateIn delay={200}>
-          <div className="mt-16 md:mt-20">
-            <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-gradient-to-br from-white via-[#B89D5E]/8 to-white p-8 shadow-[0_20px_60px_-30px_rgba(184,157,94,0.2)] ring-1 ring-[#B89D5E]/10 md:p-12">
-              <div
-                className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-[#B89D5E]/20 blur-3xl"
-                aria-hidden
-              />
-              <div className="relative flex flex-col items-center text-center">
-                <h3 className="font-display text-xl font-semibold text-neutral-950 md:text-2xl">
-                  {locale === "sq" ? "Gati të fillosh?" : locale === "de" ? "Bereit zu starten?" : "Ready to start?"}
-                </h3>
-                <p className="mt-2 max-w-md text-sm text-neutral-600">
-                  {copy.ctaSubtext}
-                </p>
-                <LocaleLink
-                  href="/trainings/register"
-                  className="mt-7 inline-flex h-14 min-w-[200px] items-center justify-center rounded-full bg-neutral-950 px-10 text-base font-semibold text-white shadow-xl shadow-neutral-900/25 transition hover:bg-neutral-800 hover:shadow-2xl"
-                >
-                  {copy.registerNow}
-                </LocaleLink>
-              </div>
-            </div>
-          </div>
-        </AnimateIn>
       </div>
     </section>
   );

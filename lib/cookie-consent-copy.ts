@@ -23,7 +23,7 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
     ],
     chooseHint: "Për të vazhduar me faqen, zgjidhni një nga dy opsionet më poshtë.",
     acceptAll: "Pranoj të gjitha",
-    rejectOptional: "Refuzoj",
+    rejectOptional: "Vetëm të nevojshmet",
     privacyLabel: "Politika e privatësisë",
   },
   en: {
@@ -36,7 +36,7 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
     ],
     chooseHint: "To continue using the site, choose one of the two options below.",
     acceptAll: "Accept all",
-    rejectOptional: "Refuse essential only",
+    rejectOptional: "Essential only",
     privacyLabel: "Privacy policy",
   },
   de: {
@@ -49,7 +49,7 @@ export const COOKIE_CONSENT_BY_LOCALE: Record<Locale, CookieConsentCopy> = {
     ],
     chooseHint: "Um die Website weiter zu nutzen, wählen Sie eine der beiden Optionen.",
     acceptAll: "Alle akzeptieren",
-    rejectOptional: "Ablehnen, nur notwendige",
+    rejectOptional: "Nur notwendige",
     privacyLabel: "Datenschutzerklärung",
   },
 };

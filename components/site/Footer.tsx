@@ -32,7 +32,7 @@ const FOOTER_BY_LOCALE: Record<
     servicesTitle: "Shërbimet",
     packagesTitle: "Paketa",
     trainingsTitle: "Trajnime",
-    linksTitle: "Links",
+    linksTitle: "Lidhje",
     addressTitle: "Adresa",
     contactTitle: "Kontakti",
     followUs: "Na ndiqni",
@@ -235,7 +235,7 @@ export default function Footer({ locale }: { locale: string }) {
               </li>
               {packageTabs.map((tab) => (
                 <li key={tab.label}>
-                  <LocaleLink href="/packages" className="transition-colors duration-200 hover:text-white">
+                  <LocaleLink href={`/packages?group=${tab.groups[0]}`} className="transition-colors duration-200 hover:text-white">
                     {tab.label}
                   </LocaleLink>
                 </li>

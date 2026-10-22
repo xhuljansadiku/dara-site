@@ -29,10 +29,10 @@ export const SECTION_LABELS_BY_LOCALE: Record<
   sq: {
     whatIncluded: "Çfarë përfshin",
     whoIsItFor: "Për kë është",
-    benefits: "Rezultate & vlerë",
+    benefits: "Çfarë fitoni",
     howWeWork: "Si punojmë",
-    priceNote: "Çmime & ofertë",
-    workGallery: "Shembuj pune",
+    priceNote: "Çmimi",
+    workGallery: "Në pamje",
     faq: "Pyetje të shpeshta",
     relatedServices: "Shërbime të lidhura",
     midCta: "Gati për ofertë?",
@@ -40,10 +40,10 @@ export const SECTION_LABELS_BY_LOCALE: Record<
   en: {
     whatIncluded: "What's included",
     whoIsItFor: "Who it's for",
-    benefits: "Results & value",
+    benefits: "What you gain",
     howWeWork: "How we work",
-    priceNote: "Pricing & quote",
-    workGallery: "Work & visuals",
+    priceNote: "Pricing",
+    workGallery: "In pictures",
     faq: "FAQ",
     relatedServices: "Related services",
     midCta: "Ready for a quote?",
@@ -51,10 +51,10 @@ export const SECTION_LABELS_BY_LOCALE: Record<
   de: {
     whatIncluded: "Was enthalten ist",
     whoIsItFor: "Für wen",
-    benefits: "Ergebnisse & Nutzen",
+    benefits: "Ihr Nutzen",
     howWeWork: "So arbeiten wir",
-    priceNote: "Preise & Angebot",
-    workGallery: "Arbeiten & Einblicke",
+    priceNote: "Preis",
+    workGallery: "Einblicke",
     faq: "FAQ",
     relatedServices: "Passende Leistungen",
     midCta: "Bereit für ein Angebot?",
@@ -82,7 +82,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Rritje e dukshmërisë dhe e njohjes së brand-it",
         "Angazhim më i lartë me audiencën dhe lidhje më të fortë",
-        "Kohë e kursyer , ne kujdesemi për planifikimin dhe ekzekutimin",
+        "Kohë e kursyer – ne kujdesemi për planifikimin dhe ekzekutimin",
       ],
       howWeWork: [
         "Bisedë fillestare për të kuptuar qëllimet, tonin dhe audiencën",
@@ -109,7 +109,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Increased brand visibility and recognition",
         "Stronger engagement and connection with your audience",
-        "Time saved , we handle planning and execution",
+        "Time saved – we handle planning and execution",
       ],
       howWeWork: [
         "Initial call to understand goals, tone and audience",
@@ -136,7 +136,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       benefits: [
         "Höhere Sichtbarkeit und Wiedererkennung der Marke",
         "Stärkeres Engagement und bessere Beziehung zur Zielgruppe",
-        "Zeitersparnis , wir übernehmen Planung und Umsetzung",
+        "Zeitersparnis – wir übernehmen Planung und Umsetzung",
       ],
       howWeWork: [
         "Auftaktgespräch zu Zielen, Tonalität und Zielgruppe",
@@ -164,7 +164,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Përmbajtje që reflekton identitetin e brand-it dhe tërheq audiencën",
-        "Kohë dhe burime të kursyera , prodhim profesional i gatshëm",
+        "Kohë dhe burime të kursyera – prodhim profesional i gatshëm",
         "Reels dhe video që rrisin arritjen organike",
       ],
       howWeWork: [
@@ -240,7 +240,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startup-e që po përgatiten për rritje",
       ],
       benefits: [
-        "Drejtim i qartë , e dini se çfarë të bëni dhe në çfarë radhe",
+        "Drejtim i qartë – e dini se çfarë të bëni dhe në çfarë radhe",
         "Objektiva të matshme dhe raportim të fokusuar",
         "Shmangie të “të bësh gjithçka” pa prioritete",
       ],
@@ -266,7 +266,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startups preparing for growth",
       ],
       benefits: [
-        "Clear direction , you know what to do and in what order",
+        "Clear direction – you know what to do and in what order",
         "Measurable objectives and focused reporting",
         "Avoid spreading efforts without priorities",
       ],
@@ -292,7 +292,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Startups in der Wachstumsvorbereitung",
       ],
       benefits: [
-        "Klarer Kurs , Sie wissen, was wann zu tun ist",
+        "Klarer Kurs – Sie wissen, was wann zu tun ist",
         "Messbare Ziele und fokussiertes Reporting",
         "Kein „alles gleichzeitig“ ohne Prioritäten",
       ],
@@ -555,7 +555,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Njohuri të zbatueshme menjëherë, jo vetëm teori",
-        "Ekipi i njëjtë që punon me klientë , përvojë reale",
+        "Ekipi i njëjtë që punon me klientë – përvojë reale",
         "Kurs i përshtatshëm për nevojat dhe nivelin e ekipit",
       ],
       howWeWork: [
@@ -581,7 +581,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Immediately applicable knowledge, not just theory",
-        "Same team that works with real clients , real-world experience",
+        "Same team that works with real clients – real-world experience",
         "Content tailored to your team's level and needs",
       ],
       howWeWork: [
@@ -607,7 +607,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       benefits: [
         "Sofort anwendbares Wissen, keine reine Theorie",
-        "Dasselbe Team, das mit echten Kunden arbeitet , Praxisnähe",
+        "Dasselbe Team, das mit echten Kunden arbeitet – Praxisnähe",
         "Inhalt und Niveau an Ihr Team angepasst",
       ],
       howWeWork: [
@@ -722,7 +722,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Bisedë për produktet, inventarin, pagesën dhe transportin",
         "Strukturë dyqani, katalog dhe funksione (wireframe)",
         "Zhvillim webshop, testim dhe integrim pagesash",
-        "Lansim dhe mbështetje – mirembajtje website sipas nevojës",
+        "Lansim dhe mbështetje – mirëmbajtje website sipas nevojës",
       ],
       priceNote:
         "Krijim webshop bazë nga 800€;\nstandard nga 1.500€;\npremium nga 4.000€.\nOferta e personalizuar pas diskutimit.",
@@ -808,7 +808,7 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Lansim dhe mbështetje / evolucion i vazhdueshëm",
       ],
       priceNote:
-        "MVP nga 4,000€;\nGrowth nga 8,000€;\nEnterprise ofertë e personalizuar.\nOferta pas workshop fillestar.",
+        "MVP nga 4.000€;\nGrowth nga 8.000€;\nEnterprise ofertë e personalizuar.\nOferta pas workshop fillestar.",
     },
     en: {
       whatIncluded: [
@@ -868,14 +868,14 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
   maintenance: {
     sq: {
       whatIncluded: [
-        "Mirembajtje website: përditësime, backups, siguri dhe patches",
-        "Mirembajtje dyqan online (webshop): inventar, porosi, pagesa",
+        "Mirëmbajtje website: përditësime, backups, siguri dhe patches",
+        "Mirëmbajtje dyqan online (webshop): inventar, porosi, pagesa",
         "Optimizim website të vjetra – shpejtësi, SEO, modernizim, responsive",
         "Monitoring dhe raportim i performancës",
         "Support teknik dhe përditësime të rregullta për kompani",
       ],
       whoIsItFor: [
-        "Biznese në Shqipëri me website ose webshop që duan mirembajtje të vazhdueshme",
+        "Biznese në Shqipëri me website ose webshop që duan mirëmbajtje të vazhdueshme",
         "Kompani me website të vjetra që duan optimizim dhe përditësim",
         "Marka që duan website-in gjithmonë të përditësuar dhe të sigurt",
       ],
@@ -886,11 +886,11 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
       ],
       howWeWork: [
         "Audit fillestar i website ose webshop-it tuaj",
-        "Plan mirembajtjeje mujor (updates, backups, monitoring)",
+        "Plan mirëmbajtjeje mujor (updates, backups, monitoring)",
         "Raportim mujor dhe rekomandime për optimizime",
         "Support i vazhdueshëm për çdo problem ose nevojë",
       ],
-      priceNote: "Mirembajtje website nga 150€/muaj.\nOptimizime dhe projekte më të mëdha sipas nevojës.",
+      priceNote: "Mirëmbajtje website nga 150€/muaj.\nOptimizime dhe projekte më të mëdha sipas nevojës.",
     },
     en: {
       whatIncluded: [
@@ -906,9 +906,9 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Brands that want their website always updated and secure",
       ],
       benefits: [
-        "Secure and updated website , no technical issues",
+        "Secure and updated website – no technical issues",
         "Better performance and higher speed",
-        "No stress , we handle all technical details",
+        "No stress – we handle all technical details",
       ],
       howWeWork: [
         "Initial audit of your website/e-commerce",
@@ -932,9 +932,9 @@ const CONTENT: Record<ServiceSlug, ContentByLocale> = {
         "Marken, die ihre Website immer aktualisiert und sicher haben wollen",
       ],
       benefits: [
-        "Sichere und aktualisierte Website , keine technischen Probleme",
+        "Sichere und aktualisierte Website – keine technischen Probleme",
         "Bessere Performance und höhere Geschwindigkeit",
-        "Kein Stress , wir kümmern uns um alle technischen Details",
+        "Kein Stress – wir kümmern uns um alle technischen Details",
       ],
       howWeWork: [
         "Erstes Audit Ihrer Website/E-Commerce",

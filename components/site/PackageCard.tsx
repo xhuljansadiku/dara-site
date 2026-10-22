@@ -4,16 +4,34 @@ import LocaleLink from "@/components/site/LocaleLink";
 import { type Locale } from "@/lib/services-data";
 import type { Pkg } from "@/lib/packages-data";
 
-const CTA_LABELS: Record<Locale, Record<"quote" | "consult", string>> = {
-  sq: { quote: "Kërko ofertë", consult: "Kërko konsultim" },
-  en: { quote: "Get a quote", consult: "Request consultation" },
-  de: { quote: "Angebot anfragen", consult: "Beratung anfragen" },
+const CTA_LABELS: Record<Locale, Record<"quote" | "consult" | "register", string>> = {
+  sq: { quote: "Kërko ofertë", consult: "Kërko konsultim", register: "Regjistrohu" },
+  en: { quote: "Get a quote", consult: "Request consultation", register: "Register" },
+  de: { quote: "Angebot anfragen", consult: "Beratung anfragen", register: "Anmelden" },
 };
 
-type Props = { pkg: Pkg; locale: Locale; ctaLabel?: string; /** Deep shadow for dark-on-light panels (e.g. homepage Paketa block) */ elevated?: boolean; wide?: boolean };
+const PRICE_LABELS: Record<Locale, { regular: string; now: string }> = {
+  sq: { regular: "Çmimi i rregullt", now: "Çmimi aktual" },
+  en: { regular: "Regular price", now: "Current price" },
+  de: { regular: "Regulärer Preis", now: "Aktueller Preis" },
+};
 
-export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, elevated = false, wide = false }: Props) {
-  const ctaType = pkg.cta ?? "quote";
+type Props = {
+  pkg: Pkg;
+  locale: Locale;
+  ctaLabel?: string;
+  /** CTA target; defaults to the contact form. */
+  href?: string;
+  /** Deep shadow for dark-on-light panels (e.g. homepage Paketa block) */
+  elevated?: boolean;
+  wide?: boolean;
+  /** Heading level for the package title, to fit the surrounding outline. */
+  titleAs?: "h3" | "h4";
+};
+
+export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, href = "/contact", elevated = false, wide = false, titleAs = "h4" }: Props) {
+  const Title = titleAs;
+  const ctaType = href.startsWith("/trainings") ? "register" : (pkg.cta ?? "quote");
   const ctaLabel = ctaLabelProp ?? CTA_LABELS[locale][ctaType];
   const isFeatured = Boolean(pkg.badge);
 
@@ -26,11 +44,12 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
           ? "border-[#B89D5E]/35 shadow-[0_0_36px_-18px_rgba(184,157,94,0.28)] ring-2 ring-[#B89D5E]/35 hover:border-[#B89D5E]/45 hover:shadow-[0_0_44px_-14px_rgba(184,157,94,0.35)]"
           : "border-neutral-200/90 shadow-lg shadow-black/[0.06] ring-1 ring-black/[0.04] hover:border-neutral-300/90 hover:shadow-xl";
 
-  const starIcon = (
-    <svg className="h-3.5 w-3.5 shrink-0 text-[#B89D5E]" viewBox="0 0 20 20" fill="currentColor" aria-label={pkg.badge}>
-      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-    </svg>
-  );
+  const badge = pkg.badge ? (
+    <span className="inline-flex items-center gap-1 rounded-full bg-[#B89D5E]/15 px-2.5 py-1 text-[11px] font-semibold text-[#5c4c2c] ring-1 ring-[#B89D5E]/30">
+      <span aria-hidden>★</span>
+      {pkg.badge}
+    </span>
+  ) : null;
 
   const checkIcon = (idx: number) => (
     <span
@@ -49,19 +68,19 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
         {/* Header strip */}
         <div className="flex items-center justify-between border-b border-neutral-100 bg-neutral-50/90 px-6 py-3.5">
           <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-600">{pkg.subtitle}</span>
-          {pkg.badge && starIcon}
+          {badge}
         </div>
 
         {/* Wide body: left info | middle points | right CTA */}
         <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:gap-10 md:p-8">
           {/* Left: title + price */}
           <div className="md:w-56 md:shrink-0">
-            <h5 className="text-2xl font-bold tracking-tight text-neutral-950">{pkg.title}</h5>
+            <Title className="text-2xl font-bold tracking-tight text-neutral-950">{pkg.title}</Title>
             <div className="mt-3 flex items-baseline gap-2">
               {pkg.priceOriginal && (
-                <span className="text-sm text-neutral-400 line-through">{pkg.priceOriginal}</span>
+                <span className="text-sm text-neutral-500 line-through"><span className="sr-only">{PRICE_LABELS[locale].regular}: </span>{pkg.priceOriginal}</span>
               )}
-              <span className="text-xl font-bold text-neutral-950">{pkg.price}</span>
+              <span className="text-xl font-bold text-neutral-950">{pkg.priceOriginal && <span className="sr-only">{PRICE_LABELS[locale].now}: </span>}{pkg.price}</span>
             </div>
           </div>
 
@@ -81,10 +100,11 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
           {/* Right: CTA */}
           <div className="md:shrink-0">
             <LocaleLink
-              href="/contact"
+              href={href}
               className="inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-2xl bg-neutral-950 px-7 text-sm font-semibold text-white shadow-lg shadow-neutral-900/25 transition hover:bg-neutral-800 md:w-auto"
             >
               {ctaLabel}
+              <span className="sr-only">: {pkg.title}</span>
             </LocaleLink>
           </div>
         </div>
@@ -101,16 +121,16 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
         <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-600">
           {pkg.subtitle}
         </span>
-        {pkg.badge && starIcon}
+        {badge}
       </div>
 
       <div className="flex flex-1 flex-col p-6 text-center md:p-6 md:text-left">
-        <h5 className="text-xl font-bold tracking-tight text-neutral-950">{pkg.title}</h5>
+        <Title className="text-xl font-bold tracking-tight text-neutral-950">{pkg.title}</Title>
         <div className="mt-3 flex items-baseline justify-center gap-2 md:justify-start">
           {pkg.priceOriginal && (
-            <span className="text-sm text-neutral-400 line-through">{pkg.priceOriginal}</span>
+            <span className="text-sm text-neutral-500 line-through"><span className="sr-only">{PRICE_LABELS[locale].regular}: </span>{pkg.priceOriginal}</span>
           )}
-          <span className="text-lg font-bold text-neutral-950">{pkg.price}</span>
+          <span className="text-lg font-bold text-neutral-950">{pkg.priceOriginal && <span className="sr-only">{PRICE_LABELS[locale].now}: </span>}{pkg.price}</span>
         </div>
 
         <ul className="mx-auto mt-6 flex-1 max-w-[17rem] space-y-3 text-left md:mx-0 md:max-w-none">
@@ -123,10 +143,11 @@ export default function PackageCard({ pkg, locale, ctaLabel: ctaLabelProp, eleva
         </ul>
 
         <LocaleLink
-          href="/contact"
+          href={href}
           className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-2xl bg-neutral-950 text-sm font-semibold text-white shadow-lg shadow-neutral-900/25 transition hover:bg-neutral-800"
         >
           {ctaLabel}
+          <span className="sr-only">: {pkg.title}</span>
         </LocaleLink>
       </div>
     </div>

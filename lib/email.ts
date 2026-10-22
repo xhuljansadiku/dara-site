@@ -46,7 +46,7 @@ export async function sendLeadNotification(lead: {
     ${lead.budget ? `<p><strong>Buxheti:</strong> ${escapeHtml(lead.budget)}</p>` : ""}
     <p><strong>Mesazhi:</strong></p>
     <pre style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 8px;">${escapeHtml(lead.message)}</pre>
-    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website , ${new Date().toISOString()}</p>
+    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website – ${new Date().toISOString()}</p>
   `;
 
   try {
@@ -79,22 +79,22 @@ export async function sendLeadNotification(lead: {
 const AUTO_REPLY_HTML = (name: string, locale: string) => {
   const copy: Record<string, { subject: string; title: string; body: string; footer: string }> = {
     sq: {
-      subject: "Faleminderit , DARA Marketing Agency",
+      subject: "Faleminderit – DARA Marketing Agency",
       title: "Faleminderit për mesazhin!",
       body: "Kemi marrë kërkesën tënde dhe do të kontaktojmë brenda 24 orëve.",
-      footer: "DARA Marketing Agency , Dare to be Different",
+      footer: "DARA Marketing Agency – Dare to be Different",
     },
     en: {
-      subject: "Thank you , DARA Marketing Agency",
+      subject: "Thank you – DARA Marketing Agency",
       title: "Thank you for your message!",
       body: "We've received your request and will get back to you within 24 hours.",
-      footer: "DARA Marketing Agency , Dare to be Different",
+      footer: "DARA Marketing Agency – Dare to be Different",
     },
     de: {
-      subject: "Vielen Dank , DARA Marketing Agency",
+      subject: "Vielen Dank – DARA Marketing Agency",
       title: "Vielen Dank für Ihre Nachricht!",
       body: "Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 24 Stunden.",
-      footer: "DARA Marketing Agency , Dare to be Different",
+      footer: "DARA Marketing Agency – Dare to be Different",
     },
   };
   const c = copy[locale] ?? copy.en;
@@ -109,7 +109,7 @@ const AUTO_REPLY_HTML = (name: string, locale: string) => {
 export async function sendAutoReplyToLead(lead: { name: string; email: string }, locale = "en"): Promise<{ ok: boolean; error?: string }> {
   if (!isConfigured) return { ok: true };
   const copy = { sq: "Faleminderit", en: "Thank you", de: "Vielen Dank" };
-  const subject = `${copy[locale as keyof typeof copy] ?? copy.en} , DARA Marketing Agency`;
+  const subject = `${copy[locale as keyof typeof copy] ?? copy.en} – DARA Marketing Agency`;
   try {
     await transporter.sendMail({
       from: FROM_EMAIL,
@@ -146,7 +146,7 @@ export async function sendJobNotification(job: {
     <p><strong>Mesazhi:</strong></p>
     <pre style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 8px;">${escapeHtml(job.message)}</pre>
     ${job.cvAttachment ? `<p><strong>CV:</strong> ${escapeHtml(job.cvAttachment.filename)} (bashkangjitur)</p>` : ""}
-    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website (Karriere) , ${new Date().toISOString()}</p>
+    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website (Karriere) – ${new Date().toISOString()}</p>
   `;
 
   const attachments = job.cvAttachment
@@ -178,7 +178,7 @@ export async function sendNewsletterNotification(email: string, isNew: boolean):
   const html = `
     <h2>${isNew ? "Abonim i ri" : "Abonim (email ekzistues)"}</h2>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website , ${new Date().toISOString()}</p>
+    <p style="color:#888;font-size:12px;margin-top:20px;">Dërguar nga DARA website – ${new Date().toISOString()}</p>
   `;
 
   try {

@@ -37,7 +37,7 @@ export const PACKAGE_GROUP_LABELS: Record<Locale, Record<PackageGroup, string>> 
     websiteLanding: "Website & Landing Page",
     ecommerce: "E-commerce",
     saas: "SaaS & Aplikacione",
-    maintenance: "Mirembajtje",
+    maintenance: "Mirëmbajtje",
   },
   en: {
     marketing: "Marketing",
@@ -68,7 +68,7 @@ export const PACKAGE_FILTER_TABS_BY_LOCALE: Record<Locale, PackageFilterTab[]> =
     { label: "Brand", groups: ["brand"] },
     { label: "Trajnime", groups: ["training"] },
     { label: "Website", groups: ["websiteLanding", "ecommerce", "saas"] },
-    { label: "Mirembajtje", groups: ["maintenance"] },
+    { label: "Mirëmbajtje", groups: ["maintenance"] },
   ],
   en: [
     { label: "All", groups: [] },
@@ -115,15 +115,15 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
     ecommerce: [
       { title: "Basic Shop", subtitle: "Dyqan bazë", price: "800€", priceOriginal: "1.200€", points: ["Deri 30 produkte", "Pagesë online", "Setup transporti", "SEO bazë"] },
       { title: "Standard Shop", subtitle: "Dyqan i optimizuar", price: "Nga 1.500€", badge: "Paketa më e zgjedhur", points: ["Deri 150 produkte", "Faqe kategori të optimizuara", "Email automation bazë", "Optimizim performance"] },
-      { title: "Premium Shop", subtitle: "Dyqan premium", price: "Nga 4,000€", points: ["Produkte pa limit", "UX i personalizuar", "Automatizime marketingu", "Integrime ERP/CRM", "Optimizim konvertimi"] },
+      { title: "Premium Shop", subtitle: "Dyqan premium", price: "Nga 4.000€", points: ["Produkte pa limit", "UX i personalizuar", "Automatizime marketingu", "Integrime ERP/CRM", "Optimizim konvertimi"] },
     ],
     saas: [
       { title: "Software i Personalizuar", subtitle: "SaaS & Aplikacione", price: "Ofertë e personalizuar", cta: "consult", points: ["MVP, SaaS & aplikacione", "Dizajn & zhvillim i plotë", "Integrime & API", "Support pas launch"] },
     ],
     maintenance: [
       { title: "Bazë", subtitle: "Website, E-commerce, SaaS", price: "Nga 150€/muaj", points: ["Updates dhe backups", "Monitoring bazë", "Support email", "Siguri bazë", "Website, E-commerce dhe SaaS"] },
-      { title: "Standard", subtitle: "+ Optimizim", price: "Nga 300€/muaj", points: ["Bazë +", "Optimizim shpejtësie", "SEO monitoring", "Raportim mujor", "Mirembajtje E-commerce dhe SaaS"] },
-      { title: "Premium", subtitle: "Paketë e plotë", price: "Ofertë", points: ["Standard +", "Mirembajtje e plotë E-commerce", "Mirembajtje SaaS dhe aplikacione", "Optimizim i vazhdueshëm", "Support prioritet"] },
+      { title: "Standard", subtitle: "+ Optimizim", price: "Nga 300€/muaj", points: ["Bazë +", "Optimizim shpejtësie", "SEO monitoring", "Raportim mujor", "Mirëmbajtje E-commerce dhe SaaS"] },
+      { title: "Premium", subtitle: "Paketë e plotë", price: "Ofertë", points: ["Standard +", "Mirëmbajtje e plotë E-commerce", "Mirëmbajtje SaaS dhe aplikacione", "Optimizim i vazhdueshëm", "Support prioritet"] },
     ],
   },
   en: {
@@ -195,3 +195,37 @@ export const PACKAGES_BY_GROUP_AND_LOCALE: Record<
     ],
   },
 };
+
+/**
+ * Billing / exclusion notes shown under a package group. Only facts stated elsewhere on the
+ * site are listed here (ad spend: ads service price note; monthly billing: "/month" prices).
+ */
+export const PACKAGE_GROUP_NOTES: Record<Locale, Partial<Record<PackageGroup, string>>> = {
+  sq: {
+    marketing: "Çmimet janë mujore. Buxheti i reklamave në Meta/Google nuk përfshihet dhe paguhet veçmas nga ju.",
+    maintenance: "Çmimet janë mujore.",
+  },
+  en: {
+    marketing: "Prices are monthly. Meta/Google ad spend is not included and is paid separately by you.",
+    maintenance: "Prices are monthly.",
+  },
+  de: {
+    marketing: "Monatliche Preise. Das Werbebudget für Meta/Google ist nicht enthalten und wird separat von Ihnen bezahlt.",
+    maintenance: "Monatliche Preise.",
+  },
+};
+
+const PACKAGE_GROUP_SERVICE: Record<Exclude<PackageGroup, "training">, string> = {
+  marketing: "social-media",
+  brand: "branding",
+  websiteLanding: "website-landing",
+  ecommerce: "ecommerce",
+  saas: "saas",
+  maintenance: "maintenance",
+};
+
+/** Where a package CTA leads: training has its own registration; everything else preselects the service. */
+export function getPackageCtaHref(group: PackageGroup, index: number): string {
+  if (group === "training") return `/trainings/register?training=${index === 1 ? "smm-1-1" : "smm"}`;
+  return `/contact?service=${PACKAGE_GROUP_SERVICE[group]}`;
+}

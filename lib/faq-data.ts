@@ -1,45 +1,77 @@
 import type { Locale } from "@/lib/services-data";
+import { PACKAGES_BY_GROUP_AND_LOCALE, type PackageGroup } from "@/lib/packages-data";
 
 export type FaqItem = { q: string; a: string };
 
+/** Package price without the "From/Nga/Ab" prefix, so FAQ answers always match the packages. */
+function price(locale: Locale, group: PackageGroup, index: number): string {
+  const raw = PACKAGES_BY_GROUP_AND_LOCALE[locale][group][index]?.price ?? "";
+  return raw.replace(/^(Nga|From|Ab)\s+/i, "");
+}
+
+function buildFaq(locale: Locale): FaqItem[] {
+  const landing = price(locale, "websiteLanding", 0);
+  const business = price(locale, "websiteLanding", 1);
+  const premium = price(locale, "websiteLanding", 2);
+  const shop = price(locale, "ecommerce", 0);
+  const shopStandard = price(locale, "ecommerce", 1);
+  const maintenance = price(locale, "maintenance", 0);
+
+  if (locale === "sq") {
+    return [
+      { q: "Sa kushton krijimi i një website?", a: `Landing page nga ${landing}, website biznesi (deri 5–7 faqe) nga ${business}, website premium me dizajn unik nga ${premium}. Çmimi final varet nga scope-i; ju dërgojmë ofertë të personalizuar pas bisedës fillestare.` },
+      { q: "Sa kohë duhet për ndërtimin e një website?", a: "Landing page: 1–2 javë. Website me disa faqe: 2–4 javë. Dyqan online: 4–8 javë. Afatet e sakta përcaktohen në ofertë." },
+      { q: "A mund të krijoni dyqan online (webshop)?", a: `Po: katalog produktesh, pagesë online, transport dhe inventar. Basic Shop (deri 30 produkte) nga ${shop}, Standard Shop (deri 150 produkte) nga ${shopStandard}.` },
+      { q: "A përfshihet buxheti i reklamave në çmimin e menaxhimit të reklamave?", a: "Jo. Tarifa e menaxhimit nuk përfshin buxhetin që paguhet te Meta ose Google. Buxhetin e vendosni ju; ne e menaxhojmë dhe e optimizojmë." },
+      { q: "A e bëni edhe SEO për website?", a: "Çdo website përfshin SEO bazë: meta tags, strukturë headings dhe faqe mobile-friendly. Optimizimi i avancuar SEO ofrohet veçmas." },
+      { q: "A ofroni mirëmbajtje mujore për website?", a: `Po, nga ${maintenance}: përditësime, backups, siguri bazë dhe monitorim. Paketat më të plota përfshijnë optimizim shpejtësie dhe raportim mujor.` },
+      { q: "Si funksionon procesi i punës?", a: "Bisedë fillestare për qëllimet → propozim për strukturën dhe ofertën → zhvillim me aprovime nga ju → testim dhe lansim. Komunikojmë hap pas hapi." },
+      { q: "Sa shpejt na ktheni përgjigje dhe kur mund të fillojmë?", a: "Ju kthejmë përgjigje brenda 24 orëve. Fillimi varet nga lloji i projektit; disa projekte nisin brenda 1–2 javëve." },
+      { q: "Si paguhet?", a: "Oferta përfshin çmimin dhe kushtet e pagesës. Zakonisht kërkohet një depozitë fillestare dhe pjesa tjetër pas përfundimit ose sipas fazave." },
+      { q: "A punoni me biznese të vogla dhe me klientë jashtë Shqipërisë?", a: "Po. Punojmë me startup-e, biznese të vogla dhe kompani, në Shqipëri dhe jashtë saj. Komunikojmë në shqip, anglisht dhe gjermanisht." },
+      { q: "A mund të bëni website në disa gjuhë?", a: "Po. Ndërtojmë website shumëgjuhëshe (p.sh. shqip, anglisht, gjermanisht), sipas nevojës së biznesit tuaj." },
+      { q: "A ofroni trajnime për ekipe?", a: "Po. Trajnime praktike për social media marketing, në grup ose 1:1. Kursi Web Developer do të hapet së shpejti." },
+    ];
+  }
+
+  if (locale === "de") {
+    return [
+      { q: "Was kostet eine Website?", a: `Landingpage ab ${landing}, Business-Website (bis 5–7 Seiten) ab ${business}, Premium-Website mit individuellem Design ab ${premium}. Der Endpreis hängt vom Umfang ab; Sie erhalten nach dem Erstgespräch ein individuelles Angebot.` },
+      { q: "Wie lange dauert die Erstellung einer Website?", a: "Landingpage: 1–2 Wochen. Mehrseitige Website: 2–4 Wochen. Online-Shop: 4–8 Wochen. Die genauen Zeiten stehen im Angebot." },
+      { q: "Können Sie einen Online-Shop erstellen?", a: `Ja: Produktkatalog, Online-Zahlung, Versand und Lagerverwaltung. Basic Shop (bis 30 Produkte) ab ${shop}, Standard Shop (bis 150 Produkte) ab ${shopStandard}.` },
+      { q: "Ist das Werbebudget im Preis für Ads Management enthalten?", a: "Nein. Die Management-Gebühr enthält nicht das Budget, das an Meta oder Google gezahlt wird. Sie legen das Budget fest; wir verwalten und optimieren es." },
+      { q: "Ist SEO enthalten?", a: "Jede Website enthält Basis-SEO: Meta-Tags, saubere Überschriften-Struktur und mobilfreundliche Seiten. Fortgeschrittene SEO-Optimierung bieten wir separat an." },
+      { q: "Bieten Sie monatliche Website-Wartung an?", a: `Ja, ab ${maintenance}: Updates, Backups, Basis-Sicherheit und Monitoring. Größere Pakete enthalten Geschwindigkeitsoptimierung und monatliches Reporting.` },
+      { q: "Wie läuft die Zusammenarbeit ab?", a: "Erstgespräch zu Zielen → Vorschlag für Struktur und Angebot → Umsetzung mit Ihren Freigaben → Test und Launch. Wir kommunizieren Schritt für Schritt." },
+      { q: "Wie schnell antworten Sie und wann können wir starten?", a: "Wir melden uns innerhalb von 24 Stunden. Der Start hängt vom Projekttyp ab; manche Projekte beginnen innerhalb von 1–2 Wochen." },
+      { q: "Wie funktioniert die Zahlung?", a: "Das Angebot enthält Preis und Zahlungsbedingungen. Üblich ist eine Anzahlung, der Rest bei Fertigstellung oder nach Projektphasen." },
+      { q: "Arbeiten Sie mit kleinen Unternehmen und Kunden außerhalb Albaniens?", a: "Ja. Wir arbeiten mit Startups, kleinen Unternehmen und Firmen in Albanien und im Ausland. Wir kommunizieren auf Albanisch, Englisch und Deutsch." },
+      { q: "Können Sie mehrsprachige Websites erstellen?", a: "Ja. Wir erstellen mehrsprachige Websites (z. B. Albanisch, Englisch, Deutsch), je nach Bedarf Ihres Unternehmens." },
+      { q: "Bieten Sie Schulungen für Teams an?", a: "Ja. Praxisnahe Social-Media-Marketing-Trainings, in der Gruppe oder 1:1. Der Web-Entwickler-Kurs startet demnächst." },
+    ];
+  }
+
+  return [
+    { q: "How much does a website cost?", a: `Landing page from ${landing}, business website (up to 5–7 pages) from ${business}, premium website with a unique design from ${premium}. The final price depends on scope; you receive a tailored quote after an initial conversation.` },
+    { q: "How long does it take to build a website?", a: "Landing page: 1–2 weeks. Multi-page website: 2–4 weeks. Online store: 4–8 weeks. Exact timelines are set out in the quote." },
+    { q: "Can you build an online store?", a: `Yes: product catalogue, online payment, shipping and inventory. Basic Shop (up to 30 products) from ${shop}, Standard Shop (up to 150 products) from ${shopStandard}.` },
+    { q: "Is ad spend included in the ads management price?", a: "No. The management fee does not include the budget paid to Meta or Google. You set the budget; we manage and optimise it." },
+    { q: "Is SEO included?", a: "Every website includes basic SEO: meta tags, a clean heading structure and mobile-friendly pages. Advanced SEO optimisation is offered separately." },
+    { q: "Do you offer monthly website maintenance?", a: `Yes, from ${maintenance}: updates, backups, basic security and monitoring. Larger plans add speed optimisation and monthly reporting.` },
+    { q: "What does the process look like?", a: "Initial call about your goals → proposal for structure and scope → build with your approvals → testing and launch. We keep you updated at every step." },
+    { q: "How quickly do you reply, and when can we start?", a: "We reply within 24 hours. The start date depends on the project type; some projects begin within 1–2 weeks." },
+    { q: "How is payment handled?", a: "The quote includes the price and payment terms. Usually an initial deposit is required, with the rest on completion or by project phase." },
+    { q: "Do you work with small businesses and clients outside Albania?", a: "Yes. We work with startups, small businesses and larger companies in Albania and abroad. We communicate in Albanian, English and German." },
+    { q: "Can you build a multilingual website?", a: "Yes. We build multilingual websites (for example Albanian, English and German), depending on what your business needs." },
+    { q: "Do you offer training for teams?", a: "Yes. Practical social media marketing training, in groups or 1:1. The Web Developer course is coming soon." },
+  ];
+}
+
 export const FAQ_BY_LOCALE: Record<Locale, FaqItem[]> = {
-  sq: [
-    { q: "Sa kushton krijimi i një website?", a: "Çmimi varet nga kompleksiteti: landing page nga 500€, website profesionale me disa faqe nga 1.000€, website premium për kompani nga 2.000€ e lart. Për dyqan online (webshop) fillon nga 1.000€. Jepim ofertë të personalizuar pas diskutimit të nevojave." },
-    { q: "Sa kohë duhet për ndërtimin e një faqeje interneti?", a: "Website me disa faqe: 2–4 javë. Dyqan online: 4–8 javë. Landing page: 1–2 javë. Afatet përcaktohen qartë në ofertë dhe respektohen." },
-    { q: "A mund të krijoni webshop për biznesin tim?", a: "Po. Krijojmë dyqane online (e-commerce) të përshtatshme për biznese në Shqipëri: katalog produktesh, pagesë me kartë, transport, inventar. Nga 1.000€. Ideal për marka që duan të shesin online." },
-    { q: "A e bëni edhe SEO për website?", a: "Po. Çdo website që ndërtojmë përfshin SEO bazik: meta tags, struktura headings, mobile friendly. Ofrojmë edhe optimizim SEO të avancuar dhe mirembajtje website për rezultate afatgjatë në Google." },
-    { q: "A ofroni mirëmbajtje mujore për website?", a: "Po. Mirembajtje website nga 100€/muaj: përditësime, backups, siguri, monitorim. Përshtatshme për kompani dhe biznese që duan website-in gjithmonë të përditësuar dhe të sigurt." },
-    { q: "A mund të bëni website në disa gjuhë (shqip, anglisht, gjermanisht)?", a: "Po. Ndërtojmë website shumëgjuhëshe. DARA vetë ofron faqe në shqip, anglisht dhe gjermanisht. Përshtatemi sipas nevojës së biznesit tuaj." },
-    { q: "A është website-i që ndërtoni i optimizuar për mobile?", a: "Po. Të gjitha website-et janë responsive dhe mobile-friendly. Dizajni përshtatet automatikisht për telefon, tablet dhe desktop – e rëndësishme për përdoruesit dhe për SEO." },
-    { q: "Si funksionon procesi i punës për një website?", a: "Bisedë fillestare për qëllimet dhe nevojat → Propozime strukturë dhe dizajn → Zhvillim dhe testim → Lansim. Ju jeni i përfshirë në aprovime. Komunikojmë hap pas hapi." },
-    { q: "A punoni me biznese në Shqipëri?", a: "Po. Punojmë me kompani shqiptare në Tiranë dhe në të gjithë Shqipërinë, si edhe me klientë në Gjermani, UK dhe më gjerë. Komunikojmë në shqip, anglisht dhe gjermanisht." },
-    { q: "Sa kohë duhet për të filluar?", a: "Pas kërkesës tuaj, kontaktojmë brenda 24 orëve. Fillimi varet nga lloji i projektit; disa projekte nisin brenda 1–2 javëve." },
-    { q: "Si paguhet?", a: "Oferta përfshin çmimin dhe kushtet. Zakonisht kërkohet depozitë fillestare, pjesa tjetër pas përfundimit ose sipas fazeve. Transparencë e plotë." },
-    { q: "Çfarë ndryshon DARA nga agjencitë e tjera?", a: "Fokusohemi në strategji të qarta, rezultate të matshme dhe përmbajtje që reflekton identitetin e brand-it. Ekip i vogël, i fokusuar, me përvojë. Kuptojmë si web design ashtu edhe marketing." },
-    { q: "A ofroni trajnime për ekipet?", a: "Po. Trajnime praktike për social media, marketing digjital dhe web – si grupe ashtu edhe 1-on-1. Të orientuara nga rezultatet." },
-  ],
-  en: [
-    { q: "How long until we can start?", a: "After your request, we respond within 24 hours. Start date depends on the project type , some projects begin within 1–2 weeks." },
-    { q: "How is payment handled?", a: "The quote includes price and payment terms. Usually an initial deposit is required, the rest upon completion or by phase." },
-    { q: "Do you work with businesses outside Albania?", a: "Yes. We work with clients in Albania, Germany, UK and beyond. We communicate in Albanian, English and German." },
-    { q: "What makes DARA different from other agencies?", a: "We focus on clear strategy, measurable results and content that reflects your brand identity. We work with a small, focused, experienced team." },
-    { q: "Do you offer short consulting sessions?", a: "Yes. We offer 1-on-1 consulting sessions (60–90 min) to clarify your marketing direction without long-term commitment." },
-    { q: "Can you build a website or online store?", a: "Yes. We offer websites, landing pages and e-commerce stores. Every project starts with a consultation to understand your needs." },
-    { q: "How long does a typical project take?", a: "Depends on the service: a logo 2–3 weeks, website 4–8 weeks, marketing strategy 2–4 weeks. We give clear timelines in the quote." },
-    { q: "Do you work with small businesses?", a: "Yes. We work with startups, SMEs and corporates. We have packages for every budget , from short consultations to monthly retainers." },
-    { q: "What platforms do you use for social media?", a: "We work with Instagram, Facebook, LinkedIn, TikTok and YouTube , depending on your brand and target audience." },
-    { q: "Do you offer training for teams?", a: "Yes. We offer SMM and web development training , both group and 1-on-1. Training is practical and results-oriented." },
-  ],
-  de: [
-    { q: "Wie lange dauert es bis zum Start?", a: "Nach Ihrer Anfrage melden wir uns innerhalb von 24 Stunden. Der Starttermin hängt vom Projekttyp ab , manche Projekte beginnen innerhalb von 1–2 Wochen." },
-    { q: "Wie funktioniert die Zahlung?", a: "Das Angebot enthält Preis und Zahlungsbedingungen. Üblicherweise wird eine Anzahlung verlangt, der Rest bei Fertigstellung oder nach Phasen." },
-    { q: "Arbeiten Sie mit Unternehmen außerhalb Albaniens?", a: "Ja. Wir arbeiten mit Kunden in Albanien, Deutschland, UK und darüber hinaus. Wir kommunizieren auf Albanisch, Englisch und Deutsch." },
-    { q: "Was unterscheidet DARA von anderen Agenturen?", a: "Wir konzentrieren uns auf klare Strategie, messbare Ergebnisse und Content, der Ihre Markenidentität widerspiegelt. Wir arbeiten mit einem kleinen, fokussierten, erfahrenen Team." },
-    { q: "Bieten Sie kurze Beratungssitzungen an?", a: "Ja. Wir bieten 1-zu-1-Beratungssitzungen (60–90 Min.) zur Klärung Ihrer Marketing-Richtung ohne langfristige Bindung." },
-    { q: "Können Sie eine Website oder einen Online-Shop erstellen?", a: "Ja. Wir bieten Websites, Landing Pages und E-Commerce-Shops. Jedes Projekt beginnt mit einer Beratung, um Ihre Bedürfnisse zu verstehen." },
-    { q: "Wie lange dauert ein typisches Projekt?", a: "Hängt vom Service ab: Logo 2–3 Wochen, Website 4–8 Wochen, Marketingstrategie 2–4 Wochen. Wir geben klare Zeitrahmen im Angebot." },
-    { q: "Arbeiten Sie mit kleinen Unternehmen?", a: "Ja. Wir arbeiten mit Startups, KMU und Konzernen. Wir haben Pakete für jedes Budget , von kurzen Beratungen bis zu monatlichen Retainern." },
-    { q: "Welche Plattformen nutzen Sie für Social Media?", a: "Wir arbeiten mit Instagram, Facebook, LinkedIn, TikTok und YouTube , je nach Ihrer Marke und Zielgruppe." },
-    { q: "Bieten Sie Schulungen für Teams an?", a: "Ja. Wir bieten SMM- und Web-Entwicklungs-Schulungen , sowohl in Gruppen als auch 1-zu-1. Die Schulungen sind praxisnah und ergebnisorientiert." },
-  ],
+  sq: buildFaq("sq"),
+  en: buildFaq("en"),
+  de: buildFaq("de"),
 };
+
+/** Number of questions shown in the homepage preview (full list on /faq). */
+export const HOME_FAQ_COUNT = 6;

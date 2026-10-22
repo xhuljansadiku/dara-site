@@ -1,7 +1,7 @@
 import ServicePageLayout from "@/components/site/ServicePageLayout";
-import { getServiceBySlug, SERVICE_SLUGS, type ServiceSlug } from "@/lib/services-data";
+import { getServiceBySlug, SERVICE_MIN_PRICE_EUR, SERVICE_SLUGS, type ServiceSlug } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
-import { DEFAULT_SERVICE_FAQ } from "@/lib/service-page-faq";
+import { getServiceFaq } from "@/lib/service-page-faq";
 import { SERVICE_HERO_SUBLINE } from "@/lib/service-page-extras";
 import { getServicePageContent } from "@/lib/services-page-content";
 import { buildLocalizedMetadata } from "@/lib/seo-utils";
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
   );
 }
 
-/** Hero + gallery images per service slug (optional). */
+/** Hero + gallery images per service slug (optional, local files only). */
 const SERVICE_IMAGES: Partial<Record<ServiceSlug, string[]>> = {
   "website-landing": [
     "/images/services/website/website-cover.jpg",
@@ -27,18 +27,11 @@ const SERVICE_IMAGES: Partial<Record<ServiceSlug, string[]>> = {
   ],
   ecommerce: [
     "/images/services/e-commerce/e-commerce-cover.jpg",
-    "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
-    "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
-  ],
-  saas: [
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    "/images/services/e-commerce/e-commerce-1.jpg",
+    "/images/services/e-commerce/e-commerce-2.jpg",
   ],
   maintenance: [
     "/images/services/maintenance/maintenance-cover.jpg",
-    "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
   ],
   "social-media": [
     "/images/services/social-media/social-media-cover.jpg",
@@ -116,7 +109,7 @@ export default function ServiceSlugPage({ params }: Props) {
       {
         "@type": "ListItem",
         position: 3,
-        name: service.title,
+        name: titlePlain,
         item: `${BASE}/${locale}/services/${slug}`,
       },
     ],
@@ -128,10 +121,17 @@ export default function ServiceSlugPage({ params }: Props) {
     name: titlePlain,
     description: service.desc,
     provider: { "@type": "Organization", name: "DARA Marketing Agency" },
-    ...(service.price && { offers: { "@type": "Offer", price: service.price } }),
+    // schema.org needs a numeric price; the published starting price is a minimum.
+    ...(SERVICE_MIN_PRICE_EUR[slug] > 0 && {
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        priceSpecification: { "@type": "PriceSpecification", minPrice: SERVICE_MIN_PRICE_EUR[slug], priceCurrency: "EUR" },
+      },
+    }),
   };
 
-  const faqForJsonLd = content.faq?.length ? content.faq : DEFAULT_SERVICE_FAQ[locale];
+  const faqForJsonLd = getServiceFaq(locale, slug, titlePlain, service.price, content);
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

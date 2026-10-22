@@ -47,8 +47,11 @@ export default function CookieConsentBanner() {
 
   useEffect(() => {
     if (readStored()) return;
-    setVisible(true);
-    const t = requestAnimationFrame(() => setEntered(true));
+    // Defer to the next frame so the enter transition runs after the first paint.
+    const t = requestAnimationFrame(() => {
+      setVisible(true);
+      requestAnimationFrame(() => setEntered(true));
+    });
     return () => cancelAnimationFrame(t);
   }, []);
 

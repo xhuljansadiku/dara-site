@@ -60,7 +60,7 @@ const HERO_BY_LOCALE: Record<
     paragraphs: [
       "DARA Marketing Agency është agjenci marketingu dhe web design në Tiranë, Shqipëri. Themeluar më 2020. Ndihmojmë kompanitë shqiptare dhe ndërkombëtare me krijim website, branding dhe marketing digjital që konverton.",
       "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
-      "Ekipi ynë kombinojnë kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset në Shqipëri dhe më gjerë të bëhen histori suksesi.",
+      "Ekipi ynë kombinon kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset në Shqipëri dhe më gjerë të bëhen histori suksesi.",
     ],
     stats: [
       { k: "Themeluar", v: "2020" },
@@ -125,19 +125,19 @@ const PROCESS_BY_LOCALE: Record<
         n: "02",
         title: "Strategy & Assets",
         desc: "Ndërtojmë planin dhe asetet që e bëjnë marketingun të performojë realisht.",
-        bullets: ["Landing pages / UX", "Tracking (events + pixels)", "Creative & copy", "Content calendar"],
+        bullets: ["Landing page / UX", "Matje (events + pixel)", "Kreativë & tekste", "Kalendar përmbajtjeje"],
       },
       {
         n: "03",
         title: "Launch & Testing",
         desc: "Nisim me strukturë, jo \"random ads\". Pastaj testojmë për fitues.",
-        bullets: ["Campaign structure", "A/B testing", "Budget allocation", "Offer iterations"],
+        bullets: ["Strukturë fushatash", "Testime A/B", "Ndarje buxheti", "Përmirësim oferte"],
       },
       {
         n: "04",
         title: "Optimize & Scale",
         desc: "Optimizojmë çdo javë dhe skalojmë vetëm atë që sjell rezultat.",
-        bullets: ["Weekly reporting", "CRO improvements", "Scale winners", "New creative cycles"],
+        bullets: ["Raportim javor", "Përmirësime konvertimi", "Rritje e asaj që funksionon", "Kreativë të rinj"],
       },
     ],
   },

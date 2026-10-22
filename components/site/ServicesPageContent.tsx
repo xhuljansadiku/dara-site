@@ -17,7 +17,7 @@ const FILTER_TABS_BY_LOCALE: Record<Locale, { label: string; indices: number[] }
     { label: "Brand", indices: [3] },
     { label: "Trajnime", indices: [6] },
     { label: "Website", indices: [7, 8, 9] },
-    { label: "Mirembajtje", indices: [10] },
+    { label: "Mirëmbajtje", indices: [10] },
   ],
   en: [
     { label: "All", indices: [] },
@@ -45,7 +45,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Shërbime web design & marketing",
     title: "Krijim website, branding & ",
     titleAccent: "marketing digjital",
-    subtitle: "Website profesionale, dyqan online, web design Tirana. Rrjetet sociale, strategji, branding, reklama Meta & Google, mirembajtje website. Sherbime për biznese në Shqipëri.",
+    subtitle: "Website profesionale, dyqan online, web design Tirana. Rrjetet sociale, strategji, branding, reklama Meta & Google, mirëmbajtje website. Sherbime për biznese në Shqipëri.",
     getQuote: "Merr ofertë",
     viewWork: "Shiko punën",
   },

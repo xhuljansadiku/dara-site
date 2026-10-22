@@ -12,10 +12,9 @@ import ValuePillarIcon from "@/components/site/ValuePillarIcon";
 import HomeServicesStrip from "@/components/site/HomeServicesStrip";
 import AnimateIn from "@/components/site/AnimateIn";
 import MarketingVideo from "@/components/site/MarketingVideo";
-import TextWithBreaksAfterPeriods from "@/components/site/TextWithBreaksAfterPeriods";
+import GoogleReviewsSection from "@/components/site/GoogleReviewsSection";
 import HeroParallaxBg from "@/components/site/HeroParallaxBg";
 import TypewriterHero from "@/components/site/TypewriterHero";
-import CountUp from "@/components/site/CountUp";
 import SectionDots from "@/components/site/SectionDots";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
@@ -25,6 +24,8 @@ import {
 } from "@/lib/packages-data";
 import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
 import { buildLocalizedMetadata } from "@/lib/seo-utils";
+import { CONTACT, PROJECTS_DELIVERED } from "@/lib/business-facts";
+import { getVerifiedTestimonials } from "@/lib/testimonials";
 
 type Locale = "sq" | "en" | "de";
 
@@ -43,54 +44,47 @@ const HERO_BY_LOCALE: Record<
   }
 > = {
   sq: {
-    kicker: "DARA MARKETING AGENCY",
+    kicker: "Agjenci marketingu & web · Tiranë",
     titleA: "Guxo të jesh",
     titleB: "ndryshe",
-    desc: "Nga krijimi i website-ve dhe e-commerce, deri te menaxhimi i reklamave (Meta & Google). Ne hartojmë strategji marketingut digjital që kthejnë trafikun në shitje reale dhe rritje të matshme.",
-    ctaPrimary: "Nisni Bashkëpunimin",
-    ctaSecondary: "Zbuloni Shërbimet",
+    desc: "Ndërtojmë website dhe dyqane online, menaxhojmë rrjetet sociale dhe reklamat në Meta & Google për biznese në Shqipëri dhe Europë, me objektiva të qarta dhe raportim të rregullt.",
+    ctaPrimary: "Kërko ofertë",
+    ctaSecondary: "Shiko shërbimet",
     scrollHint: "Zbulo më shumë",
     socialProof: {
-      beforeLink: "100+ projekte të realizuara me sukses.",
-      linkText: "Zbuloni",
-      afterLink: " rrugëtimin tonë kreativ.",
+      beforeLink: `${PROJECTS_DELIVERED} projekte të realizuara.`,
+      linkText: "Shiko punët tona",
+      afterLink: ".",
     },
   },
   en: {
-    kicker: "DARA MARKETING AGENCY",
+    kicker: "Marketing & web agency · Tirana",
     titleA: "Dare to be",
     titleB: "different",
-    desc: "From websites and e-commerce to ad management (Meta & Google). We craft digital marketing strategies that turn traffic into real sales and measurable growth.",
-    ctaPrimary: "Start collaborating",
-    ctaSecondary: "Discover services",
+    desc: "We build websites and online stores, and run social media and Meta & Google ads for businesses in Albania and Europe, with clear objectives and regular reporting.",
+    ctaPrimary: "Request a quote",
+    ctaSecondary: "View services",
     scrollHint: "Scroll to explore",
     socialProof: {
-      beforeLink: "100+ projects delivered successfully.",
-      linkText: "Discover",
-      afterLink: " our creative journey.",
+      beforeLink: `${PROJECTS_DELIVERED} projects delivered.`,
+      linkText: "See our work",
+      afterLink: ".",
     },
   },
   de: {
-    kicker: "DARA MARKETING AGENCY",
+    kicker: "Marketing- & Web-Agentur · Tirana",
     titleA: "Wage es,",
     titleB: "anders zu sein",
-    desc: "Von Websites und E-Commerce bis zur Werbebetreuung (Meta & Google). Wir entwickeln digitale Marketingstrategien, die Traffic in echte Verkäufe und messbares Wachstum verwandeln.",
-    ctaPrimary: "Zusammenarbeit starten",
-    ctaSecondary: "Leistungen entdecken",
+    desc: "Wir erstellen Websites und Online-Shops und betreuen Social Media sowie Meta- & Google-Ads für Unternehmen in Albanien und Europa, mit klaren Zielen und regelmäßigem Reporting.",
+    ctaPrimary: "Angebot anfragen",
+    ctaSecondary: "Leistungen ansehen",
     scrollHint: "Mehr entdecken",
     socialProof: {
-      beforeLink: "Über 100 erfolgreich umgesetzte Projekte.",
-      linkText: "Entdecken Sie",
-      afterLink: " unseren kreativen Weg.",
+      beforeLink: `${PROJECTS_DELIVERED} umgesetzte Projekte.`,
+      linkText: "Unsere Arbeiten ansehen",
+      afterLink: ".",
     },
   },
-};
-
-/** Scrolling marquee under hero ("DARA" in logo gold) */
-const MARQUEE_BY_LOCALE: Record<Locale, { brand: string; rest: string }> = {
-  sq: { brand: "DARA", rest: " Marketing Agency · partneri juaj i besuar · " },
-  en: { brand: "DARA", rest: " Marketing Agency · your trusted partner · " },
-  de: { brand: "DARA", rest: " Marketing Agency · Ihr vertrauensvoller Partner · " },
 };
 
 const VALUE_PILLARS_HEADER: Record<
@@ -98,39 +92,40 @@ const VALUE_PILLARS_HEADER: Record<
   { kicker: string; heading: string; tagline?: { brand: string; rest: string } }
 > = {
   sq: {
-    kicker: "Vlerat",
-    heading: "Katër gjëra që na dallojnë",
+    kicker: "Pse DARA",
+    heading: "Si punojmë me ju",
   },
   en: {
-    kicker: "Values",
-    heading: "Four things that define us",
+    kicker: "Why DARA",
+    heading: "How we work with you",
   },
   de: {
-    kicker: "Werte",
-    heading: "Vier Dinge, die uns ausmachen",
+    kicker: "Warum DARA",
+    heading: "So arbeiten wir mit Ihnen",
   },
 };
 
 type ValuePillar = { title: string; desc: ReactNode };
 
+/** Concrete working principles (each one is backed by the process and packages pages). */
 const VALUE_PILLARS_BY_LOCALE: Record<Locale, ValuePillar[]> = {
   sq: [
-    { title: "KREATIVITETI", desc: "Ide guximtare që kthehen në ekzekutim të saktë." },
-    { title: "UNIK", desc: "Krijuar për t'u dalluar në një treg të mbingarkuar." },
-    { title: "INOVACION", desc: "Përdorim mjetet më të fundit për avantazhin tuaj." },
-    { title: "REZULTATE", desc: "Rritje e matshme me shifra, jo me supozime." },
+    { title: "Plan i personalizuar", desc: "Çdo plan nis nga biznesi, audienca dhe qëllimi juaj, jo nga një model i gatshëm." },
+    { title: "Proces i qartë", desc: "Hapa të përcaktuar, aprovime nga ju në çdo fazë dhe afate të shkruara në ofertë." },
+    { title: "Raportim transparent", desc: "Raporte të rregullta për çfarë u bë dhe si performoi, që të dini ku shkon buxheti." },
+    { title: "Objektiva të matshme", desc: "KPI-të vendosen që në fillim, që progresi të matet kundrejt qëllimeve tuaja." },
   ],
   en: [
-    { title: "CREATIVITY", desc: "Bold ideas that become precise execution." },
-    { title: "UNIQUE", desc: "Built to stand out in a crowded market." },
-    { title: "INNOVATION", desc: "We use the latest tools for your advantage." },
-    { title: "RESULTS", desc: "Measurable growth with numbers, not assumptions." },
+    { title: "Tailored plan", desc: "Every plan starts from your business, audience and goal, not a ready-made template." },
+    { title: "Clear process", desc: "Defined steps, your approval at each stage and timelines written into the quote." },
+    { title: "Transparent reporting", desc: "Regular reports on what was done and how it performed, so you know where the budget goes." },
+    { title: "Measurable objectives", desc: "KPIs are agreed at the start, so progress is measured against your goals." },
   ],
   de: [
-    { title: "KREATIVITÄT", desc: "Mutige Ideen, die in präzise Umsetzung münden." },
-    { title: "EINZIGARTIGKEIT", desc: "Entwickelt, um sich in einem überfüllten Markt abzuheben." },
-    { title: "INNOVATION", desc: "Wir nutzen die neuesten Tools für Ihren Vorteil." },
-    { title: "ERGEBNISSE", desc: "Messbares Wachstum mit Zahlen, nicht mit Vermutungen." },
+    { title: "Individueller Plan", desc: "Jeder Plan beginnt bei Ihrem Unternehmen, Ihrer Zielgruppe und Ihrem Ziel, nicht bei einer Vorlage." },
+    { title: "Klarer Prozess", desc: "Definierte Schritte, Ihre Freigabe in jeder Phase und Zeitpläne im Angebot." },
+    { title: "Transparentes Reporting", desc: "Regelmäßige Berichte darüber, was umgesetzt wurde und wie es lief, damit Sie wissen, wohin das Budget fließt." },
+    { title: "Messbare Ziele", desc: "KPIs werden zu Beginn festgelegt, damit Fortschritt an Ihren Zielen gemessen wird." },
   ],
 };
 
@@ -176,59 +171,39 @@ const ABOUT_BY_LOCALE: Record<
 const ABOUT_STATS_BY_LOCALE: Record<Locale, { value: string; label: string }[]> = {
   sq: [
     { value: "", label: "vite eksperiencë" }, // Will be replaced dynamically
-    { value: "100+", label: "biznese të punuara" },
-    { value: "AL, EU", label: "treg ndërkombëtar" },
+    { value: PROJECTS_DELIVERED, label: "projekte të realizuara" },
+    { value: "AL, EU", label: "klientë në Shqipëri dhe Europë" },
   ],
   en: [
     { value: "", label: "years experience" }, // Will be replaced dynamically
-    { value: "100+", label: "businesses worked with" },
-    { value: "AL, EU", label: "international market" },
+    { value: PROJECTS_DELIVERED, label: "projects delivered" },
+    { value: "AL, EU", label: "clients in Albania and Europe" },
   ],
   de: [
     { value: "", label: "Jahre Erfahrung" }, // Will be replaced dynamically
-    { value: "100+", label: "betreute Unternehmen" },
-    { value: "AL, EU", label: "internationaler Markt" },
+    { value: PROJECTS_DELIVERED, label: "umgesetzte Projekte" },
+    { value: "AL, EU", label: "Kunden in Albanien und Europa" },
   ],
 };
 
 // Shërbimet dhe çmimet nga services-data (burim i vetëm për faqen e shërbimeve dhe kryefaqen)
 const SERVICES_BY_LOCALE = SERVICE_DETAILS_BY_LOCALE;
-// 4 service groups: strategy → content & campaigns → brand → training & build
-const SERVICE_GROUP_INDICES = [
-  [2, 5], // Strategy & planning (Digital Strategy, Consulting)
-  [0, 1, 4], // Content & campaigns (Social, Content, Ads)
-  [3], // Brand & identity (Branding)
-  [6, 7, 8, 9, 10], // Training & build (Training, Website & landing, E-commerce, SaaS, Maintenance)
-] as const;
-
-const SERVICE_GROUP_LABELS: Record<Locale, [string, string, string, string]> = {
-  sq: ["Strategji dhe planifikim", "Përmbajtje dhe fusha", "Brand dhe identitet", "Trajnime dhe ndërtim"],
-  en: ["Strategy & planning", "Content & campaigns", "Brand & identity", "Training & build"],
-  de: ["Strategie & Planung", "Content & Kampagnen", "Marke & Identität", "Training & Umsetzung"],
-};
-
-// Simple filter tabs for services: Marketing, Brand, Trajnime, Website, Mirembajtje
+// Service categories (indices into SERVICE_SLUGS). Training has its own section and journey.
 const FILTER_TABS_BY_LOCALE: Record<Locale, { label: string; indices: number[] }[]> = {
   sq: [
-    { label: "Marketing", indices: [0, 1, 2, 4, 5] }, // social, content, strategy, ads, consulting
-    { label: "Brand", indices: [3] },
-    { label: "Trajnime", indices: [6] },
-    { label: "Website", indices: [7, 8, 9] }, // website-landing, ecommerce, saas
-    { label: "Mirembajtje", indices: [10] }, // maintenance
+    { label: "Website & teknologji", indices: [7, 8, 9, 10] }, // website, ecommerce, saas, maintenance
+    { label: "Marketing & rritje", indices: [0, 1, 2, 4, 5] }, // social, content, strategy, ads, consulting
+    { label: "Branding", indices: [3] },
   ],
   en: [
-    { label: "Marketing", indices: [0, 1, 2, 4, 5] },
-    { label: "Brand", indices: [3] },
-    { label: "Training", indices: [6] },
-    { label: "Website", indices: [7, 8, 9] },
-    { label: "Maintenance", indices: [10] },
+    { label: "Website & technology", indices: [7, 8, 9, 10] },
+    { label: "Marketing & growth", indices: [0, 1, 2, 4, 5] },
+    { label: "Branding", indices: [3] },
   ],
   de: [
-    { label: "Marketing", indices: [0, 1, 2, 4, 5] },
-    { label: "Brand", indices: [3] },
-    { label: "Training", indices: [6] },
-    { label: "Website", indices: [7, 8, 9] },
-    { label: "Wartung", indices: [10] },
+    { label: "Website & Technologie", indices: [7, 8, 9, 10] },
+    { label: "Marketing & Wachstum", indices: [0, 1, 2, 4, 5] },
+    { label: "Branding", indices: [3] },
   ],
 };
 
@@ -238,75 +213,6 @@ const PRICE_TOOLTIP_BY_LOCALE: Record<Locale, string> = {
   sq: "Çmimi varet nga scope-i dhe kohëzgjatja. Na kontaktoni për ofertë të personalizuar.",
   en: "Price depends on scope and duration. Contact us for a tailored quote.",
   de: "Der Preis hängt von Umfang und Dauer ab. Kontaktieren Sie uns für ein individuelles Angebot.",
-};
-
-const RESULT_BY_SERVICE_INDEX: Record<Locale, Record<number, string>> = {
-  sq: { 0: "+40% angazhim mesatar", 4: "Më shumë lead dhe konvertime" },
-  en: { 0: "+40% avg. engagement", 4: "More leads & conversions" },
-  de: { 0: "+40 % durchschn. Engagement", 4: "Mehr Leads & Konversionen" },
-};
-
-const TESTIMONIAL_BY_LOCALE: Record<Locale, { quote: string; name: string; role: string; company?: string }[]> = {
-  sq: [
-    {
-      quote: "DARA na ndihmoi të strukturojmë rrjetet tona sociale dhe të rrisnim shitjet. Profesionale dhe të fokusuara te rezultatet.",
-      name: "Ana M.",
-      role: "Menaxhere",
-      company: "Don Mare Hotel",
-    },
-    {
-      quote: "Krijuan website-in tonë nga zero dhe e lansuam brenda 3 javësh. Shpejtësia dhe cilësia ishin mbi pritshmëritë.",
-      name: "Genci V.",
-      role: "Pronar",
-      company: "VizionTech",
-    },
-    {
-      quote: "Pas 2 muajsh bashkëpunim, shitjet tona online u rritën me 38%. Rekomandoj DARA-n pa hezitim.",
-      name: "Blerinda H.",
-      role: "Drejtoreshë",
-      company: "Estetika Blerinda",
-    },
-  ],
-  en: [
-    {
-      quote: "DARA helped us structure our social presence and increase sales. Professional and focused on results.",
-      name: "Ana M.",
-      role: "Manager",
-      company: "Don Mare Hotel",
-    },
-    {
-      quote: "They built our website from scratch and launched it within 3 weeks. Speed and quality exceeded our expectations.",
-      name: "Genci V.",
-      role: "Owner",
-      company: "VizionTech",
-    },
-    {
-      quote: "After 2 months of collaboration, our online sales grew by 38%. I recommend DARA without hesitation.",
-      name: "Blerinda H.",
-      role: "Director",
-      company: "Estetika Blerinda",
-    },
-  ],
-  de: [
-    {
-      quote: "DARA hat uns geholfen, unseren Social-Media-Auftritt zu strukturieren und den Umsatz zu steigern. Professionell und ergebnisorientiert.",
-      name: "Ana M.",
-      role: "Managerin",
-      company: "Don Mare Hotel",
-    },
-    {
-      quote: "Sie haben unsere Website von Grund auf erstellt und innerhalb von 3 Wochen gelauncht. Geschwindigkeit und Qualität übertrafen unsere Erwartungen.",
-      name: "Genci V.",
-      role: "Inhaber",
-      company: "VizionTech",
-    },
-    {
-      quote: "Nach 2 Monaten Zusammenarbeit stiegen unsere Online-Verkäufe um 38 %. Ich empfehle DARA ohne Zögern.",
-      name: "Blerinda H.",
-      role: "Direktorin",
-      company: "Estetika Blerinda",
-    },
-  ],
 };
 
 const SERVICES_SECTION_COPY: Record<
@@ -327,140 +233,147 @@ const SERVICES_SECTION_COPY: Record<
     packagesTitleHighlight: string;
     packagesIntro: string;
     packagesAll: string;
+    comparePackages: string;
   }
 > = {
   sq: {
     sectionKicker: "Shërbime",
     sectionTitleBefore: "Çfarë ",
     sectionTitleHighlight: "ofrojmë",
-    sectionIntro: "Të organizuara sipas qasjes: strategji → përmbajtje → brand → trajnime dhe ndërtim.",
+    sectionIntro: "Zgjidhni kategorinë që ju intereson. Çdo shërbim ka faqen e vet me çfarë përfshin, procesin dhe çmimin fillestar.",
     allServices: "Të gjitha",
     from: "Nga",
     quoteRequest: "Ofertë sipas nevojës",
     more: "Më shumë",
-    requestQuoteForGroup: "Kërko ofertë për këto shërbime",
+    requestQuoteForGroup: "Kërko ofertë",
     packagesTitle: "Paketa",
     packagesKicker: "Paketa",
     packagesTitleBefore: "Paketa për ",
     packagesTitleHighlight: "çdo nevojë",
     packagesIntro: "Zgjidhje të gatshme për marketing, brand, trajnime dhe website. Paketa që përshtaten me biznesin tuaj.",
     packagesAll: "Të gjitha",
+    comparePackages: "Krahaso të gjitha paketat",
   },
   en: {
     sectionKicker: "Services",
     sectionTitleBefore: "What we ",
     sectionTitleHighlight: "offer",
-    sectionIntro: "Organised by approach: strategy → content → brand → training & build.",
+    sectionIntro: "Pick the area you need. Each service has its own page with what is included, the process and the starting price.",
     allServices: "All",
     from: "From",
     quoteRequest: "Quote on request",
     more: "More",
-    requestQuoteForGroup: "Request quote for these services",
+    requestQuoteForGroup: "Request a quote",
     packagesTitle: "Packages",
     packagesKicker: "Packages",
     packagesTitleBefore: "Packages for ",
     packagesTitleHighlight: "every need",
     packagesIntro: "Ready-made solutions for marketing, brand, training and website. Packages that fit your business.",
     packagesAll: "All",
+    comparePackages: "Compare all packages",
   },
   de: {
     sectionKicker: "Leistungen",
     sectionTitleBefore: "Was wir ",
     sectionTitleHighlight: "anbieten",
-    sectionIntro: "Strukturiert nach Ansatz: Strategie → Content → Marke → Training & Umsetzung.",
+    sectionIntro: "Wählen Sie den Bereich, den Sie brauchen. Jede Leistung hat eine eigene Seite mit Umfang, Ablauf und Einstiegspreis.",
     allServices: "Alle",
     from: "Ab",
     quoteRequest: "Angebot auf Anfrage",
     more: "Mehr",
-    requestQuoteForGroup: "Angebot für diese Leistungen",
+    requestQuoteForGroup: "Angebot anfragen",
     packagesTitle: "Pakete",
     packagesKicker: "Pakete",
     packagesTitleBefore: "Pakete für ",
     packagesTitleHighlight: "jeden Bedarf",
     packagesIntro: "Fertige Lösungen für Marketing, Marke, Training und Website. Pakete, die zu Ihrem Unternehmen passen.",
     packagesAll: "Alle",
+    comparePackages: "Alle Pakete vergleichen",
   },
 };
 
 const CTA_BY_LOCALE: Record<
   Locale,
-  { title: string; subtitle: string; button: string; whyTitle: string; whyBullets: string[]; newsletterNote: string }
+  {
+    title: string;
+    titleAccent: string;
+    subtitle: string;
+    button: string;
+    stepsTitle: string;
+    steps: string[];
+    needTitle: string;
+    need: string;
+    newsletterNote: string;
+  }
 > = {
   sq: {
-    title: "Le të punojmë bashkë dhe të krijojmë diçka të madhe",
-    subtitle: "Na shkruaj për një audit të shpejtë ose për një plan konkret rritjeje.",
-    button: "Merr analizë falas",
-    whyTitle: "Pse DARA?",
-    whyBullets: [
-      "Strategji e personalizuar, jo modele të gatshme",
-      "Fokus te rezultatet dhe raportimi transparent",
-      "Ekip me përvojë", // Years will be added dynamically
+    title: "Le të flasim për",
+    titleAccent: "projektin tuaj",
+    subtitle: "Kërkoni ofertë për një website, dyqan online, fushatë ose audit të prezencës suaj digjitale.",
+    button: "Kërko ofertë",
+    stepsTitle: "Çfarë ndodh pasi dërgoni kërkesën",
+    steps: [
+      "Plotësoni formularin e shkurtër (rreth 2 minuta).",
+      "Ju kthejmë përgjigje brenda 24 orëve, me pyetje nëse na mungon diçka.",
+      "Merrni një plan të shkurtër me scope-in, afatet dhe ofertën. Pa angazhim.",
     ],
-    newsletterNote: "Pa spam. Çdoherë mund të çabonësh.",
+    needTitle: "Çfarë na ndihmon",
+    need: "Linku i website-it ose rrjeteve sociale, qëllimi kryesor dhe, nëse e keni, një buxhet orientues.",
+    newsletterNote: "Pa spam. Çabonohuni kur të doni.",
   },
   en: {
-    title: "Let’s work together and create something great",
-    subtitle: "Reach out for a quick audit or a clear growth plan tailored to your business.",
-    button: "Get a free audit",
-    whyTitle: "Why DARA?",
-    whyBullets: [
-      "Tailored strategy, not one-size-fits-all",
-      "Focus on results and transparent reporting",
-      "Experienced team", // Years will be added dynamically
+    title: "Let’s talk about",
+    titleAccent: "your project",
+    subtitle: "Request a quote for a website, online store, campaign or an audit of your digital presence.",
+    button: "Request a quote",
+    stepsTitle: "What happens after you send a request",
+    steps: [
+      "Fill in the short form (about 2 minutes).",
+      "We reply within 24 hours, with questions if anything is missing.",
+      "You receive a short plan with scope, timeline and a quote. No commitment.",
     ],
+    needTitle: "What helps us",
+    need: "A link to your website or social profiles, your main goal and, if you have one, an indicative budget.",
     newsletterNote: "No spam. Unsubscribe anytime.",
   },
   de: {
-    title: "Lass uns gemeinsam etwas Großartiges aufbauen",
-    subtitle: "Melde dich für ein schnelles Audit oder einen klaren Wachstumsplan für dein Unternehmen.",
-    button: "Kostenloses Audit anfragen",
-    whyTitle: "Warum DARA?",
-    whyBullets: [
-      "Maßgeschneiderte Strategie, keine Standardlösung",
-      "Fokus auf Ergebnisse und transparentes Reporting",
-      "Erfahrenes Team", // Years will be added dynamically
+    title: "Sprechen wir über",
+    titleAccent: "Ihr Projekt",
+    subtitle: "Fragen Sie ein Angebot für Website, Online-Shop, Kampagne oder ein Audit Ihres digitalen Auftritts an.",
+    button: "Angebot anfragen",
+    stepsTitle: "Was nach Ihrer Anfrage passiert",
+    steps: [
+      "Sie füllen das kurze Formular aus (ca. 2 Minuten).",
+      "Wir melden uns innerhalb von 24 Stunden, mit Rückfragen, falls etwas fehlt.",
+      "Sie erhalten einen kurzen Plan mit Umfang, Zeitrahmen und Angebot. Unverbindlich.",
     ],
+    needTitle: "Was uns hilft",
+    need: "Ein Link zu Ihrer Website oder Ihren Social-Media-Profilen, Ihr Hauptziel und, falls vorhanden, ein Budgetrahmen.",
     newsletterNote: "Kein Spam. Jederzeit abmelden.",
   },
 };
 
-const CAREER_BY_LOCALE: Record<Locale, { kicker: string; title: string; subtitle: string; roles: string[]; cta: string }> = {
-  sq: {
-    kicker: "Karrierë",
-    title: "Po zgjerojmë ekipin",
-    subtitle: "Po kërkojmë njerëz të talentuar për të bashkëpunuar me ne.",
-    roles: ["Graphic Design", "Video Maker", "Social Media Manager"],
-    cta: "Apliko tani",
-  },
-  en: {
-    kicker: "Careers",
-    title: "We are expanding our team",
-    subtitle: "We are looking for talented people to join us.",
-    roles: ["Graphic Design", "Video Maker", "Social Media Manager"],
-    cta: "Apply now",
-  },
-  de: {
-    kicker: "Karriere",
-    title: "Wir erweitern unser Team",
-    subtitle: "Wir suchen talentierte Menschen für unser Team.",
-    roles: ["Grafikdesign", "Video Maker", "Social Media Manager"],
-    cta: "Jetzt bewerben",
-  },
+const CAREER_BY_LOCALE: Record<Locale, { text: string; cta: string }> = {
+  sq: { text: "Dëshironi të punoni me ne? Shikoni pozicionet dhe mundësitë e bashkëpunimit.", cta: "Karrierë" },
+  en: { text: "Want to work with us? See open positions and collaboration opportunities.", cta: "Careers" },
+  de: { text: "Sie möchten mit uns arbeiten? Offene Stellen und Kooperationsmöglichkeiten ansehen.", cta: "Karriere" },
 };
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
     title: "DARA · Krijim website, web design Tirana & marketing digjital shqip",
     description:
-      "Agjenci marketingu në Shqipëri: krijim website, web design Tirana, webshop, branding, marketing digjital. Website profesionale për kompani. 7+ vite përvojë, 100+ biznese.",
+      "Agjenci marketingu në Tiranë: krijim website, webshop, branding, menaxhim rrjetesh sociale dhe reklamash Meta & Google. Çmime fillestare transparente dhe përgjigje brenda 24 orëve.",
   },
   en: {
     title: "DARA Marketing Agency · Dare to be Different",
-    description: "DARA Marketing Agency. We bring brand stories to life through bold strategies, digital marketing, and creative content. 7+ years experience, 100+ businesses.",
+    description:
+      "Marketing and web agency in Tirana: websites, online stores, branding, social media and Meta & Google ads for businesses in Albania and Europe. Transparent starting prices.",
   },
   de: {
     title: "DARA Marketing Agency · Wage es, anders zu sein",
-    description: "DARA Marketing Agency. Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne. 7+ Jahre Erfahrung, 100+ Unternehmen.",
+    description:
+      "Marketing- und Web-Agentur in Tirana: Websites, Online-Shops, Branding, Social Media sowie Meta- & Google-Ads für Unternehmen in Albanien und Europa. Transparente Einstiegspreise.",
   },
 };
 
@@ -468,18 +381,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const l = (["sq", "en", "de"].includes(locale) ? locale : "en") as Locale;
   const meta = META_BY_LOCALE[l];
-  const yearsExp = getYearsOfExperienceFormatted();
-  // Replace years in description dynamically
-  const description = meta.description.replace(/7\+/, yearsExp);
   return buildLocalizedMetadata({
     locale: l,
     path: "",
     title: meta.title,
-    description,
+    description: meta.description,
   });
 }
 
-// Use shared utility function for years of experience
+const CONTACT_LABEL: Record<Locale, string> = { sq: "Kontakt", en: "Contact", de: "Kontakt" };
 
 export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeFromParams } = use(params);
@@ -496,7 +406,6 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     ...aboutStatsRaw.slice(1),
   ];
   const services = SERVICES_BY_LOCALE[locale];
-  const serviceGroupLabels = SERVICE_GROUP_LABELS[locale];
   const cta = CTA_BY_LOCALE[locale];
   const career = CAREER_BY_LOCALE[locale];
   const pillarsHeader = VALUE_PILLARS_HEADER[locale];
@@ -505,8 +414,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dara.al";
   const jsonLdByLocale: Record<Locale, string> = {
     sq: "Agjenci marketingu në Tiranë, Shqipëri: krijim website, web design, dyqan online, branding dhe marketing digjital. Website profesionale për kompani shqiptare.",
-    en: "We bring brand stories to life through bold strategies and results-oriented marketing.",
-    de: "Wir bringen Marken mit mutigen Strategien und ergebnisorientiertem Marketing nach vorne.",
+    en: "Marketing and web agency in Tirana, Albania: websites, online stores, branding, social media and paid advertising.",
+    de: "Marketing- und Web-Agentur in Tirana, Albanien: Websites, Online-Shops, Branding, Social Media und Online-Werbung.",
   };
   const jsonLd = {
     "@context": "https://schema.org",
@@ -525,13 +434,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       addressCountry: "AL",
     },
     areaServed: { "@type": "Country", name: "Albania" },
-    email: "daramarketing.eu@gmail.com",
-    telephone: "+355688009988",
-    sameAs: [
-      "https://www.instagram.com/daramarketing.al/?hl=en",
-      "https://www.facebook.com/profile.php?id=100082700976706",
-      "https://www.linkedin.com/company/dara-marketing-agency-al/",
-    ],
+    email: CONTACT.email,
+    telephone: CONTACT.phoneE164,
+    sameAs: [CONTACT.social.instagram, CONTACT.social.facebook, CONTACT.social.linkedin],
     foundingDate: "2020-01-01",
     numberOfEmployees: { "@type": "QuantitativeValue", value: 6 },
     priceRange: "€€",
@@ -540,7 +445,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* HERO - Trifid style: full viewport, bold typography + readability scrim */}
+      {/* HERO - full viewport, bold typography + readability scrim */}
       <section id="hero" className="relative isolate flex min-h-screen min-h-[100dvh] flex-col justify-center overflow-hidden px-4 py-24 sm:px-6 md:px-8 sm:py-24 md:py-32">
         <HeroParallaxBg />
         {/* Global light dim: keeps astronaut/clouds vivid */}
@@ -550,16 +455,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-[min(100%,40rem)] bg-gradient-to-r from-black/55 via-black/25 to-transparent sm:w-[min(100%,46rem)]"
           aria-hidden
         />
-        {/* Bottom edge: light black scrim (opacity ~0.3) for trust line + scroll */}
+        {/* Bottom edge: light black scrim for trust line + scroll */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-44 bg-gradient-to-t from-[rgba(0,0,0,0.3)] via-[rgba(0,0,0,0.12)] to-transparent sm:h-52"
           aria-hidden
         />
         <div className="relative z-10 mx-auto w-full max-w-5xl text-center lg:text-left">
-          <p className="animate-fade-in-up text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
+          <p className="animate-fade-in-up text-[11px] font-semibold uppercase tracking-[0.3em] text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.65)] md:text-xs">
             {hero.kicker}
           </p>
-          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-[3.35rem] font-bold leading-[0.92] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+          <h1 className="animate-fade-in-up animate-fade-in-up-delay-1 mt-4 font-display text-[3.35rem] font-bold leading-[0.92] tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.45),0_1px_3px_rgba(0,0,0,0.85)] sm:text-6xl md:text-7xl lg:text-8xl">
             {hero.titleA}{" "}
             <TypewriterHero locale={locale} initialWord={hero.titleB} />
           </h1>
@@ -569,24 +474,22 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           <div className="animate-fade-in-up animate-fade-in-up-delay-3 mx-auto mt-12 flex w-full max-w-xl flex-col gap-3 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
             <LocaleLink
               href="/contact"
-              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-white bg-white px-8 py-0 text-sm font-semibold text-black shadow-[0_8px_32px_-4px_rgba(0,0,0,0.45)] transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_12px_40px_-4px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
+              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-[#B89D5E] bg-[#B89D5E] px-8 py-0 text-sm font-semibold text-neutral-950 shadow-[0_8px_32px_-4px_rgba(0,0,0,0.45)] transition-all duration-300 sm:px-10 hover:border-white hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
             >
               {hero.ctaPrimary}
             </LocaleLink>
             <LocaleLink
               href="/services"
-              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-[#B89D5E] bg-black/40 px-8 py-0 text-sm font-[600] text-[#B89D5E] [text-shadow:0_1px_3px_rgba(0,0,0,0.55),0_0_12px_rgba(0,0,0,0.35)] shadow-[0_0_0_1px_rgba(0,0,0,0.45),0_8px_36px_rgba(0,0,0,0.5),0_4px_14px_rgba(0,0,0,0.35),0_2px_8px_rgba(184,157,94,0.35)] backdrop-blur-md transition-all duration-300 sm:px-10 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:[text-shadow:0_1px_2px_rgba(0,0,0,0.2)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.25),0_10px_40px_rgba(0,0,0,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B89D5E] md:w-auto"
+              className="inline-flex h-14 min-h-[3.5rem] w-full min-w-0 items-center justify-center rounded-full border-2 border-white/70 bg-black/30 px-8 py-0 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 sm:px-10 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:w-auto"
             >
               {hero.ctaSecondary}
             </LocaleLink>
           </div>
           <p className="animate-fade-in-up animate-fade-in-up-delay-4 mx-auto mt-9 max-w-xl text-sm font-medium leading-[1.65] text-white/90 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] lg:mx-0">
-            {hero.socialProof.beforeLink}
-            <br className="md:hidden" aria-hidden />
-            <span className="hidden md:inline"> </span>
+            {hero.socialProof.beforeLink}{" "}
             <LocaleLink
               href="/work"
-              className="font-medium text-[#d4af37] underline decoration-[#d4af37]/65 underline-offset-2 [text-shadow:2px_2px_10px_rgba(0,0,0,0.7)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition hover:text-[#e8c84a] hover:decoration-[#e8c84a]/80"
+              className="font-semibold text-[#e8cf8a] underline decoration-[#e8cf8a]/70 underline-offset-2 transition hover:text-white"
             >
               {hero.socialProof.linkText}
             </LocaleLink>
@@ -595,9 +498,8 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
 
         <a
-          href="#about"
+          href="#services-overview"
           className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 flex flex-col items-center gap-2 text-[11px] font-medium tracking-wider text-white/85 [text-shadow:0_1px_16px_rgba(0,0,0,0.75)] transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white focus-visible:rounded"
-          aria-label={hero.scrollHint}
         >
           {hero.scrollHint}
           <svg className="h-5 w-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -606,61 +508,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </a>
       </section>
 
-      {/* Marquee banner - Trifid style */}
-      <section className="relative overflow-hidden border-y border-gray-200 py-5 md:py-6">
-        <div className="animate-marquee flex w-max gap-16">
-          {[...Array(4)].map((_, i) => {
-            const m = MARQUEE_BY_LOCALE[locale];
-            return (
-              <span key={i} className="shrink-0 font-display text-2xl font-bold uppercase tracking-wider text-gray-900 md:text-4xl lg:text-5xl">
-                <span className="text-[#c8a55c]">{m.brand}</span>
-                <span>{m.rest}</span>
-              </span>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Value pillars (brand-aligned, DARA gold on results card) */}
-      <section id="values" className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-20 md:py-28">
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#B89D5E]/30 to-transparent"
-          aria-hidden
-        />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mb-10 text-center md:mb-16">
-            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#8a7344]">
-              {pillarsHeader.kicker}
-            </p>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
-              {pillarsHeader.heading}
-            </h2>
-            {pillarsHeader.tagline && (
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-600 md:text-[17px]">
-                <span className="font-semibold text-[#B89D5E]">{pillarsHeader.tagline.brand}</span>
-                <span>{pillarsHeader.tagline.rest}</span>
-              </p>
-            )}
-          </div>
-          {/* sm/md: 2 kolona; lg+: 4 në një rresht me flex (grid-cols-4 nuk respektohej në disa raste) */}
-          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:flex lg:flex-row lg:gap-[30px]">
-            {pillars.map((pillar, idx) => (
-                <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0 lg:min-w-0 lg:flex-1">
-                  <div className="card-glow group flex h-full min-h-0 flex-col items-center rounded-2xl border border-stone-200/90 bg-white/90 p-7 text-center shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] backdrop-blur-[2px] md:items-stretch md:p-9 md:text-left">
-                    <ValuePillarIcon index={idx} />
-                    <h3 className="mt-5 font-display text-xl font-bold uppercase tracking-[0.12em] text-gray-900 md:text-2xl">
-                      {pillar.title}
-                    </h3>
-                    <div className="mt-4 flex-1 text-base leading-snug text-gray-600 md:text-lg">{pillar.desc}</div>
-                  </div>
-                </AnimateIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* All services: compact numbered links */}
+      {/* All services: compact numbered links (direct path to every service page) */}
       <HomeServicesStrip
+        locale={locale}
         items={services.map((s, idx) => ({
           slug: SERVICE_SLUGS[idx],
           title: s.title,
@@ -668,107 +518,27 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         }))}
       />
 
-      {/* ABOUT US */}
-      <section id="about" className="relative overflow-hidden py-16 sm:py-20 md:py-28">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_45%,#fafafa_100%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.4] [mask-image:linear-gradient(180deg,white,transparent)]"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
-            backgroundSize: "48px 48px",
-          }}
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
-            <div
-              className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-[#B89D5E]/10 blur-3xl"
-              aria-hidden
-            />
-            <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-              <AnimateIn delay={100}>
-                <div className="relative order-2 flex justify-center lg:order-1">
-                  <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
-                    <div
-                      className="pointer-events-none absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-[#B89D5E]/25 via-transparent to-transparent opacity-50 blur-xl"
-                      aria-hidden
-                    />
-                    <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
-                      <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
-                    </div>
-                  </div>
+      {/* How we work: concrete principles instead of abstract values */}
+      <section id="values" aria-labelledby="values-heading" className="relative bg-gradient-to-b from-stone-50/90 via-white to-white py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-10 text-center md:mb-14">
+            <p className="font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-[#6b5a38]">
+              {pillarsHeader.kicker}
+            </p>
+            <h2 id="values-heading" className="mt-4 font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+              {pillarsHeader.heading}
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+            {pillars.map((pillar, idx) => (
+              <AnimateIn key={pillar.title} delay={idx * 80} className="h-full min-h-0">
+                <div className="card-glow flex h-full min-h-0 flex-col items-center rounded-2xl border border-stone-200/90 bg-white p-7 text-center shadow-[0_2px_24px_-12px_rgba(0,0,0,0.06)] md:items-start md:text-left">
+                  <ValuePillarIcon index={idx} />
+                  <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-gray-900">{pillar.title}</h3>
+                  <div className="mt-3 flex-1 text-[15px] leading-relaxed text-gray-600">{pillar.desc}</div>
                 </div>
               </AnimateIn>
-              <div className="order-1 text-center lg:order-2 lg:text-left">
-                <AnimateIn>
-                  <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
-                    <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
-                    {about.kicker}
-                  </span>
-                </AnimateIn>
-                <AnimateIn delay={50}>
-                  <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-neutral-950 sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
-                    <span>{about.titlePrefix}</span>
-                    <span className="text-gradient-gold">{about.titleAccent}</span>
-                  </h2>
-                </AnimateIn>
-                <AnimateIn delay={100}>
-                  <p className="mt-5 text-base leading-[1.7] text-neutral-800 md:text-lg">
-                    <TextWithBreaksAfterPeriods text={about.paragraphs[0]} />
-                  </p>
-                </AnimateIn>
-                <AnimateIn delay={150}>
-                  <p className="mt-4 text-base leading-[1.7] text-neutral-600 md:text-lg">
-                    <TextWithBreaksAfterPeriods text={about.paragraphs[1]} />
-                  </p>
-                </AnimateIn>
-                {about.paragraphs[2] && (
-                  <AnimateIn delay={200}>
-                    <p className="mt-4 text-base leading-[1.7] text-neutral-600 md:text-lg">
-                      <TextWithBreaksAfterPeriods text={about.paragraphs[2]} />
-                    </p>
-                  </AnimateIn>
-                )}
-                <AnimateIn delay={250}>
-                  <div className="mt-8 flex flex-wrap justify-center gap-2 sm:mt-10 lg:justify-start">
-                    {aboutStats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className="min-w-[140px] flex-1 rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] sm:min-w-[160px] sm:px-5 lg:text-left"
-                      >
-                        <span className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
-                          {/^\d+/.test(stat.value) ? (
-                            <CountUp
-                              end={parseInt(stat.value)}
-                              suffix={stat.value.replace(/^\d+/, "")}
-                            />
-                          ) : (
-                            stat.value
-                          )}
-                        </span>
-                        <span className="mt-1 block text-[11px] font-medium uppercase tracking-[0.12em] text-neutral-500 sm:text-xs lg:normal-case lg:tracking-normal">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </AnimateIn>
-                <AnimateIn delay={300}>
-                  <div className="mt-10 flex justify-center lg:justify-start">
-                    <LocaleLink
-                      href="/about"
-                      className="inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full border border-neutral-950 bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition-all duration-300 hover:border-[#B89D5E] hover:bg-[#B89D5E] hover:text-neutral-950 hover:shadow-[0_10px_36px_-10px_rgba(184,157,94,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto sm:max-w-none"
-                    >
-                      {about.readMore}
-                    </LocaleLink>
-                  </div>
-                </AnimateIn>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -776,255 +546,199 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       <ServicesSection
         locale={locale}
         services={services}
-        groupIndices={SERVICE_GROUP_INDICES}
-        groupLabels={serviceGroupLabels}
         filterTabs={FILTER_TABS_BY_LOCALE[locale]}
         serviceAnchors={SERVICE_ANCHORS}
         priceTooltip={PRICE_TOOLTIP_BY_LOCALE[locale]}
-        resultByIndex={RESULT_BY_SERVICE_INDEX[locale]}
         packagesByGroup={PACKAGES_BY_GROUP_AND_LOCALE[locale]}
         packageFilterTabs={PACKAGE_FILTER_TABS_BY_LOCALE[locale]}
         packageGroupLabels={PACKAGE_GROUP_LABELS[locale]}
-        testimonials={TESTIMONIAL_BY_LOCALE[locale]}
+        testimonials={getVerifiedTestimonials(locale)}
         copy={SERVICES_SECTION_COPY[locale]}
       />
 
-      <TrainingsSection locale={locale} />
-
+      {/* Proof: real portfolio, then public reviews */}
       <HomeWorkSection locale={locale} />
+      <GoogleReviewsSection locale={locale} />
+
+      {/* ABOUT US */}
+      <section id="about" aria-labelledby="about-heading" className="relative overflow-hidden py-16 sm:py-20 md:py-24">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_45%,#fafafa_100%)]"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] sm:rounded-[2rem] sm:p-6 md:p-10 lg:p-12">
+            <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+              <AnimateIn delay={100}>
+                <div className="relative order-2 flex justify-center lg:order-1">
+                  <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
+                    <div className="relative aspect-[9/16] overflow-hidden rounded-[1.35rem] bg-neutral-950 shadow-2xl shadow-black/25 ring-2 ring-neutral-950/10 ring-offset-4 ring-offset-white">
+                      <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </AnimateIn>
+              <div className="order-1 text-center lg:order-2 lg:text-left">
+                <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
+                  <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
+                  {about.kicker}
+                </span>
+                <h2 id="about-heading" className="mt-4 font-display text-2xl font-semibold tracking-tight text-neutral-950 sm:mt-5 sm:text-3xl md:text-4xl xl:text-[2.75rem] xl:leading-[1.1]">
+                  <span>{about.titlePrefix}</span>
+                  <span className="text-gradient-gold">{about.titleAccent}</span>
+                </h2>
+                {about.paragraphs.map((paragraph, idx) => (
+                  <p
+                    key={idx}
+                    className={`${idx === 0 ? "mt-5 text-neutral-800" : "mt-4 text-neutral-600"} text-base leading-[1.7] md:text-lg`}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+                <dl className="mt-8 flex flex-wrap justify-center gap-2 sm:mt-10 lg:justify-start">
+                  {aboutStats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="flex min-w-[140px] flex-1 flex-col-reverse rounded-2xl border-[0.5px] border-neutral-300/70 bg-neutral-50/90 px-4 py-3.5 text-center sm:min-w-[160px] sm:px-5 lg:text-left"
+                    >
+                      <dt className="mt-1 block text-xs font-medium text-neutral-600">{stat.label}</dt>
+                      <dd className="block text-2xl font-bold tabular-nums text-neutral-950 sm:text-3xl md:text-4xl">
+                        {/* Plain value: a count-up shows "0+" to crawlers that render without scrolling. */}
+                        {stat.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="mt-10 flex justify-center lg:justify-start">
+                  <LocaleLink
+                    href="/about"
+                    className="inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full border border-neutral-950 bg-white px-8 text-sm font-semibold text-neutral-950 transition-all duration-300 hover:bg-neutral-950 hover:text-white sm:w-auto sm:max-w-none"
+                  >
+                    {about.readMore}
+                  </LocaleLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Training is a separate journey from agency services */}
+      <TrainingsSection locale={locale} />
 
       <HomeTeamSection locale={locale} />
 
-      {/* KARRIERË / CAREERS */}
-      <section id="careers" className="relative overflow-hidden py-16 md:py-28">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.38] [mask-image:linear-gradient(180deg,white,transparent)]"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.035) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0,0,0,0.035) 1px, transparent 1px)`,
-            backgroundSize: "48px 48px",
-          }}
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[#B89D5E]/12 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-16 left-0 h-56 w-56 rounded-full bg-neutral-300/25 blur-3xl"
-          aria-hidden
-        />
-
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="text-center lg:col-span-5 lg:text-left">
-              <AnimateIn delay={0}>
-                <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 lg:justify-start">
-                  <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
-                  {career.kicker}
-                </span>
-              </AnimateIn>
-              <AnimateIn delay={80}>
-                <h2 className="mt-5 bg-gradient-to-br from-neutral-950 via-neutral-800 to-neutral-900 bg-clip-text font-display text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
-                  {career.title}
-                </h2>
-              </AnimateIn>
-              <AnimateIn delay={120}>
-                <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-neutral-600 md:text-[17px] lg:mx-0">
-                  {career.subtitle}
-                </p>
-              </AnimateIn>
-              <AnimateIn delay={160}>
-                <LocaleLink
-                  href="/careers"
-                  className="mt-8 inline-flex h-12 w-full max-w-xs items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:max-w-sm lg:inline-flex lg:w-auto lg:max-w-none"
-                >
-                  {career.cta}
-                </LocaleLink>
-              </AnimateIn>
-            </div>
-            <div className="lg:col-span-7">
-              <div className="grid gap-4 sm:grid-cols-3 sm:items-stretch lg:gap-5">
-                {career.roles.map((role, idx) => (
-                  <AnimateIn key={role} delay={180 + idx * 60} className="h-full min-h-0">
-                    <LocaleLink
-                      href="/careers"
-                      className="group relative flex h-full min-h-[150px] flex-col overflow-hidden rounded-3xl border border-black/[0.06] bg-white p-6 text-center shadow-[0_8px_32px_-20px_rgba(0,0,0,0.1)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-[#B89D5E]/40 hover:shadow-[0_24px_48px_-24px_rgba(184,157,94,0.14)] sm:text-left"
-                    >
-                      <div
-                        className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[#B89D5E]/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-70"
-                        aria-hidden
-                      />
-                      <span className="relative inline-flex min-w-[2.25rem] items-center justify-center self-center rounded-full bg-neutral-950 px-2 py-1 font-mono text-[10px] font-semibold tabular-nums text-white sm:self-start">
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
-                      <span className="relative mt-4 flex-1 text-lg font-semibold tracking-tight text-neutral-950">
-                        {role}
-                      </span>
-                      <span className="relative mt-4 inline-flex items-center justify-center gap-1 self-center text-sm font-semibold text-neutral-600 transition group-hover:text-neutral-950 sm:justify-start sm:self-start">
-                        {locale === "sq" ? "Apliko →" : locale === "de" ? "Bewerben →" : "Apply →"}
-                      </span>
-                    </LocaleLink>
-                  </AnimateIn>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <HomeFaqSection locale={locale} />
 
-      {/* CTA Section - Professional */}
-      <section className="relative py-16 md:py-28" aria-labelledby="cta-heading">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:linear-gradient(180deg,white,transparent)]"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)`,
-            backgroundSize: "48px 48px",
-          }}
-          aria-hidden
-        />
+      {/* Final CTA: what happens next + contact details */}
+      <section id="contact-cta" className="relative py-16 md:py-24" aria-labelledby="cta-heading">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#B89D5E]/8 via-transparent to-transparent" aria-hidden />
-          <div
-            className="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-[#B89D5E]/12 blur-3xl"
-            aria-hidden
-          />
-          <div className="relative z-10 px-5 py-10 md:px-12 md:py-16 lg:px-16 lg:py-20">
-            <div className="grid gap-14 text-center lg:grid-cols-2 lg:gap-20 lg:text-left">
-              {/* Left - CTA */}
-              <div>
-                <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-neutral-950 md:text-4xl lg:text-[2.75rem]">
-                  {cta.title.split(" ").slice(0, -3).join(" ")}{" "}
-                  <span className="text-gradient-gold">{cta.title.split(" ").slice(-3).join(" ")}</span>
-                </h2>
-                <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-neutral-600 lg:mx-0">
-                  {cta.subtitle}
-                </p>
-                <div className="mx-auto mt-8 w-full max-w-md space-y-4 text-left lg:mx-0 lg:max-w-none">
-                  {cta.whyBullets.map((bullet, idx) => {
-                    const displayBullet = idx === 2 && (bullet.includes("Ekip") || bullet.includes("team") || bullet.includes("Team"))
-                      ? locale === "sq"
-                        ? `Ekip me përvojë ${yearsExperienceFormatted} vjet në marketingu`
-                        : locale === "de"
-                        ? `Erfahrenes Team ${yearsExperienceFormatted} Jahre im Marketing`
-                        : `Experienced team ${yearsExperienceFormatted} years in marketing`
-                      : bullet;
-                    return (
-                      <div key={idx} className="flex items-start gap-3">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-200">
-                          <svg className="h-2.5 w-2.5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#B89D5E]/8 via-transparent to-transparent" aria-hidden />
+            <div className="relative z-10 px-5 py-10 md:px-12 md:py-16 lg:px-16">
+              <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+                {/* Left - CTA */}
+                <div className="text-center lg:text-left">
+                  <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-neutral-950 md:text-4xl lg:text-[2.75rem]">
+                    {cta.title} <span className="text-gradient-gold">{cta.titleAccent}</span>
+                  </h2>
+                  <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-neutral-600 lg:mx-0">{cta.subtitle}</p>
+                  <h3 className="mt-8 text-sm font-semibold text-neutral-950">{cta.stepsTitle}</h3>
+                  <ol className="mx-auto mt-4 w-full max-w-md space-y-3 text-left lg:mx-0 lg:max-w-none">
+                    {cta.steps.map((step, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-xs font-semibold text-white">
+                          {idx + 1}
                         </span>
-                        <span className="min-w-0 text-sm leading-snug text-gray-700">{displayBullet}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="mt-10 flex justify-center lg:justify-start">
-                <LocaleLink
-                  href="/contact"
-                  className="inline-flex h-12 w-full max-w-sm items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto"
-                >
-                  {cta.button}
-                </LocaleLink>
-                </div>
-              </div>
-
-              {/* Right - Contact & Newsletter */}
-              <div className="space-y-10">
-                <div>
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
-                    {locale === "sq" ? "Kontakt" : locale === "de" ? "Kontakt" : "Contact"}
-                  </h3>
-                  <div className="mx-auto mt-5 w-full max-w-md space-y-4 text-left text-sm lg:mx-0 lg:max-w-none">
-                    <a
-                      href="mailto:daramarketing.eu@gmail.com"
-                      className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900"
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                      </span>
-                      <span className="min-w-0 break-words pt-1.5 leading-snug">daramarketing.eu@gmail.com</span>
-                    </a>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                      </span>
-                      <a href="tel:+355688009988" className="text-gray-900/80 transition hover:text-gray-900">
-                        +355 68 800 9988
-                      </a>
-                      <a
-                        href="https://wa.me/355688009988"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#25D366] transition hover:scale-105"
-                        aria-label="WhatsApp"
-                      >
-                        <svg className="h-4 w-4 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                      </a>
-                    </div>
-                    <a
-                      href="https://maps.google.com/?q=Rruga+Donika+Kastrioti,+Tirane+-+Albania"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-start gap-3 text-gray-900/80 transition hover:text-gray-900"
-                    >
-                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                        <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                      </span>
-                      <span className="min-w-0 pt-1.5 leading-snug">Rruga Donika Kastrioti, Tiranë - Albania</span>
-                    </a>
-                  </div>
-                  <div className="mt-6 flex justify-center gap-3 lg:justify-start">
-                    <a href="https://www.instagram.com/daramarketing.al/?hl=en" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="Instagram">
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100082700976706" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="Facebook">
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/company/dara-marketing-agency-al/" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:border-gray-400 hover:text-gray-900" aria-label="LinkedIn">
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    </a>
-                  </div>
-                </div>
-                <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 text-center lg:text-left">
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900">
-                    Newsletter
-                  </h3>
-                  <NewsletterForm locale={locale} />
-                  <p className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500 lg:justify-start">
-                    <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    {cta.newsletterNote} · GDPR
+                        <span className="min-w-0 pt-0.5 text-sm leading-snug text-gray-700">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="mx-auto mt-6 max-w-md rounded-xl bg-stone-50 px-4 py-3 text-left text-sm text-neutral-600 lg:mx-0 lg:max-w-none">
+                    <span className="font-semibold text-neutral-900">{cta.needTitle}:</span> {cta.need}
                   </p>
+                  <div className="mt-8 flex justify-center lg:justify-start">
+                    <LocaleLink
+                      href="/contact"
+                      className="inline-flex h-12 w-full max-w-sm items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto"
+                    >
+                      {cta.button}
+                    </LocaleLink>
+                  </div>
+                </div>
+
+                {/* Right - Contact & Newsletter (secondary) */}
+                <div className="space-y-10">
+                  <div>
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-900">{CONTACT_LABEL[locale]}</h3>
+                    <ul className="mt-5 space-y-4 text-sm">
+                      <li>
+                        <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
+                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          </span>
+                          <span className="min-w-0 break-words">{CONTACT.email}</span>
+                        </a>
+                      </li>
+                      <li className="flex flex-wrap items-center gap-3">
+                        <a href={`tel:${CONTACT.phoneE164}`} className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
+                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                          </span>
+                          {CONTACT.phoneDisplay}
+                        </a>
+                        <a
+                          href={CONTACT.whatsappUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex min-h-9 items-center rounded-full bg-[#25D366]/15 px-3 text-xs font-semibold text-[#0b5c2c] ring-1 ring-[#25D366]/40 transition hover:bg-[#25D366]/25"
+                        >
+                          WhatsApp
+                        </a>
+                      </li>
+                      <li>
+                        <a href={CONTACT.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
+                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                          </span>
+                          <span className="min-w-0">{CONTACT.address}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-900">Newsletter</h3>
+                    <NewsletterForm locale={locale} />
+                    <p className="mt-3 text-xs text-gray-600">{cta.newsletterNote}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
       </section>
 
-      <div className="h-8" />
+      {/* Careers: kept secondary to the client enquiry journey */}
+      <aside className="mx-auto mb-10 max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-stone-50 px-6 py-5 text-center sm:flex-row sm:text-left">
+          <p className="text-sm text-neutral-700">{career.text}</p>
+          <LocaleLink
+            href="/careers"
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 text-sm font-semibold text-neutral-950 transition hover:border-neutral-950"
+          >
+            {career.cta}
+            <span aria-hidden>→</span>
+          </LocaleLink>
+        </div>
+      </aside>
+
       <SectionDots locale={locale} />
     </>
   );

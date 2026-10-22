@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
-import { FAQ_BY_LOCALE } from "@/lib/faq-data";
+import { FAQ_BY_LOCALE, HOME_FAQ_COUNT } from "@/lib/faq-data";
 import type { Locale } from "@/lib/services-data";
 
 type Props = {
@@ -12,9 +12,9 @@ type Props = {
 };
 
 export default function HomeFaqSection({ locale, variant = "home" }: Props) {
-  const faqs = FAQ_BY_LOCALE[locale];
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const isPage = variant === "page";
+  const faqs = isPage ? FAQ_BY_LOCALE[locale] : FAQ_BY_LOCALE[locale].slice(0, HOME_FAQ_COUNT);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const TitleTag = isPage ? "h1" : "h2";
 
   const title = locale === "sq" ? "Pyetje të shpeshta" : locale === "de" ? "Häufige Fragen" : "Frequently asked questions";
@@ -97,9 +97,11 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
               >
                 <button
                   type="button"
+                  id={`faq-q-${i}`}
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-neutral-50/80 md:px-6 md:py-4"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-a-${i}`}
                 >
                   <span className="font-semibold leading-snug text-neutral-950 md:text-[17px]">{faq.q}</span>
                   <span
@@ -121,8 +123,10 @@ export default function HomeFaqSection({ locale, variant = "home" }: Props) {
                   </span>
                 </button>
                 <div
-                  className="overflow-hidden transition-all duration-300 ease-in-out"
-                  style={{ maxHeight: isOpen ? "400px" : "0px", opacity: isOpen ? 1 : 0 }}
+                  id={`faq-a-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-q-${i}`}
+                  hidden={!isOpen}
                 >
                   <div className="border-t border-neutral-100 px-5 py-4 text-left text-[15px] leading-relaxed text-neutral-600 md:px-6">
                     {faq.a}

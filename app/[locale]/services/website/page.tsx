@@ -20,7 +20,7 @@ const HERO_BY_LOCALE: Record<
     kicker: "Website",
     title: "Website & Teknologji",
     subtitle:
-      "Nga faqe landing dhe website te dyqane online, aplikacione dhe mirembajtje. Zgjidhje që përshtaten me nevojat e biznesit tuaj.",
+      "Nga faqe landing dhe website te dyqane online, aplikacione dhe mirëmbajtje. Zgjidhje që përshtaten me nevojat e biznesit tuaj.",
     getQuote: "Merr ofertë",
     allServices: "Të gjitha shërbimet",
   },
@@ -100,7 +100,7 @@ const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
     title: "Website & Teknologji | DARA Marketing Agency",
     description:
-      "Website, landing pages, e-commerce, SaaS dhe mirembajtje. Zgjidhje profesionale për prezencën tuaj online.",
+      "Website, landing pages, e-commerce, SaaS dhe mirëmbajtje. Zgjidhje profesionale për prezencën tuaj online.",
   },
   en: {
     title: "Website & Technology | DARA Marketing Agency",

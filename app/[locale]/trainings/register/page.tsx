@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import BrandSelect from "@/components/site/BrandSelect";
 import LocaleLink from "@/components/site/LocaleLink";
 import { TRAININGS, type Locale } from "@/lib/trainings-data";
@@ -97,10 +97,12 @@ export default function TrainingRegisterPage() {
 
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  // Preselect from ?training=<slug> (links on training cards and detail pages).
+  const requestedTraining = useSearchParams().get("training");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    training: "",
+    training: TRAININGS.some((t) => t.slug === requestedTraining) ? (requestedTraining as string) : "",
     message: "",
   });
 
@@ -146,7 +148,8 @@ export default function TrainingRegisterPage() {
 
     const training = TRAININGS.find((t) => t.slug === formData.training);
     const trainingTitle = training ? training.title[locale] : formData.training;
-    const fullMessage = `${locale === "sq" ? "Regjistrim për trajnim" : locale === "de" ? "Anmeldung für Training" : "Training registration"}: ${trainingTitle}\n${formData.message.trim() ? `\n${formData.message.trim()}` : ""}`;
+    const isWaitlist = Boolean(training?.comingSoon);
+    const fullMessage = `${isWaitlist ? (locale === "sq" ? "Interes / listë pritjeje për trajnim" : locale === "de" ? "Warteliste für Training" : "Training waitlist") : locale === "sq" ? "Regjistrim për trajnim" : locale === "de" ? "Anmeldung für Training" : "Training registration"}: ${trainingTitle}\n${formData.message.trim() ? `\n${formData.message.trim()}` : ""}`;
 
     setStatus("loading");
 
@@ -304,7 +307,7 @@ export default function TrainingRegisterPage() {
                           value: t.slug,
                           label: `${t.title[locale]}${
                             t.comingSoon
-                              ? ` (${locale === "sq" ? "Së shpejti" : locale === "de" ? "Demnächst" : "Coming soon"})`
+                              ? ` (${locale === "sq" ? "Së shpejti – listë pritjeje" : locale === "de" ? "Demnächst – Warteliste" : "Coming soon – waitlist"})`
                               : ""
                           }`,
                         }))}

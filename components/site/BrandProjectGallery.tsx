@@ -8,9 +8,12 @@ import type { Project } from "@/lib/projects";
 
 type Props = {
   projects: Project[];
+  locale: "sq" | "en" | "de";
 };
 
-export default function BrandProjectGallery({ projects }: Props) {
+const VIEW_LABEL = { sq: "Shiko logon", en: "View logo", de: "Logo ansehen" } as const;
+
+export default function BrandProjectGallery({ projects, locale }: Props) {
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
 
   const images = projects.map((p) => p.thumbnail).filter((src): src is string => !!src);
@@ -60,8 +63,8 @@ export default function BrandProjectGallery({ projects }: Props) {
 
               {/* Bottom label */}
               <div className="border-t border-neutral-100 px-4 py-2.5 text-left">
-                <span className="text-xs font-medium text-neutral-400 transition group-hover:text-[#B89D5E]">
-                  Shiko logon
+                <span className="text-xs font-medium text-neutral-600 transition group-hover:text-[#6b5a38]">
+                  {VIEW_LABEL[locale]}
                 </span>
               </div>
             </button>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import LocaleLink from "@/components/site/LocaleLink";
 import AnimateIn from "@/components/site/AnimateIn";
 import { type Locale } from "@/lib/services-data";
@@ -9,6 +10,8 @@ import {
   PACKAGE_FILTER_TABS_BY_LOCALE,
   PACKAGE_GROUP_LABELS,
   PACKAGE_GROUPS,
+  PACKAGE_GROUP_NOTES,
+  getPackageCtaHref,
 } from "@/lib/packages-data";
 import PackageCard from "@/components/site/PackageCard";
 
@@ -76,10 +79,14 @@ type Props = {
 };
 
 export default function PackagesPageContent({ locale }: Props) {
-  const [activeFilter, setActiveFilter] = useState<number>(0);
+  const filterTabs = PACKAGE_FILTER_TABS_BY_LOCALE[locale];
+  // ?group=<first group key> opens a category directly (used by footer links).
+  const requestedGroup = useSearchParams().get("group");
+  const [activeFilter, setActiveFilter] = useState<number>(() =>
+    Math.max(0, filterTabs.findIndex((tab) => tab.groups[0] === requestedGroup))
+  );
   const hero = HERO_BY_LOCALE[locale];
   const cta = CTA_BY_LOCALE[locale];
-  const filterTabs = PACKAGE_FILTER_TABS_BY_LOCALE[locale];
   const packages = PACKAGES_BY_GROUP_AND_LOCALE[locale];
   const groupLabels = PACKAGE_GROUP_LABELS[locale];
 
@@ -141,13 +148,14 @@ export default function PackagesPageContent({ locale }: Props) {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
           <div className="flex min-w-full justify-center sm:justify-start">
-          <div className="flex w-max flex-nowrap gap-2 whitespace-nowrap sm:w-full sm:flex-wrap">
+          <div role="group" aria-label={locale === "sq" ? "Kategoritë e paketave" : locale === "de" ? "Paketkategorien" : "Package categories"} className="flex w-max flex-nowrap gap-2 whitespace-nowrap sm:w-full sm:flex-wrap">
             {filterTabs.map((tab, idx) => (
               <button
                 key={idx}
                 type="button"
+                aria-pressed={activeFilter === idx}
                 onClick={() => setActiveFilter(idx)}
-                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition ${
+                className={`min-h-11 rounded-xl px-5 text-sm font-medium transition ${
                   activeFilter === idx
                     ? "bg-gray-900 text-white"
                     : "border border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900"
@@ -172,16 +180,25 @@ export default function PackagesPageContent({ locale }: Props) {
             return (
               <AnimateIn key={groupKey} delay={groupIdx * 80}>
                 <div>
-                  <h2 className="mb-8 text-center text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-900 md:text-xs">
+                  <h2 className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.25em] text-gray-900 md:text-left">
                     {groupLabel}
                   </h2>
                   <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {groupPackages.map((pkg) => (
+                    {groupPackages.map((pkg, pkgIdx) => (
                       <div key={pkg.title} className={groupPackages.length === 1 ? "col-span-full" : ""}>
-                        <PackageCard pkg={pkg} locale={locale} wide={groupPackages.length === 1} />
+                        <PackageCard
+                          pkg={pkg}
+                          locale={locale}
+                          href={getPackageCtaHref(groupKey, pkgIdx)}
+                          titleAs="h3"
+                          wide={groupPackages.length === 1}
+                        />
                       </div>
                     ))}
                   </div>
+                  {PACKAGE_GROUP_NOTES[locale][groupKey] && (
+                    <p className="mt-5 text-center text-sm text-gray-600 md:text-left">{PACKAGE_GROUP_NOTES[locale][groupKey]}</p>
+                  )}
                 </div>
               </AnimateIn>
             );

@@ -20,19 +20,23 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 
 export type ServiceDetail = { title: string; desc: string; price?: string };
 
-/** Minimum price (EUR) per service - used to filter budget options in contact form. Values align with BUDGET_TIERS_EUR. */
+/**
+ * Lowest published starting price (EUR) per service - used to filter budget options in the
+ * contact form. Must match the "From …" prices below and the entry packages in packages-data.
+ * Content creation has no published price (quote on request), so it does not filter budgets.
+ */
 export const SERVICE_MIN_PRICE_EUR: Record<ServiceSlug, number> = {
   "social-media": 250,
-  content: 100,
-  strategy: 250,
-  branding: 500,
-  ads: 100,
+  content: 0,
+  strategy: 500,
+  branding: 250, // Logo package
+  ads: 250,
   consulting: 100,
   training: 250,
-  "website-landing": 250,
-  ecommerce: 1000,
+  "website-landing": 300,
+  ecommerce: 800,
   saas: 4000,
-  maintenance: 100,
+  maintenance: 150,
 };
 
 export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
@@ -88,8 +92,8 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
       price: "Nga 4.000€",
     },
     {
-      title: "Mirembajtje website & optimizim",
-      desc: "Mirembajtje website dhe dyqan online: përditësime, backups, siguri. Optimizim website të vjetra – shpejtësi, SEO, modernizim. Monitoring dhe support teknik për biznese në Shqipëri.",
+      title: "Mirëmbajtje website & optimizim",
+      desc: "Mirëmbajtje website dhe dyqan online: përditësime, backups, siguri. Optimizim website të vjetra – shpejtësi, SEO, modernizim. Monitoring dhe support teknik për biznese në Shqipëri.",
       price: "Nga 150€ / muaj",
     },
   ],
@@ -106,7 +110,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "Digital Marketing Strategy",
-      desc: "Business analysis and personalized strategy for real growth , positioning, objectives and concrete ideas.",
+      desc: "Business analysis and personalized strategy for real growth – positioning, objectives and concrete ideas.",
       price: "From €500/strategy",
     },
     {
@@ -136,7 +140,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "E-commerce",
-      desc: "Online store with products, inventory, payment and delivery , tailored solution for selling online.",
+      desc: "Online store with products, inventory, payment and delivery – tailored solution for selling online.",
       price: "From €800",
     },
     {
@@ -193,7 +197,7 @@ export const SERVICE_DETAILS_BY_LOCALE: Record<Locale, ServiceDetail[]> = {
     },
     {
       title: "E-Commerce",
-      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand , maßgeschneiderte Lösung für den Verkauf im Internet.",
+      desc: "Online-Shop mit Produkten, Lager, Zahlung und Versand – maßgeschneiderte Lösung für den Verkauf im Internet.",
       price: "Ab 800€",
     },
     {

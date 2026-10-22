@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
@@ -8,737 +8,579 @@ import { locales as LOCALES, defaultLocale } from "@/i18n";
 import { getServiceGroupNavItems } from "@/lib/services-data";
 import type { Locale } from "@/lib/services-data";
 
-type NavItem = { label: string; href: string; hasDropdown?: boolean; serviceGroupId?: string };
+type MenuId = "services" | "about" | "lang";
 
 const NAV_TRANSLATIONS: Record<
-  (typeof LOCALES)[number],
+  Locale,
   {
     tagline: string;
     services: string;
     viewAllServices: string;
+    overview: string;
     packages: string;
     trainings: string;
     about: string;
+    aboutUs: string;
     works: string;
     careers: string;
     faq: string;
     team: string;
-    contact: string;
     getQuote: string;
     language: string;
+    openMenu: string;
+    closeMenu: string;
+    mainNav: string;
+    groups: { website: string; marketing: string; branding: string };
   }
 > = {
   sq: {
     tagline: "Marketing Agency",
     services: "Shërbime",
     viewAllServices: "Të gjitha shërbimet",
+    overview: "Përmbledhje",
     packages: "Paketa",
     trainings: "Trajnime",
     about: "Rreth nesh",
-    works: "Punët",
+    aboutUs: "Kush jemi",
+    works: "Projektet",
     careers: "Karrierë",
-    faq: "FAQ",
+    faq: "Pyetje të shpeshta",
     team: "Ekipi",
-    contact: "Kontakt",
-    getQuote: "Merr ofertë",
+    getQuote: "Kërko ofertë",
     language: "Gjuha",
+    openMenu: "Hap menunë",
+    closeMenu: "Mbyll menunë",
+    mainNav: "Navigimi kryesor",
+    groups: { website: "Website & teknologji", marketing: "Marketing & rritje", branding: "Branding" },
   },
   en: {
     tagline: "Marketing Agency",
     services: "Services",
     viewAllServices: "All services",
+    overview: "Overview",
     packages: "Packages",
     trainings: "Training",
     about: "About",
-    works: "Work",
+    aboutUs: "About us",
+    works: "Projects",
     careers: "Careers",
     faq: "FAQ",
     team: "Team",
-    contact: "Contact",
-    getQuote: "Get a quote",
+    getQuote: "Request a quote",
     language: "Language",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    mainNav: "Main navigation",
+    groups: { website: "Website & technology", marketing: "Marketing & growth", branding: "Branding" },
   },
   de: {
     tagline: "Marketing Agency",
     services: "Leistungen",
     viewAllServices: "Alle Leistungen",
+    overview: "Übersicht",
     packages: "Pakete",
     trainings: "Training",
     about: "Über uns",
+    aboutUs: "Über DARA",
     works: "Referenzen",
     careers: "Karriere",
     faq: "FAQ",
     team: "Team",
-    contact: "Kontakt",
     getQuote: "Angebot anfragen",
     language: "Sprache",
+    openMenu: "Menü öffnen",
+    closeMenu: "Menü schließen",
+    mainNav: "Hauptnavigation",
+    groups: { website: "Website & Technologie", marketing: "Marketing & Wachstum", branding: "Branding" },
   },
+};
+
+const LOCALE_FLAGS: Record<Locale, { flagSrc: string; label: string }> = {
+  sq: { flagSrc: "https://flagcdn.com/w40/al.png", label: "Shqip" },
+  en: { flagSrc: "https://flagcdn.com/w40/gb.png", label: "English" },
+  de: { flagSrc: "https://flagcdn.com/w40/de.png", label: "Deutsch" },
+};
+
+/** Hub page per service group (branding has a single service page). */
+const GROUP_HUB: Record<string, string> = {
+  website: "/services/website",
+  marketing: "/services/marketing",
+  branding: "/services/branding",
 };
 
 export default function Navbar() {
   const pathname = usePathname() || "/";
   const params = useParams();
 
-  // Derive current locale from params or path, fall back to defaultLocale
   const pathParts = pathname.split("/").filter(Boolean);
-  let locale = typeof params?.locale === "string" ? String(params.locale) : pathParts[0];
-  if (!LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])) {
-    locale = defaultLocale;
-  }
-  const nav = NAV_TRANSLATIONS[locale as (typeof LOCALES)[number]] ?? NAV_TRANSLATIONS[defaultLocale];
+  const rawLocale = typeof params?.locale === "string" ? String(params.locale) : pathParts[0];
+  const locale: Locale = LOCALES.includes((rawLocale ?? "") as Locale) ? (rawLocale as Locale) : defaultLocale;
+  const nav = NAV_TRANSLATIONS[locale];
 
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<"services" | "about" | null>(null);
+  const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const triggerRefs = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** Menu opened by hover: the click that usually follows should keep it open, not toggle it shut. */
+  const openedByHover = useRef<MenuId | null>(null);
+
+  // Branding is a single page, so it sits in the services panel rather than the training group.
+  const serviceGroups = getServiceGroupNavItems(locale).filter((g) => g.id !== "training");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    // Hide the floating bar while scrolling down, bring it back on scroll up (always shown near the top).
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      setHidden(y > 160 && y > lastY + 4);
+      if (y < lastY - 4 || y <= 160) setHidden(false);
+      lastY = y;
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [websiteOpen, setWebsiteOpen] = useState(false);
-  const [marketingOpen, setMarketingOpen] = useState(false);
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
-  const [mobileWebsiteOpen, setMobileWebsiteOpen] = useState(false);
-  const [mobileMarketingOpen, setMobileMarketingOpen] = useState(false);
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const websiteRef = useRef<HTMLDivElement>(null);
-  const marketingRef = useRef<HTMLDivElement>(null);
-  const langDropdownRef = useRef<HTMLDivElement>(null);
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const clearCloseTimeout = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  };
-
-  const scheduleClose = (fn: () => void, delay = 120) => {
-    clearCloseTimeout();
-    closeTimeoutRef.current = setTimeout(fn, delay);
-  };
-
-  const LOCALE_FLAGS: Record<(typeof LOCALES)[number], { flagSrc: string; label: string }> = {
-    sq: { flagSrc: "https://flagcdn.com/w40/al.png", label: "Shqip" },
-    en: { flagSrc: "https://flagcdn.com/w40/gb.png", label: "English" },
-    de: { flagSrc: "https://flagcdn.com/w40/de.png", label: "Deutsch" },
-  };
-
-  const currentLocale = (LOCALES.includes((locale ?? "") as (typeof LOCALES)[number])
-    ? locale
-    : defaultLocale) as Locale;
-  const serviceGroups = useMemo(() => getServiceGroupNavItems(currentLocale), [currentLocale]);
-
-  const items: NavItem[] = useMemo(
-    () => [
-      { label: serviceGroups[0]?.label ?? "Website", href: "/services", hasDropdown: true, serviceGroupId: "website" },
-      { label: serviceGroups[1]?.label ?? "Marketing", href: "/services", hasDropdown: true, serviceGroupId: "marketing" },
-      { label: serviceGroups[2]?.label ?? "Branding", href: "/services/branding" },
-      { label: nav.packages, href: "/packages" },
-      { label: nav.trainings, href: "/trainings" },
-      { label: nav.works, href: "/work" },
-      { label: nav.about, href: "/about", hasDropdown: true },
-    ],
-    [nav, serviceGroups]
-  );
-
-  const aboutDropdownItems = useMemo(
-    () => [
-      { label: nav.about, href: "/about" },
-      { label: nav.team, href: "/team" },
-      { label: nav.careers, href: "/careers" },
-      { label: nav.faq, href: "/faq" },
-    ],
-    [nav]
-  );
-
-  const isServicesActive = pathname === withLocale("/services") || pathname.startsWith(withLocale("/services/"));
-  const isWebsiteActive =
-    pathname.includes("/services/website") ||
-    ["website-landing", "ecommerce", "saas", "maintenance"].some((s) =>
-      pathname.includes(`/services/${s}`)
-    );
-  const isMarketingActive =
-    pathname.includes("/services/marketing") ||
-    ["social-media", "content", "strategy", "ads", "consulting"].some((s) =>
-      pathname.includes(`/services/${s}`)
-    );
-  const isAboutActive =
-    pathname === withLocale("/about") ||
-    pathname === withLocale("/team") ||
-    pathname === withLocale("/careers") ||
-    pathname === withLocale("/faq");
-
+  // Close menus on outside click and on Escape (returning focus to the trigger).
   useEffect(() => {
-    if (!websiteOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (websiteRef.current && !websiteRef.current.contains(e.target as Node)) setWebsiteOpen(false);
-    }
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [websiteOpen]);
+    if (!openMenu && !mobileOpen) return;
+    const onPointer = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (openMenu) {
+        triggerRefs.current[openMenu]?.focus();
+        setOpenMenu(null);
+      } else if (mobileOpen) {
+        setMobileOpen(false);
+        setMobileSection(null);
+      }
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openMenu, mobileOpen]);
 
+  // Lock page scroll behind the mobile menu.
   useEffect(() => {
-    if (!marketingOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (marketingRef.current && !marketingRef.current.contains(e.target as Node)) setMarketingOpen(false);
-    }
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [marketingOpen]);
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
 
-  useEffect(() => {
-    if (!aboutOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (aboutRef.current && !aboutRef.current.contains(e.target as Node)) setAboutOpen(false);
-    }
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [aboutOpen]);
-
-  // Kur menuja mobile mbyllet, mbyll edhe nënmenunë
-  useEffect(() => {
-    if (!open) {
-      setMobileAboutOpen(false);
-      setMobileWebsiteOpen(false);
-      setMobileMarketingOpen(false);
-    }
-  }, [open]);
-
-  useEffect(() => () => clearCloseTimeout(), []);
-
-  useEffect(() => {
-    if (!langDropdownOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) setLangDropdownOpen(false);
-    }
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [langDropdownOpen]);
+  useEffect(() => () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+  }, []);
 
   function withLocale(href: string) {
     const normalized = href.startsWith("/") ? href : `/${href}`;
     return normalized === "/" ? `/${locale}` : `/${locale}${normalized}`;
   }
 
-  function isActive(href: string) {
+  function isCurrent(href: string) {
+    return pathname === withLocale(href);
+  }
+
+  function isSection(href: string) {
     const target = withLocale(href);
-    if (href === "/") return pathname === `/${locale}` || pathname === `/${locale}/`;
     return pathname === target || pathname.startsWith(`${target}/`);
   }
 
+  /** Keep the same page when switching language (all routes exist in every locale). */
   function switchLocale(nextLocale: string) {
     const parts = pathname.split("/").filter(Boolean);
-
-    if (parts.length === 0) {
-      return `/${nextLocale}`;
-    }
-
-    // If first segment is a locale, replace it; otherwise, prepend
-    if (LOCALES.includes(parts[0] as (typeof LOCALES)[number])) {
+    if (parts.length === 0) return `/${nextLocale}`;
+    if (LOCALES.includes(parts[0] as Locale)) {
       parts[0] = nextLocale;
       return `/${parts.join("/")}`;
     }
-
     return `/${nextLocale}/${parts.join("/")}`;
   }
 
+  const closeAll = () => {
+    setOpenMenu(null);
+    setMobileOpen(false);
+    setMobileSection(null);
+  };
+
+  const hoverOpen = (id: MenuId) => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    if (openMenu !== id) openedByHover.current = id;
+    setOpenMenu(id);
+  };
+  const toggleMenu = (id: MenuId) => {
+    if (openedByHover.current === id && openMenu === id) {
+      openedByHover.current = null;
+      return;
+    }
+    openedByHover.current = null;
+    setOpenMenu((m) => (m === id ? null : id));
+  };
+  const hoverClose = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => setOpenMenu(null), 150);
+  };
+  /** Close a dropdown when keyboard focus moves outside it. */
+  const blurClose = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenMenu(null);
+  };
+
+  const aboutItems = [
+    { label: nav.aboutUs, href: "/about" },
+    { label: nav.team, href: "/team" },
+    { label: nav.careers, href: "/careers" },
+    { label: nav.faq, href: "/faq" },
+  ];
+  const topLinks = [
+    { label: nav.works, href: "/work" },
+    { label: nav.packages, href: "/packages" },
+    { label: nav.trainings, href: "/trainings" },
+  ];
+
+  const isHome = pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
+  const servicesActive = isSection("/services");
+  const aboutActive = aboutItems.some((it) => isSection(it.href));
+
+  const desktopTrigger = (active: boolean) =>
+    `relative flex min-h-11 items-center gap-1 rounded-full px-3.5 text-sm transition-colors ${
+      active ? "text-[#d1b780]" : "text-gray-200 hover:text-white"
+    }`;
+  const activeBar = <span className="absolute inset-x-3 bottom-1 h-[2px] rounded-full bg-[#B89D5E]" aria-hidden />;
+  const chevron = (open: boolean) => (
+    <svg className={`h-3.5 w-3.5 opacity-70 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+  const panelLink = (href: string, label: string, extra = "") => (
+    <Link
+      key={href}
+      href={withLocale(href)}
+      onClick={closeAll}
+      aria-current={isCurrent(href) ? "page" : undefined}
+      className={`block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-gray-100 hover:text-gray-950 ${
+        isCurrent(href) ? "bg-gray-100 font-medium text-gray-950" : "text-gray-700"
+      } ${extra}`}
+    >
+      {label}
+    </Link>
+  );
+
   return (
-    <header className={`sticky top-0 z-50 border-b border-gray-800/80 backdrop-blur-xl transition-all duration-300 ${scrolled ? "bg-gray-950/90 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)]" : "bg-gray-900/70"}`}>
-      <div className={`mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 sm:px-4 transition-all duration-300 ${scrolled ? "h-14 py-1" : "h-18 py-2 md:h-20"}`}>
-        {/* Brand: DARA + MARKETING AGENCY (subtitle) */}
-        <Link href={`/${locale}`} className="flex min-w-0 items-center gap-2.5 sm:gap-3" onClick={() => setOpen(false)}>
-          <div className="flex flex-col items-center gap-0.5">
-            <Image
-              src="/logo.png"
-              alt="DARA"
-              width={150}
-              height={48}
-              className={`w-auto object-contain transition-all duration-300 ${scrolled ? "h-7" : "h-8 sm:h-10 md:h-11"}`}
-              priority
-            />
-            <span className="whitespace-nowrap text-[8px] uppercase tracking-[0.14em] text-gray-400 sm:text-[10px]">
-              {nav.tagline}
-            </span>
-          </div>
+    <>
+    <header
+      ref={headerRef}
+      className={`fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-reduce:transition-none sm:px-5 ${
+        hidden && !mobileOpen && !openMenu ? "-translate-y-[120%]" : "translate-y-0"
+      }`}
+    >
+      <div
+        className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full border pl-5 pr-2 backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-500 md:h-16 ${
+          scrolled || !isHome
+            ? "border-white/10 bg-gray-950/[0.92] shadow-[0_18px_50px_-20px_rgba(0,0,0,0.6)]"
+            : "border-white/[0.08] bg-gray-950/55 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.6)]"
+        }`}
+      >
+        <Link href={`/${locale}`} className="flex min-w-0 items-center" onClick={closeAll}>
+          <span className="flex flex-col items-center gap-0.5">
+            <Image src="/logo.png" alt="DARA" width={150} height={48} className="h-7 w-auto object-contain md:h-8" priority />
+            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.14em] text-gray-300 sm:text-[10px]">{nav.tagline}</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 rounded-full border border-gray-700 bg-gray-900/50 px-2 py-1 lg:flex">
-          {items.map((it, idx) => {
-            const num = String(idx + 1).padStart(2, "0");
-            if (it.href === "/about" && it.hasDropdown) {
-              return (
-                <div
-                  key="about"
-                  ref={aboutRef}
-                  className="relative"
-                  onMouseEnter={() => {
-                    clearCloseTimeout();
-                    setWebsiteOpen(false);
-                    setMarketingOpen(false);
-                    setAboutOpen(true);
-                  }}
-                  onMouseLeave={() => scheduleClose(() => setAboutOpen(false))}
-                >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setWebsiteOpen(false);
-                      setMarketingOpen(false);
-                      setAboutOpen((o) => !o);
-                    }}
-                    className={[
-                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isAboutActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
-                    ].join(" ")}
-                    aria-expanded={aboutOpen}
-                    aria-haspopup="true"
-                  >
-                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
-                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
-                      {it.label}
-                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
-                    </span>
-                    {isAboutActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
-                    )}
-                  </button>
-                  {aboutOpen && (
-                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[200px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
-                      {aboutDropdownItems.map(({ href, label }) => (
-                        <Link
-                          key={href}
-                          href={withLocale(href)}
-                          onClick={() => setAboutOpen(false)}
-                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-                        >
-                          {label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-            if (it.serviceGroupId === "website" && it.hasDropdown) {
-              const group = serviceGroups[0];
-              if (!group) return null;
-              return (
-                <div
-                  key="website"
-                  ref={websiteRef}
-                  className="relative"
-                  onMouseEnter={() => {
-                    clearCloseTimeout();
-                    setAboutOpen(false);
-                    setMarketingOpen(false);
-                    setWebsiteOpen(true);
-                  }}
-                  onMouseLeave={() => scheduleClose(() => setWebsiteOpen(false))}
-                >
-                  <Link
-                    href={withLocale("/services/website")}
-                    className={[
-                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isWebsiteActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
-                    ].join(" ")}
-                    aria-expanded={websiteOpen}
-                    aria-haspopup="true"
-                  >
-                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
-                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
-                      {group.label}
-                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
-                    </span>
-                    {isWebsiteActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
-                    )}
-                  </Link>
-                  {websiteOpen && (
-                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[260px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
-                      {group.items.map(({ slug, label }) => (
-                        <Link
-                          key={slug}
-                          href={withLocale(`/services/${slug}`)}
-                          onClick={() => setWebsiteOpen(false)}
-                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-                        >
-                          {label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-            if (it.serviceGroupId === "marketing" && it.hasDropdown) {
-              const group = serviceGroups[1];
-              if (!group) return null;
-              return (
-                <div
-                  key="marketing"
-                  ref={marketingRef}
-                  className="relative"
-                  onMouseEnter={() => {
-                    clearCloseTimeout();
-                    setAboutOpen(false);
-                    setWebsiteOpen(false);
-                    setMarketingOpen(true);
-                  }}
-                  onMouseLeave={() => scheduleClose(() => setMarketingOpen(false))}
-                >
-                  <Link
-                    href={withLocale("/services/marketing")}
-                    className={[
-                      "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                      isMarketingActive ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
-                    ].join(" ")}
-                    aria-expanded={marketingOpen}
-                    aria-haspopup="true"
-                  >
-                    <span className="text-[10px] font-medium text-gray-500">{num}</span>
-                    <span className="relative z-10 flex items-center gap-0.5 whitespace-nowrap">
-                      {group.label}
-                      <span className="ml-0.5 text-[10px] opacity-70">▾</span>
-                    </span>
-                    {isMarketingActive && (
-                      <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
-                    )}
-                  </Link>
-                  {marketingOpen && (
-                    <div className="absolute left-0 top-full z-50 mt-1 min-w-[280px] rounded-2xl border border-gray-200 bg-white py-2 shadow-xl">
-                      {group.items.map(({ slug, label }) => (
-                        <Link
-                          key={slug}
-                          href={withLocale(`/services/${slug}`)}
-                          onClick={() => setMarketingOpen(false)}
-                          className="block whitespace-nowrap px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-                        >
-                          {label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-            const active = isActive(it.href);
-            return (
-              <Link
-                key={it.href}
-                href={withLocale(it.href)}
-                className={[
-                  "relative flex flex-col items-center gap-0 rounded-full px-3.5 py-2 text-sm transition-colors",
-                  active ? "text-[#B89D5E]" : "text-gray-300 hover:text-white",
-                ].join(" ")}
+        <nav aria-label={nav.mainNav} className="hidden lg:block">
+          <ul className="flex items-center gap-0.5">
+            <li>
+              <div
+                className="relative"
+                onMouseEnter={() => hoverOpen("services")}
+                onMouseLeave={hoverClose}
+                onBlur={blurClose}
               >
-                <span className="text-[10px] font-medium text-gray-500">{num}</span>
-                <span className="relative z-10 whitespace-nowrap">{it.label}</span>
-                {active && (
-                  <span className="absolute inset-x-2 -bottom-1 h-[2px] rounded-full bg-[#B89D5E]" />
-                )}
-              </Link>
-            );
-          })}
+                <button
+                  ref={(el) => {
+                    triggerRefs.current.services = el;
+                  }}
+                  type="button"
+                  aria-expanded={openMenu === "services"}
+                  aria-controls="nav-services-panel"
+                  onClick={() => toggleMenu("services")}
+                  className={desktopTrigger(servicesActive)}
+                >
+                  {nav.services}
+                  {chevron(openMenu === "services")}
+                  {servicesActive && activeBar}
+                </button>
+                <div
+                  id="nav-services-panel"
+                  hidden={openMenu !== "services"}
+                  className="absolute left-0 top-full z-50 pt-2"
+                >
+                  <div className="grid w-[min(46rem,calc(100vw-2rem))] grid-cols-3 gap-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-xl">
+                    {serviceGroups.map((group) => (
+                      <div key={group.id}>
+                        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#6b5a38]">
+                          {nav.groups[group.id as keyof typeof nav.groups] ?? group.label}
+                        </p>
+                        <ul>
+                          {group.id !== "branding" && (
+                            <li>{panelLink(GROUP_HUB[group.id], nav.overview, "font-medium")}</li>
+                          )}
+                          {group.items.map(({ slug, label }) => (
+                            <li key={slug}>{panelLink(`/services/${slug}`, label.replace(/\s*\n\s*/g, " "))}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                    <div className="col-span-3 border-t border-gray-100 pt-3">
+                      {panelLink("/services", `${nav.viewAllServices} →`, "inline-block font-semibold text-gray-950")}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {topLinks.map((it) => {
+              const active = isSection(it.href);
+              return (
+                <li key={it.href}>
+                  <Link
+                    href={withLocale(it.href)}
+                    aria-current={isCurrent(it.href) ? "page" : undefined}
+                    className={desktopTrigger(active)}
+                  >
+                    {it.label}
+                    {active && activeBar}
+                  </Link>
+                </li>
+              );
+            })}
+            <li>
+              <div className="relative" onMouseEnter={() => hoverOpen("about")} onMouseLeave={hoverClose} onBlur={blurClose}>
+                <button
+                  ref={(el) => {
+                    triggerRefs.current.about = el;
+                  }}
+                  type="button"
+                  aria-expanded={openMenu === "about"}
+                  aria-controls="nav-about-panel"
+                  onClick={() => toggleMenu("about")}
+                  className={desktopTrigger(aboutActive)}
+                >
+                  {nav.about}
+                  {chevron(openMenu === "about")}
+                  {aboutActive && activeBar}
+                </button>
+                <div id="nav-about-panel" hidden={openMenu !== "about"} className="absolute right-0 top-full z-50 pt-2">
+                  <ul className="min-w-[13rem] rounded-2xl border border-gray-200 bg-white p-2 shadow-xl">
+                    {aboutItems.map((it) => (
+                      <li key={it.href}>{panelLink(it.href, it.label)}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
         </nav>
 
-        {/* Right side: language (left of hamburger on mobile), CTA, menu */}
         <div className="flex items-center gap-2">
-          <div ref={langDropdownRef} className="relative">
+          {/* Language switcher (same page in the selected language) */}
+          <div className="relative" onBlur={blurClose}>
             <button
+              ref={(el) => {
+                triggerRefs.current.lang = el;
+              }}
               type="button"
-              onClick={() => setLangDropdownOpen((o) => !o)}
-              className="hidden items-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 py-2 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700 lg:flex"
-              aria-expanded={langDropdownOpen}
-              aria-haspopup="true"
-              aria-label={nav.language}
+              onClick={() => toggleMenu("lang")}
+              className="inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-600 bg-gray-800 px-3 text-sm font-medium text-white transition hover:border-gray-500 hover:bg-gray-700"
+              aria-expanded={openMenu === "lang"}
+              aria-controls="nav-lang-panel"
+              aria-label={`${nav.language}: ${LOCALE_FLAGS[locale].label}`}
             >
-              {LOCALE_FLAGS[locale as (typeof LOCALES)[number]] && (
-                <Image
-                  src={LOCALE_FLAGS[locale as (typeof LOCALES)[number]].flagSrc}
-                  alt=""
-                  width={24}
-                  height={18}
-                  className="h-4 w-6 rounded-sm object-cover"
-                />
-              )}
-              <span className="text-xs">{LOCALE_FLAGS[locale as (typeof LOCALES)[number]]?.label ?? locale.toUpperCase()}</span>
-              <svg className={`h-4 w-4 text-gray-400 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <Image src={LOCALE_FLAGS[locale].flagSrc} alt="" width={24} height={18} className="h-4 w-6 rounded-sm object-cover" />
+              <span className="hidden text-xs xl:inline">{LOCALE_FLAGS[locale].label}</span>
             </button>
-            <button
-              type="button"
-              onClick={() => setLangDropdownOpen((o) => !o)}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white transition hover:bg-gray-700 lg:hidden"
-              aria-expanded={langDropdownOpen}
-              aria-haspopup="true"
-              aria-label={nav.language}
+            <ul
+              id="nav-lang-panel"
+              hidden={openMenu !== "lang"}
+              className="absolute right-0 top-full z-50 mt-1 min-w-[9rem] rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl"
             >
-              {LOCALE_FLAGS[locale as (typeof LOCALES)[number]] && (
-                <Image
-                  src={LOCALE_FLAGS[locale as (typeof LOCALES)[number]].flagSrc}
-                  alt=""
-                  width={28}
-                  height={21}
-                  className="h-5 w-7 rounded-sm object-cover"
-                />
-              )}
-            </button>
-            {langDropdownOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl">
-                {LOCALES.map((l) => {
-                  const active = l === locale;
-                  const info = LOCALE_FLAGS[l];
-                  return (
-                    <Link
-                      key={l}
-                      href={switchLocale(l)}
-                      onClick={() => setLangDropdownOpen(false)}
-                      className={[
-                        "flex items-center gap-3 px-4 py-2.5 text-sm transition-colors",
-                        active ? "bg-gray-800 text-white font-medium" : "text-gray-300 hover:bg-gray-800 hover:text-white",
-                      ].join(" ")}
-                    >
-                      <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
-                      <span>{info.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+              {LOCALES.map((l) => (
+                <li key={l}>
+                  <Link
+                    href={switchLocale(l)}
+                    hrefLang={l}
+                    lang={l}
+                    onClick={closeAll}
+                    aria-current={l === locale ? "true" : undefined}
+                    className={`flex min-h-11 items-center gap-3 px-4 text-sm transition-colors ${
+                      l === locale ? "bg-gray-800 font-medium text-white" : "text-gray-200 hover:bg-gray-800 hover:text-white"
+                    }`}
+                  >
+                    <Image src={LOCALE_FLAGS[l].flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
+                    {LOCALE_FLAGS[l].label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <Link
             href={withLocale("/contact")}
-            className="hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] lg:inline-flex lg:whitespace-nowrap"
+            className="hidden h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-neutral-950 shadow-sm transition hover:bg-[#cbb27a] lg:inline-flex"
           >
             {nav.getQuote}
           </Link>
 
           <button
-            onClick={() => setOpen((s) => !s)}
+            type="button"
+            onClick={() => {
+              setMobileOpen((s) => !s);
+              setMobileSection(null);
+              setOpenMenu(null);
+            }}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-600 bg-gray-800 text-white hover:bg-gray-700 lg:hidden"
-            aria-label="Toggle menu"
-            aria-expanded={open}
+            aria-label={mobileOpen ? nav.closeMenu : nav.openMenu}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
-            <span className="text-lg">{open ? "✕" : "☰"}</span>
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              {mobileOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-gray-800 bg-black/95 backdrop-blur-2xl lg:hidden">
+      {mobileOpen && (
+        <nav
+          id="mobile-menu"
+          aria-label={nav.mainNav}
+          className="mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-3xl border border-white/10 bg-gray-950/95 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.8)] backdrop-blur-xl lg:hidden"
+        >
           <div className="mx-auto max-w-7xl px-4 py-5">
-            <div className="grid gap-2">
-              {items.map((it) => {
-                if (it.href === "/about" && it.hasDropdown) {
-                  return (
-                    <div
-                      key="about-mobile"
-                      className={`space-y-1 ${mobileAboutOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setMobileAboutOpen((o) => !o)}
-                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
-                        aria-expanded={mobileAboutOpen}
-                        aria-controls="mobile-about-list"
-                        id="mobile-about-button"
-                      >
-                        <span>{nav.about}</span>
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
-                          {mobileAboutOpen ? "−" : "+"}
-                        </span>
-                      </button>
-                      <div
-                        id="mobile-about-list"
-                        role="region"
-                        aria-labelledby="mobile-about-button"
-                        className={`overflow-hidden transition-all duration-200 ${mobileAboutOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
-                      >
-                        <div className="space-y-1 pt-1">
-                          {aboutDropdownItems.map(({ href, label }) => (
+            <ul className="grid gap-2">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setMobileSection((s) => (s === "services" ? null : "services"))}
+                  className="flex min-h-12 w-full items-center justify-between rounded-2xl bg-gray-800/60 px-4 text-left text-sm font-medium text-white"
+                  aria-expanded={mobileSection === "services"}
+                  aria-controls="mobile-services"
+                >
+                  {nav.services}
+                  {chevron(mobileSection === "services")}
+                </button>
+                <div id="mobile-services" hidden={mobileSection !== "services"} className="mt-2 space-y-4 rounded-2xl bg-gray-900 p-3">
+                  {serviceGroups.map((group) => (
+                    <div key={group.id}>
+                      <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#d1b780]">
+                        {nav.groups[group.id as keyof typeof nav.groups] ?? group.label}
+                      </p>
+                      <ul>
+                        {[
+                          ...(group.id !== "branding" ? [{ href: GROUP_HUB[group.id], label: nav.overview }] : []),
+                          ...group.items.map(({ slug, label }) => ({ href: `/services/${slug}`, label: label.replace(/\s*\n\s*/g, " ") })),
+                        ].map((it) => (
+                          <li key={it.href}>
                             <Link
-                              key={href}
-                              href={withLocale(href)}
-                              onClick={() => { setOpen(false); setMobileAboutOpen(false); }}
-                              className={[
-                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
-                                pathname === withLocale(href)
-                                  ? "bg-gray-800 text-white"
-                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
-                              ].join(" ")}
+                              href={withLocale(it.href)}
+                              onClick={closeAll}
+                              aria-current={isCurrent(it.href) ? "page" : undefined}
+                              className={`flex min-h-11 items-center rounded-xl px-3 text-sm ${
+                                isCurrent(it.href) ? "bg-gray-800 text-white" : "text-gray-200 hover:bg-gray-800"
+                              }`}
                             >
-                              <span>{label}</span>
-                              <span className="text-gray-500">→</span>
+                              {it.label}
                             </Link>
-                          ))}
-                        </div>
-                      </div>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  );
-                }
-                if (it.serviceGroupId === "website" && it.hasDropdown) {
-                  const group = serviceGroups[0];
-                  if (!group) return null;
-                  return (
-                    <div
-                      key="website-mobile"
-                      className={`space-y-1 ${mobileWebsiteOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setMobileWebsiteOpen((o) => !o)}
-                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
-                        aria-expanded={mobileWebsiteOpen}
-                        aria-controls="mobile-website-list"
-                        id="mobile-website-button"
-                      >
-                        <span>{group.label}</span>
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
-                          {mobileWebsiteOpen ? "−" : "+"}
-                        </span>
-                      </button>
-                      <div
-                        id="mobile-website-list"
-                        role="region"
-                        aria-labelledby="mobile-website-button"
-                        className={`overflow-hidden transition-all duration-200 ${mobileWebsiteOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
-                      >
-                        <div className="space-y-1 pt-1">
-                          {group.items.map(({ slug, label }) => (
-                            <Link
-                              key={slug}
-                              href={withLocale(`/services/${slug}`)}
-                              onClick={() => { setOpen(false); setMobileWebsiteOpen(false); }}
-                              className={[
-                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
-                                pathname === withLocale(`/services/${slug}`)
-                                  ? "bg-gray-800 text-white"
-                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
-                              ].join(" ")}
-                            >
-                              <span>{label}</span>
-                              <span className="text-gray-500">→</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                if (it.serviceGroupId === "marketing" && it.hasDropdown) {
-                  const group = serviceGroups[1];
-                  if (!group) return null;
-                  return (
-                    <div
-                      key="marketing-mobile"
-                      className={`space-y-1 ${mobileMarketingOpen ? "border-b border-gray-700 pb-3 mb-2" : ""}`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setMobileMarketingOpen((o) => !o)}
-                        className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium uppercase tracking-wider text-white hover:bg-gray-800"
-                        aria-expanded={mobileMarketingOpen}
-                        aria-controls="mobile-marketing-list"
-                        id="mobile-marketing-button"
-                      >
-                        <span>{group.label}</span>
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-lg font-medium text-white" aria-hidden>
-                          {mobileMarketingOpen ? "−" : "+"}
-                        </span>
-                      </button>
-                      <div
-                        id="mobile-marketing-list"
-                        role="region"
-                        aria-labelledby="mobile-marketing-button"
-                        className={`overflow-hidden transition-all duration-200 ${mobileMarketingOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
-                      >
-                        <div className="space-y-1 pt-1">
-                          {group.items.map(({ slug, label }) => (
-                            <Link
-                              key={slug}
-                              href={withLocale(`/services/${slug}`)}
-                              onClick={() => { setOpen(false); setMobileMarketingOpen(false); }}
-                              className={[
-                                "flex items-center justify-between rounded-2xl px-4 py-2.5 pl-6 text-sm transition-colors",
-                                pathname === withLocale(`/services/${slug}`)
-                                  ? "bg-gray-800 text-white"
-                                  : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
-                              ].join(" ")}
-                            >
-                              <span>{label}</span>
-                              <span className="text-gray-500">→</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                const active = isActive(it.href);
-                return (
+                  ))}
                   <Link
-                    key={it.href}
-                    href={withLocale(it.href)}
-                    onClick={() => setOpen(false)}
-                    className={[
-                      "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition-colors",
-                      active
-                        ? "bg-gray-800 text-white"
-                        : "bg-gray-800/50 text-gray-300 hover:bg-gray-800",
-                    ].join(" ")}
+                    href={withLocale("/services")}
+                    onClick={closeAll}
+                    className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-white hover:bg-gray-800"
                   >
-                    <span>{it.label}</span>
-                    <span className="text-gray-500">→</span>
+                    {nav.viewAllServices} →
                   </Link>
-                );
-              })}
-            </div>
-
-            <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-gray-700 bg-gray-800/50 p-3">
-              <div className="flex-1">
-                <p className="text-xs text-gray-400">{nav.language}</p>
-                <div className="mt-2 flex gap-2">
-                {LOCALES.map((l) => {
-                  const active = l === locale;
-                  const info = LOCALE_FLAGS[l];
-                  return (
-                    <Link
-                      key={l}
-                      href={switchLocale(l)}
-                      onClick={() => setOpen(false)}
-                      className={[
-                        "flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-center text-xs font-medium transition-colors",
-                        active
-                          ? "bg-white text-black"
-                          : "border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white",
-                      ].join(" ")}
-                    >
-                      <Image src={info.flagSrc} alt="" width={24} height={18} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
-                      <span>{info.label}</span>
-                    </Link>
-                  );
-                })}
                 </div>
-              </div>
-            </div>
+              </li>
+              {topLinks.map((it) => (
+                <li key={it.href}>
+                  <Link
+                    href={withLocale(it.href)}
+                    onClick={closeAll}
+                    aria-current={isCurrent(it.href) ? "page" : undefined}
+                    className={`flex min-h-12 items-center rounded-2xl px-4 text-sm font-medium ${
+                      isSection(it.href) ? "bg-gray-700 text-white" : "bg-gray-800/60 text-gray-100 hover:bg-gray-800"
+                    }`}
+                  >
+                    {it.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setMobileSection((s) => (s === "about" ? null : "about"))}
+                  className="flex min-h-12 w-full items-center justify-between rounded-2xl bg-gray-800/60 px-4 text-left text-sm font-medium text-white"
+                  aria-expanded={mobileSection === "about"}
+                  aria-controls="mobile-about"
+                >
+                  {nav.about}
+                  {chevron(mobileSection === "about")}
+                </button>
+                <ul id="mobile-about" hidden={mobileSection !== "about"} className="mt-2 rounded-2xl bg-gray-900 p-3">
+                  {aboutItems.map((it) => (
+                    <li key={it.href}>
+                      <Link
+                        href={withLocale(it.href)}
+                        onClick={closeAll}
+                        aria-current={isCurrent(it.href) ? "page" : undefined}
+                        className={`flex min-h-11 items-center rounded-xl px-3 text-sm ${
+                          isCurrent(it.href) ? "bg-gray-800 text-white" : "text-gray-200 hover:bg-gray-800"
+                        }`}
+                      >
+                        {it.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
 
             <Link
               href={withLocale("/contact")}
-              onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9a8a52] whitespace-nowrap"
+              onClick={closeAll}
+              className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#B89D5E] px-5 text-sm font-semibold text-neutral-950 shadow-sm transition hover:bg-[#cbb27a]"
             >
               {nav.getQuote}
             </Link>
           </div>
-        </div>
+        </nav>
       )}
     </header>
+    {/* Spacer so page content starts below the floating bar (the homepage hero sits underneath it). */}
+    {!isHome && <div className="h-[4.25rem] md:h-[4.75rem]" aria-hidden />}
+    </>
   );
 }

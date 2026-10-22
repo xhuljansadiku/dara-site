@@ -2,45 +2,90 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import NewsletterForm from "@/components/NewsletterForm";
+import LocaleLink from "@/components/site/LocaleLink";
 import { trackEvent } from "@/lib/analytics";
 import { SERVICE_SLUGS, SERVICE_DETAILS_BY_LOCALE, SERVICE_MIN_PRICE_EUR, type Locale } from "@/lib/services-data";
 import { BUDGET_OPTIONS, BUDGET_TIERS_EUR } from "@/lib/budget-prices";
 import { GENERIC_ERROR_MESSAGES, NETWORK_ERROR_MESSAGES } from "@/lib/api-errors";
+import { CONTACT, RESPONSE_TIME } from "@/lib/business-facts";
 
 // Services shown in contact form (exclude training - has its own form at /trainings/register)
 const CONTACT_SERVICE_SLUGS = SERVICE_SLUGS.filter((s) => s !== "training");
+/** Pseudo-service for visitors who do not know yet which service they need. */
+const NOT_SURE = "not-sure";
+const NOT_SURE_LABEL: Record<Locale, { label: string; description: string }> = {
+  sq: { label: "Nuk jam i sigurt ende", description: "Na tregoni qëllimin dhe ju sugjerojmë zgjidhjen." },
+  en: { label: "Not sure yet", description: "Tell us your goal and we will suggest the right service." },
+  de: { label: "Noch nicht sicher", description: "Nennen Sie uns Ihr Ziel, wir schlagen die passende Leistung vor." },
+};
 const LEADS_ENDPOINT = "/api/leads";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2 | 3 | 4 | 5;
+type Captcha = { a: number; b: number; op: "+" | "-" | "×" };
+
+/** Simple arithmetic check, created when the visitor reaches the review step. */
+function makeCaptcha(): Captcha {
+  const ops = ["+", "-", "×"] as const;
+  const x = Math.floor(Math.random() * 9) + 2;
+  const y = Math.floor(Math.random() * 9) + 2;
+  const op = ops[Math.floor(Math.random() * ops.length)];
+  return op === "-" ? { a: Math.max(x, y), b: Math.min(x, y), op } : { a: x, b: y, op };
+}
+
+function solveCaptcha({ a, b, op }: Captcha) {
+  return op === "+" ? a + b : op === "-" ? a - b : a * b;
+}
+
+/**
+ * A budget tier fits a service if the service can start within it, i.e. the tier's upper bound
+ * is above the starting price (e.g. "€500–€1,000" fits a shop from €800). Index 0 = "Not sure".
+ */
+function budgetTierFits(tierIndex: number, minPrice: number) {
+  if (tierIndex === 0) return true;
+  const upper = BUDGET_TIERS_EUR[tierIndex + 1] ?? Number.POSITIVE_INFINITY;
+  return upper > minPrice;
+}
+
+/** Milliseconds since a timestamp (bots submit the multi-step form implausibly fast). */
+function msSince(timestamp: number) {
+  return Date.now() - timestamp;
+}
+
+function serviceLabel(slug: string, locale: Locale) {
+  if (slug === NOT_SURE) return NOT_SURE_LABEL[locale].label;
+  const index = SERVICE_SLUGS.findIndex((s) => s === slug);
+  return SERVICE_DETAILS_BY_LOCALE[locale]?.[index]?.title.replace(/\s*\n\s*/g, " ") || slug;
+}
 
 export default function ContactPage() {
   const params = useParams();
   const router = useRouter();
   const locale = (params?.locale as Locale) || "sq";
+  // Service pages link here with ?service=<slug> so the visitor does not have to choose again.
+  const requestedService = useSearchParams().get("service") ?? "";
   const formPanelRef = useRef<HTMLDivElement | null>(null);
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
-  const formLoadedAt = useRef<number>(Date.now());
-  const [captchaLeft, setCaptchaLeft] = useState<number>(() => Math.floor(Math.random() * 9) + 2);
-  const [captchaRight, setCaptchaRight] = useState<number>(() => Math.floor(Math.random() * 9) + 2);
-  const [captchaOp, setCaptchaOp] = useState<"+" | "-" | "×">(() => {
-    const ops = ["+", "-", "×"] as const;
-    return ops[Math.floor(Math.random() * ops.length)];
-  });
+  const formLoadedAt = useRef<number>(0);
+  const [captcha, setCaptcha] = useState<Captcha | null>(null);
   const [captchaAnswer, setCaptchaAnswer] = useState("");
-  
+
+  useEffect(() => {
+    formLoadedAt.current = Date.now();
+  }, []);
+
   // Form data
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
     company: "",
-    service: "",
+    service: [...CONTACT_SERVICE_SLUGS, NOT_SURE].includes(requestedService) ? requestedService : "",
     websiteType: "",
     websitePages: "",
     websiteSEO: "",
@@ -65,24 +110,11 @@ export default function ContactPage() {
     .map((slug) => slug.trim())
     .filter(Boolean);
   const primaryService = selectedServiceSlugs[0] ?? "";
-  const captchaA = captchaOp === "-" ? Math.max(captchaLeft, captchaRight) : captchaLeft;
-  const captchaB = captchaOp === "-" ? Math.min(captchaLeft, captchaRight) : captchaRight;
-  const captchaExpected =
-    captchaOp === "+" ? captchaA + captchaB :
-    captchaOp === "-" ? captchaA - captchaB :
-    captchaA * captchaB;
-
-  const regenerateCaptcha = () => {
-    const ops = ["+", "-", "×"] as const;
-    setCaptchaLeft(Math.floor(Math.random() * 9) + 2);
-    setCaptchaRight(Math.floor(Math.random() * 9) + 2);
-    setCaptchaOp(ops[Math.floor(Math.random() * ops.length)]);
-  };
 
   const handleInputChange = (name: string, value: string) => {
-    // For name field, only allow letters and spaces (no numbers or special characters)
+    // Names: letters from any language (ä, ö, ü, ß, ë, ç…), spaces, hyphens, apostrophes and dots.
     if (name === "name") {
-      const filteredValue = value.replace(/[^a-zA-ZëçÇË\s]/g, "");
+      const filteredValue = value.replace(/[^\p{L}\p{M}\s'’.-]/gu, "");
       setFormData((prev) => ({ ...prev, [name]: filteredValue }));
     } else if (name === "service") {
       // When service changes, reset budget if it's now below service minimum
@@ -91,7 +123,7 @@ export default function ContactPage() {
         let newBudget = prev.budget;
         if (prev.budget) {
           const budgetIdx = BUDGET_OPTIONS[locale].indexOf(prev.budget);
-          if (budgetIdx >= 0 && BUDGET_TIERS_EUR[budgetIdx] < serviceMin) {
+          if (budgetIdx >= 0 && !budgetTierFits(budgetIdx, serviceMin)) {
             newBudget = "";
           }
         }
@@ -117,7 +149,7 @@ export default function ContactPage() {
           const min = SERVICE_MIN_PRICE_EUR[item as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
           return Math.max(max, min);
         }, 0);
-        if (budgetIdx >= 0 && BUDGET_TIERS_EUR[budgetIdx] < maxMin) {
+        if (budgetIdx >= 0 && !budgetTierFits(budgetIdx, maxMin)) {
           newBudget = "";
         }
       }
@@ -137,7 +169,7 @@ export default function ContactPage() {
       const min = SERVICE_MIN_PRICE_EUR[slug as keyof typeof SERVICE_MIN_PRICE_EUR] ?? 0;
       return Math.max(max, min);
     }, 0);
-    return opts.filter((_, i) => i === 0 || BUDGET_TIERS_EUR[i] >= serviceMin);
+    return opts.filter((_, i) => budgetTierFits(i, serviceMin));
   };
 
   const handleNext = (e?: React.MouseEvent) => {
@@ -175,6 +207,7 @@ export default function ContactPage() {
     // Only increment by 1 step at a time
     if (currentStep < 5) {
       const nextStep = (currentStep === 2 && shouldSkipDetailsStep ? 4 : currentStep + 1) as Step;
+      if (nextStep === 5) setCaptcha(makeCaptcha());
       setCurrentStep(nextStep);
       // Reset navigation flag after a short delay
       setTimeout(() => setIsNavigating(false), 300);
@@ -204,13 +237,14 @@ export default function ContactPage() {
       return;
     }
 
-    if (Date.now() - formLoadedAt.current < 4000) {
+    // Bot trap: a human cannot complete five steps this quickly, so nothing is sent.
+    if (msSince(formLoadedAt.current) < 4000) {
       setStatus("success");
       router.push(`/${locale}/contact/thank-you`);
       return;
     }
 
-    if (Number(captchaAnswer.trim()) !== captchaExpected) {
+    if (!captcha || Number(captchaAnswer.trim()) !== solveCaptcha(captcha)) {
       setStatus("error");
       setError(
         locale === "sq"
@@ -220,23 +254,18 @@ export default function ContactPage() {
             : "The anti-bot check is incorrect. Please try again."
       );
       setCaptchaAnswer("");
-      regenerateCaptcha();
+      setCaptcha(makeCaptcha());
       return;
     }
-    
+
     setStatus("loading");
     setError(null);
 
     // Build message from form data
-    let messageParts: string[] = [];
-    
+    const messageParts: string[] = [];
+
     if (selectedServiceSlugs.length) {
-      const serviceTitle = selectedServiceSlugs
-        .map((item) => {
-          const itemIndex = SERVICE_SLUGS.findIndex((serviceSlug) => serviceSlug === item);
-          return SERVICE_DETAILS_BY_LOCALE[locale]?.[itemIndex]?.title || item;
-        })
-        .join(", ");
+      const serviceTitle = selectedServiceSlugs.map((item) => serviceLabel(item, locale)).join(", ");
       messageParts.push(`${locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}: ${serviceTitle}`);
     }
 
@@ -335,8 +364,6 @@ export default function ContactPage() {
     }
   }
 
-  const serviceIndex = primaryService ? SERVICE_SLUGS.findIndex((slug) => slug === primaryService) : -1;
-  const selectedService = serviceIndex >= 0 ? SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex] : null;
   const shouldSkipDetailsStep = selectedServiceSlugs.length > 1;
   const stepTitles =
     locale === "sq"
@@ -393,7 +420,7 @@ export default function ContactPage() {
               {locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
             </p>
             <p className="mt-2 text-lg font-semibold text-[#111827]">
-              {locale === "sq" ? "Brenda 24 orëve" : locale === "de" ? "Innerhalb von 24 Std." : "Within 24h"}
+              {RESPONSE_TIME[locale]}
             </p>
           </div>
           <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.35)] backdrop-blur">
@@ -448,6 +475,7 @@ export default function ContactPage() {
         </div>
         </div>
       </section>
+
 
       {/* GRID */}
       <section className="relative pb-16 md:pb-24">
@@ -530,7 +558,7 @@ export default function ContactPage() {
                       </p>
                       <p className={`mt-2 text-sm font-medium ${isActive ? "text-white" : isComplete ? "text-white/90" : "text-white/65"}`}>
                         {title}
-                        {isDisabled ? " • skip" : ""}
+                        {isDisabled ? (locale === "sq" ? " · kapërcehet" : locale === "de" ? " · übersprungen" : " · skipped") : ""}
                       </p>
                     </div>
                   );
@@ -560,7 +588,6 @@ export default function ContactPage() {
                         required={true}
                         minLength={2}
                         maxLength={120}
-                        pattern="[a-zA-ZëçÇË\s]+"
                         locale={locale}
                       />
                       <ControlledField
@@ -569,7 +596,7 @@ export default function ContactPage() {
                         type="tel"
                         value={formData.phone}
                         onChange={(v) => handleInputChange("phone", v)}
-                        placeholder="+355 68 800 9988"
+                        placeholder="+355 6X XXX XXXX"
                         required={true}
                         maxLength={50}
                         locale={locale}
@@ -582,7 +609,6 @@ export default function ContactPage() {
                         onChange={(v) => handleInputChange("email", v)}
                         placeholder="you@business.com"
                         required={true}
-                        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}"
                         maxLength={200}
                         locale={locale}
                       />
@@ -601,33 +627,26 @@ export default function ContactPage() {
                 {/* Step 2: Service Selection */}
                 {currentStep === 2 && (
                   <div className="grid gap-5">
-                    <div className="rounded-2xl border border-stone-200 bg-stone-50/70 p-4">
-                      <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8b7355]">
-                        {locale === "sq" ? "Hyrje" : locale === "de" ? "Einführung" : "Introduction"}
-                      </p>
-                      <p className="mt-2 text-sm leading-7 text-stone-600">
-                        {locale === "sq"
-                          ? "Na duhen vetëm të dhënat bazë që të dimë me kë po flasim dhe ku të të kthejmë përgjigje."
-                          : locale === "de"
-                          ? "Wir brauchen nur die Grunddaten, um zu wissen, mit wem wir sprechen und wohin wir antworten."
-                          : "We only need the essentials to know who we’re talking to and where to reply."}
-                      </p>
-                    </div>
+                    <p className="text-sm leading-7 text-stone-600">
+                      {locale === "sq"
+                        ? "Zgjidhni një ose më shumë shërbime. Nëse nuk jeni i sigurt, zgjidhni «Nuk jam i sigurt ende» dhe na tregoni qëllimin në hapin tjetër."
+                        : locale === "de"
+                        ? "Wählen Sie eine oder mehrere Leistungen. Wenn Sie unsicher sind, wählen Sie „Noch nicht sicher“ und beschreiben Sie im nächsten Schritt Ihr Ziel."
+                        : "Choose one or more services. If you are unsure, pick “Not sure yet” and describe your goal in the next step."}
+                    </p>
                     <MultiServiceSelectField
-                      label={locale === "sq" ? "Zgjidh shërbimin*" : locale === "de" ? "Service wählen*" : "Select service*"}
+                      label={locale === "sq" ? "Shërbimi që ju intereson*" : locale === "de" ? "Gewünschte Leistung*" : "Service you are interested in*"}
                       values={selectedServiceSlugs}
                       onToggle={toggleServiceSelection}
-                      required={true}
                       locale={locale}
-                      options={CONTACT_SERVICE_SLUGS.map((slug) => {
-                        const serviceIndex = SERVICE_SLUGS.indexOf(slug);
-                        const service = SERVICE_DETAILS_BY_LOCALE[locale]?.[serviceIndex];
-                        return {
+                      options={[
+                        ...CONTACT_SERVICE_SLUGS.map((slug) => ({
                           value: slug,
-                          label: service?.title ?? slug,
-                          description: service?.price,
-                        };
-                      })}
+                          label: serviceLabel(slug, locale),
+                          description: SERVICE_DETAILS_BY_LOCALE[locale]?.[SERVICE_SLUGS.indexOf(slug)]?.price,
+                        })),
+                        { value: NOT_SURE, ...NOT_SURE_LABEL[locale] },
+                      ]}
                     />
                   </div>
                 )}
@@ -759,7 +778,11 @@ export default function ContactPage() {
 
                     {primaryService && primaryService !== "website-landing" && primaryService !== "ecommerce" && primaryService !== "social-media" && (
                       <ControlledTextArea
-                        label={locale === "sq" ? "Detaje shtesë për këtë shërbim" : locale === "de" ? "Zusätzliche Details zu diesem Service" : "Additional details for this service"}
+                        label={
+                          primaryService === NOT_SURE
+                            ? locale === "sq" ? "Çfarë doni të arrini? (p.sh. më shumë klientë, shitje online, një website të ri)" : locale === "de" ? "Was möchten Sie erreichen? (z. B. mehr Kunden, Online-Verkauf, neue Website)" : "What do you want to achieve? (e.g. more customers, online sales, a new website)"
+                            : locale === "sq" ? "Detaje shtesë për këtë shërbim" : locale === "de" ? "Zusätzliche Details zu diesem Service" : "Additional details for this service"
+                        }
                         name="otherServiceDetails"
                         value={formData.otherServiceDetails}
                         onChange={(v) => handleInputChange("otherServiceDetails", v)}
@@ -817,12 +840,7 @@ export default function ContactPage() {
                         {selectedServiceSlugs.length > 0 && (
                           <ReviewRow
                             label={locale === "sq" ? "Shërbimi" : locale === "de" ? "Leistung" : "Service"}
-                            value={selectedServiceSlugs
-                              .map((slug) => {
-                                const itemIndex = SERVICE_SLUGS.findIndex((serviceSlug) => serviceSlug === slug);
-                                return SERVICE_DETAILS_BY_LOCALE[locale]?.[itemIndex]?.title || slug;
-                              })
-                              .join(", ")}
+                            value={selectedServiceSlugs.map((slug) => serviceLabel(slug, locale)).join(", ")}
                           />
                         )}
                         {primaryService === "website-landing" && (
@@ -918,7 +936,7 @@ export default function ContactPage() {
                         </span>
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="inline-flex h-11 items-center rounded-xl border border-stone-300 bg-white px-4 text-base font-semibold text-stone-900">
-                            {captchaA} {captchaOp} {captchaB} = ?
+                            {captcha ? `${captcha.a} ${captcha.op} ${captcha.b} = ?` : ""}
                           </span>
                           <input
                             type="text"
@@ -950,9 +968,9 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                {status === "error" && (
-                  <p className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-[0_16px_36px_-28px_rgba(220,38,38,0.65)]">
-                    {error ?? (locale === "sq" ? "Diçka shkoi keq." : locale === "de" ? "Etwas ist schief gelaufen." : "Something went wrong.")}
+                {error && (
+                  <p role="alert" className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {error}
                   </p>
                 )}
 
@@ -998,7 +1016,7 @@ export default function ContactPage() {
                       <button
                         type="submit"
                         disabled={status === "loading"}
-                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#b7924a] px-6 font-medium text-white transition hover:bg-[#a88543] disabled:opacity-60 sm:ml-auto"
+                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#B89D5E] px-6 font-semibold text-neutral-950 transition hover:bg-[#cbb27a] disabled:opacity-60 sm:ml-auto"
                       >
                         {status === "loading"
                           ? locale === "sq" ? "Duke dërguar..." : locale === "de" ? "Wird gesendet..." : "Sending..."
@@ -1008,15 +1026,16 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                {currentStep <= 5 && (
-                  <p className="mt-4 text-xs leading-6 text-stone-500">
-                    {locale === "sq"
-                      ? "Duke dërguar, pranon të të kontaktojmë për këtë kërkesë."
-                      : locale === "de"
-                      ? "Durch Senden stimmen Sie zu, dass wir Sie für diese Anfrage kontaktieren."
-                      : "By sending, you agree that we may contact you for this request."}
-                  </p>
-                )}
+                <p className="mt-4 text-xs leading-6 text-stone-600">
+                  {locale === "sq"
+                    ? "Të dhënat përdoren vetëm për t’iu përgjigjur kësaj kërkese. "
+                    : locale === "de"
+                    ? "Ihre Daten werden nur zur Beantwortung dieser Anfrage verwendet. "
+                    : "Your details are only used to reply to this request. "}
+                  <LocaleLink href="/privacy" className="font-medium text-stone-800 underline underline-offset-2 hover:text-stone-950">
+                    {locale === "sq" ? "Politika e privatësisë" : locale === "de" ? "Datenschutzerklärung" : "Privacy policy"}
+                  </LocaleLink>
+                </p>
               </form>
             </div>
           </div>
@@ -1031,13 +1050,13 @@ export default function ContactPage() {
               <div className="mt-5 grid gap-3 text-sm">
                 <InfoRow
                   k={locale === "sq" ? "Email" : locale === "de" ? "E-Mail" : "Email"}
-                  v="daramarketing.eu@gmail.com"
-                  href="mailto:daramarketing.eu@gmail.com"
+                  v={CONTACT.email}
+                  href={`mailto:${CONTACT.email}`}
                 />
-                <InfoRow k={locale === "sq" ? "Telefoni" : locale === "de" ? "Telefon" : "Phone"} v="+355 68 800 9988" href="tel:+355688009988" className="min-w-0" />
+                <InfoRow k={locale === "sq" ? "Telefoni" : locale === "de" ? "Telefon" : "Phone"} v={CONTACT.phoneDisplay} href={`tel:${CONTACT.phoneE164}`} className="min-w-0" />
                 <InfoRow
                   k={locale === "sq" ? "Përgjigje" : locale === "de" ? "Antwort" : "Response"}
-                  v={locale === "sq" ? "Brenda 24 orëve" : locale === "de" ? "Innerhalb von 24 Std." : "Within 24h"}
+                  v={RESPONSE_TIME[locale]}
                 />
               </div>
 
@@ -1124,7 +1143,7 @@ export default function ContactPage() {
               <div className="mt-4 space-y-4 text-sm text-white/78">
                 <div className="flex items-start justify-between gap-4">
                   <span>{locale === "sq" ? "Shërbimi" : locale === "de" ? "Service" : "Service"}</span>
-                  <span className="text-right font-medium text-white">{selectedService?.title ?? (locale === "sq" ? "Jo i zgjedhur" : locale === "de" ? "Nicht gewählt" : "Not selected")}</span>
+                  <span className="text-right font-medium text-white">{primaryService ? serviceLabel(primaryService, locale) : (locale === "sq" ? "Jo i zgjedhur" : locale === "de" ? "Nicht gewählt" : "Not selected")}</span>
                 </div>
                 <div className="flex items-start justify-between gap-4">
                   <span>{locale === "sq" ? "Buxheti" : locale === "de" ? "Budget" : "Budget"}</span>
@@ -1166,6 +1185,8 @@ export default function ContactPage() {
 
 /* ----------------- helpers (must be in same file or imported) ----------------- */
 
+const AUTOCOMPLETE: Record<string, string> = { name: "name", email: "email", phone: "tel", company: "organization" };
+
 function ControlledField({
   label,
   name,
@@ -1177,7 +1198,6 @@ function ControlledField({
   pattern,
   minLength,
   maxLength,
-  locale = "sq",
 }: {
   label: string;
   name: string;
@@ -1206,8 +1226,8 @@ function ControlledField({
         pattern={pattern}
         minLength={minLength}
         maxLength={maxLength}
-        className="h-12 rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-stone-900 placeholder:text-stone-400 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10 invalid:border-red-400/60"
-        title={pattern && name === "name" ? (locale === "sq" ? "Vetëm shkronja dhe hapësira" : locale === "de" ? "Nur Buchstaben und Leerzeichen" : "Only letters and spaces") : undefined}
+        className="h-12 rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-stone-900 placeholder:text-stone-500 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
+        autoComplete={AUTOCOMPLETE[name]}
       />
     </label>
   );
@@ -1271,122 +1291,27 @@ function ControlledSelectField({
   required?: boolean;
   locale?: string;
 }) {
-  const [open, setOpen] = useState(false);
   const isRequired = required || label.includes("*");
-  const placeholder = isRequired ? (locale === "sq" ? "Zgjidh..." : locale === "de" ? "Wählen..." : "Select...") : label;
+  const placeholder = locale === "sq" ? "Zgjidh..." : locale === "de" ? "Bitte wählen..." : "Select...";
 
+  // Native select: works with keyboard, screen readers and the mobile OS picker.
   return (
     <label className="grid gap-2">
       <span className="text-sm font-medium text-gray-700">{label}</span>
-      <div className="relative">
-        <input type="hidden" name={name} value={value} required={isRequired} />
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          onBlur={() => setTimeout(() => setOpen(false), 150)}
-          className="flex h-12 w-full items-center justify-between rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-left text-stone-900 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
-        >
-          <span className={value ? "" : "text-gray-500"}>{value || placeholder}</span>
-          <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        {open && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-xl border border-gray-200 bg-white py-1 shadow-xl">
-            {options.map((o) => (
-              <button
-                key={o}
-                type="button"
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  onChange(o);
-                  setOpen(false);
-                }}
-                className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
-                  value === o ? "bg-gray-900 text-white" : "text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                {o}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    </label>
-  );
-}
-
-function ServiceSelectField({
-  label,
-  name,
-  value,
-  onChange,
-  options,
-  required = false,
-  locale = "sq",
-}: {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (value: string) => void;
-  options: Array<{ value: string; label: string; description?: string }>;
-  required?: boolean;
-  locale?: string;
-}) {
-  const [open, setOpen] = useState(false);
-  const isRequired = required || label.includes("*");
-  const placeholder = isRequired ? (locale === "sq" ? "Zgjidh..." : locale === "de" ? "Wahlen..." : "Select...") : label;
-  const selectedOption = options.find((option) => option.value === value);
-
-  return (
-    <label className="grid gap-2">
-      <span className="text-sm font-medium text-gray-700">{label}</span>
-      <div className="relative">
-        <input type="hidden" name={name} value={value} required={isRequired} />
-        <button
-          type="button"
-          onClick={() => setOpen((openState) => !openState)}
-          onBlur={() => setTimeout(() => setOpen(false), 150)}
-          className="flex min-h-14 w-full items-center justify-between rounded-2xl border border-stone-200 bg-stone-50/50 px-4 py-3 text-left text-stone-900 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
-        >
-          <div className="min-w-0">
-            <div className={selectedOption ? "font-medium text-gray-900" : "text-gray-500"}>
-              {selectedOption ? selectedOption.label : placeholder}
-            </div>
-            {selectedOption?.description ? (
-              <div className="mt-1 text-xs text-gray-500">{selectedOption.description}</div>
-            ) : null}
-          </div>
-          <svg className={`ml-3 h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        {open && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-2 max-h-72 overflow-auto rounded-2xl border border-stone-200 bg-white py-1 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]">
-            {options.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  onChange(option.value);
-                  setOpen(false);
-                }}
-                className={`w-full px-4 py-3 text-left transition-colors ${
-                  value === option.value ? "bg-gray-900 text-white" : "text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                <div className="font-medium">{option.label}</div>
-                {option.description ? (
-                  <div className={`mt-1 text-xs ${value === option.value ? "text-white/80" : "text-gray-500"}`}>
-                    {option.description}
-                  </div>
-                ) : null}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+      <select
+        name={name}
+        value={value}
+        required={isRequired}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-12 w-full rounded-2xl border border-stone-200 bg-stone-50/50 px-4 text-stone-900 outline-none transition focus:border-[#B89D5E] focus:bg-white focus:ring-4 focus:ring-[#B89D5E]/10"
+      >
+        <option value="">{placeholder}</option>
+        {options.map((o) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
     </label>
   );
 }
@@ -1396,35 +1321,18 @@ function MultiServiceSelectField({
   values,
   onToggle,
   options,
-  required = false,
   locale = "sq",
 }: {
   label: string;
   values: string[];
   onToggle: (value: string) => void;
   options: Array<{ value: string; label: string; description?: string }>;
-  required?: boolean;
   locale?: string;
 }) {
-  const isRequired = required || label.includes("*");
-  const selectedLabels = options.filter((option) => values.includes(option.value)).map((option) => option.label);
-
   return (
-    <label className="grid gap-2">
-      <span className="text-sm font-medium text-gray-700">{label}</span>
+    <fieldset className="grid gap-2">
+      <legend className="mb-2 text-sm font-medium text-gray-700">{label}</legend>
       <div className="rounded-[1.6rem] border border-stone-200 bg-stone-50/60 p-3">
-        <input type="hidden" name="service" value={values.join(",")} required={isRequired} />
-        <div className="mb-3 flex flex-wrap gap-2">
-          {selectedLabels.length ? selectedLabels.map((item) => (
-            <span key={item} className="inline-flex items-center rounded-full bg-[#111827] px-3 py-1.5 text-xs font-medium text-white">
-              {item}
-            </span>
-          )) : (
-            <span className="inline-flex items-center rounded-full bg-white px-3 py-1.5 text-xs text-stone-500 ring-1 ring-stone-200">
-              {locale === "sq" ? "Zgjidh një ose më shumë shërbime" : locale === "de" ? "Wählen Sie einen oder mehrere Services" : "Choose one or more services"}
-            </span>
-          )}
-        </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {options.map((option) => {
             const isSelected = values.includes(option.value);
@@ -1432,6 +1340,7 @@ function MultiServiceSelectField({
               <button
                 key={option.value}
                 type="button"
+                aria-pressed={isSelected}
                 onClick={() => onToggle(option.value)}
                 className={`rounded-2xl border p-4 text-left transition ${
                   isSelected
@@ -1439,30 +1348,33 @@ function MultiServiceSelectField({
                     : "border-stone-200 bg-white text-stone-900 hover:border-[#B89D5E]/40 hover:bg-stone-50"
                 }`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="font-medium">{option.label}</div>
+                <span className="flex items-start justify-between gap-3">
+                  <span>
+                    <span className="block font-medium">{option.label}</span>
                     {option.description ? (
-                      <div className={`mt-1 text-xs ${isSelected ? "text-white/75" : "text-stone-500"}`}>
+                      <span className={`mt-1 block text-xs ${isSelected ? "text-white/80" : "text-stone-600"}`}>
                         {option.description}
-                      </div>
+                      </span>
                     ) : null}
-                  </div>
-                  <span className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold ${
-                    isSelected ? "border-[#d1b780]/40 bg-[#d1b780]/15 text-[#f3dfb5]" : "border-stone-300 text-stone-400"
-                  }`}>
-                    {isSelected ? "OK" : "+"}
                   </span>
-                </div>
+                  <span
+                    aria-hidden
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-semibold ${
+                      isSelected ? "border-[#d1b780]/40 bg-[#d1b780]/15 text-[#f3dfb5]" : "border-stone-300 text-stone-500"
+                    }`}
+                  >
+                    {isSelected ? "✓" : "+"}
+                  </span>
+                </span>
               </button>
             );
           })}
         </div>
-        <p className="mt-3 text-xs text-stone-500">
+        <p className="mt-3 text-xs text-stone-600">
           {locale === "sq" ? "Nëse zgjedh më shumë se një shërbim, detajet do t'i diskutojmë më pas." : locale === "de" ? "Wenn Sie mehr als einen Service wählen, besprechen wir die Details später." : "If you select more than one service, we’ll discuss the details later."}
         </p>
       </div>
-    </label>
+    </fieldset>
   );
 }
 

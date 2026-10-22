@@ -14,7 +14,7 @@ export async function generateMetadata({
   const { canonical, languages } = buildAlternates("privacy", l);
   const titleSuffix = " | DARA";
   return {
-    title: meta.title + titleSuffix,
+    title: meta.title, // root template adds the brand suffix
     description: meta.description,
     alternates: { canonical, languages },
     openGraph: {

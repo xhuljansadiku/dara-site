@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { locales, defaultLocale } from "@/i18n";
+import { locales } from "@/i18n";
 
 export type SiteLocale = (typeof locales)[number];
 
@@ -87,6 +87,9 @@ export function buildLocalizedMetadata({
   image = "/opengraph-image",
   noIndex = false,
 }: LocalizedMetadataInput): Metadata {
+  // The root layout's title template appends "| DARA Marketing Agency"; strip a brand suffix
+  // here so pages never render it twice. Social cards keep the full title.
+  const pageTitle = title.replace(/\s*\|\s*DARA(\s+Marketing Agency)?\s*$/i, "");
   const alternates = buildAlternates(path, locale);
   const url = buildAbsoluteUrl(buildLocalePath(locale, path));
   const ogLocale = locale === "sq" ? "sq_AL" : locale === "de" ? "de_DE" : "en_GB";
@@ -95,7 +98,7 @@ export function buildLocalizedMetadata({
     .map((candidate) => (candidate === "sq" ? "sq_AL" : candidate === "de" ? "de_DE" : "en_GB"));
 
   return {
-    title,
+    title: pageTitle,
     description,
     alternates,
     openGraph: {

@@ -313,3 +313,25 @@ select option:focus {
 .animate-float-up {
   animation: float-up 0.4s ease-out both;
 }
+
+/* Reduced motion: content must never stay hidden or keep moving for users who opt out. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-reveal,
+  .animate-reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee,
+  .typewriter-cursor,
+  .animate-bounce,
+  .animate-float-up,
+  .animate-fade-in-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -9,17 +9,17 @@ type Locale = "sq" | "en" | "de";
 
 const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
-    title: "Ekipi | DARA Marketing Agency",
+    title: "Ekipi",
     description:
       "Njihni ekipin DARA në Tiranë: strategji, kreativitet dhe marketing digjital për biznese në Shqipëri.",
   },
   en: {
-    title: "Team | DARA Marketing Agency",
+    title: "Team",
     description:
       "Meet the DARA team: marketing, strategy and creative professionals helping brands grow.",
   },
   de: {
-    title: "Team | DARA Marketing Agency",
+    title: "Team",
     description:
       "Lernen Sie das DARA-Team kennen: Marketing, Strategie und Kreativität für wachsende Marken.",
   },
@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const meta = META_BY_LOCALE[locale];
   const { canonical, languages } = buildAlternates("team", locale);
   return {
-    title: meta.title,
+    title: meta.title, // root template adds the brand suffix
     description: meta.description,
     alternates: { canonical, languages },
     openGraph: {
-      title: meta.title,
+      title: `${meta.title} | DARA Marketing Agency`,
       description: meta.description,
     },
   };

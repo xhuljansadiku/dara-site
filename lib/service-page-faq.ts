@@ -1,4 +1,6 @@
 import type { Locale } from "@/lib/services-data";
+import type { ServiceSlug } from "@/lib/services-data";
+import type { ServicePageContent } from "@/lib/services-page-content";
 
 /** Conversion-focused defaults; service pages can override via `content.faq`. */
 export const DEFAULT_SERVICE_FAQ: Record<Locale, { q: string; a: string }[]> = {
@@ -45,3 +47,59 @@ export const DEFAULT_SERVICE_FAQ: Record<Locale, { q: string; a: string }[]> = {
     },
   ],
 };
+
+const SERVICE_FAQ_TEMPLATES: Record<
+  Locale,
+  { cost: (title: string) => string; included: (title: string) => string; noPrice: string; adSpend: { q: string; a: string } }
+> = {
+  sq: {
+    cost: (title) => `Sa kushton shërbimi “${title}”?`,
+    included: (title) => `Çfarë përfshin “${title}”?`,
+    noPrice: "Çmimi jepet sipas nevojës, pas një bisede të shkurtër për qëllimin dhe volumin e punës.",
+    adSpend: {
+      q: "A përfshihet buxheti i reklamave në çmim?",
+      a: "Jo. Tarifa e menaxhimit nuk përfshin buxhetin që paguhet te Meta ose Google. Buxhetin e vendosni ju.",
+    },
+  },
+  en: {
+    cost: (title) => `How much does ${title} cost?`,
+    included: (title) => `What is included in ${title}?`,
+    noPrice: "Pricing is quoted per project, after a short conversation about your goal and the volume of work.",
+    adSpend: {
+      q: "Is ad spend included in the price?",
+      a: "No. The management fee does not include the budget paid to Meta or Google. You set that budget.",
+    },
+  },
+  de: {
+    cost: (title) => `Was kostet ${title}?`,
+    included: (title) => `Was ist bei ${title} enthalten?`,
+    noPrice: "Der Preis wird pro Projekt nach einem kurzen Gespräch über Ziel und Umfang angeboten.",
+    adSpend: {
+      q: "Ist das Werbebudget im Preis enthalten?",
+      a: "Nein. Die Management-Gebühr enthält nicht das Budget, das an Meta oder Google gezahlt wird. Dieses Budget legen Sie fest.",
+    },
+  },
+};
+
+/**
+ * Service-specific FAQ built only from facts already on the page (price, price note, inclusions),
+ * followed by the general questions. Used for both the visible FAQ and its JSON-LD.
+ */
+export function getServiceFaq(
+  locale: Locale,
+  slug: ServiceSlug,
+  title: string,
+  price: string | undefined,
+  content: ServicePageContent
+): { q: string; a: string }[] {
+  if (content.faq?.length) return content.faq;
+  const t = SERVICE_FAQ_TEMPLATES[locale];
+  const priceNote = content.priceNote?.replace(/\s*[;\n]\s*/g, ". ").replace(/\.\.\s*/g, ". ").trim();
+  const costAnswer = [price, priceNote].filter(Boolean).join(". ").replace(/\.\./g, ".") || t.noPrice;
+  return [
+    { q: t.cost(title), a: costAnswer },
+    { q: t.included(title), a: `${content.whatIncluded.join("; ")}.` },
+    ...(slug === "ads" ? [t.adSpend] : []),
+    ...DEFAULT_SERVICE_FAQ[locale],
+  ];
+}

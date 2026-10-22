@@ -21,11 +21,11 @@ export async function generateStaticParams() {
 
 const CTA_BY_LOCALE: Record<
   Locale,
-  { register: string; allTrainings: string; backHome: string }
+  { register: string; registerInterest: string; allTrainings: string; backHome: string }
 > = {
-  sq: { register: "Rregjistrohu tani", allTrainings: "Të gjitha trajnimet", backHome: "Kthehu në kryefaqe" },
-  en: { register: "Register now", allTrainings: "All trainings", backHome: "Back to home" },
-  de: { register: "Jetzt anmelden", allTrainings: "Alle Trainings", backHome: "Zur Startseite" },
+  sq: { register: "Regjistrohu tani", registerInterest: "Shpreh interesin", allTrainings: "Të gjitha trajnimet", backHome: "Kthehu në kryefaqe" },
+  en: { register: "Register now", registerInterest: "Register interest", allTrainings: "All trainings", backHome: "Back to home" },
+  de: { register: "Jetzt anmelden", registerInterest: "Interesse vormerken", allTrainings: "Alle Trainings", backHome: "Zur Startseite" },
 };
 
 const COMING_SOON_BY_LOCALE: Record<
@@ -34,15 +34,15 @@ const COMING_SOON_BY_LOCALE: Record<
 > = {
   sq: {
     title: "Së shpejti",
-    subtitle: "Ky trajnim do të jetë i disponueshëm shumë shpejt. Na kontaktoni për të mësuar më shumë.",
+    subtitle: "Ky kurs nuk është hapur ende për regjistrim. Shpreh interesin dhe të njoftojmë kur të caktohet data e fillimit.",
   },
   en: {
     title: "Coming soon",
-    subtitle: "This training will be available very soon. Contact us to learn more.",
+    subtitle: "This course is not open for registration yet. Register your interest and we will let you know when a start date is set.",
   },
   de: {
     title: "Demnächst",
-    subtitle: "Dieses Training wird sehr bald verfügbar sein. Kontaktieren Sie uns für weitere Informationen.",
+    subtitle: "Dieser Kurs ist noch nicht buchbar. Merken Sie Ihr Interesse vor, wir informieren Sie, sobald ein Starttermin feststeht.",
   },
 };
 
@@ -78,10 +78,10 @@ export default function TrainingSlugPage({ params }: Props) {
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <LocaleLink
-                href="/trainings/register"
+                href={`/trainings/register?training=${training.slug}`}
                 className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800"
               >
-                {cta.register}
+                {cta.registerInterest}
               </LocaleLink>
               <LocaleLink
                 href="/trainings"
@@ -193,7 +193,7 @@ export default function TrainingSlugPage({ params }: Props) {
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               <LocaleLink
-                href="/trainings/register"
+                href={`/trainings/register?training=${training.slug}`}
                 className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-medium text-white transition hover:bg-gray-800"
               >
                 {cta.register}

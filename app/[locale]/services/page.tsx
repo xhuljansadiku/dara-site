@@ -11,7 +11,7 @@ const META_BY_LOCALE: Record<Locale, { title: string; description: string }> = {
   sq: {
     title: "Shërbime web design, krijim website & marketing digjital",
     description:
-      "Krijim website, web design Tirana, dyqan online, mirembajtje website. Marketing digjital shqip: rrjetet sociale, branding, reklama Meta & Google, strategji. Agjenci për biznese në Shqipëri.",
+      "Krijim website, web design Tirana, dyqan online, mirëmbajtje website. Marketing digjital shqip: rrjetet sociale, branding, reklama Meta & Google, strategji. Agjenci për biznese në Shqipëri.",
   },
   en: {
     title: "Services",
