@@ -241,7 +241,7 @@ select option:focus {
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-page-enter {
-  animation: page-fade-in 0.35s ease-out both;
+  animation: page-fade-in 0.35s ease-out backwards;
 }
 
 /* ─── Home work section: rows of project mockups drifting sideways ─── */
@@ -300,18 +300,6 @@ select option:focus {
   z-index: 9999;
   transition: width 0.1s linear;
   pointer-events: none;
-}
-
-/* ─── Custom cursor (desktop/mouse only) ─── */
-.custom-cursor {
-  pointer-events: none;
-  position: fixed;
-  z-index: 99999;
-  mix-blend-mode: difference;
-}
-
-@media (pointer: coarse) {
-  .custom-cursor { display: none; }
 }
 
 /* ─── Typewriter cursor blink ─── */

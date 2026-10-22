@@ -295,7 +295,7 @@ export default function ProcessPage({ params }: { params: Promise<{ locale: stri
           <div className="relative">
             <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gray-200 md:left-6" />
             <ul className="space-y-8 md:space-y-10">
-              {steps.map((s, i) => (
+              {steps.map((s) => (
                 <li key={s.n} className="relative flex gap-6 md:gap-8">
                   <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-900 text-xs font-semibold text-white md:h-12 md:w-12">
                     {s.n}

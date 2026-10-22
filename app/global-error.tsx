@@ -4,7 +4,6 @@ import { ERROR_COPY } from "@/lib/error-copy";
 import { defaultLocale } from "@/i18n";
 
 export default function GlobalError({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };

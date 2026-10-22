@@ -286,7 +286,7 @@ export default function ServicesPageContent({ locale }: Props) {
       <section className="py-14 md:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredServices.map(({ slug, index, service }, idx) => {
+          {filteredServices.map(({ slug, service }, idx) => {
             if (!service) return null;
             return (
               <AnimateIn key={slug} delay={idx * 50} className="h-full">
