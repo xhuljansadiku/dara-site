@@ -121,7 +121,6 @@ export default function Navbar() {
   const [mobileSection, setMobileSection] = useState<"services" | "about" | null>(null);
   const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -132,15 +131,8 @@ export default function Navbar() {
   const serviceGroups = getServiceGroupNavItems(locale).filter((g) => g.id !== "training");
 
   useEffect(() => {
-    // Hide the floating bar while scrolling down, bring it back on scroll up (always shown near the top).
-    let lastY = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 24);
-      setHidden(y > 160 && y > lastY + 4);
-      if (y < lastY - 4 || y <= 160) setHidden(false);
-      lastY = y;
-    };
+    // The bar stays in place; scrolling only switches it to the solid background.
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -283,9 +275,7 @@ export default function Navbar() {
     <>
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 px-3 pt-3 transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-reduce:transition-none sm:px-5 ${
-        hidden && !mobileOpen && !openMenu ? "-translate-y-[120%]" : "translate-y-0"
-      }`}
+      className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5"
     >
       <div
         className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full border pl-5 pr-2 backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-500 md:h-16 ${
