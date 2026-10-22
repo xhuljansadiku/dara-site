@@ -443,7 +443,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeContactCta locale={locale} />
       {/* Careers: kept secondary to the client enquiry journey */}
-      <aside className="mx-auto mb-10 max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
+      <aside className="mx-auto mb-10 mt-10 max-w-6xl md:mt-14 px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-stone-50 px-6 py-5 text-center sm:flex-row sm:text-left">
           <p className="text-sm text-neutral-700">{career.text}</p>
           <LocaleLink
