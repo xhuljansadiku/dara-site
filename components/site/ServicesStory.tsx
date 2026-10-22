@@ -109,8 +109,8 @@ export default function ServicesStory({ locale, headingId, kicker, titleBefore, 
     <>
       {/* Desktop: pinned, one category per screen of scroll */}
       <div ref={outerRef} className="relative hidden lg:block" style={{ height: `${groups.length * 100}svh` }}>
-        <div className="sticky top-0 flex h-[100svh] items-center">
-          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 items-center gap-14 px-8 pt-16">
+        <div className="sticky top-0 flex h-[100svh] items-start pt-[max(6rem,10svh)]">
+          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 items-start gap-14 px-8">
             <div>
               {heading(headingId)}
               <div className="mt-8 flex items-center gap-3">
