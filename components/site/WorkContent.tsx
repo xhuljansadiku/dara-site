@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import ImageLightbox from "@/components/site/ImageLightbox";
+import SocialMediaMarquee from "@/components/site/SocialMediaMarquee";
 import WebsiteMarquee from "@/components/site/WebsiteMarquee";
 import { SOCIAL_MEDIA_BOARDS, WORK_INTRO_BY_LOCALE } from "@/lib/projects";
 import type { FilterTab, Project, ProjectCategory } from "@/lib/projects";
@@ -51,7 +51,6 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
           titleAccent: "e zgjedhur",
           filters: "Filtro projektet",
           projectsWord: "projekte të realizuara",
-          view: "Shiko",
           websiteNote: "Faqe live që mund t'i hapni direkt.",
         }
       : locale === "de"
@@ -61,7 +60,6 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
             titleAccent: "Arbeiten",
             filters: "Projekte filtern",
             projectsWord: "realisierte Projekte",
-            view: "Ansehen",
             websiteNote: "Live-Websites, die Sie direkt öffnen können.",
           }
         : {
@@ -70,7 +68,6 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
             titleAccent: "work",
             filters: "Filter projects",
             projectsWord: "projects delivered",
-            view: "View",
             websiteNote: "Live sites you can open right now.",
           };
 
@@ -124,42 +121,21 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
       </section>
 
       <div className="mx-auto max-w-6xl space-y-16 px-4 sm:px-6 md:space-y-24 md:px-8">
-        {/* SOCIAL MEDIA: every mockup with its client name, opens in the lightbox */}
+        {/* SOCIAL MEDIA: the same moving rows as on the homepage, on a dark panel; a click opens the lightbox */}
         {shows("social-media") && (
-          <section aria-labelledby="work-social">
-            <GroupHeader
-              id="work-social"
-              title={label("social-media")}
-              count={SOCIAL_MEDIA_BOARDS.length}
-              note={projects.find((p) => p.category === "social-media")?.desc}
-            />
-            <ul className="mt-8 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {SOCIAL_MEDIA_BOARDS.map((board, i) => (
-                <li key={board.img}>
-                  <button
-                    type="button"
-                    onClick={() => setLightboxIndex(i)}
-                    className="group block w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B89D5E]"
-                  >
-                    <span className="relative block aspect-video overflow-hidden rounded-2xl bg-gray-100 ring-1 ring-black/5 transition group-hover:ring-[#B89D5E]/60">
-                      <Image
-                        src={board.img}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                      />
-                    </span>
-                    <span className="mt-3 flex items-center justify-between gap-3">
-                      <span className="truncate font-semibold text-gray-900">{board.name}</span>
-                      <span className="shrink-0 text-xs font-medium text-gray-400 transition group-hover:text-[#6b5a38]" aria-hidden>
-                        {copy.view} →
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+          <section aria-labelledby="work-social" className="overflow-hidden rounded-[2rem] bg-neutral-950 py-10 text-white md:py-14">
+            <div className="px-4 sm:px-6 md:px-8">
+              <GroupHeader
+                id="work-social"
+                title={label("social-media")}
+                count={SOCIAL_MEDIA_BOARDS.length}
+                note={projects.find((p) => p.category === "social-media")?.desc}
+                tone="dark"
+              />
+            </div>
+            <div className="mt-10">
+              <SocialMediaMarquee onOpen={(img) => setLightboxIndex(Math.max(0, BOARD_IMAGES.indexOf(img)))} />
+            </div>
           </section>
         )}
 
