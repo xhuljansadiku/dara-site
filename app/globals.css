@@ -244,6 +244,39 @@ select option:focus {
   animation: page-fade-in 0.35s ease-out both;
 }
 
+/* ─── Home work section: rows of project mockups drifting sideways ─── */
+@keyframes work-marquee {
+  to { transform: translateX(-50%); }
+}
+.work-marquee {
+  animation: work-marquee 70s linear infinite;
+}
+.work-marquee-reverse {
+  animation-direction: reverse;
+}
+.work-marquee-row:hover .work-marquee,
+.work-marquee-row:focus-within .work-marquee {
+  animation-play-state: paused;
+}
+/* Website captures scroll to the bottom of the page while their card is hovered (--scroll-time set inline) */
+.site-page-scroll {
+  object-position: 50% 0%;
+  transition: object-position 0.9s ease-out;
+}
+.group:hover .site-page-scroll {
+  object-position: 50% 100%;
+  transition: object-position var(--scroll-time, 4s) ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-marquee { animation: none; }
+  .work-marquee-row { overflow-x: auto; }
+  .site-page-scroll,
+  .group:hover .site-page-scroll {
+    object-position: 50% 0%;
+    transition: none;
+  }
+}
+
 /* ─── Stagger word animation ─── */
 @keyframes word-in {
   from { opacity: 0; transform: translateY(20px); }

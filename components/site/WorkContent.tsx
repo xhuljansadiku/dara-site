@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import LocaleLink from "@/components/site/LocaleLink";
 import ImageLightbox from "@/components/site/ImageLightbox";
-import ProjectCard from "@/components/site/ProjectCard";
-import SocialMediaWorkGallery from "@/components/site/SocialMediaWorkGallery";
-import type { Project, ProjectCategory } from "@/lib/projects";
-import type { FilterTab } from "@/lib/projects";
+import WebsiteMarquee from "@/components/site/WebsiteMarquee";
+import { SOCIAL_MEDIA_BOARDS, WORK_INTRO_BY_LOCALE } from "@/lib/projects";
+import type { FilterTab, Project, ProjectCategory } from "@/lib/projects";
+import { PROJECTS_DELIVERED } from "@/lib/business-facts";
 
 type Props = {
   locale: "sq" | "en" | "de";
@@ -14,14 +15,64 @@ type Props = {
   filterTabs: FilterTab[];
 };
 
+const BOARD_IMAGES = SOCIAL_MEDIA_BOARDS.map((b) => b.img);
+
+function GroupHeader({ id, title, count, note, tone = "light" }: { id: string; title: string; count: number; note?: string; tone?: "light" | "dark" }) {
+  const dark = tone === "dark";
+  return (
+    <div className={`flex flex-col gap-2 border-b pb-4 sm:flex-row sm:items-end sm:justify-between ${dark ? "border-white/10" : "border-gray-200"}`}>
+      <h2 id={id} className={`font-display text-3xl font-bold uppercase tracking-tight md:text-4xl ${dark ? "text-white" : "text-gray-900"}`}>
+        {title}
+        <span className={`ml-3 align-super text-sm font-semibold tabular-nums ${dark ? "text-[#d1b780]" : "text-[#6b5a38]"}`}>{count}</span>
+      </h2>
+      {note && <p className={`text-sm ${dark ? "text-white/55" : "text-gray-500"}`}>{note}</p>}
+    </div>
+  );
+}
+
 export default function WorkContent({ locale, projects, filterTabs }: Props) {
   const [activeFilter, setActiveFilter] = useState<ProjectCategory | "all">("all");
-  const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filteredProjects =
-    activeFilter === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeFilter);
+  const websites = projects.filter((p) => p.category === "website" && p.websiteUrl);
+  const counts: Partial<Record<ProjectCategory, number>> = {
+    "social-media": SOCIAL_MEDIA_BOARDS.length,
+    website: websites.length,
+  };
+  const label = (key: ProjectCategory) => filterTabs.find((t) => t.key === key)?.label ?? key;
+  const shows = (key: ProjectCategory) => activeFilter === "all" || activeFilter === key;
+  const total = BOARD_IMAGES.length;
+
+  const copy =
+    locale === "sq"
+      ? {
+          kicker: "Portfolio",
+          titleStart: "Puna jonë",
+          titleAccent: "e zgjedhur",
+          filters: "Filtro projektet",
+          projectsWord: "projekte të realizuara",
+          view: "Shiko",
+          websiteNote: "Faqe live që mund t'i hapni direkt.",
+        }
+      : locale === "de"
+        ? {
+            kicker: "Portfolio",
+            titleStart: "Unsere",
+            titleAccent: "Arbeiten",
+            filters: "Projekte filtern",
+            projectsWord: "realisierte Projekte",
+            view: "Ansehen",
+            websiteNote: "Live-Websites, die Sie direkt öffnen können.",
+          }
+        : {
+            kicker: "Portfolio",
+            titleStart: "Our",
+            titleAccent: "work",
+            filters: "Filter projects",
+            projectsWord: "projects delivered",
+            view: "View",
+            websiteNote: "Live sites you can open right now.",
+          };
 
   const ctaLabels =
     locale === "sq"
@@ -32,126 +83,140 @@ export default function WorkContent({ locale, projects, filterTabs }: Props) {
 
   return (
     <>
-      {/* HEADER SECTION - Same as HomeWorkSection */}
-      <section id="work" className="py-12 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
-          <div className="min-w-0 w-full sm:flex-1">
-            <p className="text-xs uppercase tracking-[0.2em] text-gray-600">
-              {locale === "sq" ? "Disa projekte" : locale === "de" ? "Ausgewählte Projekte" : "Previous projects"}
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold md:text-5xl">
-              {locale === "sq" && (
-                <>
-                  Puna jonë <span className="text-gray-900">e zgjedhur</span>
-                </>
-              )}
-              {locale === "en" && (
-                <>
-                  Our <span className="text-gray-900">work</span>
-                </>
-              )}
-              {locale === "de" && (
-                <>
-                  Unsere <span className="text-gray-900">Arbeiten</span>
-                </>
-              )}
-            </h2>
-            <p className="mt-3 max-w-none text-sm text-gray-600">
-              {locale === "sq"
-                ? "Projekte të ndryshme nga strategji dhe social media deri te brand dhe trajnime."
-                : locale === "de"
-                ? "Verschiedene Projekte von Strategie und Social Media bis Brand und Schulungen."
-                : "From strategy and social media to brand and training. A selection of what we deliver."}
+      {/* HEADER + FILTERS */}
+      <section id="work" className="pb-10 pt-10 md:pb-14 md:pt-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+          <div className="text-center">
+            <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
+              {copy.kicker}
+            </span>
+            <h1 className="mt-6 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-gray-900 md:text-7xl">
+              {copy.titleStart} <span className="text-[#B89D5E]">{copy.titleAccent}</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">{WORK_INTRO_BY_LOCALE[locale]}</p>
+            <p className="mt-4 text-sm font-semibold text-[#6b5a38]">
+              {PROJECTS_DELIVERED} {copy.projectsWord}
             </p>
           </div>
-        </div>
 
-        {/* FILTER TABS */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          {filterTabs.map((tab) => (
-            <button
-              key={tab.key}
-              type="button"
-              onClick={() => setActiveFilter(tab.key)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                activeFilter === tab.key
-                  ? "bg-gray-900 text-white"
-                  : "border border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Social Media = large photos | Others = cards */}
-        {(() => {
-          const smProjects = filteredProjects.filter((p) => p.category === "social-media");
-          const smImages = smProjects.flatMap((p) =>
-            p.images?.length ? p.images : p.thumbnail ? [p.thumbnail] : []
-          );
-          const otherProjects = filteredProjects.filter((p) => p.category !== "social-media");
-          return (
-            <div className="mt-10 space-y-10">
-              {smImages.length > 0 && (
-                <SocialMediaWorkGallery
-                  images={smImages}
-                  onOpenImage={(index) => setLightbox({ images: smImages, index })}
-                />
-              )}
-              {otherProjects.length > 0 && (
-                <div className="grid min-h-0 grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {otherProjects.map((p) => (
-                    <ProjectCard key={p.title} project={p} locale={locale} setLightbox={setLightbox} />
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })()}
-
-        {lightbox && (
-          <ImageLightbox
-            images={lightbox.images}
-            currentIndex={lightbox.index}
-            alt="Project"
-            onClose={() => setLightbox(null)}
-            onPrev={() =>
-              setLightbox((prev) =>
-                prev ? { ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length } : null
-              )
-            }
-            onNext={() =>
-              setLightbox((prev) =>
-                prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null
-              )
-            }
-          />
-        )}
+          <div role="group" aria-label={copy.filters} className="mt-10 flex flex-wrap justify-center gap-2">
+            {filterTabs.map((tab) => {
+              const on = activeFilter === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setActiveFilter(tab.key)}
+                  className={`inline-flex h-11 items-center gap-2 rounded-xl border px-5 text-sm font-medium transition ${
+                    on ? "border-gray-900 bg-gray-900 text-white" : "border-gray-200 bg-white text-gray-700 hover:border-gray-400 hover:text-gray-900"
+                  }`}
+                >
+                  {tab.label}
+                  {tab.key !== "all" && counts[tab.key] !== undefined && (
+                    <span className={`text-xs tabular-nums ${on ? "text-[#d1b780]" : "text-gray-400"}`}>{counts[tab.key]}</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
+
+      <div className="mx-auto max-w-6xl space-y-16 px-4 sm:px-6 md:space-y-24 md:px-8">
+        {/* SOCIAL MEDIA: every mockup with its client name, opens in the lightbox */}
+        {shows("social-media") && (
+          <section aria-labelledby="work-social">
+            <GroupHeader
+              id="work-social"
+              title={label("social-media")}
+              count={SOCIAL_MEDIA_BOARDS.length}
+              note={projects.find((p) => p.category === "social-media")?.desc}
+            />
+            <ul className="mt-8 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+              {SOCIAL_MEDIA_BOARDS.map((board, i) => (
+                <li key={board.img}>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex(i)}
+                    className="group block w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B89D5E]"
+                  >
+                    <span className="relative block aspect-video overflow-hidden rounded-2xl bg-gray-100 ring-1 ring-black/5 transition group-hover:ring-[#B89D5E]/60">
+                      <Image
+                        src={board.img}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                      />
+                    </span>
+                    <span className="mt-3 flex items-center justify-between gap-3">
+                      <span className="truncate font-semibold text-gray-900">{board.name}</span>
+                      <span className="shrink-0 text-xs font-medium text-gray-400 transition group-hover:text-[#6b5a38]" aria-hidden>
+                        {copy.view} →
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* WEBSITE: the same moving row as on the homepage, on a dark panel */}
+        {shows("website") && websites.length > 0 && (
+          <section aria-labelledby="work-web" className="overflow-hidden rounded-[2rem] bg-neutral-950 py-10 text-white md:py-14">
+            <div className="px-4 sm:px-6 md:px-8">
+              <GroupHeader id="work-web" title={label("website")} count={websites.length} note={copy.websiteNote} tone="dark" />
+            </div>
+            <div className="mt-10">
+              <WebsiteMarquee sites={websites} />
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={BOARD_IMAGES}
+          currentIndex={lightboxIndex}
+          alt="Project"
+          onClose={() => setLightboxIndex(null)}
+          onPrev={() => setLightboxIndex((i) => (i === null ? null : (i - 1 + total) % total))}
+          onNext={() => setLightboxIndex((i) => (i === null ? null : (i + 1) % total))}
+        />
+      )}
 
       {/* CTA */}
-      <section className="py-12 md:py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        <div className="rounded-3xl border border-gray-200 bg-white p-6 text-center shadow-sm md:p-10 md:text-left">
-          <h2 className="text-2xl font-semibold md:text-3xl text-gray-900">
-            {ctaLabels.title} <span className="text-gray-900">{ctaLabels.accent}</span>.
-          </h2>
-          <p className="mt-2 mx-auto max-w-2xl text-gray-600 md:mx-0">{ctaLabels.desc}</p>
-          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center md:justify-start">
-            <LocaleLink href="/contact" className="inline-flex h-11 w-full max-w-md items-center justify-center rounded-xl bg-gray-900 px-5 font-medium text-white hover:bg-gray-800 sm:mx-auto sm:w-auto md:mx-0">
-              {ctaLabels.contact}
-            </LocaleLink>
-            <LocaleLink href="/" className="inline-flex h-11 w-full max-w-md items-center justify-center rounded-xl border-2 border-gray-300 px-5 font-medium text-gray-900 hover:border-gray-900 hover:bg-gray-50 sm:mx-auto sm:w-auto md:mx-0">
-              {ctaLabels.backHome}
-            </LocaleLink>
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+          <div className="relative overflow-hidden rounded-[2rem] bg-neutral-950 px-6 py-12 text-center text-white md:px-12 md:py-16">
+            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#B89D5E]/20 blur-3xl" aria-hidden />
+            <h2 className="relative mx-auto max-w-3xl font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight md:text-6xl">
+              {ctaLabels.title} <span className="text-[#d1b780]">{ctaLabels.accent}</span>
+            </h2>
+            <p className="relative mx-auto mt-5 max-w-xl text-white/65">{ctaLabels.desc}</p>
+            <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <LocaleLink
+                href="/contact"
+                className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#B89D5E] px-8 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85] sm:w-auto"
+              >
+                {ctaLabels.contact}
+                <span aria-hidden className="transition group-hover:translate-x-0.5">
+                  →
+                </span>
+              </LocaleLink>
+              <LocaleLink
+                href="/"
+                className="inline-flex h-12 w-full items-center justify-center rounded-full border border-white/20 px-8 text-sm font-semibold text-white transition hover:border-white/50 sm:w-auto"
+              >
+                {ctaLabels.backHome}
+              </LocaleLink>
+            </div>
           </div>
         </div>
-        </div>
       </section>
-      <div className="h-8" />
     </>
   );
 }

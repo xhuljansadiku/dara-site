@@ -20,6 +20,12 @@ export default withNextIntl({
         destination: "/en/trainings/smm",
         permanent: true,
       },
+      // The brand logo page was removed; send old links and indexed URLs to the portfolio.
+      {
+        source: "/:locale(sq|en|de)/work/brand",
+        destination: "/:locale/work",
+        permanent: true,
+      },
       // Historical opengraph cache-busted path.
       {
         source: "/opengraph-image:hash",

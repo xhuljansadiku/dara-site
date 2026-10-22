@@ -21,7 +21,6 @@ export const INDEXABLE_STATIC_PATHS = [
   "/terms",
   "/trainings",
   "/work",
-  "/work/brand",
   "/faq",
 ] as const;
 
