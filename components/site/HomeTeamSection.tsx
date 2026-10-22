@@ -7,7 +7,12 @@ import { getTeamMembersForLocale, type TeamMemberPublic } from "@/lib/team-membe
 
 type Locale = "sq" | "en" | "de";
 
-type Props = { locale: Locale };
+type Props = {
+  locale: Locale;
+  /** The /team page uses this block as its main heading and hides the link to itself. */
+  headingLevel?: "h1" | "h2";
+  showTeamLink?: boolean;
+};
 
 const COPY: Record<Locale, { kicker: string; title: string; titleHighlight: string; intro: string; cta: string; founder: string }> = {
   sq: {
@@ -50,7 +55,8 @@ function Face({ m, className, sizes, text }: { m: TeamMemberPublic; className: s
 }
 
 /** The founder in the middle and the team around her; hovering or tapping a person shows their role and bio. */
-export default function HomeTeamSection({ locale }: Props) {
+export default function HomeTeamSection({ locale, headingLevel = "h2", showTeamLink = true }: Props) {
+  const Heading = headingLevel;
   const copy = COPY[locale];
   const [lead, ...rest] = getTeamMembersForLocale(locale);
   const [activeName, setActiveName] = useState(lead.name);
@@ -64,23 +70,23 @@ export default function HomeTeamSection({ locale }: Props) {
             <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
             {copy.kicker}
           </span>
-          <h2 id="team-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight md:text-6xl">
+          <Heading id="team-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight md:text-6xl">
             {copy.title} <span className="text-[#d1b780]">{copy.titleHighlight}</span>
-          </h2>
+          </Heading>
           <p className="mt-5 text-[15px] leading-relaxed text-white/65">{copy.intro}</p>
           <div key={active.name} className="animate-packages-tab-enter mt-10 rounded-[1.5rem] bg-white/[0.05] p-6 ring-1 ring-white/10" aria-live="polite">
             <p className="font-display text-3xl font-bold uppercase">{active.name}</p>
             <p className="text-sm text-[#d1b780]">{active.role}</p>
             <p className="mt-3 text-sm leading-relaxed text-white/70">{active.bio}</p>
           </div>
-          <div className="mt-8">
+          {showTeamLink && <div className="mt-8">
             <LocaleLink href="/team" className="group inline-flex h-12 items-center gap-2 rounded-full bg-[#B89D5E] px-7 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]">
               {copy.cta}
               <span aria-hidden className="transition group-hover:translate-x-0.5">
                 →
               </span>
             </LocaleLink>
-          </div>
+          </div>}
         </div>
 
         <div className="relative mx-auto aspect-square w-full max-w-[30rem]">

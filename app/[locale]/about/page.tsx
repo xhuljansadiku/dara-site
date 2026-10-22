@@ -1,8 +1,8 @@
 // app/[locale]/about/page.tsx - About us (company-focused), localized sq/en/de
 import { use } from "react";
-import LocaleLink from "@/components/site/LocaleLink";
+import HomeAboutSection from "@/components/site/HomeAboutSection";
+import HomeContactCta from "@/components/site/HomeContactCta";
 import AnimateIn from "@/components/site/AnimateIn";
-import MarketingVideo from "@/components/site/MarketingVideo";
 import type { Metadata } from "next";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import { buildLocalizedMetadata } from "@/lib/seo-utils";
@@ -42,70 +42,6 @@ export async function generateMetadata({
     description: meta.description,
   });
 }
-
-const HERO_BY_LOCALE: Record<
-  Locale,
-  {
-    kicker: string;
-    title: string;
-    paragraphs: string[];
-    stats: { k: string; v: string }[];
-    ctaWork: string;
-    ctaContact: string;
-  }
-> = {
-  sq: {
-    kicker: "Rreth nesh",
-    title: "Ne jemi DARA Marketing",
-    paragraphs: [
-      "DARA Marketing Agency është agjenci marketingu dhe web design në Tiranë, Shqipëri. Themeluar më 2020. Ndihmojmë kompanitë shqiptare dhe ndërkombëtare me krijim website, branding dhe marketing digjital që konverton.",
-      "E udhëhequr nga filozofia “Guxo të jesh ndryshe”, besojmë se çdo brand ka një histori unike. Misioni ynë është t’ua sjellim këto histori në jetë përmes strategjive të guximshme dhe përmbajtjes që konverton.",
-      "Ekipi ynë kombinon kreativitetin, përvojën dhe një qasje praktike për të ndihmuar bizneset në Shqipëri dhe më gjerë të bëhen histori suksesi.",
-    ],
-    stats: [
-      { k: "Themeluar", v: "2020" },
-      { k: "DARA", v: "Guxo të jesh ndryshe" },
-      { k: "Fokus", v: "Rezultatet & rritja" },
-      { k: "Ekipi", v: "" }, // Will be replaced dynamically
-    ],
-    ctaWork: "Shiko punën tonë",
-    ctaContact: "Na kontakto",
-  },
-  en: {
-    kicker: "About us",
-    title: "We are DARA Marketing",
-    paragraphs: [
-      "DARA Marketing Agency is your marketing partner. Established in 2020. We help businesses grow through creative strategies and results-oriented marketing.",
-      "Driven by the philosophy “Dare to be Different”, we believe every brand has a unique story. Our mission is to bring those stories to life through bold strategies and content that converts.",
-      "Our team combines creativity, experience and a hands-on approach to help local and international businesses become success stories.",
-    ],
-    stats: [
-      { k: "Established", v: "2020" },
-      { k: "DARA", v: "Dare to be different" },
-      { k: "Focus", v: "Results & growth" },
-      { k: "Team", v: "" }, // Will be replaced dynamically
-    ],
-    ctaWork: "View our work",
-    ctaContact: "Contact us",
-  },
-  de: {
-    kicker: "Über uns",
-    title: "Wir sind DARA Marketing",
-    paragraphs: [
-      "DARA Marketing Agency ist Ihre Marketing-Partnerin. Gegründet im Jahr 2020. Wir helfen Unternehmen beim Wachstum durch kreative Strategien und ergebnisorientiertes Marketing.",
-      "Geleitet von der Philosophie „Wage es, anders zu sein“, glauben wir, dass jede Marke eine einzigartige Geschichte hat. Unsere Mission ist es, diese Geschichten durch mutige Strategien und konvertierenden Content zum Leben zu erwecken.",
-      "Unser Team verbindet Kreativität, Erfahrung und einen praxisnahen Ansatz, um lokale und internationale Unternehmen zu Erfolgsgeschichten zu machen.",
-    ],
-    stats: [
-      { k: "Gegründet", v: "2020" },
-      { k: "DARA", v: "Wage es, anders zu sein" },
-      { k: "Fokus", v: "Ergebnisse & Wachstum" },
-      { k: "Team", v: "" }, // Will be replaced dynamically
-    ],
-    ctaWork: "Unsere Arbeiten",
-    ctaContact: "Kontaktiere uns",
-  },
-};
 
 const PROCESS_BY_LOCALE: Record<
   Locale,
@@ -477,127 +413,18 @@ const TARGET_BY_LOCALE: Record<
   },
 };
 
-const CTA_BY_LOCALE: Record<Locale, { titleRest: string; titleHighlight: string; subtitle: string; contact: string; viewWork: string }> = {
-  sq: {
-    titleRest: "Le të punojmë bashkë dhe të krijojmë ",
-    titleHighlight: "diçka të madhe.",
-    subtitle: "Ndani vizionin dhe objektivat.\nDo të kthehemi me një plan të qartë.",
-    contact: "Na kontakto",
-    viewWork: "Shiko punën tonë",
-  },
-  en: {
-    titleRest: "Let's work together and create ",
-    titleHighlight: "something great.",
-    subtitle: "Share your vision and objectives.\nWe'll get back with a clear plan.",
-    contact: "Contact us",
-    viewWork: "View our work",
-  },
-  de: {
-    titleRest: "Lass uns gemeinsam ",
-    titleHighlight: "etwas Großartiges schaffen.",
-    subtitle: "Teilen Sie Ihre Vision und Ziele. Wir melden uns mit einem klaren Plan.",
-    contact: "Kontaktiere uns",
-    viewWork: "Unsere Arbeiten",
-  },
-};
-
 export default function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeFromParams } = use(params);
   const locale: Locale = ["sq", "en", "de"].includes(localeFromParams as Locale) ? (localeFromParams as Locale) : "sq";
 
-  const yearsExpFormatted = getYearsOfExperienceFormatted();
-  const heroRaw = HERO_BY_LOCALE[locale];
-  // Replace experience stat dynamically
-  const hero = {
-    ...heroRaw,
-    stats: heroRaw.stats.map((stat) =>
-      stat.k === "Ekipi" || stat.k === "Team"
-        ? {
-            ...stat,
-            v:
-              locale === "sq"
-                ? `${yearsExpFormatted} vite përvojë`
-                : locale === "de"
-                ? `${yearsExpFormatted} Jahre Erfahrung`
-                : `${yearsExpFormatted} years experience`,
-          }
-        : stat
-    ),
-  };
   const process = PROCESS_BY_LOCALE[locale];
   const missionVision = MISSION_VISION_BY_LOCALE[locale];
   const differentiators = DIFFERENTIATORS_BY_LOCALE[locale];
   const target = TARGET_BY_LOCALE[locale];
-  const cta = CTA_BY_LOCALE[locale];
 
   return (
     <>
-      {/* HERO - Full-width modern hero */}
-      <section className="relative overflow-hidden py-16 sm:py-20 md:py-28 lg:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="grid items-center gap-10 sm:gap-14 md:gap-16 lg:grid-cols-2 lg:gap-20">
-            <div className="relative order-1 text-center lg:order-2 lg:text-left">
-              <span className="inline-block rounded-full border border-gray-200 bg-gray-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-700">
-                {hero.kicker}
-              </span>
-              <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl xl:text-7xl">
-                {hero.title.includes(" ") ? (
-                  <>
-                    {hero.title.split(" ").slice(0, -1).join(" ")}{" "}
-                    <span className="text-[#B89D5E]">
-                      {hero.title.split(" ").slice(-1)[0]}
-                    </span>
-                  </>
-                ) : (
-                  hero.title
-                )}
-              </h1>
-              <div className="mt-8 space-y-5 text-base leading-relaxed text-gray-600 md:text-lg">
-                {hero.paragraphs.map((p, idx) => (
-                  <p key={idx} className="mx-auto max-w-xl lg:mx-0">{p}</p>
-                ))}
-              </div>
-
-              {/* Stats - horizontal bar */}
-              <div className="mt-10 flex flex-wrap justify-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:gap-10 md:p-8 lg:justify-start">
-                {hero.stats.map((s) => (
-                  <div key={s.k} className="flex flex-col text-center lg:text-left">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-500">{s.k}</span>
-                    <span className="mt-1 text-lg font-bold text-gray-900 md:text-xl">{s.v}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
-                <LocaleLink
-                  href="/contact"
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
-                >
-                  {hero.ctaContact}
-                </LocaleLink>
-                <LocaleLink
-                  href="/work"
-                  className="inline-flex h-12 items-center justify-center rounded-full border-2 border-gray-300 px-8 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
-                >
-                  {hero.ctaWork}
-                </LocaleLink>
-              </div>
-            </div>
-
-            <div className="relative order-2 lg:order-1 flex justify-center items-center">
-              <div className="relative w-full max-w-[280px] sm:max-w-[320px]">
-                <div className="aspect-[9/16] overflow-hidden rounded-[1.75rem] border-4 border-gray-900/10 bg-black shadow-2xl shadow-gray-900/10">
-                  <MarketingVideo src="/video/about-dara.mp4" className="h-full w-full object-cover" />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                    <p className="text-sm font-medium text-white">DARA Marketing Agency</p>
-                    <p className="text-xs text-white/90">{hero.stats[1]?.v}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeAboutSection locale={locale} years={getYearsOfExperienceFormatted()} headingLevel="h1" showReadMore={false} />
 
       {/* PROCESS - Modern grid */}
       <section id="process" className="relative py-20 md:py-28">
@@ -815,35 +642,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-10 md:p-16 lg:p-20">
-            <div className="relative text-center">
-              <h2 className="font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl lg:text-5xl">
-                {cta.titleRest}
-                <span className="text-gray-900">{cta.titleHighlight}</span>
-              </h2>
-              <p className="mx-auto mt-6 max-w-2xl whitespace-pre-line text-lg text-gray-600">{cta.subtitle}</p>
-
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <LocaleLink
-                  href="/contact"
-                  className="inline-flex h-14 items-center justify-center rounded-full bg-gray-900 px-10 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
-                >
-                  {cta.contact}
-                </LocaleLink>
-                <LocaleLink
-                  href="/work"
-                  className="inline-flex h-14 items-center justify-center rounded-full border-2 border-gray-300 px-10 font-medium text-gray-900 transition hover:border-gray-900 hover:bg-gray-50 sm:w-auto"
-                >
-                  {cta.viewWork}
-                </LocaleLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeContactCta locale={locale} />
 
       <div className="h-8" />
     </>

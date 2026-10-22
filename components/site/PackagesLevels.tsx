@@ -47,7 +47,11 @@ type Props = {
   locale: Locale;
   packagesByGroup: Record<PackageGroup, Pkg[]>;
   groupLabels: Record<PackageGroup, string>;
-  copy: { kicker: string; titleBefore: string; titleHighlight: string; intro: string; compare: string };
+  copy: { kicker: string; titleBefore: string; titleHighlight: string; intro: string; compare?: string };
+  /** Category to open first, e.g. from /packages?group=ecommerce. */
+  initialGroup?: PackageGroup | null;
+  /** The /packages page uses this block as its main heading. */
+  headingLevel?: "h1" | "h2";
 };
 
 const NUMBER = /\d{1,3}(?:[.,]\d{3})+|\d+/;
@@ -128,11 +132,12 @@ function Check({ gold = false }: { gold?: boolean }) {
  * Homepage packages: pick a category, then a level with the slider (or the level buttons). One card shows the
  * chosen package; its price counts to the new amount and the points it adds over the previous level light up.
  */
-export default function PackagesLevels({ locale, packagesByGroup, groupLabels, copy }: Props) {
+export default function PackagesLevels({ locale, packagesByGroup, groupLabels, copy, initialGroup, headingLevel = "h2" }: Props) {
+  const Heading = headingLevel;
   const ui = UI[locale];
   const sliderId = useId();
   const groups = PACKAGE_GROUPS.filter((g) => packagesByGroup[g]?.length);
-  const [group, setGroup] = useState<PackageGroup>(groups[0] ?? "marketing");
+  const [group, setGroup] = useState<PackageGroup>(initialGroup && groups.includes(initialGroup) ? initialGroup : (groups[0] ?? "marketing"));
   const pkgs = packagesByGroup[group] ?? [];
   const [level, setLevel] = useState(() => featuredIndex(pkgs));
   const pick = Math.min(level, Math.max(0, pkgs.length - 1));
@@ -159,10 +164,10 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
           <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
           {copy.kicker}
         </span>
-        <h2 className="mt-4 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-neutral-950 md:text-6xl">
+        <Heading className="mt-4 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-neutral-950 md:text-6xl">
           {copy.titleBefore}
           <span className="text-[#8a7344]">{copy.titleHighlight}</span>
-        </h2>
+        </Heading>
         <p className="mt-5 text-[15px] leading-relaxed text-neutral-600">{copy.intro}</p>
       </div>
 
@@ -225,12 +230,12 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
 
         <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2 lg:self-start">
           {note && <p className="text-sm leading-relaxed text-neutral-600">{note}</p>}
-          <LocaleLink href="/packages" className="group mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-neutral-950 hover:text-[#8a7344]">
+          {copy.compare && <LocaleLink href="/packages" className="group mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-neutral-950 hover:text-[#8a7344]">
             {copy.compare}
             <span aria-hidden className="transition group-hover:translate-x-0.5">
               →
             </span>
-          </LocaleLink>
+          </LocaleLink>}
         </div>
 
         <article aria-live="polite" className="rounded-[1.75rem] bg-neutral-950 p-6 text-white shadow-[0_40px_90px_-45px_rgba(0,0,0,0.6)] sm:p-8 md:rounded-[2rem] md:p-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">

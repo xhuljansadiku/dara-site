@@ -5,7 +5,8 @@ import { ABOUT_BY_LOCALE, ABOUT_STATS_BY_LOCALE } from "@/lib/home-about";
 type Locale = "sq" | "en" | "de";
 
 /** Homepage "About us": the agency video fills the section, with the copy and the key numbers on top. */
-export default function HomeAboutSection({ locale, years }: { locale: Locale; years: string }) {
+export default function HomeAboutSection({ locale, years, headingLevel = "h2", showReadMore = true }: { locale: Locale; years: string; headingLevel?: "h1" | "h2"; showReadMore?: boolean }) {
+  const Heading = headingLevel;
   const about = ABOUT_BY_LOCALE[locale];
   const raw = ABOUT_STATS_BY_LOCALE[locale];
   const stats = [{ value: years, label: raw[0].label }, ...raw.slice(1)];
@@ -22,10 +23,10 @@ export default function HomeAboutSection({ locale, years }: { locale: Locale; ye
           {about.kicker}
         </span>
         <div className="mt-5 max-w-2xl">
-          <h2 id="about-heading" className="font-display text-6xl font-bold uppercase leading-[0.9] tracking-tight md:text-8xl">
+          <Heading id="about-heading" className="font-display text-6xl font-bold uppercase leading-[0.9] tracking-tight md:text-8xl">
             {about.titlePrefix}
             <span className="text-[#d1b780]">{about.titleAccent}</span>
-          </h2>
+          </Heading>
           <p className="mt-6 text-lg leading-relaxed text-white/80">{about.paragraphs[0]}</p>
           <p className="mt-4 leading-relaxed text-white/60">{about.paragraphs[1]}</p>
         </div>
@@ -37,7 +38,7 @@ export default function HomeAboutSection({ locale, years }: { locale: Locale; ye
             </div>
           ))}
         </dl>
-        <div className="mt-8">
+        {showReadMore && <div className="mt-8">
           <LocaleLink
             href="/about"
             className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#B89D5E] px-7 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]"
@@ -47,7 +48,7 @@ export default function HomeAboutSection({ locale, years }: { locale: Locale; ye
               →
             </span>
           </LocaleLink>
-        </div>
+        </div>}
       </div>
     </section>
   );
