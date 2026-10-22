@@ -79,7 +79,7 @@ export default function TrainingsPage({ params }: Props) {
         </div>
       </section>
       <TrainingsSection locale={locale} />
-      <GoogleReviewsSection locale={locale} />
+      <GoogleReviewsSection locale={locale} audience="training" />
       <div className="h-8" />
     </>
   );
