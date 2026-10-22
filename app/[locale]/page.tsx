@@ -1,7 +1,6 @@
 // app/[locale]/page.tsx - Localised home page for sq/en/de
 import type { ReactNode } from "react";
 import { use } from "react";
-import NewsletterForm from "@/components/NewsletterForm";
 import LocaleLink from "@/components/site/LocaleLink";
 import ServicesSection from "@/components/site/ServicesSection";
 import TrainingsSection from "@/components/site/TrainingsSection";
@@ -24,6 +23,7 @@ import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
 import { buildLocalizedMetadata } from "@/lib/seo-utils";
 import { CONTACT, PROJECTS_DELIVERED } from "@/lib/business-facts";
 import HomeAboutSection from "@/components/site/HomeAboutSection";
+import HomeContactCta from "@/components/site/HomeContactCta";
 import { getVerifiedTestimonials } from "@/lib/testimonials";
 
 type Locale = "sq" | "en" | "de";
@@ -234,66 +234,6 @@ const SERVICES_SECTION_COPY: Record<
   },
 };
 
-const CTA_BY_LOCALE: Record<
-  Locale,
-  {
-    title: string;
-    titleAccent: string;
-    subtitle: string;
-    button: string;
-    stepsTitle: string;
-    steps: string[];
-    needTitle: string;
-    need: string;
-    newsletterNote: string;
-  }
-> = {
-  sq: {
-    title: "Le të flasim për",
-    titleAccent: "projektin tuaj",
-    subtitle: "Kërkoni ofertë për një website, dyqan online, fushatë ose audit të prezencës suaj digjitale.",
-    button: "Kërko ofertë",
-    stepsTitle: "Çfarë ndodh pasi dërgoni kërkesën",
-    steps: [
-      "Plotësoni formularin e shkurtër (rreth 2 minuta).",
-      "Ju kthejmë përgjigje brenda 24 orëve, me pyetje nëse na mungon diçka.",
-      "Merrni një plan të shkurtër me scope-in, afatet dhe ofertën. Pa angazhim.",
-    ],
-    needTitle: "Çfarë na ndihmon",
-    need: "Linku i website-it ose rrjeteve sociale, qëllimi kryesor dhe, nëse e keni, një buxhet orientues.",
-    newsletterNote: "Pa spam. Çabonohuni kur të doni.",
-  },
-  en: {
-    title: "Let’s talk about",
-    titleAccent: "your project",
-    subtitle: "Request a quote for a website, online store, campaign or an audit of your digital presence.",
-    button: "Request a quote",
-    stepsTitle: "What happens after you send a request",
-    steps: [
-      "Fill in the short form (about 2 minutes).",
-      "We reply within 24 hours, with questions if anything is missing.",
-      "You receive a short plan with scope, timeline and a quote. No commitment.",
-    ],
-    needTitle: "What helps us",
-    need: "A link to your website or social profiles, your main goal and, if you have one, an indicative budget.",
-    newsletterNote: "No spam. Unsubscribe anytime.",
-  },
-  de: {
-    title: "Sprechen wir über",
-    titleAccent: "Ihr Projekt",
-    subtitle: "Fragen Sie ein Angebot für Website, Online-Shop, Kampagne oder ein Audit Ihres digitalen Auftritts an.",
-    button: "Angebot anfragen",
-    stepsTitle: "Was nach Ihrer Anfrage passiert",
-    steps: [
-      "Sie füllen das kurze Formular aus (ca. 2 Minuten).",
-      "Wir melden uns innerhalb von 24 Stunden, mit Rückfragen, falls etwas fehlt.",
-      "Sie erhalten einen kurzen Plan mit Umfang, Zeitrahmen und Angebot. Unverbindlich.",
-    ],
-    needTitle: "Was uns hilft",
-    need: "Ein Link zu Ihrer Website oder Ihren Social-Media-Profilen, Ihr Hauptziel und, falls vorhanden, ein Budgetrahmen.",
-    newsletterNote: "Kein Spam. Jederzeit abmelden.",
-  },
-};
 
 const CAREER_BY_LOCALE: Record<Locale, { text: string; cta: string }> = {
   sq: { text: "Dëshironi të punoni me ne? Shikoni pozicionet dhe mundësitë e bashkëpunimit.", cta: "Karrierë" },
@@ -331,7 +271,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   });
 }
 
-const CONTACT_LABEL: Record<Locale, string> = { sq: "Kontakt", en: "Contact", de: "Kontakt" };
 
 export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: localeFromParams } = use(params);
@@ -341,7 +280,6 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const yearsExperienceFormatted = getYearsOfExperienceFormatted();
   const hero = HERO_BY_LOCALE[locale];
   const services = SERVICES_BY_LOCALE[locale];
-  const cta = CTA_BY_LOCALE[locale];
   const career = CAREER_BY_LOCALE[locale];
   const pillarsHeader = VALUE_PILLARS_HEADER[locale];
   const pillars = VALUE_PILLARS_BY_LOCALE[locale];
@@ -503,101 +441,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
       <HomeFaqSection locale={locale} />
 
-      {/* Final CTA: what happens next + contact details */}
-      <section id="contact-cta" className="relative py-16 md:py-24" aria-labelledby="cta-heading">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white shadow-[0_24px_64px_-32px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] sm:rounded-[2rem]">
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#B89D5E]/8 via-transparent to-transparent" aria-hidden />
-            <div className="relative z-10 px-5 py-10 md:px-12 md:py-16 lg:px-16">
-              <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
-                {/* Left - CTA */}
-                <div className="text-center lg:text-left">
-                  <h2 id="cta-heading" className="font-display text-3xl font-bold leading-[1.15] text-neutral-950 md:text-4xl lg:text-[2.75rem]">
-                    {cta.title} <span className="text-gradient-gold">{cta.titleAccent}</span>
-                  </h2>
-                  <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-neutral-600 lg:mx-0">{cta.subtitle}</p>
-                  <h3 className="mt-8 text-sm font-semibold text-neutral-950">{cta.stepsTitle}</h3>
-                  <ol className="mx-auto mt-4 w-full max-w-md space-y-3 text-left lg:mx-0 lg:max-w-none">
-                    {cta.steps.map((step, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-xs font-semibold text-white">
-                          {idx + 1}
-                        </span>
-                        <span className="min-w-0 pt-0.5 text-sm leading-snug text-gray-700">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                  <p className="mx-auto mt-6 max-w-md rounded-xl bg-stone-50 px-4 py-3 text-left text-sm text-neutral-600 lg:mx-0 lg:max-w-none">
-                    <span className="font-semibold text-neutral-900">{cta.needTitle}:</span> {cta.need}
-                  </p>
-                  <div className="mt-8 flex justify-center lg:justify-start">
-                    <LocaleLink
-                      href="/contact"
-                      className="inline-flex h-12 w-full max-w-sm items-center justify-center rounded-full bg-neutral-950 px-8 text-sm font-semibold text-white shadow-lg shadow-neutral-900/20 transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-950 sm:w-auto"
-                    >
-                      {cta.button}
-                    </LocaleLink>
-                  </div>
-                </div>
-
-                {/* Right - Contact & Newsletter (secondary) */}
-                <div className="space-y-10">
-                  <div>
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-900">{CONTACT_LABEL[locale]}</h3>
-                    <ul className="mt-5 space-y-4 text-sm">
-                      <li>
-                        <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
-                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                          </span>
-                          <span className="min-w-0 break-words">{CONTACT.email}</span>
-                        </a>
-                      </li>
-                      <li className="flex flex-wrap items-center gap-3">
-                        <a href={`tel:${CONTACT.phoneE164}`} className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
-                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                          </span>
-                          {CONTACT.phoneDisplay}
-                        </a>
-                        <a
-                          href={CONTACT.whatsappUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex min-h-9 items-center rounded-full bg-[#25D366]/15 px-3 text-xs font-semibold text-[#0b5c2c] ring-1 ring-[#25D366]/40 transition hover:bg-[#25D366]/25"
-                        >
-                          WhatsApp
-                        </a>
-                      </li>
-                      <li>
-                        <a href={CONTACT.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-gray-900/80 transition hover:text-gray-900">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100" aria-hidden>
-                            <svg className="h-4 w-4 text-gray-900/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                          </span>
-                          <span className="min-w-0">{CONTACT.address}</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-900">Newsletter</h3>
-                    <NewsletterForm locale={locale} />
-                    <p className="mt-3 text-xs text-gray-600">{cta.newsletterNote}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <HomeContactCta locale={locale} />
       {/* Careers: kept secondary to the client enquiry journey */}
       <aside className="mx-auto mb-10 max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-stone-50 px-6 py-5 text-center sm:flex-row sm:text-left">
