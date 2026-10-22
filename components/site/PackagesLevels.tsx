@@ -166,14 +166,15 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
         <p className="mt-5 text-[15px] leading-relaxed text-neutral-600">{copy.intro}</p>
       </div>
 
-      <div role="group" aria-label={ui.groups} className="mt-8 flex flex-wrap gap-2">
+      {/* Phones: one row that scrolls sideways; wider screens: wrapped. */}
+      <div role="group" aria-label={ui.groups} className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
         {groups.map((g) => (
           <button
             key={g}
             type="button"
             aria-pressed={group === g}
             onClick={() => chooseGroup(g)}
-            className={`min-h-10 rounded-full border px-4 text-sm font-medium transition ${
+            className={`min-h-10 shrink-0 whitespace-nowrap rounded-full border px-4 text-sm font-medium transition ${
               group === g ? "border-neutral-950 bg-neutral-950 text-white" : "border-neutral-950/15 bg-white text-neutral-700 hover:border-neutral-950"
             }`}
           >
@@ -182,8 +183,9 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
         ))}
       </div>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
-        <div>
+      {/* Phones: selector, card, then notes. Desktop: selector and notes on the left, the card on the right. */}
+      <div className="mt-8 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.1fr] lg:gap-x-14 lg:gap-y-6">
+        <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
           {pkgs.length > 1 && (
             <>
               <label htmlFor={sliderId} className="text-[11px] font-semibold uppercase tracking-[0.3em] text-neutral-500">
@@ -209,18 +211,21 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
                 type="button"
                 aria-pressed={pick === i}
                 onClick={() => setLevel(i)}
-                className={`rounded-2xl border px-3 py-3 text-left transition ${pick === i ? "border-neutral-950 bg-neutral-950 text-white" : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-950"}`}
+                className={`rounded-2xl border px-2.5 py-2.5 text-left transition sm:px-3 sm:py-3 ${pick === i ? "border-neutral-950 bg-neutral-950 text-white" : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-950"}`}
               >
-                <span className="block font-display text-lg font-bold uppercase leading-tight">{x.title}</span>
-                <span className={`block text-xs ${pick === i ? "text-[#d1b780]" : "text-neutral-500"}`}>{x.price}</span>
+                <span className="block font-display text-base font-bold uppercase leading-tight sm:text-lg">{x.title}</span>
+                <span className={`block text-[11px] leading-snug sm:text-xs ${pick === i ? "text-[#d1b780]" : "text-neutral-500"}`}>{x.price}</span>
                 {i === fi && pkgs.length > 1 && (
                   <span className={`mt-1 block text-[10px] font-semibold ${pick === i ? "text-white/70" : "text-[#8a7344]"}`}>★ {x.badge ?? ui.recommended}</span>
                 )}
               </button>
             ))}
           </div>
-          {note && <p className="mt-6 text-sm leading-relaxed text-neutral-600">{note}</p>}
-          <LocaleLink href="/packages" className="group mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-neutral-950 hover:text-[#8a7344]">
+        </div>
+
+        <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2 lg:self-start">
+          {note && <p className="text-sm leading-relaxed text-neutral-600">{note}</p>}
+          <LocaleLink href="/packages" className="group mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-neutral-950 hover:text-[#8a7344]">
             {copy.compare}
             <span aria-hidden className="transition group-hover:translate-x-0.5">
               →
@@ -228,13 +233,13 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
           </LocaleLink>
         </div>
 
-        <article aria-live="polite" className="rounded-[2rem] bg-neutral-950 p-8 text-white shadow-[0_40px_90px_-45px_rgba(0,0,0,0.6)] md:p-10">
+        <article aria-live="polite" className="rounded-[1.75rem] bg-neutral-950 p-6 text-white shadow-[0_40px_90px_-45px_rgba(0,0,0,0.6)] sm:p-8 md:rounded-[2rem] md:p-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/50">
             {groupLabels[group]} · {p.subtitle}
           </p>
-          <h3 className="mt-2 font-display text-4xl font-bold uppercase md:text-5xl">{p.title}</h3>
+          <h3 className="mt-2 font-display text-3xl font-bold uppercase sm:text-4xl md:text-5xl">{p.title}</h3>
           <div className="mt-4 flex flex-wrap items-baseline gap-x-3">
-            <span className="font-display text-4xl font-bold tabular-nums text-[#d1b780] md:text-5xl">{withAmount(p.price, amount, locale)}</span>
+            <span className="font-display text-3xl font-bold tabular-nums text-[#d1b780] sm:text-4xl md:text-5xl">{withAmount(p.price, amount, locale)}</span>
             {p.priceOriginal && <span className="text-lg text-white/40 line-through">{p.priceOriginal}</span>}
           </div>
           {save !== null && <span className="mt-3 inline-flex rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">{ui.save(money(locale, save))}</span>}
@@ -259,7 +264,7 @@ export default function PackagesLevels({ locale, packagesByGroup, groupLabels, c
           </ul>
           <LocaleLink
             href={getPackageCtaHref(group, pick)}
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#B89D5E] px-7 text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]"
+            className="mt-8 flex h-12 w-full items-center justify-center rounded-full bg-[#B89D5E] px-7 sm:inline-flex sm:w-auto text-sm font-semibold text-neutral-950 transition hover:bg-[#d4bd85]"
           >
             {ctaLabel}
           </LocaleLink>
