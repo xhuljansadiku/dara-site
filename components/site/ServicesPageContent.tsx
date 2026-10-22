@@ -42,26 +42,26 @@ const HERO_BY_LOCALE: Record<
   { kicker: string; title: string; titleAccent: string; subtitle: string; getQuote: string; viewWork: string }
 > = {
   sq: {
-    kicker: "Shërbime web design & marketing",
-    title: "Krijim website, branding & ",
-    titleAccent: "marketing digjital",
-    subtitle: "Website profesionale, dyqan online, web design Tirana. Rrjetet sociale, strategji, branding, reklama Meta & Google, mirëmbajtje website. Sherbime për biznese në Shqipëri.",
+    kicker: "Shërbime",
+    title: "Çfarë mund të ",
+    titleAccent: "bëjmë për ju",
+    subtitle: "Website, rrjete sociale, reklama dhe brand. Zgjidhni çfarë ju duhet.",
     getQuote: "Merr ofertë",
     viewWork: "Shiko punën",
   },
   en: {
     kicker: "Services",
-    title: "Services built for ",
-    titleAccent: "results",
-    subtitle: "From social media and content to strategy, branding, ads, consulting and training. We combine what you need to grow.",
+    title: "What we can ",
+    titleAccent: "do for you",
+    subtitle: "Websites, social media, ads and branding. Pick what you need.",
     getQuote: "Get a quote",
     viewWork: "View our work",
   },
   de: {
     kicker: "Leistungen",
-    title: "Leistungen für ",
-    titleAccent: "Erfolge",
-    subtitle: "Von Social Media und Content über Strategie, Branding, Ads, Beratung und Training. Wir kombinieren, was Sie zum Wachstum brauchen.",
+    title: "Was wir ",
+    titleAccent: "für Sie tun",
+    subtitle: "Websites, Social Media, Anzeigen und Marke. Wählen Sie, was Sie brauchen.",
     getQuote: "Angebot anfragen",
     viewWork: "Referenzen ansehen",
   },
@@ -107,40 +107,40 @@ const SEO_SECTIONS_BY_LOCALE: Record<
   }
 > = {
   sq: {
-    strategyTitle: "Si i strukturojmë shërbimet",
+    strategyTitle: "Si funksionon",
     strategyBody: [
-      "Faqja e shërbimeve të DARA është ndërtuar për t'i ndarë qartë nevojat e biznesit në dy drejtime kryesore: marketing dhe website. Kjo e bën më të thjeshtë për Google dhe për vizitorin të kuptojnë nëse kompania ka nevojë për krijim website, web design, dyqan online, mirëmbajtje website, rrjete sociale, branding apo reklama Meta & Google.",
-      "Në vend që të fusim çdo gjë në një faqe të vetme, ne i lidhim shërbimet me faqe të dedikuara, me përmbajtje specifike për çdo rast përdorimi. Kjo na ndihmon të shmangim përmbajtjen e hollë, të përmirësojmë internal linking dhe të çojmë përdoruesin drejt faqes që i përgjigjet më mirë qëllimit të tij.",
+      "Shërbimet i kemi ndarë në dy grupe: marketing dhe website.",
+      "Klikoni një shërbim për të parë çfarë përfshin dhe sa kushton.",
     ],
-    linkingTitle: "Nga kjo faqe ku duhet të vazhdosh",
+    linkingTitle: "Nuk e dini nga t’ia nisni?",
     linkingBody:
-      "Nëse po kërkon rritje përmes përmbajtjes, reklamave ose strategjisë, nis te grupi Marketing. Nëse ke nevojë për krijim website, landing page, webshop ose optimizim teknik, vazhdo te grupi Website. Për të parë projekte reale dhe shembuj pune, portfolio është hapi tjetër më i mirë.",
+      "Duhen klientë? Shikoni Marketing. Duhet website ose dyqan? Shikoni Website. Doni të shihni punë reale? Shikoni Projektet.",
     exploreMarketing: "Shiko faqen Marketing",
     exploreWebsite: "Shiko faqen Website",
     exploreWork: "Shiko portfolio",
   },
   en: {
-    strategyTitle: "How we structure our services",
+    strategyTitle: "How it works",
     strategyBody: [
-      "The DARA services page is organised around two practical growth tracks: marketing services and website services. That makes it easier for both search engines and potential clients to understand whether the need is social media management, content creation, branding, Meta and Google Ads, website design, e-commerce development, or ongoing maintenance.",
-      "Instead of collapsing everything into one generic page, we route users into dedicated service hubs and detailed pages with clearer intent. This improves internal linking, reduces thin overlap, and helps each service rank for a more specific set of keywords and business problems.",
+      "Our services come in two groups: marketing and websites.",
+      "Click a service to see what’s included and what it costs.",
     ],
-    linkingTitle: "Where to go next from here",
+    linkingTitle: "Not sure where to start?",
     linkingBody:
-      "If your main challenge is lead generation, visibility, creative production, or campaign strategy, the marketing hub is the right next step. If you need a website, landing page, webshop, SaaS product, or technical optimisation, go to the website hub. If you want proof of delivery, the work page is the strongest supporting route.",
+      "Need customers? See Marketing. Need a website or store? See Website. Want to see real work? See Projects.",
     exploreMarketing: "Explore Marketing",
     exploreWebsite: "Explore Website",
     exploreWork: "View work",
   },
   de: {
-    strategyTitle: "Wie wir unsere Leistungen strukturieren",
+    strategyTitle: "So funktioniert es",
     strategyBody: [
-      "Die Leistungsseite von DARA ist in zwei klare Wachstumsbereiche gegliedert: Marketing-Leistungen und Website-Leistungen. So verstehen Suchmaschinen und Interessenten schneller, ob der Bedarf eher bei Social Media, Content, Branding, Meta- und Google-Ads oder bei Website-Erstellung, E-Commerce und technischer Wartung liegt.",
-      "Statt alles auf einer generischen Seite zu bündeln, führen wir Nutzer auf spezialisierte Hub-Seiten und Detailseiten mit klarerer Suchintention. Das stärkt die interne Verlinkung, reduziert inhaltliche Überschneidungen und hilft jeder Seite, für präzisere Keywords und konkrete Business-Ziele sichtbar zu werden.",
+      "Unsere Leistungen gibt es in zwei Gruppen: Marketing und Websites.",
+      "Klicken Sie auf eine Leistung, um Umfang und Preis zu sehen.",
     ],
-    linkingTitle: "Sinnvolle nächste Schritte",
+    linkingTitle: "Unsicher, wo Sie anfangen sollen?",
     linkingBody:
-      "Wenn Ihre Herausforderung eher bei Leads, Sichtbarkeit, Kampagnen oder Content liegt, ist die Marketing-Seite der richtige nächste Schritt. Wenn Sie eine Website, Landingpage, einen Shop, ein SaaS-Produkt oder technische Optimierung brauchen, gehen Sie zur Website-Seite. Für echte Projektbeispiele ist die Referenzseite der beste Anschluss.",
+      "Sie brauchen Kunden? Siehe Marketing. Eine Website oder ein Shop? Siehe Website. Echte Arbeiten? Siehe Projekte.",
     exploreMarketing: "Marketing ansehen",
     exploreWebsite: "Website ansehen",
     exploreWork: "Referenzen ansehen",

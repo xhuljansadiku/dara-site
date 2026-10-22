@@ -126,59 +126,59 @@ export const SERVICE_PAGE_TRUST_LINE: Record<Locale, string> = {
 /** The business problem each service solves (replaces a generic paragraph shared by all pages). */
 export const SERVICE_PROBLEM: Record<ServiceSlug, Record<Locale, string>> = {
   "social-media": {
-    sq: "Profilet që postojnë rrallë ose pa plan nuk ndërtojnë besim dhe nuk sjellin kërkesa. Shumë biznese e dinë këtë, por nuk kanë kohë ta menaxhojnë çdo javë.",
-    en: "Profiles that post rarely or without a plan do not build trust or bring enquiries. Most businesses know this but lack the time to manage it every week.",
-    de: "Profile, die selten oder ohne Plan posten, bauen kein Vertrauen auf und bringen keine Anfragen. Vielen Unternehmen fehlt die Zeit, das jede Woche zu betreuen.",
+    sq: "Një profil që poston rrallë nuk sjell klientë. Shumica e dinë, por s’kanë kohë.",
+    en: "A profile that rarely posts doesn’t bring customers. Most know it, but have no time.",
+    de: "Ein Profil, das selten postet, bringt keine Kunden. Die meisten wissen es, haben aber keine Zeit.",
   },
-  content: {
-    sq: "Fotot dhe videot e improvizuara e bëjnë një biznes të duket më pak profesional se sa është. Pa materiale cilësore, edhe reklamat e mira performojnë dobët.",
-    en: "Improvised photos and videos make a business look less professional than it is. Without quality creative, even well-targeted ads underperform.",
-    de: "Improvisierte Fotos und Videos lassen ein Unternehmen weniger professionell wirken, als es ist. Ohne gute Inhalte bleiben auch gut ausgesteuerte Anzeigen schwach.",
+  "content": {
+    sq: "Fotot e bëra me nxitim ju bëjnë të dukeni më pak seriozë se sa jeni.",
+    en: "Rushed photos make you look less serious than you are.",
+    de: "Schnelle Handyfotos lassen Sie weniger seriös wirken, als Sie sind.",
   },
-  strategy: {
-    sq: "Kur marketingu bëhet pa prioritete, buxheti shpërndahet në shumë kanale dhe është e vështirë të dihet çfarë po funksionon.",
-    en: "When marketing has no clear priorities, budget is spread across too many channels and it is hard to tell what is working.",
-    de: "Ohne klare Prioritäten verteilt sich das Budget auf zu viele Kanäle, und es ist schwer zu erkennen, was funktioniert.",
+  "strategy": {
+    sq: "Pa plan, marketingu bëhet me hamendje dhe paratë shkojnë dëm.",
+    en: "Without a plan, marketing is guesswork and money gets wasted.",
+    de: "Ohne Plan ist Marketing Raterei, und Geld geht verloren.",
   },
-  branding: {
-    sq: "Një logo e paqartë ose materiale që nuk përputhen mes tyre e bëjnë biznesin të duket më i vogël dhe më pak i besueshëm se konkurrentët.",
-    en: "An unclear logo or materials that do not match each other make a business look smaller and less trustworthy than its competitors.",
-    de: "Ein unklares Logo oder uneinheitliche Materialien lassen ein Unternehmen kleiner und weniger vertrauenswürdig wirken als die Konkurrenz.",
+  "branding": {
+    sq: "Kur logoja dhe ngjyrat ndryshojnë kudo, njerëzit nuk ju mbajnë mend.",
+    en: "When your logo and colours change everywhere, people don’t remember you.",
+    de: "Wenn Logo und Farben überall anders sind, erinnert sich niemand an Sie.",
   },
-  ads: {
-    sq: "Postimet e promovuara pa strukturë dhe matje harxhojnë buxhet pa sjellë klientë. Fushatat kanë nevojë për synim, testim dhe optimizim të vazhdueshëm.",
-    en: "Boosted posts without structure or tracking spend budget without bringing customers. Campaigns need targeting, testing and ongoing optimisation.",
-    de: "Beworbene Beiträge ohne Struktur und Tracking verbrauchen Budget, ohne Kunden zu bringen. Kampagnen brauchen Targeting, Tests und laufende Optimierung.",
+  "ads": {
+    sq: "Shumë njerëz \"boost\"-ojnë postime dhe humbin para pa marrë klientë.",
+    en: "Many people boost posts and lose money without getting customers.",
+    de: "Viele bewerben Posts und verlieren Geld, ohne Kunden zu gewinnen.",
   },
-  consulting: {
-    sq: "Ndonjëherë nuk nevojitet një agjenci e plotë, por një mendim i jashtëm për të vendosur çfarë të bëni më pas dhe çfarë të ndaloni.",
-    en: "Sometimes you do not need a full agency, just an outside view to decide what to do next and what to stop doing.",
-    de: "Manchmal braucht es keine komplette Agentur, sondern eine externe Sicht, um zu entscheiden, was als Nächstes zu tun ist und was nicht.",
+  "consulting": {
+    sq: "Ndonjëherë ju duhet vetëm dikush që ta shohë gjendjen nga jashtë.",
+    en: "Sometimes you just need someone to look at it from the outside.",
+    de: "Manchmal braucht es nur jemanden, der von außen draufschaut.",
   },
-  training: {
-    sq: "Ekipet që menaxhojnë vetë rrjetet sociale shpesh mësojnë me provë dhe gabim. Një trajnim praktik shkurton këtë kohë dhe krijon një mënyrë pune të përbashkët.",
-    en: "Teams that run their own social media often learn by trial and error. Practical training shortens that time and gives the team a shared way of working.",
-    de: "Teams, die Social Media selbst betreuen, lernen oft durch Ausprobieren. Ein praxisnahes Training verkürzt diese Zeit und schafft eine gemeinsame Arbeitsweise.",
+  "training": {
+    sq: "Nëse rrjetet varen nga dikush tjetër, çdo ndryshim ju ngadalëson.",
+    en: "If your channels depend on someone else, every change slows you down.",
+    de: "Wenn Ihre Kanäle von anderen abhängen, bremst jede Änderung.",
   },
   "website-landing": {
-    sq: "Një website i ngadaltë, i vjetëruar ose që nuk shpjegon qartë ofertën i largon vizitorët para se të kontaktojnë.",
-    en: "A slow, outdated website, or one that does not explain the offer clearly, loses visitors before they get in touch.",
-    de: "Eine langsame, veraltete Website oder eine, die das Angebot nicht klar erklärt, verliert Besucher, bevor sie Kontakt aufnehmen.",
+    sq: "Një website i ngadaltë ose i paqartë i largon klientët para se t’ju shkruajnë.",
+    en: "A slow or unclear website sends customers away before they contact you.",
+    de: "Eine langsame oder unklare Website vertreibt Kunden, bevor sie schreiben.",
   },
-  ecommerce: {
-    sq: "Shitja vetëm përmes mesazheve në rrjete sociale kufizon sa porosi mund të menaxhoni. Një dyqan online i lejon klientët të blejnë vetë, në çdo orë.",
-    en: "Selling only through social media messages limits how many orders you can handle. An online store lets customers buy on their own, at any hour.",
-    de: "Verkauf nur über Social-Media-Nachrichten begrenzt, wie viele Bestellungen Sie bewältigen können. Ein Online-Shop lässt Kunden jederzeit selbst kaufen.",
+  "ecommerce": {
+    sq: "Shitja vetëm me mesazhe ju ha kohën dhe ju humbet porosi.",
+    en: "Selling only through messages eats your time and loses orders.",
+    de: "Nur über Nachrichten zu verkaufen kostet Zeit und Bestellungen.",
   },
-  saas: {
-    sq: "Kur proceset e biznesit mbështeten në tabela dhe mjete të ndara, ose kur keni një ide produkti, nevojitet software i ndërtuar për rastin tuaj.",
-    en: "When business processes rely on spreadsheets and disconnected tools, or when you have a product idea, you need software built for your case.",
-    de: "Wenn Abläufe auf Tabellen und getrennten Tools beruhen oder Sie eine Produktidee haben, braucht es Software, die für Ihren Fall gebaut ist.",
+  "saas": {
+    sq: "Kur biznesi mbahet me tabela Excel, gabimet dhe vonesat shtohen.",
+    en: "When a business runs on spreadsheets, mistakes and delays pile up.",
+    de: "Wenn ein Unternehmen mit Excel läuft, häufen sich Fehler und Verzögerungen.",
   },
-  maintenance: {
-    sq: "Website-et pa përditësime bëhen më të ngadalta dhe më të cenueshme. Problemet zakonisht vihen re vetëm kur faqja ka rënë ose klientët ankohen.",
-    en: "Websites without updates become slower and more vulnerable. Problems are usually noticed only when the site is down or customers complain.",
-    de: "Websites ohne Updates werden langsamer und angreifbarer. Probleme fallen meist erst auf, wenn die Seite ausfällt oder Kunden sich beschweren.",
+  "maintenance": {
+    sq: "Një faqe pa përditësime ngadalësohet dhe bie pikërisht kur s’e prisni.",
+    en: "A site without updates slows down and breaks right when you don’t expect it.",
+    de: "Eine Seite ohne Updates wird langsam und fällt genau dann aus, wenn Sie es nicht erwarten.",
   },
 };
 
@@ -204,29 +204,29 @@ export function getServiceCtaHref(slug: ServiceSlug): string {
 
 const CLIENT_INPUTS: Record<"website" | "ecommerce" | "marketing" | "branding" | "training", Record<Locale, string>> = {
   website: {
-    sq: "Logoja dhe materialet e brand-it, tekstet ose informacionet kryesore, fotot nëse i keni, dhe disa website që ju pëlqejnë si referencë.",
-    en: "Your logo and brand assets, texts or key information, photos if you have them, and a few websites you like as a reference.",
-    de: "Logo und Markenmaterial, Texte oder Kerninformationen, vorhandene Fotos und einige Websites, die Ihnen als Referenz gefallen.",
+    sq: "Logoja, pak tekst për biznesin dhe 2–3 website që ju pëlqejnë.",
+    en: "Your logo, a little text about the business and 2–3 sites you like.",
+    de: "Ihr Logo, etwas Text zum Unternehmen und 2–3 Websites, die Ihnen gefallen.",
   },
   ecommerce: {
-    sq: "Lista e produkteve me çmime, foto dhe përshkrime, metodat e pagesës dhe transportit që doni, dhe logoja e materialet e brand-it.",
-    en: "A product list with prices, photos and descriptions, the payment and shipping methods you want, and your logo and brand assets.",
-    de: "Eine Produktliste mit Preisen, Fotos und Beschreibungen, gewünschte Zahlungs- und Versandarten sowie Logo und Markenmaterial.",
+    sq: "Lista e produkteve me çmime dhe foto.",
+    en: "Your product list with prices and photos.",
+    de: "Ihre Produktliste mit Preisen und Fotos.",
   },
   marketing: {
-    sq: "Qëllimet dhe audienca juaj, akses në llogaritë e rrjeteve sociale ose të reklamave, materialet e brand-it dhe aprovim në kohë të planit.",
-    en: "Your goals and target audience, access to your social media or ad accounts, brand materials and timely approval of the plan.",
-    de: "Ihre Ziele und Zielgruppe, Zugang zu Social-Media- oder Werbekonten, Markenmaterial und eine zeitnahe Freigabe des Plans.",
+    sq: "Linket e rrjeteve tuaja dhe çfarë doni të arrini.",
+    en: "Links to your channels and what you want to achieve.",
+    de: "Links zu Ihren Kanälen und was Sie erreichen wollen.",
   },
   branding: {
-    sq: "Informacion për biznesin, vlerat dhe audiencën, konkurrentët nga të cilët doni të dalloheni, dhe çdo material vizual ekzistues.",
-    en: "Information about your business, values and audience, the competitors you want to stand apart from, and any existing visual material.",
-    de: "Informationen zu Unternehmen, Werten und Zielgruppe, Wettbewerber, von denen Sie sich abheben möchten, und vorhandenes Bildmaterial.",
+    sq: "Emri i biznesit dhe disa shembuj që ju pëlqejnë.",
+    en: "Your business name and a few examples you like.",
+    de: "Ihr Firmenname und ein paar Beispiele, die Ihnen gefallen.",
   },
   training: {
-    sq: "Niveli aktual i pjesëmarrësve, çfarë doni të arrini me trajnimin dhe orari i preferuar (në grup ose 1:1).",
-    en: "The participants’ current level, what you want to achieve with the training and your preferred schedule (group or 1:1).",
-    de: "Den aktuellen Stand der Teilnehmenden, Ihre Ziele für das Training und den gewünschten Zeitplan (Gruppe oder 1:1).",
+    sq: "Vetëm dëshirën për të mësuar.",
+    en: "Just the will to learn.",
+    de: "Nur die Lust zu lernen.",
   },
 };
 
