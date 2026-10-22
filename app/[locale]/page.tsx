@@ -19,7 +19,6 @@ import SectionDots from "@/components/site/SectionDots";
 import { getYearsOfExperienceFormatted } from "@/lib/experience";
 import {
   PACKAGES_BY_GROUP_AND_LOCALE,
-  PACKAGE_FILTER_TABS_BY_LOCALE,
   PACKAGE_GROUP_LABELS,
 } from "@/lib/packages-data";
 import { SERVICE_DETAILS_BY_LOCALE, SERVICE_SLUGS } from "@/lib/services-data";
@@ -550,7 +549,6 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         serviceAnchors={SERVICE_ANCHORS}
         priceTooltip={PRICE_TOOLTIP_BY_LOCALE[locale]}
         packagesByGroup={PACKAGES_BY_GROUP_AND_LOCALE[locale]}
-        packageFilterTabs={PACKAGE_FILTER_TABS_BY_LOCALE[locale]}
         packageGroupLabels={PACKAGE_GROUP_LABELS[locale]}
         testimonials={getVerifiedTestimonials(locale)}
         copy={SERVICES_SECTION_COPY[locale]}

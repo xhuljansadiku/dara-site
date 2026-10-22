@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import LocaleLink from "@/components/site/LocaleLink";
-import PackageCard from "@/components/site/PackageCard";
+import PackagesLevels from "@/components/site/PackagesLevels";
 import ServicesStory, { type StoryGroup } from "@/components/site/ServicesStory";
-import { PACKAGE_GROUP_NOTES, getPackageCtaHref, type Pkg, type PackageGroup } from "@/lib/packages-data";
+import type { Pkg, PackageGroup } from "@/lib/packages-data";
 import { SERVICE_HERO_SUBLINE, SERVICE_IMAGES } from "@/lib/service-page-extras";
 import type { ServiceSlug } from "@/lib/services-data";
 
@@ -17,14 +15,6 @@ const GROUP_ICONS = [
   <svg key="2" className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>,
 ];
 
-type PackageFilterTab = { label: string; groups: PackageGroup[] };
-
-const GROUP_LABEL: Record<Locale, { packages: string }> = {
-  sq: { packages: "Kategoritë e paketave" },
-  en: { packages: "Package categories" },
-  de: { packages: "Paketkategorien" },
-};
-
 type Props = {
   locale: Locale;
   services: Service[];
@@ -32,7 +22,6 @@ type Props = {
   serviceAnchors: readonly string[];
   priceTooltip: string;
   packagesByGroup: Record<PackageGroup, Pkg[]>;
-  packageFilterTabs: PackageFilterTab[];
   packageGroupLabels: Record<PackageGroup, string>;
   /** Verified testimonials only (see lib/testimonials.ts). */
   testimonials: { quote: string; name: string; role: string; company?: string }[];
@@ -52,50 +41,6 @@ type Props = {
   };
 };
 
-function ToggleGroup({
-  label,
-  options,
-  active,
-  onChange,
-  dark = false,
-}: {
-  label: string;
-  options: string[];
-  active: number;
-  onChange: (idx: number) => void;
-  dark?: boolean;
-}) {
-  return (
-    <div className="mb-8 w-full overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      <div
-        role="group"
-        aria-label={label}
-        className={`inline-flex min-w-min flex-nowrap gap-0 rounded-2xl p-1.5 ring-1 md:flex-wrap ${
-          dark ? "bg-white/10 ring-white/10" : "bg-neutral-200/60 ring-black/[0.04]"
-        }`}
-      >
-        {options.map((option, idx) => (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={active === idx}
-            onClick={() => onChange(idx)}
-            className={`min-h-11 whitespace-nowrap rounded-[0.65rem] px-4 text-sm font-medium transition-colors duration-200 ${
-              active === idx
-                ? "bg-white text-neutral-950 shadow-sm ring-1 ring-black/[0.06]"
-                : dark
-                  ? "text-neutral-300 hover:text-white"
-                  : "text-neutral-600 hover:text-neutral-950"
-            }`}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function ServicesSection({
   locale,
   services,
@@ -103,17 +48,10 @@ export default function ServicesSection({
   serviceAnchors,
   priceTooltip,
   packagesByGroup,
-  packageFilterTabs,
   packageGroupLabels,
   testimonials,
   copy,
 }: Props) {
-  const [activePackageTab, setActivePackageTab] = useState<number>(0);
-
-  const packageTabs = packageFilterTabs.filter((tab) => tab.groups.length > 0);
-  const visiblePackageGroups = packageTabs[activePackageTab]?.groups ?? ([] as PackageGroup[]);
-  const notes = PACKAGE_GROUP_NOTES[locale];
-
   // One pinned step per service category; each category shows the cover photo of its first service.
   const storyGroups: StoryGroup[] = filterTabs.map((tab, t) => {
     const items = tab.indices.map((i) => {
@@ -158,61 +96,20 @@ export default function ServicesSection({
           </div>
         )}
 
-        {/* Packages: dark panel, light cards */}
-        <div className="relative mt-16 md:mt-20">
-          <div className="relative overflow-hidden rounded-[1.75rem] bg-neutral-950 px-5 py-10 shadow-2xl shadow-black/25 ring-1 ring-white/10 md:rounded-[2rem] md:px-10 md:py-14">
-            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#B89D5E]/15 blur-3xl" aria-hidden />
-
-            <div className="relative mb-8 text-center md:text-left">
-              <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-400 md:justify-start">
-                <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/90 to-transparent" aria-hidden />
-                {copy.packagesKicker}
-              </span>
-              <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
-                {copy.packagesTitleBefore}
-                <span className="bg-gradient-to-r from-[#d9c38c] to-[#B89D5E] bg-clip-text text-transparent">
-                  {copy.packagesTitleHighlight}
-                </span>
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-neutral-300 md:mx-0">{copy.packagesIntro}</p>
-            </div>
-
-            <ToggleGroup
-              label={GROUP_LABEL[locale].packages}
-              options={packageTabs.map((t) => t.label)}
-              active={activePackageTab}
-              onChange={setActivePackageTab}
-              dark
-            />
-
-            <div key={activePackageTab} className="relative space-y-12 animate-packages-tab-enter">
-              {visiblePackageGroups.map((groupKey) => (
-                <div key={groupKey}>
-                  <h3 className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.28em] text-[#d1b780] md:text-left">
-                    {packageGroupLabels[groupKey]}
-                  </h3>
-                  <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {packagesByGroup[groupKey].map((pkg, pkgIdx) => (
-                      <PackageCard key={`${groupKey}-${pkg.title}`} pkg={pkg} locale={locale} href={getPackageCtaHref(groupKey, pkgIdx)} elevated />
-                    ))}
-                  </div>
-                  {notes[groupKey] && (
-                    <p className="mt-5 text-center text-sm leading-relaxed text-neutral-300 md:text-left">{notes[groupKey]}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="relative mt-10 flex justify-center md:justify-start">
-              <LocaleLink
-                href="/packages"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 px-5 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10"
-              >
-                {copy.comparePackages}
-                <span aria-hidden>→</span>
-              </LocaleLink>
-            </div>
-          </div>
+        {/* Packages: pick a category and a level; one card shows the package */}
+        <div className="mt-16 md:mt-24">
+          <PackagesLevels
+            locale={locale}
+            packagesByGroup={packagesByGroup}
+            groupLabels={packageGroupLabels}
+            copy={{
+              kicker: copy.packagesKicker,
+              titleBefore: copy.packagesTitleBefore,
+              titleHighlight: copy.packagesTitleHighlight,
+              intro: copy.packagesIntro,
+              compare: copy.comparePackages,
+            }}
+          />
         </div>
       </div>
     </section>
