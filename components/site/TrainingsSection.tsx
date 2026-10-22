@@ -1,6 +1,5 @@
 import LocaleLink from "@/components/site/LocaleLink";
-import AnimateIn from "@/components/site/AnimateIn";
-import { TRAININGS } from "@/lib/trainings-data";
+import { TRAININGS, type Training } from "@/lib/trainings-data";
 import { TRAINING_PARTICIPANTS } from "@/lib/business-facts";
 import type { Locale } from "@/lib/services-data";
 
@@ -9,185 +8,168 @@ const SECTION_COPY: Record<
   {
     kicker: string;
     title: string;
+    titleHighlight: string;
     subtitle: string;
-    viewProgram: string;
+    passLabel: string;
+    price: string;
+    duration: string;
+    register: string;
     comingSoon: string;
-    registerNow: string;
     registerInterest: string;
     studentsLabel: string;
-    programsLabel: string;
     teamTraining: string;
   }
 > = {
   sq: {
     kicker: "Trajnime",
-    title: "Trajnime praktike për marketing dhe social media",
+    title: "Mëso marketing",
+    titleHighlight: "nga praktika",
     subtitle: "Programe për individë dhe ekipe që duan të menaxhojnë vetë marketingun digjital.",
-    viewProgram: "Shiko programin",
+    passLabel: "Leje hyrjeje",
+    price: "Çmimi",
+    duration: "Kohëzgjatja",
+    register: "Regjistrohu",
     comingSoon: "Së shpejti",
-    registerNow: "Regjistrohu",
     registerInterest: "Shpreh interesin",
     studentsLabel: "pjesëmarrës deri tani",
-    programsLabel: "programe aktive",
     teamTraining: "Kërko trajnim për ekipin",
   },
   en: {
     kicker: "Training",
-    title: "Practical marketing and social media training",
+    title: "Learn marketing",
+    titleHighlight: "by doing",
     subtitle: "Programmes for individuals and teams who want to run their own digital marketing.",
-    viewProgram: "View the programme",
+    passLabel: "Admission pass",
+    price: "Price",
+    duration: "Duration",
+    register: "Register",
     comingSoon: "Coming soon",
-    registerNow: "Register",
     registerInterest: "Register interest",
     studentsLabel: "participants so far",
-    programsLabel: "active programmes",
     teamTraining: "Request team training",
   },
   de: {
     kicker: "Training",
-    title: "Praxisnahe Trainings für Marketing und Social Media",
+    title: "Marketing lernen",
+    titleHighlight: "in der Praxis",
     subtitle: "Programme für Einzelpersonen und Teams, die ihr digitales Marketing selbst steuern möchten.",
-    viewProgram: "Programm ansehen",
+    passLabel: "Eintrittskarte",
+    price: "Preis",
+    duration: "Dauer",
+    register: "Anmelden",
     comingSoon: "Demnächst",
-    registerNow: "Anmelden",
     registerInterest: "Interesse vormerken",
     studentsLabel: "Teilnehmende bisher",
-    programsLabel: "aktive Programme",
     teamTraining: "Team-Training anfragen",
   },
 };
 
-const ACTIVE_PROGRAMS = TRAININGS.filter((t) => !t.comingSoon).length;
+const ACTIVE = TRAININGS.filter((t) => !t.comingSoon);
+const SOON = TRAININGS.filter((t) => t.comingSoon);
+const registerHref = (t: Training) => `/trainings/register?training=${t.slug}`;
 
 type Props = { locale: Locale };
 
-/** Training is a separate journey from agency services: register here, not via the quote form. */
+function Tick() {
+  return (
+    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E] text-neutral-950" aria-hidden>
+      <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * Training is a separate journey from agency services: register here, not via the quote form.
+ * Each programme is an admission pass (the first one in gold); programmes not yet running are listed below.
+ */
 export default function TrainingsSection({ locale }: Props) {
   const copy = SECTION_COPY[locale];
 
   return (
-    <section id="trainings" aria-labelledby="trainings-heading" className="relative overflow-hidden py-16 md:py-24">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_40%,#fafafa_100%)]"
-        aria-hidden
-      />
-
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-end md:justify-between md:text-left">
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
-              {copy.kicker}
-            </span>
-            <h2
-              id="trainings-heading"
-              className="mt-4 font-display text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl"
-            >
-              {copy.title}
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-neutral-600 md:text-[17px]">{copy.subtitle}</p>
-          </div>
-          <dl className="flex shrink-0 gap-2 rounded-2xl bg-neutral-200/60 p-1.5 ring-1 ring-black/[0.04]">
-            <div className="flex min-w-[130px] flex-col-reverse items-center rounded-xl bg-white px-5 py-3 text-center shadow-sm">
-              <dt className="mt-1 text-xs font-medium text-neutral-500">{copy.studentsLabel}</dt>
-              <dd className="text-2xl font-bold tabular-nums text-neutral-950">{TRAINING_PARTICIPANTS}</dd>
-            </div>
-            <div className="flex min-w-[130px] flex-col-reverse items-center rounded-xl bg-white px-5 py-3 text-center shadow-sm">
-              <dt className="mt-1 text-xs font-medium text-neutral-500">{copy.programsLabel}</dt>
-              <dd className="text-2xl font-bold tabular-nums text-neutral-950">{ACTIVE_PROGRAMS}</dd>
-            </div>
-          </dl>
+    <section id="trainings" aria-labelledby="trainings-heading" className="bg-neutral-950 py-16 text-white md:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+        <div className="max-w-2xl">
+          <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-white/60">
+            <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
+            {copy.kicker}
+          </span>
+          <h2 id="trainings-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight md:text-6xl">
+            {copy.title} <span className="text-[#d1b780]">{copy.titleHighlight}</span>
+          </h2>
+          <p className="mt-5 text-[15px] leading-relaxed text-white/65">{copy.subtitle}</p>
         </div>
 
-        <ul className="mt-12 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {TRAININGS.map((training, idx) => {
-            const isComingSoon = training.comingSoon;
-            return (
-              <li key={training.slug} className="flex">
-                <AnimateIn delay={idx * 80} className="flex w-full">
-                  <article
-                    className={`flex w-full flex-col rounded-3xl border p-7 md:p-8 ${
-                      isComingSoon
-                        ? "border-dashed border-neutral-300 bg-neutral-50"
-                        : "border-black/[0.06] bg-white shadow-[0_8px_40px_-24px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04]"
-                    }`}
-                  >
-                    <div className="flex flex-wrap items-center gap-2">
-                      {isComingSoon ? (
-                        <span className="rounded-full bg-neutral-200 px-3 py-1.5 text-sm font-semibold text-neutral-700">
-                          {copy.comingSoon}
-                        </span>
-                      ) : (
-                        <span className="rounded-full bg-neutral-950 px-3.5 py-1.5 text-sm font-semibold text-white">
-                          {training.price}
-                        </span>
-                      )}
-                      <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
-                        {training.duration[locale]}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-xl font-semibold leading-snug tracking-tight text-neutral-950 md:text-2xl">
-                      {training.title[locale]}
-                    </h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{training.shortDesc[locale]}</p>
-                    <ul className="mt-5 flex-1 space-y-2.5">
-                      {training.highlights[locale].map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-sm leading-snug text-neutral-700">
-                          <span
-                            className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B89D5E]/15 text-[#8a7344] ring-1 ring-[#B89D5E]/25"
-                            aria-hidden
-                          >
-                            <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                          <span className="min-w-0 flex-1">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-7 flex flex-col gap-2">
-                      {isComingSoon ? (
-                        <LocaleLink
-                          href={`/trainings/register?training=${training.slug}`}
-                          className="inline-flex h-12 w-full items-center justify-center rounded-2xl border border-neutral-300 bg-white px-6 text-sm font-semibold text-neutral-900 transition hover:border-neutral-950"
-                        >
-                          {copy.registerInterest}
-                        </LocaleLink>
-                      ) : (
-                        <>
-                          <LocaleLink
-                            href={`/trainings/${training.slug}`}
-                            className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-neutral-950 px-6 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                          >
-                            {copy.viewProgram}
-                          </LocaleLink>
-                          <LocaleLink
-                            href={`/trainings/register?training=${training.slug}`}
-                            className="inline-flex h-11 w-full items-center justify-center rounded-2xl text-sm font-semibold text-neutral-800 underline-offset-4 transition hover:underline"
-                          >
-                            {copy.registerNow}
-                          </LocaleLink>
-                        </>
-                      )}
-                    </div>
-                  </article>
-                </AnimateIn>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {ACTIVE.map((t, i) => (
+            <article
+              key={t.slug}
+              className={`flex flex-col overflow-hidden rounded-[1.75rem] text-neutral-950 sm:flex-row ${i === 0 ? "bg-gradient-to-br from-[#e3cf9c] to-[#a88b4f]" : "bg-[#f4f1ea]"}`}
+            >
+              <div className="flex-1 p-7">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-neutral-900/60">{copy.passLabel} · DARA</p>
+                <h3 className="mt-2 font-display text-3xl font-bold uppercase">
+                  <LocaleLink href={`/trainings/${t.slug}`} className="hover:underline">
+                    {t.title[locale]}
+                  </LocaleLink>
+                </h3>
+                <p className="mt-2 text-sm text-neutral-800">{t.shortDesc[locale]}</p>
+                <ul className="mt-5 space-y-2">
+                  {t.highlights[locale].slice(0, 4).map((h) => (
+                    <li key={h} className="flex gap-2.5 text-sm">
+                      <Tick />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Stub: tear line with notches cut in the section colour */}
+              <div className="relative flex flex-col justify-between gap-4 border-t-2 border-dashed border-neutral-950/20 p-7 sm:w-48 sm:border-l-2 sm:border-t-0">
+                <span className="absolute -left-4 -top-4 hidden h-8 w-8 rounded-full bg-neutral-950 sm:block" aria-hidden />
+                <span className="absolute -bottom-4 -left-4 hidden h-8 w-8 rounded-full bg-neutral-950 sm:block" aria-hidden />
+                <div>
+                  <p className="text-xs text-neutral-900/60">{copy.price}</p>
+                  <p className="font-display text-4xl font-bold">{t.price}</p>
+                  <p className="mt-3 text-xs text-neutral-900/60">{copy.duration}</p>
+                  <p className="text-sm font-semibold">{t.duration[locale]}</p>
+                </div>
+                <LocaleLink
+                  href={registerHref(t)}
+                  className="inline-flex h-12 items-center justify-center rounded-full bg-neutral-950 px-6 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                >
+                  {copy.register}
+                </LocaleLink>
+              </div>
+            </article>
+          ))}
+        </div>
 
-        <div className="mt-10 flex justify-center">
-          <LocaleLink
-            href="/services/training"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 text-sm font-semibold text-neutral-950 shadow-sm transition hover:border-[#B89D5E]/50"
-          >
+        {SOON.map((t) => (
+          <div key={t.slug} className="mt-6 flex flex-col justify-between gap-4 rounded-[1.5rem] border border-dashed border-white/20 p-6 sm:flex-row sm:items-center">
+            <div>
+              <span className="rounded-full bg-[#B89D5E]/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#d1b780]">{copy.comingSoon}</span>
+              <p className="mt-3 font-display text-2xl font-bold uppercase">{t.title[locale]}</p>
+              <p className="mt-1 text-sm text-white/60">{t.shortDesc[locale]}</p>
+            </div>
+            <LocaleLink
+              href={registerHref(t)}
+              className="inline-flex h-12 shrink-0 items-center justify-center rounded-full border border-white/25 px-6 text-sm font-semibold transition hover:border-white/60"
+            >
+              {copy.registerInterest}
+            </LocaleLink>
+          </div>
+        ))}
+
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-white/60">
+            <span className="font-display text-2xl font-bold text-[#d1b780]">{TRAINING_PARTICIPANTS}</span> {copy.studentsLabel}
+          </p>
+          <LocaleLink href="/services/training" className="group inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-[#d1b780]">
             {copy.teamTraining}
-            <span aria-hidden>→</span>
+            <span aria-hidden className="transition group-hover:translate-x-0.5">
+              →
+            </span>
           </LocaleLink>
         </div>
       </div>
