@@ -3,7 +3,10 @@
 import { useState } from "react";
 import LocaleLink from "@/components/site/LocaleLink";
 import PackageCard from "@/components/site/PackageCard";
+import ServicesStory, { type StoryGroup } from "@/components/site/ServicesStory";
 import { PACKAGE_GROUP_NOTES, getPackageCtaHref, type Pkg, type PackageGroup } from "@/lib/packages-data";
+import { SERVICE_HERO_SUBLINE, SERVICE_IMAGES } from "@/lib/service-page-extras";
+import type { ServiceSlug } from "@/lib/services-data";
 
 type Locale = "sq" | "en" | "de";
 type Service = { title: string; desc: string; price?: string };
@@ -16,10 +19,10 @@ const GROUP_ICONS = [
 
 type PackageFilterTab = { label: string; groups: PackageGroup[] };
 
-const GROUP_LABEL: Record<Locale, { services: string; packages: string }> = {
-  sq: { services: "Kategoritë e shërbimeve", packages: "Kategoritë e paketave" },
-  en: { services: "Service categories", packages: "Package categories" },
-  de: { services: "Leistungskategorien", packages: "Paketkategorien" },
+const GROUP_LABEL: Record<Locale, { packages: string }> = {
+  sq: { packages: "Kategoritë e paketave" },
+  en: { packages: "Package categories" },
+  de: { packages: "Paketkategorien" },
 };
 
 type Props = {
@@ -105,105 +108,53 @@ export default function ServicesSection({
   testimonials,
   copy,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<number>(0);
   const [activePackageTab, setActivePackageTab] = useState<number>(0);
 
   const packageTabs = packageFilterTabs.filter((tab) => tab.groups.length > 0);
   const visiblePackageGroups = packageTabs[activePackageTab]?.groups ?? ([] as PackageGroup[]);
-  const activeFilter = filterTabs[activeTab];
   const notes = PACKAGE_GROUP_NOTES[locale];
 
+  // One pinned step per service category; each category shows the cover photo of its first service.
+  const storyGroups: StoryGroup[] = filterTabs.map((tab, t) => {
+    const items = tab.indices.map((i) => {
+      const slug = serviceAnchors[i] as ServiceSlug;
+      return {
+        slug,
+        title: services[i].title.replace(/\s*\n\s*/g, " "),
+        sub: SERVICE_HERO_SUBLINE[slug]?.[locale] ?? services[i].desc,
+        price: services[i].price ?? copy.quoteRequest,
+        href: `/services/${slug}`,
+      };
+    });
+    const cover = items[0] ? SERVICE_IMAGES[items[0].slug]?.[0] : undefined;
+    return { name: tab.label, icon: GROUP_ICONS[t % GROUP_ICONS.length], img: cover ?? "/images/services/website/website-cover.jpg", items };
+  });
+
   return (
-    <section id="services" aria-labelledby="services-heading" className="relative overflow-hidden py-16 md:py-24">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f5_50%,#fafafa_100%)]"
-        aria-hidden
+    // overflow-x-clip (not hidden) so the pinned services block can stick to the viewport.
+    <section id="services" aria-labelledby="services-heading" className="relative overflow-x-clip bg-[#f4f1ea] pb-16 md:pb-24">
+      <ServicesStory
+        locale={locale}
+        headingId="services-heading"
+        kicker={copy.sectionKicker}
+        titleBefore={copy.sectionTitleBefore}
+        titleHighlight={copy.sectionTitleHighlight}
+        groups={storyGroups}
+        priceNote={priceTooltip}
+        quoteLabel={copy.requestQuoteForGroup}
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-8">
-        <div className="mb-10 text-center md:text-left">
-          <span className="inline-flex items-center justify-center gap-2 font-display text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:justify-start">
-            <span className="h-px w-8 bg-gradient-to-r from-[#B89D5E]/80 to-transparent" aria-hidden />
-            {copy.sectionKicker}
-          </span>
-          <h2 id="services-heading" className="mt-4 font-display text-3xl font-semibold tracking-tight text-neutral-950 md:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
-            {copy.sectionTitleBefore}
-            <span className="bg-gradient-to-r from-[#8a7344] to-[#5c4c2c] bg-clip-text text-transparent">
-              {copy.sectionTitleHighlight}
-            </span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-neutral-600 md:mx-0">{copy.sectionIntro}</p>
-        </div>
-
-        <ToggleGroup
-          label={GROUP_LABEL[locale].services}
-          options={filterTabs.map((t) => t.label)}
-          active={activeTab}
-          onChange={setActiveTab}
-        />
-
-        {activeFilter && (
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-black/[0.06] bg-white p-6 shadow-[0_20px_60px_-28px_rgba(0,0,0,0.12)] md:p-8">
-            <div className="relative mb-7 flex flex-col items-center gap-3 text-center sm:flex-row sm:gap-4 sm:text-left">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-neutral-950 text-white shadow-lg shadow-neutral-900/15">
-                {GROUP_ICONS[activeTab % GROUP_ICONS.length]}
-              </span>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-600">{activeFilter.label}</h3>
-            </div>
-            <ul
-              className={
-                activeFilter.indices.length === 1
-                  ? "grid grid-cols-1 gap-4 md:max-w-md"
-                  : "grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
-              }
-            >
-              {activeFilter.indices.map((i) => {
-                const s = services[i];
-                const title = s.title.replace(/\s*\n\s*/g, " ");
-                return (
-                  <li key={s.title} className="flex">
-                    <LocaleLink
-                      href={`/services/${serviceAnchors[i]}`}
-                      className="group relative flex w-full flex-col rounded-3xl border border-black/[0.06] bg-white p-6 text-center shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] ring-1 ring-black/[0.02] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-20px_rgba(184,157,94,0.18)] md:text-left"
-                    >
-                      <h4 className="text-lg font-semibold tracking-tight text-neutral-950 md:text-xl">{title}</h4>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-4">{s.desc}</p>
-                      <div className="mt-5 border-t border-neutral-200/80 pt-4">
-                        <p className="text-sm font-semibold text-neutral-950">{s.price ?? copy.quoteRequest}</p>
-                        <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#6b5a38]">
-                          {copy.more}
-                          <span className="sr-only">: {title}</span>
-                          <span aria-hidden className="transition group-hover:translate-x-0.5">→</span>
-                        </p>
-                      </div>
-                    </LocaleLink>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="mt-5 text-xs leading-relaxed text-neutral-600">{priceTooltip}</p>
-
-            {testimonials.length > 0 && (
-              <div className="mt-8 space-y-4 rounded-2xl border border-black/[0.06] bg-neutral-50 p-5 md:p-6">
-                {testimonials.map((t, i) => (
-                  <figure key={i} className={i > 0 ? "border-t border-neutral-200 pt-4" : ""}>
-                    <blockquote className="text-sm italic leading-relaxed text-neutral-800">&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-2 text-xs font-medium text-neutral-950">
-                      {t.name}, {t.role}
-                      {t.company && ` · ${t.company}`}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-7 flex justify-center md:justify-start">
-              <LocaleLink
-                href="/contact"
-                className="inline-flex h-11 w-full max-w-md items-center justify-center rounded-full bg-neutral-950 px-7 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-800 sm:w-auto"
-              >
-                {copy.requestQuoteForGroup}
-              </LocaleLink>
-            </div>
+        {testimonials.length > 0 && (
+          <div className="mt-10 space-y-4 rounded-2xl border border-black/[0.06] bg-white p-5 md:p-6">
+            {testimonials.map((t, i) => (
+              <figure key={i} className={i > 0 ? "border-t border-neutral-200 pt-4" : ""}>
+                <blockquote className="text-sm italic leading-relaxed text-neutral-800">&ldquo;{t.quote}&rdquo;</blockquote>
+                <figcaption className="mt-2 text-xs font-medium text-neutral-950">
+                  {t.name}, {t.role}
+                  {t.company && ` · ${t.company}`}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         )}
 

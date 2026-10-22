@@ -3,6 +3,58 @@ import type { ServiceSlug } from "@/lib/services-data";
 import { PROJECTS_DELIVERED } from "@/lib/business-facts";
 
 /** Outcome-focused one-liner under H1 (not feature list). */
+/** Hero + gallery images per service slug (local files; the first one is the cover). */
+export const SERVICE_IMAGES: Partial<Record<ServiceSlug, string[]>> = {
+  "website-landing": [
+    "/images/services/website/website-cover.jpg",
+    "/images/services/website/website-1.jpg",
+    "/images/services/website/website-2.jpg",
+  ],
+  ecommerce: [
+    "/images/services/e-commerce/e-commerce-cover.jpg",
+    "/images/services/e-commerce/e-commerce-1.jpg",
+    "/images/services/e-commerce/e-commerce-2.jpg",
+  ],
+  maintenance: [
+    "/images/services/maintenance/maintenance-cover.jpg",
+  ],
+  "social-media": [
+    "/images/services/social-media/social-media-cover.jpg",
+    "/images/services/social-media/social-media-1.jpg",
+    "/images/services/social-media/social-media-2.jpg",
+  ],
+  content: [
+    "/images/services/content-creation/content-creation-cover.jpg",
+    "/images/services/content-creation/content-creation-1.jpg",
+    "/images/services/content-creation/content-creation-2.jpg",
+  ],
+  strategy: [
+    "/images/services/digital-marketing/digital-marketing-cover.jpg",
+    "/images/services/digital-marketing/digital-marketing-1.jpg",
+    "/images/services/digital-marketing/digital-marketing-2.jpg",
+  ],
+  ads: [
+    "/images/services/ads/ads-cover.jpg",
+    "/images/services/ads/ads-1.jpg",
+    "/images/services/ads/ads-2.jpg",
+  ],
+  consulting: [
+    "/images/services/consulting/consulting-cover.jpg",
+    "/images/services/consulting/consulting-1.jpg",
+    "/images/services/consulting/consulting-2.jpg",
+  ],
+  branding: [
+    "/images/services/branding/branding-cover.jpg",
+    "/images/services/branding/branding-1.jpg",
+    "/images/services/branding/branding-2.jpg",
+  ],
+  training: [
+    "/images/services/consulting/consulting-cover.jpg",
+    "/images/services/digital-marketing/digital-marketing-1.jpg",
+    "/images/services/social-media/social-media-1.jpg",
+  ],
+};
+
 export const SERVICE_HERO_SUBLINE: Record<
   ServiceSlug,
   Record<Locale, string>
